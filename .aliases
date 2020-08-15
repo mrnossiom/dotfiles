@@ -1,0 +1,7 @@
+# LS aliases
+alias ls='ls -l'
+alias ll='ls -lah'
+
+# Other stuff
+alias g='git'
+alias update='npm i -g npm; npm update -g'
