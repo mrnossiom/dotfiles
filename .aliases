@@ -1,7 +1,24 @@
-# LS aliases
-alias ls='ls -l'
-alias ll='ls -lah'
-
 # Other stuff
+export EDITOR='code'
+export PS1='\[\033[36m\][\u]: \[\033[33;1m\]\W \[\033[31;2m\]\$\[\033[m\]\] '
+export CLICOLOR=1
+export LSCOLORS=ExFxBxDxCxegedabagacad
+
+# Basic aliases
+alias ls='ls -GFl'
+alias ll='ls -GFlah'
+alias rm='rm -i'
+
+alias ~='cd ~'
+alias ..='cd ..'
+alias ...='cd ../..'
+
+# Git aliases
 alias g='git'
-alias update='npm i -g npm; npm update -g'
+alias gc='git commit'
+
+# Docker Aliases
+alias dk='docker'
+alias dc='docker-compose'
+alias dcu='docker-compose up'
+alias dcd='docker-compose down'
