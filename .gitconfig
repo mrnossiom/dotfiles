@@ -1,0 +1,46 @@
+[user]
+	email = milomoisson@gmail.com
+	name = Milo Moisson
+	signingkey = 3C01CA5E
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+[gpg]
+	program = gpg
+[commit]
+	gpgsign = true
+[tag]
+	gpgsign = true
+[merge]
+	tool = diffmerge
+	guitool = diffmerge
+[alias]
+	egconf = config --global --edit
+
+	b = branch --all
+	brm = branch --delete
+
+	ll = log --graph --oneline
+	lla = log --graph --oneline --all
+	last = log -1 HEAD --stat
+
+	st = status -sb
+
+	cm = commit -m
+
+	rv = remote -v
+
+	a = add
+	ap = add --patch
+	al = add -A
+
+	pu = push
+
+	s = switch
+	sc = switch --create
+[core]
+	editor = code -w
+[help]
+	autocorrect = 30

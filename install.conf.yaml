@@ -8,12 +8,19 @@
       force: true
 
 - link:
-    ~/.npmrc:
-    ~/.gitconfig:
+    ~/.npmrc: .npmrc
+    ~/.gitconfig: .gitconfig
     ~/.config/starship.toml.save: starship.toml.save
-    ~/.config/fish/: fish/
     ~/.ssh/config: ssh_config
+    ~/.config/fish/config.fish: fish/config
+    ~/.config/fish/functions/exit.fish: fish/functions/exit
+    ~/.config/fish/functions/fish_greeting.fish: fish/functions/fish_greeting
 
 - shell:
-    - [git submodule update --init --recursive, Installing submodules]
-    - [brew update && brew upgrade, Update and upgrade brew]
+    -
+      command: git submodule update --init --recursive
+      description: Check and Update DotBot submodule...
+    -
+      command: brew update && brew upgrade
+      stdout: true
+      description: Update and upgrade brew...
