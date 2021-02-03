@@ -13,8 +13,8 @@
     ~/.config/starship.toml.save: starship.toml.save
     ~/.ssh/config: ssh_config
     ~/.config/fish/config.fish: fish/config
-    ~/.config/fish/functions/exit.fish: fish/functions/exit
-    ~/.config/fish/functions/fish_greeting.fish: fish/functions/fish_greeting
+    ~/.config/fish/fish_variables: fish/fish_variables
+    ~/.config/fish/functions/: fish/functions/
 
 - shell:
     -
