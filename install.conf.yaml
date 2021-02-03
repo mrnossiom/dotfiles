@@ -1,0 +1,19 @@
+- defaults:
+    link:
+      relink: true
+      create: true
+
+- clean:
+    ~/:
+      force: true
+
+- link:
+    ~/.npmrc:
+    ~/.gitconfig:
+    ~/.config/starship.toml.save: starship.toml.save
+    ~/.config/fish/: fish/
+    ~/.ssh/config: ssh_config
+
+- shell:
+    - [git submodule update --init --recursive, Installing submodules]
+    - [brew update && brew upgrade, Update and upgrade brew]
