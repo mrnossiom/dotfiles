@@ -3,24 +3,21 @@
       relink: true
       create: true
 
-- clean:
-    ~/:
-      force: true
+- clean: ['~']
 
 - link:
-    ~/.npmrc: .npmrc
-    ~/.gitconfig: .gitconfig
+    ~/.npmrc:
+    ~/.gitconfig:
     ~/.config/starship.toml.save: starship.toml.save
     ~/.ssh/config: ssh_config
-    ~/.config/fish/config.fish: fish/config
-    ~/.config/fish/fish_variables: fish/fish_variables
-    ~/.config/fish/functions/: fish/functions/
+    ~/.config/fish/: fish
 
 - shell:
-    -
-      command: git submodule update --init --recursive
-      description: Check and Update DotBot submodule...
-    -
-      command: brew update && brew upgrade
+    - command: git pull origin
+      description: Fetch my dotfiles repo...
       stdout: true
+    - command: git submodule update --init --recursive
+      description: Check and Update DotBot submodule...
+    - command: brew update && brew upgrade
       description: Update and upgrade brew...
+      stdout: true

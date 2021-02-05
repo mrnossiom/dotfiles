@@ -7,6 +7,7 @@ SETUVAR _fish_abbr_d:docker
 SETUVAR _fish_abbr_dcd:docker\x2dcompose\x20down
 SETUVAR _fish_abbr_dcu:docker\x2dcompose\x20up
 SETUVAR _fish_abbr_g:git
+SETUVAR _fish_abbr_ga:git\x20a
 SETUVAR _fish_abbr_gal:git\x20al
 SETUVAR _fish_abbr_gap:git\x20ap
 SETUVAR _fish_abbr_gb:git\x20b
@@ -15,6 +16,7 @@ SETUVAR _fish_abbr_glast:git\x20last
 SETUVAR _fish_abbr_gll:git\x20ll
 SETUVAR _fish_abbr_gls:git\x20log\x20\x2d\x2doneline\x20\x2d\x2dgraph\x20\x2d\x2dshow\x2dsignature
 SETUVAR _fish_abbr_gpu:git\x20pu
+SETUVAR _fish_abbr_grms:git\x20rms
 SETUVAR _fish_abbr_gst:git\x20st
 SETUVAR _fish_abbr_rm:rm\x20\x2di
 SETUVAR _fish_abbr_rmd:rm\x20\x2drd

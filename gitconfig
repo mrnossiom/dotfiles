@@ -40,7 +40,13 @@
 
 	s = switch
 	sc = switch --create
+
+	dfc = diff --cached
+
+	rms = restore --staged
 [core]
 	editor = code -w
 [help]
 	autocorrect = 30
+[pull]
+	ff = only
