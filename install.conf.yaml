@@ -6,7 +6,7 @@
 - clean: ['~']
 
 - link:
-    ~/.npmrc:
+    ~/.yarnrc:
     ~/.gitconfig:
     ~/.config/starship.toml.save:
     ~/.ssh/config: ssh_config
