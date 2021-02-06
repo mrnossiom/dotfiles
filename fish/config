@@ -1,4 +1,0 @@
-set -g fish_user_paths "/usr/local/sbin" $fish_user_paths
-set GPG_TTY (tty)
-
-starship init fish | source

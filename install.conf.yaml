@@ -8,12 +8,12 @@
 - link:
     ~/.npmrc:
     ~/.gitconfig:
-    ~/.config/starship.toml.save: starship.toml.save
+    ~/.config/starship.toml.save:
     ~/.ssh/config: ssh_config
     ~/.config/fish/: fish
 
 - shell:
-    - command: git pull origin
+    - command: cd ~/.dotfiles/ && git pull origin
       description: Fetch my dotfiles repo...
       stdout: true
     - command: git submodule update --init --recursive
