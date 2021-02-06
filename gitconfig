@@ -41,7 +41,8 @@
 	s = switch
 	sc = switch --create
 
-	dfc = diff --cached
+	df = diff
+	dfs = diff --staged
 
 	rms = restore --staged
 [core]
