@@ -44,6 +44,8 @@
 	df = diff
 	dfs = diff --staged
 
+	m = merge
+
 	rms = restore --staged
 [core]
 	editor = code -w
@@ -51,3 +53,5 @@
 	autocorrect = 30
 [pull]
 	ff = only
+[init]
+	defaultBranch = master
