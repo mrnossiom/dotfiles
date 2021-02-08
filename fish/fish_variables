@@ -11,6 +11,8 @@ SETUVAR _fish_abbr_gal:git\x20al
 SETUVAR _fish_abbr_gap:git\x20ap
 SETUVAR _fish_abbr_gb:git\x20b
 SETUVAR _fish_abbr_gcm:git\x20cm\x20\x27\x27
+SETUVAR _fish_abbr_gcz:git\x20cz
+SETUVAR _fish_abbr_gczr:git\x20cz\x20\x2d\x2dretry
 SETUVAR _fish_abbr_glast:git\x20last
 SETUVAR _fish_abbr_gll:git\x20ll
 SETUVAR _fish_abbr_gpu:git\x20pu
