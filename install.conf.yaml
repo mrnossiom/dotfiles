@@ -3,11 +3,13 @@
       relink: true
       create: true
 
-- clean: ['~']
+- clean: ["~"]
 
 - link:
     ~/.yarnrc:
     ~/.gitconfig:
+    ~/.czrc:
+    ~/.prettierrc.json: 
     ~/.config/starship.toml.save:
     ~/.ssh/config: ssh_config
     ~/.config/fish/: fish
