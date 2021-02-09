@@ -3,23 +3,25 @@
       relink: true
       create: true
 
-- clean: ["~"]
+- clean: ['~']
 
 - link:
     ~/.yarnrc:
     ~/.gitconfig:
     ~/.czrc:
-    ~/.prettierrc.json: 
+    ~/.prettierrc.json:
     ~/.config/starship.toml.save:
     ~/.ssh/config: ssh_config
-    ~/.config/fish/: fish
 
 - shell:
-    - command: cd ~/.dotfiles/ && git pull origin
-      description: Fetch my dotfiles repo...
-      stdout: true
+    - command: echo 'Did you setup fish symlink ?'
+    description: Setup fish symlink
+    stdout: true
+    - command: git pull origin
+    description: Fetch my dotfiles repo...
+    stdout: true
     - command: git submodule update --init --recursive
-      description: Check and Update DotBot submodule...
-    - command: brew update && brew upgrade
-      description: Update and upgrade brew...
-      stdout: true
+    description: Check and Update DotBot submodule...
+    - command: brew bundle && brew update && brew upgrade
+    description: Update and upgrade brew...
+    stdout: true
