@@ -14,14 +14,14 @@
     ~/.ssh/config: ssh_config
 
 - shell:
-    - command: echo 'Did you setup fish symlink ?'
+  - command: echo 'Did you link the fish folder ?'
     description: Setup fish symlink
     stdout: true
-    - command: git pull origin
+  - command: git pull origin
     description: Fetch my dotfiles repo...
     stdout: true
-    - command: git submodule update --init --recursive
+  - command: git submodule update --init --recursive
     description: Check and Update DotBot submodule...
-    - command: brew bundle && brew update && brew upgrade
+  - command: brew bundle && brew update && brew upgrade
     description: Update and upgrade brew...
     stdout: true
