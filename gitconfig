@@ -38,6 +38,11 @@
 
 	pu = push
 
+	pl = pull
+
+	f = fetch
+	fp = fetch --prune
+
 	s = switch
 	sc = switch --create
 
@@ -47,6 +52,8 @@
 	m = merge
 
 	rms = restore --staged
+
+	res = restore
 [core]
 	editor = code -w
 [help]
@@ -55,3 +62,9 @@
 	ff = only
 [init]
 	defaultBranch = master
+[github]
+	user = MrNossiom
+[fetch]
+	prune = true
+[color]
+	ui = true
