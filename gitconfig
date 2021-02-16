@@ -68,3 +68,5 @@
 	prune = true
 [color]
 	ui = true
+[advice]
+	addEmptyPathspec = false

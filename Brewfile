@@ -14,6 +14,6 @@ brew "ncdu"
 brew "node"
 brew "smimesign"
 brew "starship"
-brew "telnet", link: false
+brew "telnet"
 brew "tldr"
 cask "webpquicklook"
