@@ -1,4 +1,4 @@
-set -gp PATH '/usr/local/sbin' '~/.yarn/bin' '~/.config/yarn/global/node_modules/.bin'
-set -g GPG_TTY (tty)
+set -p fish_user_paths '/usr/local/sbin' '~/.config/yarn/global/node_modules/.bin'
+set GPG_TTY (tty)
 
 starship init fish | source

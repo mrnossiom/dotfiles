@@ -6,7 +6,8 @@
 - clean: ['~']
 
 - link:
-    ~/.yarnrc:
+    ~/.yarnrc: yarn/yarnrc
+    ~/.config/yarn/global/package.json: yarn/globalDependencies
     ~/.gitconfig:
     ~/.czrc:
     ~/.prettierrc.json:
@@ -14,14 +15,15 @@
     ~/.ssh/config: ssh_config
 
 - shell:
-  - command: echo 'Did you link the fish folder ?'
-    description: Setup fish symlink
-    stdout: true
-  - command: git pull origin
-    description: Fetch my dotfiles repo...
-    stdout: true
-  - command: git submodule update --init --recursive
-    description: Check and Update DotBot submodule...
-  - command: brew bundle && brew update && brew upgrade
-    description: Update and upgrade brew...
-    stdout: true
+    - command: git pull origin
+      description: Fetch my dotfiles repo...
+      stdout: true
+    - command: git submodule update --init --recursive
+      description: Check and Update DotBot submodule...
+    - command: brew bundle && brew update && brew upgrade
+      description: Update and upgrade brew...
+      stdout: true
+    - command: test -L ~/.config/fish
+      description: Setup fish symlink
+    - command: yarn upgrade
+      description: Upgrade yarn packages
