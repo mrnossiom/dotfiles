@@ -15,6 +15,9 @@
       },
       "thoughtbot/formulae": {
         "revision": "a6bb452f4c03204fc49556c81e64172700a6d6d1"
+      },
+      "homebrew/cask-fonts": {
+        "revision": "8b870420e3fd0eda49556528196fb4f842780ecc"
       }
     },
     "brew": {
@@ -565,6 +568,12 @@
         "version": "4.2.1.1013",
         "options": {
           "full_name": "diffmerge"
+        }
+      },
+      "font-fira-code": {
+        "version": "5.2",
+        "options": {
+          "full_name": "font-fira-code"
         }
       }
     }
