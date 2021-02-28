@@ -54,6 +54,11 @@
 	rms = restore --staged
 
 	res = restore
+
+	sh = stash
+	shl = stash list
+	sha = stash apply
+	shd = stash drop
 [core]
 	editor = code -w
 [help]
