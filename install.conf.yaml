@@ -24,6 +24,6 @@
       description: Update and upgrade brew...
       stdout: true
     - command: test -L ~/.config/fish
-      description: Setup fish symlink
-    - command: yarn upgrade
+      description: Verify fish symlink
+    - command: yarn global upgrade
       description: Upgrade yarn packages
