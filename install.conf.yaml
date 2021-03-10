@@ -8,6 +8,7 @@
 - link:
     ~/.yarnrc: yarn/yarnrc
     ~/.config/yarn/global/package.json: yarn/globalDependencies
+    ~/.config/yarn/global/yarn.lock: yarn/globalDependencies.lock
     ~/.gitconfig:
     ~/.czrc:
     ~/.prettierrc.json:
@@ -22,8 +23,9 @@
       description: Check and Update DotBot submodule...
     - command: brew bundle && brew update && brew upgrade
       description: Update and upgrade brew...
-      stdout: true
+      stderr: true
     - command: test -L ~/.config/fish
       description: Verify fish symlink
-    - command: yarn global upgrade
+    - command: yarn global list && yarn global upgrade
       description: Upgrade yarn packages
+      stderr: true
