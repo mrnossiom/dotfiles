@@ -5,10 +5,10 @@
         "revision": "3fbca9f51db8e7255f4b2f48daba1e04a2d99ad6"
       },
       "homebrew/cask": {
-        "revision": "d050b68d62c211b324486a16cf0c95faf96ff33a"
+        "revision": "31d7597a5c936357cb394b2c863dd46b6f6cebed"
       },
       "homebrew/core": {
-        "revision": "dbc1ac6cacbfb4ce9b22fb0bd74ddcf86e044cae"
+        "revision": "b463a7ccb4d87167ceb38ce4350d1e9a0362d1c6"
       },
       "homebrew/services": {
         "revision": "31bb79235694bdd39143843fae37bdfb297cc5cd"
@@ -20,7 +20,7 @@
         "revision": "9899ab349852a15fbc634721356bec10e05d5f11"
       },
       "apparition47/tap": {
-        "revision": "b77fa6024e52a4bb73c35dc7885e26a7a53cf67d"
+        "revision": "7340e66a85b07e01b6120cf8ab6f9b571b2f9fa2"
       }
     },
     "brew": {
@@ -633,7 +633,7 @@
         }
       },
       "mailtrackerblocker": {
-        "version": "0.3.19",
+        "version": "0.3.21",
         "options": {
           "full_name": "mailtrackerblocker"
         }
@@ -643,12 +643,12 @@
   "system": {
     "macos": {
       "big_sur": {
-        "HOMEBREW_VERSION": "3.0.4",
+        "HOMEBREW_VERSION": "3.0.5",
         "HOMEBREW_PREFIX": "/usr/local",
-        "Homebrew/homebrew-core": "c5e98a5a9bbbbe4a635d293b47f44cac975e3863",
-        "CLT": "12.4.0.0.1.1610135815",
-        "Xcode": "12.4",
-        "macOS": "11.2.2"
+        "Homebrew/homebrew-core": "b463a7ccb4d87167ceb38ce4350d1e9a0362d1c6",
+        "CLT": "",
+        "Xcode": "11.3.1",
+        "macOS": "11.0.1"
       },
       "mojave": {
         "HOMEBREW_VERSION": "3.0.5",
