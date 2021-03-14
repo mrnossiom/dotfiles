@@ -1,5 +1,6 @@
 {
 	"dependencies": {
+		"@bitwarden/cli": "^1.15.0",
 		"commitizen": "^4.2.3",
 		"contentful-cli": "^1.5.35",
 		"create-next-app": "^10.0.7",
