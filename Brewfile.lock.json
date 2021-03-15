@@ -5,10 +5,10 @@
         "revision": "3fbca9f51db8e7255f4b2f48daba1e04a2d99ad6"
       },
       "homebrew/cask": {
-        "revision": "31d7597a5c936357cb394b2c863dd46b6f6cebed"
+        "revision": "ecaa8d6ae4ab128d123c222c36763b628c87eaea"
       },
       "homebrew/core": {
-        "revision": "b463a7ccb4d87167ceb38ce4350d1e9a0362d1c6"
+        "revision": "205b5f4343905c49528bc59ef1be60b72569543a"
       },
       "homebrew/services": {
         "revision": "31bb79235694bdd39143843fae37bdfb297cc5cd"
@@ -17,7 +17,7 @@
         "revision": "a6bb452f4c03204fc49556c81e64172700a6d6d1"
       },
       "homebrew/cask-fonts": {
-        "revision": "9899ab349852a15fbc634721356bec10e05d5f11"
+        "revision": "a04e40d614e5804292b456abb84a6083fdd73e90"
       },
       "apparition47/tap": {
         "revision": "7340e66a85b07e01b6120cf8ab6f9b571b2f9fa2"
@@ -532,7 +532,7 @@
         }
       },
       "gtk+3": {
-        "version": "3.24.26",
+        "version": "3.24.27",
         "bottle": {
           "rebuild": 0,
           "cellar": "/usr/local/Cellar",
@@ -540,20 +540,20 @@
           "root_url": "https://homebrew.bintray.com/bottles",
           "files": {
             "arm64_big_sur": {
-              "url": "https://homebrew.bintray.com/bottles/gtk%2B3-3.24.26.arm64_big_sur.bottle.tar.gz",
-              "sha256": "4ba0ac4436a7980287f1f4e5e3b79c9a88e67794354c6d2e1de765f729ca0045"
+              "url": "https://homebrew.bintray.com/bottles/gtk%2B3-3.24.27.arm64_big_sur.bottle.tar.gz",
+              "sha256": "84a3b4dddd8d125f903eecad5e2fc4185de13fabae4d55ea48f72d1d261c9b3d"
             },
             "big_sur": {
-              "url": "https://homebrew.bintray.com/bottles/gtk%2B3-3.24.26.big_sur.bottle.tar.gz",
-              "sha256": "b5fe57e102381520b10516f5a068eccba5ca0e787420dd10599261140b9ffdde"
+              "url": "https://homebrew.bintray.com/bottles/gtk%2B3-3.24.27.big_sur.bottle.tar.gz",
+              "sha256": "86dcbe4988db74cd6480982ce51540e27cc1b9cf52573067087eb092492842d4"
             },
             "catalina": {
-              "url": "https://homebrew.bintray.com/bottles/gtk%2B3-3.24.26.catalina.bottle.tar.gz",
-              "sha256": "04ccff53534fab1b53934bc1c82e27a4e58d682d7f98b4bed02cf9c4c7f9c2d7"
+              "url": "https://homebrew.bintray.com/bottles/gtk%2B3-3.24.27.catalina.bottle.tar.gz",
+              "sha256": "01e44c444b45d275e016888b8e53a53d0c9b65751a01345049738ff13f55bc26"
             },
             "mojave": {
-              "url": "https://homebrew.bintray.com/bottles/gtk%2B3-3.24.26.mojave.bottle.tar.gz",
-              "sha256": "ec0cd9c16ee1ac7444cdbad4d1be574ca4dd2994254e5789f248c5ddb4e277a5"
+              "url": "https://homebrew.bintray.com/bottles/gtk%2B3-3.24.27.mojave.bottle.tar.gz",
+              "sha256": "6052e376292394f627a4b3415d2609143d1ff56433b2373e041897797976b1fa"
             }
           }
         }
@@ -637,6 +637,12 @@
         "options": {
           "full_name": "mailtrackerblocker"
         }
+      },
+      "bitwarden": {
+        "version": "1.25.0",
+        "options": {
+          "full_name": "bitwarden"
+        }
       }
     }
   },
@@ -645,10 +651,10 @@
       "big_sur": {
         "HOMEBREW_VERSION": "3.0.5",
         "HOMEBREW_PREFIX": "/usr/local",
-        "Homebrew/homebrew-core": "b463a7ccb4d87167ceb38ce4350d1e9a0362d1c6",
-        "CLT": "",
-        "Xcode": "11.3.1",
-        "macOS": "11.0.1"
+        "Homebrew/homebrew-core": "205b5f4343905c49528bc59ef1be60b72569543a",
+        "CLT": "12.4.0.0.1.1610135815",
+        "Xcode": "12.4",
+        "macOS": "11.2.2"
       },
       "mojave": {
         "HOMEBREW_VERSION": "3.0.5",
