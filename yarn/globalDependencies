@@ -2,9 +2,10 @@
 	"dependencies": {
 		"@bitwarden/cli": "^1.15.0",
 		"@vitejs/create-app": "^2.1.0",
+		"all-the-package-names": "^1.3905.0",
 		"commitizen": "^4.2.3",
 		"contentful-cli": "^1.5.35",
-		"create-next-app": "^10.0.7",
+		"create-next-app": "^10.0.9",
 		"firebase-tools": "^9.5.0",
 		"netlify-cli": "^3.8.6",
 		"npm": "^7.5.6",

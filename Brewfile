@@ -10,6 +10,7 @@ brew "python@3.9", link: false
 brew "bat"
 brew "cairo"
 brew "circleci"
+brew "cmatrix"
 brew "exa"
 brew "fish"
 brew "gh"
