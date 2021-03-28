@@ -1,17 +1,14 @@
 {
 	"dependencies": {
-		"@bitwarden/cli": "^1.15.0",
-		"@vitejs/create-app": "^2.1.0",
 		"all-the-package-names": "^1.3905.0",
-		"commitizen": "^4.2.3",
 		"contentful-cli": "^1.5.35",
 		"create-next-app": "^10.0.9",
+		"create-react-app": "^4.0.3",
 		"firebase-tools": "^9.5.0",
-		"netlify-cli": "^3.8.6",
+		"git-cz": "^4.7.6",
 		"npm": "^7.5.6",
 		"standard-changelog": "^2.0.27",
 		"vercel": "^21.2.3",
-		"yarn": "^1.22.10",
-		"yarn-deduplicate": "^3.1.0"
+		"yarn": "^1.22.10"
 	}
 }
