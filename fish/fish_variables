@@ -1,5 +1,6 @@
 # This file contains fish universal variable definitions.
 # VERSION: 3.0
+SETUVAR --path PATH:/Users/MiloMoisson/\x2econfig/yarn/global/node_modules/\x2ebin/\x1e/usr/local/sbin\x1e/Users/Milo_Moisson/\x2eyarn/\x2ebin\x1e/usr/local/bin\x1e/usr/bin\x1e/bin\x1e/usr/sbin\x1e/sbin\x1e/Library/Apple/usr/bin\x1e/usr/local/MacGPG2/bin\x1e/Library/Frameworks/Mono\x2eframework/Versions/Current/Commands\x1e/Users/MiloMoisson/\x2ecargo/bin\x1e/Users/MiloMoisson/\x2ecargo/bin\x1e/Users/MiloMoisson/\x2ecargo/bin
 SETUVAR __fish_initialized:3100
 SETUVAR _fish_abbr_clr:clear
 SETUVAR _fish_abbr_d:docker
