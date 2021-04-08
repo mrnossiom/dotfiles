@@ -26,6 +26,8 @@
       stderr: true
     - command: test -L ~/.config/fish
       description: Verify fish symlink
+    - command: type rustup && type cargo
+      description: Verify cargo install
     - command: yarn global list && yarn global upgrade
       description: Upgrade yarn packages
       stderr: true
