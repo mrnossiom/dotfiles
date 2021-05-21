@@ -7,7 +7,8 @@ set -gx GPG_TTY (tty)
 set fish_user_paths \
     $HOME/.config/yarn/global/node_modules/.bin/ \
     $HOME/.cargo/bin/ \
-    /usr/local/sbin
+    /usr/local/sbin \
+    /home/milomoisson/.local/bin
 
 fish_add_path /usr/local/opt/curl/bin
 

@@ -17,6 +17,7 @@ SETUVAR _fish_abbr_gcz:git\x20cz
 SETUVAR _fish_abbr_gczr:git\x20cz\x20\x2d\x2dretry
 SETUVAR _fish_abbr_glast:git\x20last
 SETUVAR _fish_abbr_gll:git\x20ll
+SETUVAR _fish_abbr_gpl:git\x20pl
 SETUVAR _fish_abbr_gpu:git\x20pu
 SETUVAR _fish_abbr_grms:git\x20rms
 SETUVAR _fish_abbr_gs:git\x20s
@@ -52,4 +53,4 @@ SETUVAR fish_pager_color_completion:normal
 SETUVAR fish_pager_color_description:B3A06D\x1eyellow
 SETUVAR fish_pager_color_prefix:white\x1e\x2d\x2dbold\x1e\x2d\x2dunderline
 SETUVAR fish_pager_color_progress:brwhite\x1e\x2d\x2dbackground\x3dcyan
-SETUVAR --path fish_user_paths:/home/milomoisson/\x2econfig/yarn/global/node_modules/\x2ebin/\x1e/home/milomoisson/\x2ecargo/bin/\x1e/usr/local/sbin
+SETUVAR --path fish_user_paths:/home/milomoisson/\x2econfig/yarn/global/node_modules/\x2ebin/\x1e/home/milomoisson/\x2ecargo/bin/\x1e/usr/local/sbin\x1e/home/milomoisson/\x2elocal/bin
