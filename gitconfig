@@ -59,6 +59,7 @@
 	shl = stash list
 	sha = stash apply
 	shd = stash drop
+	shp = stash pop
 [core]
 	editor = code -w
 [help]
