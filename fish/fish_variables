@@ -5,8 +5,8 @@ SETUVAR --export --path PATH:/home/linuxbrew/\x2elinuxbrew/bin\x1e/home/linuxbre
 SETUVAR __fish_initialized:3100
 SETUVAR _fish_abbr_clr:clear
 SETUVAR _fish_abbr_d:docker
-SETUVAR _fish_abbr_dcd:docker\x2dcompose\x20down
-SETUVAR _fish_abbr_dcu:docker\x2dcompose\x20up
+SETUVAR _fish_abbr_dcd:docker\x20compose\x20down
+SETUVAR _fish_abbr_dcu:docker\x20compose\x20up
 SETUVAR _fish_abbr_g:git
 SETUVAR _fish_abbr_ga:git\x20a
 SETUVAR _fish_abbr_gal:git\x20al
@@ -53,4 +53,4 @@ SETUVAR fish_pager_color_completion:normal
 SETUVAR fish_pager_color_description:B3A06D\x1eyellow
 SETUVAR fish_pager_color_prefix:white\x1e\x2d\x2dbold\x1e\x2d\x2dunderline
 SETUVAR fish_pager_color_progress:brwhite\x1e\x2d\x2dbackground\x3dcyan
-SETUVAR --path fish_user_paths:/home/milomoisson/\x2econfig/yarn/global/node_modules/\x2ebin/\x1e/home/milomoisson/\x2ecargo/bin/\x1e/usr/local/sbin\x1e/home/milomoisson/\x2elocal/bin
+SETUVAR --path fish_user_paths:/usr/local/opt/curl/bin\x1e/Users/MiloMoisson/\x2econfig/yarn/global/node_modules/\x2ebin/\x1e/Users/MiloMoisson/\x2ecargo/bin/\x1e/usr/local/sbin\x1e/home/milomoisson/\x2elocal/bin
