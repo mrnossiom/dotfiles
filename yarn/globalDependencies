@@ -7,7 +7,7 @@
 		"create-react-app": "^4.0.3",
 		"firebase-tools": "^9.11.0",
 		"npkill": "^0.8.0",
-		"npm": "^7.14.0",
+		"npm": "^7.17.0",
 		"standard-changelog": "^2.0.27",
 		"svgo": "^2.3.0",
 		"vercel": "^23.0.0",
