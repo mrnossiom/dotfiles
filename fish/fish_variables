@@ -6,7 +6,7 @@ SETUVAR __fish_initialized:3100
 SETUVAR _fish_abbr_clr:clear
 SETUVAR _fish_abbr_d:docker
 SETUVAR _fish_abbr_dcd:docker\x20compose\x20down
-SETUVAR _fish_abbr_dcu:docker\x20compose\x20up
+SETUVAR _fish_abbr_dcu:docker\x20compose\x20up\x20\x2dd
 SETUVAR _fish_abbr_g:git
 SETUVAR _fish_abbr_ga:git\x20a
 SETUVAR _fish_abbr_gal:git\x20al
