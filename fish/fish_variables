@@ -24,6 +24,7 @@ SETUVAR _fish_abbr_gs:git\x20s
 SETUVAR _fish_abbr_gst:git\x20st
 SETUVAR _fish_abbr_rm:rm\x20\x2di
 SETUVAR _fish_abbr_rmd:rm\x20\x2drd
+SETUVAR _fish_abbr_yd:yarn\x20dev
 SETUVAR fish_color_autosuggestion:585858
 SETUVAR fish_color_cancel:\x2dr
 SETUVAR fish_color_command:a1b56c

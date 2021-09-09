@@ -3,14 +3,15 @@
 		"all-the-package-names": "^1.3905.0",
 		"bundle-wizard": "^1.6.0",
 		"commitizen": "^4.2.4",
-		"create-next-app": "^10.2.2",
+		"contentful-cli": "^1.9.11",
+		"create-next-app": "^11.1.2",
 		"create-react-app": "^4.0.3",
-		"firebase-tools": "^9.11.0",
-		"npkill": "^0.8.0",
-		"npm": "^7.17.0",
+		"firebase-tools": "^9.18.0",
+		"npkill": "^0.8.2",
+		"npm": "^7.22.0",
 		"standard-changelog": "^2.0.27",
-		"svgo": "^2.3.0",
-		"vercel": "^23.0.0",
-		"yarn": "^1.22.10"
+		"svgo": "^2.5.0",
+		"vercel": "^23.1.2",
+		"yarn": "^1.22.11"
 	}
 }

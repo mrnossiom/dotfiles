@@ -2,11 +2,6 @@ Host *
     ServerAliveInterval 300
     ServerAliveCountMax 2
 
-Host ssh.cluster002.hosting.ovh.net
-    HostName ssh.cluster002.hosting.ovh.net
-    User claudiai
-    ForwardAgent yes
-
 Host MacBookdeCyril_Local
 	HostName macbook-pro-de-cyril.local
 	User Milo_Moisson
