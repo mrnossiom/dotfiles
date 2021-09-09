@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+./check_brew.sh
+
 set -e
 
 CONFIG="install.conf.yaml"
