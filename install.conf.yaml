@@ -14,6 +14,8 @@
     ~/.prettierrc.json:
     ~/.config/starship.toml.save:
     ~/.ssh/config: ssh_config
+    ~/.profile:
+    ~/fish: .config/fish
 
 - shell:
     - command: git pull origin
