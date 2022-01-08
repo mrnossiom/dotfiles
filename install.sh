@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 
+# Check the presence of Homebrew
 ./check_brew.sh
 
+# Dotbot setup
 set -e
 
 CONFIG="install.conf.yaml"
