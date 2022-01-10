@@ -15,6 +15,7 @@
     ~/.config/starship.toml.save:
     ~/.ssh/config: ssh_config
     ~/.profile:
+    ~/.cargo/.crates.toml:
     ~/fish: .config/fish
 
 - shell:
