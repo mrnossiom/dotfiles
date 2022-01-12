@@ -1,13 +1,13 @@
 {
 	"dependencies": {
 		"@napi-rs/cli": "^2.3.0",
-		"@nestjs/cli": "^8.1.8",
+		"@nestjs/cli": "^8.2.0",
 		"@nestjs/schematics": "^8.0.5",
 		"bundle-wizard": "^1.6.0",
 		"commitizen": "^4.2.4",
-		"create-next-app": "^12.0.7",
+		"create-next-app": "^12.0.8",
 		"create-slidev": "^0.27.20",
-		"create-turbo": "^1.0.24",
+		"create-turbo": "^1.0.26",
 		"discord.js": "^13.5.0",
 		"firebase-tools": "^10.0.1",
 		"glyphhanger": "^5.0.0",
@@ -17,7 +17,7 @@
 		"serve": "^13.0.2",
 		"standard-changelog": "^2.0.27",
 		"svgo": "^2.8.0",
-		"turbo": "^1.0.24",
+		"turbo": "^1.0.26",
 		"vercel": "^23.1.2",
 		"yarn": "^1.22.17"
 	}
