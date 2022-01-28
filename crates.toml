@@ -1,5 +1,6 @@
 [v1]
 "cargo-edit 0.8.0 (registry+https://github.com/rust-lang/crates.io-index)" = ["cargo-add", "cargo-rm", "cargo-set-version", "cargo-upgrade"]
+"cargo-expand 1.0.15 (registry+https://github.com/rust-lang/crates.io-index)" = ["cargo-expand"]
 "cargo-udeps 0.1.26 (registry+https://github.com/rust-lang/crates.io-index)" = ["cargo-udeps"]
 "cargo-update 8.1.2 (registry+https://github.com/rust-lang/crates.io-index)" = ["cargo-install-update", "cargo-install-update-config"]
 "git-leave 1.2.0 (registry+https://github.com/rust-lang/crates.io-index)" = ["git-leave"]
