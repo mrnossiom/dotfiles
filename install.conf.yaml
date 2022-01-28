@@ -2,6 +2,8 @@
     link:
       relink: true
       create: true
+    shell:
+      stderr: true
 
 - clean: ['~']
 
@@ -26,13 +28,11 @@
       command: git submodule update --init --recursive
     - description: Update and upgrade Brew.
       command: brew bundle && brew update && brew upgrade
-      stderr: true
     - description: Verify fish symlink.
       command: test -L ~/.config/fish
     - description: Verify cargo installation.
       command: type rustup && type cargo
     - description: Update cargo dependencies.
-      command: cargo install-update
+      command: cargo install-update -a
     - description: Upgrade yarn packages.
       command: yarn global list && yarn global upgrade --latest
-      stderr: true
