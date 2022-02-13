@@ -4,6 +4,7 @@ SETUVAR --export LDFLAGS:\x2dL/home/linuxbrew/\x2elinuxbrew/opt/llvm/lib\x20\x2d
 SETUVAR --export --path LD_LIBRARY_PATH:/home/linuxbrew/\x2elinuxbrew/lib
 SETUVAR --export --path PATH:/home/linuxbrew/\x2elinuxbrew/bin\x1e/home/linuxbrew/\x2elinuxbrew/sbin\x1e/Users/MiloMoisson/\x2econfig/yarn/global/node_modules/\x2ebin/\x1e/usr/local/sbin\x1e/Users/Milo_Moisson/\x2eyarn/\x2ebin\x1e/usr/local/bin\x1e/usr/sbin\x1e/usr/bin\x1e/sbin\x1e/bin\x1e/usr/games\x1e/usr/local/games\x1e/mnt/c/windows/system32\x1e/mnt/c/windows\x1e/mnt/c/windows/System32/Wbem\x1e/mnt/c/windows/System32/WindowsPowerShell/v1\x2e0/\x1e/mnt/c/windows/System32/OpenSSH/\x1e/mnt/c/ProgramData/chocolatey/bin\x1e/mnt/c/Program\x20Files/Git/cmd\x1e/mnt/c/tools/BCURRAN3\x1e/mnt/c/Users/milom/AppData/Local/Microsoft/WindowsApps\x1e/mnt/c/Users/milom/AppData/Local/Programs/Microsoft\x20VS\x20Code/bin\x1e/home/milomoisson/\x2ecargo/bin/\x1e/home/milomoisson/\x2ecargo/bin/
 SETUVAR __fish_initialized:3100
+SETUVAR _fish_abbr_c:cargo
 SETUVAR _fish_abbr_clr:clear
 SETUVAR _fish_abbr_d:docker
 SETUVAR _fish_abbr_dcd:docker\x20compose\x20down
@@ -13,7 +14,7 @@ SETUVAR _fish_abbr_gcm:git\x20cm\x20\x27\x27
 SETUVAR _fish_abbr_rm:rm\x20\x2di
 SETUVAR _fish_abbr_rmd:rm\x20\x2drd
 SETUVAR _fish_abbr_sl:sl\x20\x2dFal
-SETUVAR _fish_abbr_yd:yarn\x20dev
+SETUVAR _fish_abbr_y:yarn
 SETUVAR fish_color_autosuggestion:585858
 SETUVAR fish_color_cancel:\x2dr
 SETUVAR fish_color_command:a1b56c
