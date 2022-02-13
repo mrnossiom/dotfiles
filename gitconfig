@@ -75,3 +75,7 @@
 	ui = true
 [advice]
 	addEmptyPathspec = false
+[credential "https://github.com"]
+	helper = !/usr/local/bin/gh auth git-credential
+[credential]
+	helper = cache
