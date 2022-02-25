@@ -79,3 +79,5 @@
 	helper = !/usr/local/bin/gh auth git-credential
 [credential]
 	helper = cache
+[leaveTool]
+	defaultFolder = ~/projects

@@ -21,18 +21,15 @@
     ~/fish: .config/fish
 
 - shell:
-    - description: Fetch my dotfiles repo.
-      command: git pull origin
-      stdout: true
-    - description: Check and Update DotBot submodule.
+    - description: Check and Update DotBot submodule
       command: git submodule update --init --recursive
-    - description: Update and upgrade Brew.
+    - description: Update and upgrade Brew
       command: brew bundle && brew update && brew upgrade
-    - description: Verify fish symlink.
+    - description: Verify fish symlink
       command: test -L ~/.config/fish
-    - description: Verify cargo installation.
+    - description: Verify cargo installation
       command: type rustup && type cargo
-    - description: Update cargo dependencies.
+    - description: Update cargo dependencies
       command: cargo install-update -a
-    - description: Upgrade yarn packages.
+    - description: Upgrade yarn packages
       command: yarn global list && yarn global upgrade --latest
