@@ -8,28 +8,34 @@
 - clean: ['~']
 
 - link:
+    # Yarn stuff
     ~/.yarnrc: yarn/yarnrc
     ~/.config/yarn/global/package.json: yarn/globalDependencies
     ~/.config/yarn/global/yarn.lock: yarn/globalDependencies.lock
-    ~/.gitconfig:
-    ~/.czrc:
-    ~/.prettierrc.json:
+
+    # Terminal stuff
     ~/.config/starship.toml.save:
     ~/.ssh/config: ssh_config
     ~/.profile:
     ~/.cargo/.crates.toml:
-    ~/fish: .config/fish
+    #   ~/fish: .config/fish (disable this as DotBot doesn't support directories)
+
+    ~/.gitconfig:
+    ~/.czrc:
+    ~/.prettierrc.json:
 
 - shell:
-    - description: Check and Update DotBot submodule
-      command: git submodule update --init --recursive
     - description: Update and upgrade Brew
-      command: brew bundle && brew update && brew upgrade
+      command: ./scripts/check_brew.sh && brew bundle && brew update && brew upgrade
+
     - description: Verify fish symlink
       command: test -L ~/.config/fish
+
     - description: Verify cargo installation
       command: type rustup && type cargo
+
     - description: Update cargo dependencies
-      command: cargo install-update -a
+      command: ./scripts/rust_deps_update.sh
+
     - description: Upgrade yarn packages
       command: yarn global list && yarn global upgrade --latest

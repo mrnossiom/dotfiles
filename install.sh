@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
-# Check the presence of Homebrew
-./check_brew.sh
+# Exit if we are in a CI environment
+[[ $CI -ne 0 ]] && exit 0
 
-# Dotbot setup
+# DotBot setup
 set -e
 
 CONFIG="install.conf.yaml"
