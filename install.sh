@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-# Exit if we are in a CI environment
-[ ! -z $CODESPACES ] && exit 0
+# Exit if we are in a codespace environment
+[ -n "$CODESPACES" ] && exit 0
 
 # DotBot setup
 set -e

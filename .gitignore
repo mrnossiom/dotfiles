@@ -1,2 +1,5 @@
 # Lock files
 Brewfile.lock.json
+
+# Misc
+.vscode/
