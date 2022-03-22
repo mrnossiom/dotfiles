@@ -9,5 +9,6 @@
 "grc 1.2.1 (registry+https://github.com/rust-lang/crates.io-index)" = ["grc"]
 "ripgrep 13.0.0 (registry+https://github.com/rust-lang/crates.io-index)" = ["rg"]
 "swp 1.0.3 (registry+https://github.com/rust-lang/crates.io-index)" = ["swp"]
+"termimage 1.2.0 (registry+https://github.com/rust-lang/crates.io-index)" = ["termimage"]
 "tokei 12.1.2 (registry+https://github.com/rust-lang/crates.io-index)" = ["tokei"]
 "wasm-pack 0.10.2 (registry+https://github.com/rust-lang/crates.io-index)" = ["wasm-pack"]
