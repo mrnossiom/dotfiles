@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 
 # Exit if we are in a CI environment
-[[ $CI -ne 0 ]] && exit 0
+[ ! -z $CODESPACES ] && exit 0
 
 # DotBot setup
 set -e
 
-CONFIG="install.conf.yaml"
+CONFIG="install.config.yml"
 DOTBOT_DIR="dotbot"
 
 DOTBOT_BIN="bin/dotbot"
