@@ -3,6 +3,7 @@
       relink: true
       create: true
     shell:
+      stdout: true
       stderr: true
 
 - clean: ['~']
@@ -19,23 +20,27 @@
     ~/.profile: profile.sh
     ~/.cargo/.crates.toml:
     #   ~/fish: .config/fish (disable this as DotBot doesn't support directories)
+    #   ^^^^ see the shell part for this verification
 
     ~/.gitconfig:
     ~/.czrc: czrc.json
     ~/.prettierrc.json:
 
 - shell:
-    - description: Update and upgrade Brew
-      command: ./scripts/check_brew.sh && brew bundle && brew update && brew upgrade
+    - description: Check for brew installation
+      command: ./scripts/check_brew.sh
 
-    - description: Verify fish symlink
+    - description: Install new dependencies. Update and upgrade dependencies.
+      command: brew bundle && brew update && brew upgrade
+
+    - description: Verify if fish config folder is symlinked
       command: test -L ~/.config/fish
 
-    - description: Verify cargo installation
+    - description: Check for cargo installation
       command: type rustup && type cargo
 
-    - description: Update cargo dependencies
-      command: ./scripts/rust_deps_update.sh
+    - description: Update cargo dependencies and install new ones
+      command: cargo install-update --all && ./scripts/rust_deps_update.sh
 
     - description: Upgrade yarn packages
       command: yarn global list && yarn global upgrade --latest

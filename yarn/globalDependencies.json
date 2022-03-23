@@ -10,7 +10,7 @@
 		"create-slidev": "^0.29.0",
 		"create-turbo": "^1.1.9",
 		"discord.js": "^13.6.0",
-		"firebase-tools": "^10.4.1",
+		"firebase-tools": "^10.4.2",
 		"glyphhanger": "^5.0.0",
 		"npkill": "^0.8.3",
 		"npm": "^8.5.5",
