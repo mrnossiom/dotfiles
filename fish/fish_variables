@@ -10,7 +10,6 @@ SETUVAR _fish_abbr_d:docker
 SETUVAR _fish_abbr_dcd:docker\x20compose\x20down
 SETUVAR _fish_abbr_dcu:docker\x20compose\x20up\x20\x2dd
 SETUVAR _fish_abbr_g:git
-SETUVAR _fish_abbr_gcm:git\x20cm\x20\x27\x27
 SETUVAR _fish_abbr_rm:rm\x20\x2di
 SETUVAR _fish_abbr_rmd:rm\x20\x2drd
 SETUVAR _fish_abbr_sl:sl\x20\x2dFal
