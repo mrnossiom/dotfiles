@@ -29,6 +29,7 @@
 	st = status -sb
 
 	cm = commit -m
+	ui = !gitui
 
 	rv = remote -v
 
