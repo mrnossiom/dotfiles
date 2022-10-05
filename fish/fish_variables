@@ -1,9 +1,13 @@
 # This file contains fish universal variable definitions.
 # VERSION: 3.0
+SETUVAR --export PKG_CONFIG_PATH_x86_64_unknown_linux_gnu:/usr/lib/x86_64-linux-gnu/pkgconfig/
+SETUVAR --export BUN_INSTALL:/home/milomoisson/\x2ebun
 SETUVAR --export LDFLAGS:\x2dL/home/linuxbrew/\x2elinuxbrew/opt/llvm/lib\x20\x2dWl\x2c\x2drpath\x2c/home/linuxbrew/\x2elinuxbrew/opt/llvm/lib
 SETUVAR --export --path LD_LIBRARY_PATH:/home/linuxbrew/\x2elinuxbrew/lib
 SETUVAR --export --path PATH:/home/linuxbrew/\x2elinuxbrew/bin\x1e/home/linuxbrew/\x2elinuxbrew/sbin\x1e/Users/MiloMoisson/\x2econfig/yarn/global/node_modules/\x2ebin/\x1e/usr/local/sbin\x1e/Users/Milo_Moisson/\x2eyarn/\x2ebin\x1e/usr/local/bin\x1e/usr/sbin\x1e/usr/bin\x1e/sbin\x1e/bin\x1e/usr/games\x1e/usr/local/games\x1e/mnt/c/windows/system32\x1e/mnt/c/windows\x1e/mnt/c/windows/System32/Wbem\x1e/mnt/c/windows/System32/WindowsPowerShell/v1\x2e0/\x1e/mnt/c/windows/System32/OpenSSH/\x1e/mnt/c/ProgramData/chocolatey/bin\x1e/mnt/c/Program\x20Files/Git/cmd\x1e/mnt/c/tools/BCURRAN3\x1e/mnt/c/Users/milom/AppData/Local/Microsoft/WindowsApps\x1e/mnt/c/Users/milom/AppData/Local/Programs/Microsoft\x20VS\x20Code/bin\x1e/home/milomoisson/\x2ecargo/bin/\x1e/home/milomoisson/\x2ecargo/bin/
+SETUVAR --export RUSTC_WRAPPER:/home/linuxbrew/\x2elinuxbrew/bin/sccache
 SETUVAR __fish_initialized:3400
+SETUVAR _fish_abbr_b:bun
 SETUVAR _fish_abbr_c:cargo
 SETUVAR _fish_abbr_clr:clear
 SETUVAR _fish_abbr_d:docker
@@ -39,10 +43,10 @@ SETUVAR fish_color_status:red
 SETUVAR fish_color_user:brgreen
 SETUVAR fish_color_valid_path:\x2d\x2dunderline
 SETUVAR fish_greeting:Welcome\x20to\x20fish\x2c\x20the\x20friendly\x20interactive\x20shell
-SETUVAR fish_key_bindings:fish_default_key_bindings
+SETUVAR fish_key_bindings:fish_vi_key_bindings
 SETUVAR fish_pager_color_completion:normal
 SETUVAR fish_pager_color_description:B3A06D\x1eyellow
 SETUVAR fish_pager_color_prefix:white\x1e\x2d\x2dbold\x1e\x2d\x2dunderline
 SETUVAR fish_pager_color_progress:brwhite\x1e\x2d\x2dbackground\x3dcyan
 SETUVAR fish_pager_color_selected_background:\x2dr
-SETUVAR --path fish_user_paths:/home/milomoisson/\x2econfig/yarn/global/node_modules/\x2ebin/\x1e/home/milomoisson/\x2ecargo/bin/\x1e/usr/local/bin\x1e/usr/local/sbin\x1e/home/milomoisson/\x2elocal/bin
+SETUVAR --path fish_user_paths:/home/milomoisson/\x2ebun/bin\x1e/home/milomoisson/\x2econfig/yarn/global/node_modules/\x2ebin/\x1e/home/milomoisson/\x2ecargo/bin/\x1e/home/milomoisson/\x2elocal/bin\x1e/usr/local/bin\x1e/usr/local/sbin\x1e/usr/local/opt/curl/bin

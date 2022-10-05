@@ -16,6 +16,7 @@
 [merge]
 	tool = diffmerge
 	guitool = diffmerge
+	conflictstyle = diff3
 [alias]
 	egconf = config --global --edit
 
@@ -49,6 +50,7 @@
 
 	df = diff
 	dfs = diff --staged
+	dfc = diff --cached
 
 	m = merge
 
@@ -62,6 +64,7 @@
 	shp = stash pop
 [core]
 	editor = code -w
+	pager = delta
 [help]
 	autocorrect = 20
 [pull]
@@ -82,3 +85,12 @@
 	helper = cache
 [leaveTool]
 	defaultFolder = ~/projects
+[interactive]
+	diffFilter = delta --color-only
+[add.interactive]
+	useBuiltin = false
+[delta]
+	navigate = true
+	light = false
+[diff]
+	colorMoved = default
