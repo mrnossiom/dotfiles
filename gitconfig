@@ -63,7 +63,7 @@
 	sha = stash apply
 	shp = stash pop
 [core]
-	editor = code -w
+	editor = hx
 	pager = delta
 [help]
 	autocorrect = 20
@@ -93,4 +93,9 @@
 	navigate = true
 	light = false
 [diff]
+	tool = difftastic
 	colorMoved = default
+[difftool]
+	prompt = false
+[difftool "difftastic"]
+	cmd = difft "$LOCAL" "$REMOTE"

@@ -10,6 +10,7 @@
 		"create-next-app": "^12.3.1",
 		"create-react-app": "^5.0.1",
 		"create-slidev": "^0.36.5",
+		"create-vite": "^3.1.0",
 		"firebase-tools": "^11.13.0",
 		"glyphhanger": "^5.0.0",
 		"npkill": "^0.8.3",

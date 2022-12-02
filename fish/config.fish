@@ -11,6 +11,7 @@ set fish_user_paths \
     $HOME/.config/yarn/global/node_modules/.bin/ \
     $HOME/.cargo/bin/ \
     $HOME/.local/bin \
+    $HOME/.vector/bin \
     /usr/local/bin \
     /usr/local/sbin \
     /usr/local/opt/curl/bin
@@ -37,3 +38,8 @@ else if test $platform = Linux
 end
 
 starship init fish | source
+
+# pnpm
+set -gx PNPM_HOME "/home/milomoisson/.local/share/pnpm"
+set -gx PATH "$PNPM_HOME" $PATH
+# pnpm end
