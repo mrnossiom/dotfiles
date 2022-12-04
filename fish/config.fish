@@ -16,6 +16,7 @@ set fish_user_paths \
     /usr/local/sbin \
     /usr/local/opt/curl/bin
 
+# See https://docs.conda.io/en/latest/miniconda.html#linux-installers for installation
 eval /home/milomoisson/miniconda3/bin/conda "shell.fish" hook $argv | source
 
 # For Mac

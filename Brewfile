@@ -67,7 +67,6 @@ brew "ncdu"
 brew "neovim"
 brew "pinentry-mac"
 brew "node"
-brew "node@12"
 brew "node@16"
 brew "pnpm", link: false
 brew "rust-analyzer"

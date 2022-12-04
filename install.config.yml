@@ -18,7 +18,8 @@
     ~/.config/starship.toml.save: starship.toml
     ~/.ssh/config: ssh_config
     ~/.profile: profile.sh
-    ~/.cargo/.crates.toml:
+    ~/.cargo/.crates.toml: cargo/crates.toml
+    ~/.cargo/config.toml: cargo/config.toml
     #   ~/fish: .config/fish (disable this as DotBot doesn't support directories)
     #   ^^^^ see the shell part for this verification
 

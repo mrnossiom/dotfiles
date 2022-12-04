@@ -12,7 +12,7 @@ fi
 
 CRATES_TO_UPDATE=$(
 	# Dynamically create a script with awk to check if the corresponding binary exists
-	awk -F= '/\((registry|git)\+/ {
+	awk -F= '/\(registry\+/ {
 		sub(/"/, "", $1);
 		sub(/ .*/, "", $1);
 		gsub(/[ "\[\]]/, "", $2);
@@ -26,7 +26,9 @@ CRATES_TO_UPDATE=$(
 
 # Install all the missing binaries if any
 if [ $(echo -n $CRATES_TO_UPDATE | wc -c) -ne 0 ]; then
-	cargo install-update --force $CRATES_TO_UPDATE
+	for crate in $CRATES_TO_UPDATE; do
+		cargo quickinstall $crate
+	done
 else
 	echo "No crates to update"
 fi
