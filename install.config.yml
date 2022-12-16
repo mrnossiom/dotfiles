@@ -20,6 +20,7 @@
     ~/.profile: profile.sh
     ~/.cargo/.crates.toml: cargo/crates.toml
     ~/.cargo/config.toml: cargo/config.toml
+    ~/.config/helix/config.toml: helix.toml
     #   ~/fish: .config/fish (disable this as DotBot doesn't support directories)
     #   ^^^^ see the shell part for this verification
 

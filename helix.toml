@@ -1,0 +1,9 @@
+theme = "onedark"
+
+[editor]
+line-number = "relative"
+mouse = false
+
+[editor.indent-guides]
+render = true
+character = "╎"
