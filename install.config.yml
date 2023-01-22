@@ -21,8 +21,10 @@
     ~/.cargo/.crates.toml: cargo/crates.toml
     ~/.cargo/config.toml: cargo/config.toml
     ~/.config/helix/config.toml: helix.toml
-    #   ~/fish: .config/fish (disable this as DotBot doesn't support directories)
-    #   ^^^^ see the shell part for this verification
+    ~/.config/dunst/dunstrc: dunstrc.ini
+    ~/.config/polybar/blocks: polybar/blocks/
+    ~/.config/polybar/config: polybar/config.ini
+    ~/.config/fish: fish/
 
     ~/.gitconfig:
     ~/.czrc: czrc.json
@@ -35,14 +37,8 @@
     - description: Install new dependencies. Update and upgrade dependencies.
       command: brew bundle && brew update && brew upgrade
 
-    - description: Verify if fish config folder is symlinked
-      command: test -L ~/.config/fish
-
     - description: Check for cargo installation
       command: type rustup && type cargo
 
     - description: Update cargo dependencies and install new ones
       command: cargo install-update --all && ./scripts/rust_deps_update.sh
-
-    - description: Upgrade yarn packages
-      command: yarn global list && yarn global upgrade --latest
