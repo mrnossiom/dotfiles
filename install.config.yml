@@ -9,12 +9,7 @@
 - clean: ['~']
 
 - link:
-    # Yarn stuff
-    ~/.yarnrc: yarn/yarnrc
-    ~/.config/yarn/global/package.json: yarn/globalDependencies.json
-    ~/.config/yarn/global/yarn.lock: yarn/globalDependencies.lock
-
-    # Terminal stuff
+    ~/.local/share/pnpm/global/5/package.json: pnpm.json
     ~/.config/starship.toml.save: starship.toml
     ~/.ssh/config: ssh_config
     ~/.profile: profile.sh
