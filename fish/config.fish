@@ -1,5 +1,3 @@
-# TODO: ingore the `fish_variables` file and add abbr in here
-
 set platform (uname)
 
 # Common to all platforms
@@ -61,11 +59,12 @@ abbr -a g git
 abbr -a j just
 
 abbr -a sl 'sl -Fal'
-abbr -a clr ' clear'
+
 abbr -a shutdown ' shutdown'
 abbr -a clr ' clear'
 abbr -a reboot ' reboot'
 abbr -a history ' history'
+abbr -a exit ' exit'
 
 abbr -a cp 'cp -iv'
 abbr -a ln 'ln -v'

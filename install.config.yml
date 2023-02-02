@@ -20,6 +20,7 @@
     ~/.config/polybar/blocks: polybar/blocks/
     ~/.config/polybar/config: polybar/config.ini
     ~/.config/fish: fish/
+    ~/.config/topgrade.toml: topgrade.toml
 
     ~/.gitconfig:
     ~/.czrc: czrc.json

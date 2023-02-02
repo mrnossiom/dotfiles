@@ -3,3 +3,6 @@ Brewfile.lock.json
 
 # Misc
 .vscode/
+
+fish/fish_variables
+fish/functions/br.fish
