@@ -7,3 +7,15 @@ mouse = false
 [editor.indent-guides]
 render = true
 character = "╎"
+
+[keys.insert]
+up = "no_op"
+down = "no_op"
+left = "no_op"
+right = "no_op"
+
+[keys.normal]
+up = "no_op"
+down = "no_op"
+left = "no_op"
+right = "no_op"

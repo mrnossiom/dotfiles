@@ -3,14 +3,14 @@ set platform (uname)
 # Common to all platforms
 set -gx GPG_TTY (tty)
 
-set fish_user_paths \
+fish_add_path \
+    $HOME/go/bin \
     $HOME/.bun/bin \
-    $HOME/.cargo/bin/ \
+    $HOME/.cargo/bin \
     $HOME/.local/bin \
     $HOME/.vector/bin \
     /usr/local/bin \
-    /usr/local/sbin \
-    /usr/local/opt/curl/bin
+    /usr/local/sbin
 
 # pnpm
 set -gx PNPM_HOME "/home/milomoisson/.local/share/pnpm"
@@ -26,7 +26,7 @@ else if test $platform = Linux
     # Brew env setup
     test -d ~/.linuxbrew && eval (~/.linuxbrew/bin/brew shellenv)
     test -d /home/linuxbrew/.linuxbrew && eval (/home/linuxbrew/.linuxbrew/bin/brew shellenv)
-    
+
     # See https://docs.conda.io/en/latest/miniconda.html#linux-installers for installation
     eval /home/milomoisson/miniconda3/bin/conda "shell.fish" hook $argv | source
 
@@ -40,7 +40,7 @@ else if test $platform = Linux
 end
 
 # Use exa instead of ls
-set -U __fish_ls_command   'exa'
+set -U __fish_ls_command exa
 set -U __fish_ls_color_opt '--color=auto'
 
 # Abbreviations
@@ -71,11 +71,13 @@ abbr -a ln 'ln -v'
 abbr -a mv 'mv -iv'
 abbr -a mkdir 'mkdir -v'
 
-abbr -a ls   'ls -F'
-abbr -a la   'ls -Fa'
-abbr -a ld   'ls -FD'
-abbr -a ll   'ls -GlhF'
-abbr -a lll  'ls -lhF'
+abbr -a ls 'ls -F'
+abbr -a la 'ls -Fa'
+abbr -a ld 'ls -FD'
+abbr -a ll 'ls -GlhF'
+abbr -a lla 'ls -GlhFa'
+abbr -a lll 'ls -lhF'
+abbr -a llla 'ls -lhFa'
 abbr -a tree 'ls -T'
 
 abbr -a grep rg

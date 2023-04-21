@@ -1,6 +1,6 @@
 [v1]
-"cargo-aoc 0.3.3 (registry+https://github.com/rust-lang/crates.io-index)" = ["cargo-aoc"]
-"cargo-binstall 0.19.3 (registry+https://github.com/rust-lang/crates.io-index)" = ["cargo-binstall"]
+"cargo-aoc 0.3.4 (registry+https://github.com/rust-lang/crates.io-index)" = ["cargo-aoc"]
+"cargo-binstall 0.22.0 (registry+https://github.com/rust-lang/crates.io-index)" = ["cargo-binstall"]
 "cargo-binutils 0.3.6 (registry+https://github.com/rust-lang/crates.io-index)" = [
     "cargo-cov",
     "cargo-nm",
@@ -22,55 +22,59 @@
     "rust-size",
     "rust-strip",
 ]
+"cargo-bloat 0.11.1 (registry+https://github.com/rust-lang/crates.io-index)" = ["cargo-bloat"]
 "cargo-bundle 0.6.0 (registry+https://github.com/rust-lang/crates.io-index)" = ["cargo-bundle"]
+"cargo-cache 0.8.3 (registry+https://github.com/rust-lang/crates.io-index)" = ["cargo-cache"]
 "cargo-deps-list 1.0.1 (registry+https://github.com/rust-lang/crates.io-index)" = ["cargo-deps-list"]
-"cargo-edit 0.11.8 (registry+https://github.com/rust-lang/crates.io-index)" = [
+"cargo-edit 0.11.9 (registry+https://github.com/rust-lang/crates.io-index)" = [
     "cargo-add",
     "cargo-rm",
     "cargo-set-version",
     "cargo-upgrade",
 ]
-"cargo-expand 1.0.40 (registry+https://github.com/rust-lang/crates.io-index)" = ["cargo-expand"]
-"cargo-generate 0.17.6 (registry+https://github.com/rust-lang/crates.io-index)" = ["cargo-generate"]
-"cargo-nextest 0.9.49 (registry+https://github.com/rust-lang/crates.io-index)" = ["cargo-nextest"]
-"cargo-release 0.24.4 (registry+https://github.com/rust-lang/crates.io-index)" = ["cargo-release"]
-"cargo-semver-checks 0.17.1 (registry+https://github.com/rust-lang/crates.io-index)" = ["cargo-semver-checks"]
-"cargo-show-asm 0.2.12 (registry+https://github.com/rust-lang/crates.io-index)" = ["cargo-asm"]
+"cargo-expand 1.0.47 (registry+https://github.com/rust-lang/crates.io-index)" = ["cargo-expand"]
+"cargo-generate 0.18.2 (registry+https://github.com/rust-lang/crates.io-index)" = ["cargo-generate"]
+"cargo-i18n 0.2.10 (registry+https://github.com/rust-lang/crates.io-index)" = ["cargo-i18n"]
+"cargo-llvm-cov 0.5.16 (registry+https://github.com/rust-lang/crates.io-index)" = ["cargo-llvm-cov"]
+"cargo-nextest 0.9.51 (registry+https://github.com/rust-lang/crates.io-index)" = ["cargo-nextest"]
+"cargo-public-api 0.28.0 (registry+https://github.com/rust-lang/crates.io-index)" = ["cargo-public-api"]
+"cargo-release 0.24.10 (registry+https://github.com/rust-lang/crates.io-index)" = ["cargo-release"]
+"cargo-semver-checks 0.19.0 (registry+https://github.com/rust-lang/crates.io-index)" = ["cargo-semver-checks"]
+"cargo-show-asm 0.2.17 (registry+https://github.com/rust-lang/crates.io-index)" = ["cargo-asm"]
 "cargo-udeps 0.1.35 (registry+https://github.com/rust-lang/crates.io-index)" = ["cargo-udeps"]
-"cargo-update 11.0.0 (registry+https://github.com/rust-lang/crates.io-index)" = [
+"cargo-update 13.0.1 (registry+https://github.com/rust-lang/crates.io-index)" = [
     "cargo-install-update",
     "cargo-install-update-config",
 ]
-"cargo-update 11.1.0 (registry+https://github.com/rust-lang/crates.io-index)" = [
-    "cargo-install-update",
-    "cargo-install-update-config",
-]
-"cargo-update 11.1.1 (registry+https://github.com/rust-lang/crates.io-index)" = [
-    "cargo-install-update",
-    "cargo-install-update-config",
-]
-"cargo-workspaces 0.2.35 (registry+https://github.com/rust-lang/crates.io-index)" = [
+"cargo-workspaces 0.2.37 (registry+https://github.com/rust-lang/crates.io-index)" = [
     "cargo-workspaces",
     "cargo-ws",
 ]
-"codevis 0.5.1 (registry+https://github.com/rust-lang/crates.io-index)" = ["codevis"]
+"codemov 0.1.0 (git+https://github.com/sloganking/codemov.git#d51e83246eafef32c3a3f54407fe49eb9801f5ea)" = ["codemov"]
+"codevis 0.8.1 (registry+https://github.com/rust-lang/crates.io-index)" = ["codevis"]
 "diesel_cli 2.0.1 (registry+https://github.com/rust-lang/crates.io-index)" = ["diesel"]
-"fj-app 0.34.0 (registry+https://github.com/rust-lang/crates.io-index)" = ["fj-app"]
+"fj-app 0.43.0 (registry+https://github.com/rust-lang/crates.io-index)" = ["fj-app"]
+"git-ai-commit 0.1.0 (path+file:///home/milomoisson/projects/git-ai-commit)" = ["git-ai-commit"]
 "git-cliff 1.1.2 (registry+https://github.com/rust-lang/crates.io-index)" = [
     "git-cliff",
     "git-cliff-completions",
     "git-cliff-mangen",
 ]
-"git-leave 1.5.7 (registry+https://github.com/rust-lang/crates.io-index)" = ["git-leave"]
+"git-leave 1.6.0 (registry+https://github.com/rust-lang/crates.io-index)" = ["git-leave"]
 "gping 1.8.0 (registry+https://github.com/rust-lang/crates.io-index)" = ["gping"]
 "grc 1.3.1 (registry+https://github.com/rust-lang/crates.io-index)" = ["grc"]
-"probe-rs-debugger 0.16.0 (git+https://github.com/probe-rs/probe-rs?branch=master#ab03d7445b551354dbe6d913882759e4c07a87f2)" = ["probe-rs-debugger"]
-"probe-run 0.3.6 (registry+https://github.com/rust-lang/crates.io-index)" = ["probe-run"]
+"kmon 1.6.3 (registry+https://github.com/rust-lang/crates.io-index)" = ["kmon"]
+"probe-rs-debugger 0.18.0 (git+https://github.com/probe-rs/probe-rs?branch=master#a68274cbc915aec7a171c79df2885061476534d3)" = ["probe-rs-debugger"]
+"probe-run 0.3.8 (registry+https://github.com/rust-lang/crates.io-index)" = ["probe-run"]
+"runst 0.1.3 (registry+https://github.com/rust-lang/crates.io-index)" = ["runst"]
 "rustfilt 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)" = ["rustfilt"]
+"sfz 0.7.1 (registry+https://github.com/rust-lang/crates.io-index)" = ["sfz"]
+"spacedisplay 0.3.0 (registry+https://github.com/rust-lang/crates.io-index)" = ["spacedisplay"]
 "swp 1.0.3 (registry+https://github.com/rust-lang/crates.io-index)" = ["swp"]
 "tealdeer 1.6.1 (registry+https://github.com/rust-lang/crates.io-index)" = ["tldr"]
 "termimage 1.2.0 (registry+https://github.com/rust-lang/crates.io-index)" = ["termimage"]
+"thokr 0.4.1 (registry+https://github.com/rust-lang/crates.io-index)" = ["thokr"]
 "tokei 12.1.2 (registry+https://github.com/rust-lang/crates.io-index)" = ["tokei"]
 "tokio-console 0.1.7 (registry+https://github.com/rust-lang/crates.io-index)" = ["tokio-console"]
-"topgrade 10.2.4 (registry+https://github.com/rust-lang/crates.io-index)" = ["topgrade"]
-"wasm-pack 0.10.3 (registry+https://github.com/rust-lang/crates.io-index)" = ["wasm-pack"]
+"topgrade 10.3.3 (registry+https://github.com/rust-lang/crates.io-index)" = ["topgrade"]
+"wasm-pack 0.11.0 (registry+https://github.com/rust-lang/crates.io-index)" = ["wasm-pack"]

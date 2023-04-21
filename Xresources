@@ -1,0 +1,9 @@
+regolith.look.path: /usr/share/regolith-look/ayu-mirage
+i3-wm.bar.mode: hide
+
+! Does not integrate well
+!i3-wm.program.lock: /usr/bin/i3lock
+
+! `Meta + Shift + S` is the screenshot shortcut for Windows
+i3-wm.program.sleep: flameshot gui
+!i3-wm.program.sleep: notify-send "Tu est sur Linux mon reuf!"

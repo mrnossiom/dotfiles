@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 #* Check if brew is installed
 
 if command -v brew &>/dev/null; then

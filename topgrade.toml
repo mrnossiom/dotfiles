@@ -1,3 +1,5 @@
+skip_notify = true
+
 # Don't ask for confirmations
 assume_yes = true
 
@@ -5,7 +7,7 @@ assume_yes = true
 disable = ["gnome_shell_extensions", "rustup"]
 
 # Ignore failures for these steps
-#ignore_failures = ["powershell"]
+# ignore_failures = ["powershell"]
 
 # Do not ask to retry failed steps (default: false)
 no_retry = true
@@ -21,11 +23,8 @@ display_time = true
 cleanup = true
 
 [git]
-#max_concurrency = 5
-# Additional git repositories to pull
-repos = [
-    "~/projects/*/"
-]
+# max_concurrency = 5
+repos = ["~/Documents/Developement/*/", "~/Documents/TestZone/*/"]
 
 # Commands to run before anything
 [pre_commands]
@@ -33,4 +32,4 @@ repos = [
 
 [firmware]
 # Offer to update firmware; if false just check for and display available updates
-#upgrade = true
+# upgrade = true

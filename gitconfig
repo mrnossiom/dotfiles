@@ -84,7 +84,7 @@
 [credential]
 	helper = cache
 [leaveTool]
-	defaultFolder = ~/projects
+	defaultFolder = ~/Documents
 [interactive]
 	diffFilter = delta --color-only
 [add.interactive]

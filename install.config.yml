@@ -27,6 +27,9 @@
     ~/.prettierrc.json:
 
 - shell:
+    - description: Check for logid symlink
+      command: diff logid.cfg /etc/logid.cfg
+  
     - description: Check for brew installation
       command: ./scripts/check_brew.sh
 

@@ -22,3 +22,4 @@
 ## Useful commands
 
 -   `brew bundle dump`: Update Homebrew bundle (add the `--force` flag to overwrite)
+-   `set LD_LIBRARY_PATH ''`: Disables brew packages preloading and do shit...

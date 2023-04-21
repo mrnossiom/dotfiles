@@ -1,30 +1,23 @@
+[doc]
+browser = "firefox"
+
 [build]
 rustc-wrapper = "sccache"
-# rustflags = ["-Ctarget-cpu=native"]
+rustflags = ["-Ctarget-cpu=native"]
 
 [target.x86_64-unknown-linux-gnu]
 linker = "clang"
-rustflags = [
-	"-Clink-arg=-fuse-ld=lld",
-  "-Ctarget-cpu=native",
-]
+rustflags = ["-Clink-arg=-fuse-ld=lld", "-Ctarget-cpu=native"]
 
-# NOTE: you must manually install https://github.com/michaeleisel/zld on mac.
-# You can easily do this with Brew: `brew install michaeleisel/zld/zld`
 [target.x86_64-apple-darwin]
-rustflags = [
-	"-Clink-arg=-fuse-ld=/usr/local/bin/zld",
-	"-Ctarget-cpu=native",
-]
+rustflags = ["-Clink-arg=-fuse-ld=lld", "-Ctarget-cpu=native"]
 
 [target.aarch64-apple-darwin]
-rustflags = [
-	"-Clink-arg=-fuse-ld=/opt/homebrew/bin/zld",
-	"-Ctarget-cpu=native",
-]
+rustflags = ["-Clink-arg=-fuse-ld=lld", "-Ctarget-cpu=native"]
 
 [target.x86_64-pc-windows-msvc]
 linker = "rust-lld.exe"
-rustflags = [
-	"-Ctarget-cpu=native",
-]
+rustflags = ["-Ctarget-cpu=native"]
+
+[registries.crates-io]
+protocol = "sparse"
