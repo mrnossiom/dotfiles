@@ -1,0 +1,70 @@
+#!/bin/env bash
+# for storing possible user defined arguments for playerctl
+PLAYER_ARGS=$(xrescat i3xrocks.media-player.player-args)
+
+# get player status (Playing / Paused / Stopped / ...)
+STATUS=$(playerctl $PLAYER_ARGS status 2> /dev/null)
+
+# use given values or fall back to parameters from xresources
+FIELD_WIDTH=${icon:-$(xrescat i3xrocks.value.mediaplayerwidth 30)}
+PLAYING_ICON=${icon:-$(xrescat i3xrocks.label.mediaplaying "")}
+PAUSED_ICON=${icon:-$(xrescat i3xrocks.label.mediapaused "")}
+LABEL_COLOR=${label_color:-$(xrescat i3xrocks.label.color "#7B8394")}
+VALUE_COLOR=${color:-$(xrescat i3xrocks.value.color "#D8DEE9")}
+VALUE_FONT=${font:-$(xrescat i3xrocks.value.font "JetBrains Mono Medium 13")}
+
+# assign the appropriate icon
+#
+# paused/stopped uses the same icon for simplicity
+# exit with an empty blocklet if nothing is playing
+case $STATUS in
+    'Playing') ICON=${PLAYING_ICON} ;;
+    'Paused') ICON=${PAUSED_ICON} ;;
+    'Stopped') ICON=${PAUSED_ICON} ;;
+    *) echo "" ; echo "" ; exit 0 ;;
+esac
+
+# get title information
+TITLE="$(playerctl $PLAYER_ARGS metadata title)"
+
+# trim song title length
+if [[ ${#TITLE} -gt ${HALF_FIELD_WIDTH} ]]; then
+    TITLE="${TITLE:0:$(FIELD_WIDTH)}"
+fi
+
+# print resulting information (fulltext)
+TEXT="${TITLE}"
+
+# sanitize text for Pango parsing
+TEXT=${TEXT//&/&amp;}
+TEXT=${TEXT//>/&gt;}
+TEXT=${TEXT//</&lt;}
+
+echo "<span font_desc=\"${VALUE_FONT}\" color=\"${LABEL_COLOR}\">${ICON}</span>\
+<span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\">${TEXT}</span>"
+
+# for shorttext, only print the appropriate glyph
+echo "$ICON"
+
+# rudimentary controls via mouse clicks
+#
+# left click: send previous title signal
+# middle click: send play/pause signal
+# right click: send next title signal
+# scroll up: send 5% volume increment signal
+# scroll down: send 5% volume decrement signal
+ACTION_1=$(xrescat i3xrocks.action.media-player.left "playerctl $PLAYER_ARGS previous")
+ACTION_2=$(xrescat i3xrocks.action.media-player.middle "playerctl $PLAYER_ARGS play-pause")
+ACTION_3=$(xrescat i3xrocks.action.media-player.right "playerctl $PLAYER_ARGS next")
+ACTION_4=$(xrescat i3xrocks.action.media-player.scroll_up "playerctl $PLAYER_ARGS volume 0.05+")
+ACTION_5=$(xrescat i3xrocks.action.media-player.scroll_down "playerctl $PLAYER_ARGS volume 0.05-")
+
+case $BLOCK_BUTTON in
+    1) eval $ACTION_1 ;;
+    2) eval $ACTION_2 ;;
+    3) eval $ACTION_3 ;;
+    4) eval $ACTION_4 ;;
+    5) eval $ACTION_5 ;;
+esac
+
+exit 0

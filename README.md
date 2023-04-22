@@ -19,7 +19,13 @@
 └ starship.toml starship prompt configuration
 ```
 
-## Useful commands
+## Notes
 
--   `brew bundle dump`: Update Homebrew bundle (add the `--force` flag to overwrite)
+### Cli
+
+-   `timedatectl set-local-rtc 1`: (Dual boot) change time mode for Linux
 -   `set LD_LIBRARY_PATH ''`: Disables brew packages preloading and do shit...
+
+### Firefox
+
+-   `layout.css.system-ui.enabled` to `false`: I prefer to use the website preferred font

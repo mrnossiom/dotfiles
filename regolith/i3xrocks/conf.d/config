@@ -1,0 +1,25 @@
+command=$HOME/.config/regolith2/i3xrocks/scripts/$BLOCK_NAME.sh
+separator_block_width=35
+markup=pango
+color=xresource:i3xrocks.value.color
+label_color=xresource:i3xrocks.label.color
+
+# Media Player
+#
+# Displays media controls
+[media-player]
+interval=5
+
+# Battery indicator
+#
+# Displays total percentage charge left of specified battery.
+# You can specify the instance by adding:
+# instance=BAT0
+[battery]
+interval=10
+
+[time]
+command=date '+%H:%M %d/%m'
+interval=5
+
+[separator]
