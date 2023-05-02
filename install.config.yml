@@ -9,35 +9,35 @@
 - clean: ['~']
 
 - link:
-    ~/.local/share/pnpm/global/5/package.json: pnpm.json
+    ~/.config/fish: fish/
+    ~/.config/regolith2: regolith/
+    ~/.config/dunst/dunstrc: dunstrc.ini
     ~/.config/starship.toml.save: starship.toml
-    ~/.ssh/config: ssh_config
-    ~/.profile: profile.sh
+    ~/.config/topgrade.toml: topgrade.toml
+    ~/.config/helix/config.toml: helix.toml
+    ~/.config/nix/nix.conf: nix.conf
+
     ~/.cargo/.crates.toml: cargo/crates.toml
     ~/.cargo/config.toml: cargo/config.toml
-    ~/.config/helix/config.toml: helix.toml
-    ~/.config/dunst/dunstrc: dunstrc.ini
-    ~/.config/polybar/blocks: polybar/blocks/
-    ~/.config/polybar/config: polybar/config.ini
-    ~/.config/fish: fish/
-    ~/.config/topgrade.toml: topgrade.toml
 
+    ~/.profile: profile.sh
     ~/.gitconfig:
-    ~/.czrc: czrc.json
+    ~/.ssh/config: ssh_config
+    ~/.local/share/pnpm/global/5/package.json: pnpm.json
     ~/.prettierrc.json:
 
 - shell:
-    - description: Check for logid symlink
-      command: diff logid.cfg /etc/logid.cfg
-  
     - description: Check for brew installation
       command: ./scripts/check_brew.sh
 
-    - description: Install new dependencies. Update and upgrade dependencies.
-      command: brew bundle && brew update && brew upgrade
+    - description: Install new dependencies
+      command: brew bundle
 
     - description: Check for cargo installation
       command: type rustup && type cargo
+
+    - description: Check for logid symlink
+      command: diff logid.cfg /etc/logid.cfg
 
     - description: Update cargo dependencies and install new ones
       command: cargo install-update --all && ./scripts/rust_deps_update.sh

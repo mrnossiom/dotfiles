@@ -24,7 +24,7 @@ cleanup = true
 
 [git]
 # max_concurrency = 5
-repos = ["~/Documents/Developement/*/", "~/Documents/TestZone/*/"]
+repos = ["~/Documents/Developement/*/*"]
 
 # Commands to run before anything
 [pre_commands]

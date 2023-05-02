@@ -1,6 +1,8 @@
 {
 	"dependencies": {
-		"prettier": "^2.8.7",
+		"@githubnext/github-copilot-cli": "^0.1.33",
+		"pake-cli": "2.0.0-alpha6",
+		"prettier": "^2.8.8",
 		"svgo": "^3.0.2"
 	}
 }

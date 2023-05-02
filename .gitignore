@@ -1,8 +1,12 @@
-# Lock files
-Brewfile.lock.json
-
 # Misc
 .vscode/
 
+# Lock files
+Brewfile.lock.json
+
+# Fish
 fish/fish_variables
 fish/functions/br.fish
+
+# Regolith
+regolith/flags/

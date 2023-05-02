@@ -19,3 +19,7 @@ dump-brew:
 # Dump the current installed APT packages to `apt-packages.txt`
 dump-apt:
 	apt-mark showmanual > apt-packages.txt
+
+# Copy logid.cfg to /etc/logid.cfg
+install-logid:
+	sudo cp logid.cfg /etc/logid.cfg

@@ -1,5 +1,5 @@
 function repeat -a command
-    set -l command (string join ' ' $argv)
+    set -l command (string join ' ' -- $argv)
 
     while true
         # Prompt for package name
