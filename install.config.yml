@@ -6,7 +6,7 @@
       stdout: true
       stderr: true
 
-- clean: ['~']
+- clean: ['~', '~/.config']
 
 - link:
     ~/.config/fish: fish/
@@ -27,17 +27,14 @@
     ~/.prettierrc.json:
 
 - shell:
-    - description: Check for brew installation
-      command: ./scripts/check_brew.sh
+    - description: Install new dependencies if brew is installed
+      command: type brew && brew bundle; true
+      # Install with `bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"`
 
-    - description: Install new dependencies
-      command: brew bundle
-
-    - description: Check for cargo installation
-      command: type rustup && type cargo
+    - description: Check for rustup installation
+      command: type rustup
+      # Install with `curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh`
 
     - description: Check for logid symlink
       command: diff logid.cfg /etc/logid.cfg
-
-    - description: Update cargo dependencies and install new ones
-      command: cargo install-update --all && ./scripts/rust_deps_update.sh
+      # Install `logid` package
