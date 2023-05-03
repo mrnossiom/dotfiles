@@ -14,7 +14,7 @@ reload-dunst:
 
 # Dump the current installed Brew packages to `Brewfile`
 dump-brew:
-	brew bundle dump --force
+	brew bundle dump --file others/Brewfile --force
 
 # Dump the current installed APT packages to `apt-packages.txt`
 dump-apt:
@@ -22,4 +22,4 @@ dump-apt:
 
 # Copy logid.cfg to /etc/logid.cfg
 install-logid:
-	sudo cp logid.cfg /etc/logid.cfg
+	sudo cp others/logid.cfg /etc/logid.cfg

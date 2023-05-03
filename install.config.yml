@@ -11,24 +11,24 @@
 - link:
     ~/.config/fish: fish/
     ~/.config/regolith2: regolith/
-    ~/.config/dunst/dunstrc: dunstrc.ini
-    ~/.config/starship.toml.save: starship.toml
-    ~/.config/topgrade.toml: topgrade.toml
-    ~/.config/helix/config.toml: helix.toml
-    ~/.config/nix/nix.conf: nix.conf
+    ~/.config/dunst/dunstrc: others/dunstrc.ini
+    ~/.config/starship.toml.save: others/starship.toml
+    ~/.config/topgrade.toml: others/topgrade.toml
+    ~/.config/helix/config.toml: others/helix.toml
+    ~/.config/nix/nix.conf: others/nix.conf
 
     ~/.cargo/.crates.toml: cargo/crates.toml
     ~/.cargo/config.toml: cargo/config.toml
 
-    ~/.profile: profile.sh
-    ~/.gitconfig:
-    ~/.ssh/config: ssh_config
-    ~/.local/share/pnpm/global/5/package.json: pnpm.json
-    ~/.prettierrc.json:
+    ~/.profile: others/profile.sh
+    ~/.gitconfig: others/gitconfig
+    ~/.ssh/config: others/ssh_config
+    ~/.local/share/pnpm/global/5/package.json: others/pnpm.json
+    ~/.prettierrc.json: others/prettierrc.json
 
 - shell:
     - description: Install new dependencies if brew is installed
-      command: type brew && brew bundle; true
+      command: type brew && brew bundle --file others/Brewfile; true
       # Install with `bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"`
 
     - description: Check for rustup installation
@@ -36,5 +36,5 @@
       # Install with `curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh`
 
     - description: Check for logid symlink
-      command: diff logid.cfg /etc/logid.cfg
+      command: diff others/logid.cfg /etc/logid.cfg
       # Install `logid` package
