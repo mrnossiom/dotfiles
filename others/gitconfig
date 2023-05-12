@@ -11,6 +11,8 @@
 	program = gpg
 [commit]
 	gpgsign = true
+[push]
+	autoSetupRemote = true
 [tag]
 	gpgsign = true
 [merge]
