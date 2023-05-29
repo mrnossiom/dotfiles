@@ -23,3 +23,7 @@ dump-apt:
 # Copy logid.cfg to /etc/logid.cfg
 install-logid:
 	sudo cp others/logid.cfg /etc/logid.cfg
+
+# Uses the `RESTIC_REPOSITORY` environment variable to backup the home directory
+backup-home:
+	restic backup ~ --exclude-caches

@@ -20,6 +20,9 @@
     ~/.cargo/.crates.toml: cargo/crates.toml
     ~/.cargo/config.toml: cargo/config.toml
 
+    # Add a `CACHEDIR.TAG` to the linux `.cache` directory to avoid backing up the directory
+    ~/.cache/CACHEDIR.TAG: others/.CACHEDIR.TAG
+
     ~/.profile: others/profile.sh
     ~/.gitconfig: others/gitconfig
     ~/.ssh/config: others/ssh_config
