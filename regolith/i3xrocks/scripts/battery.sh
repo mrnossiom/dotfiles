@@ -31,21 +31,21 @@ CHARGE_STATE=$(get_battery_status)
 
 if [ -z "$BATT_PERCENT" ]; then
     exit 0
-elif [ "$BATT_PERCENT" -ge 0 ] && [ "$BATT_PERCENT" -le 20 ]; then
+elif [ "$BATT_PERCENT" -le 10 ]; then
     LABEL_ICON=$(xrescat i3xrocks.label.battery0 E)
     VALUE_COLOR=$(xrescat i3xrocks.critical.color red)
-elif [ "$BATT_PERCENT" -ge 20 ] && [ "$BATT_PERCENT" -le 50 ]; then
+elif [ "$BATT_PERCENT" -le 20 ]; then
     LABEL_ICON=$(xrescat i3xrocks.label.battery20 L)
     VALUE_COLOR=$(xrescat i3xrocks.error.color orange)
-elif [ "$BATT_PERCENT" -ge 50 ] && [ "$BATT_PERCENT" -le 80 ]; then
+elif [ "$BATT_PERCENT" -le 80 ]; then
     LABEL_ICON=$(xrescat i3xrocks.label.battery50 M)
     VALUE_COLOR=$(xrescat i3xrocks.label.color white)
-elif [ "$BATT_PERCENT" -ge 80 ] && [ "$BATT_PERCENT" -le 98 ]; then
+elif [ "$BATT_PERCENT" -le 98 ]; then
     LABEL_ICON=$(xrescat i3xrocks.label.battery80 F)
     VALUE_COLOR=$(xrescat i3xrocks.label.color white)
 else
     LABEL_ICON=$(xrescat i3xrocks.label.battery100 C)
-    VALUE_COLOR=$(xrescat i3xrocks.label.color white)
+    VALUE_COLOR=$(xrescat does-not-exist green)
 fi
 
 if [ -z "$CHARGE_STATE" ]; then

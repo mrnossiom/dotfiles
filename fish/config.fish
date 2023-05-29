@@ -1,7 +1,4 @@
-set platform (uname)
-
-# Common to all platforms
-set -gx GPG_TTY (tty)
+set -l platform (uname)
 
 fish_add_path \
     $HOME/go/bin \
@@ -11,11 +8,6 @@ fish_add_path \
     $HOME/.vector/bin \
     /usr/local/bin \
     /usr/local/sbin
-
-# pnpm
-set -gx PNPM_HOME "/home/milomoisson/.local/share/pnpm"
-set -gx PATH "$PNPM_HOME" $PATH
-# pnpm end
 
 # For Mac
 if test $platform = Darwin
@@ -43,45 +35,8 @@ end
 set -U __fish_ls_command exa
 set -U __fish_ls_color_opt '--color=auto'
 
-# Abbreviations
-abbr -a !! --position anywhere --function last_history_item
-
-abbr -a d docker
-abbr -a dcu 'docker compose up -d'
-abbr -a dcd 'docker compose down'
-
-abbr -a rm 'rm -i'
-abbr -a rmd 'rm -rd'
-
-abbr -a c cargo
-abbr -a b bun
-abbr -a g git
-abbr -a j just
-
-abbr -a sl 'sl -Fal'
-
-abbr -a shutdown ' shutdown'
-abbr -a clr ' clear'
-abbr -a reboot ' reboot'
-abbr -a history ' history'
-abbr -a exit ' exit'
-
-abbr -a cp 'cp -iv'
-abbr -a ln 'ln -v'
-abbr -a mv 'mv -iv'
-abbr -a mkdir 'mkdir -v'
-
-abbr -a ls 'ls -F'
-abbr -a la 'ls -Fa'
-abbr -a ld 'ls -FD'
-abbr -a ll 'ls -GlhF'
-abbr -a lla 'ls -GlhFa'
-abbr -a lll 'ls -lhF'
-abbr -a llla 'ls -lhFa'
-abbr -a tree 'ls -T'
-
-abbr -a grep rg
-abbr -a cat bat
-abbr -a diff delta
+source ~/.config/fish/fragments/abbreviations.fish
+source ~/.config/fish/fragments/variables.fish
+source ~/.config/fish/fragments/private_env.fish
 
 starship init fish | source
