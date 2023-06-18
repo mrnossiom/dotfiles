@@ -67,6 +67,7 @@
 [core]
 	editor = hx
 	pager = delta
+	hooksPath = /home/milomoisson/.git/hooks
 [help]
 	autocorrect = 20
 [pull]

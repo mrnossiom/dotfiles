@@ -6,8 +6,8 @@ Brewfile.lock.json
 
 # Fish
 fish/fish_variables
-fish/functions/br.fish
 fish/fragments/private_env.fish
+fish/completions/local/
 
 # Regolith
 regolith/flags/
