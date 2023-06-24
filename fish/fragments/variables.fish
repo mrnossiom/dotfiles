@@ -7,3 +7,5 @@ set -gx RESTIC_REPOSITORY /media/$USER/ArchaicBak/Backup
 
 # allow git to use gpg
 set -gx GPG_TTY (tty)
+
+set -gx PROJECTS $HOME/Documents/Developement
