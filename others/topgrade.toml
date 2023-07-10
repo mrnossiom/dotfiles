@@ -1,12 +1,12 @@
+[misc]
 skip_notify = true
 
 # Don't ask for confirmations
 assume_yes = true
 
-# Disable specific steps - same options as the command line flag
+# Disable specific steps
 disable = ["gnome_shell_extensions", "rustup"]
 
-# Ignore failures for these steps
 # ignore_failures = ["powershell"]
 
 # Do not ask to retry failed steps (default: false)
@@ -15,20 +15,14 @@ no_retry = true
 # Run `sudo -v` to cache credentials at the start of the run; this avoids a
 # blocking password prompt in the middle of a possibly-unattended run.
 pre_sudo = true
-
-# Display the time in step titles
 display_time = true
-
-# Cleanup temporary or old files
 cleanup = true
 
 [git]
-# max_concurrency = 5
-repos = ["~/Documents/Developement/*/*"]
+repos = ["~/Documents/Developement/*/*", "~/.config/dotfiles"]
 
-# Commands to run before anything
 [pre_commands]
-#"Emacs Snapshot" = "rm -rf ~/.emacs.d/elpa.bak && cp -rl ~/.emacs.d/elpa ~/.emacs.d/elpa.bak"
+# "Emacs Snapshot" = "rm -rf ~/.emacs.d/elpa.bak && cp -rl ~/.emacs.d/elpa ~/.emacs.d/elpa.bak"
 
 [firmware]
 # Offer to update firmware; if false just check for and display available updates
