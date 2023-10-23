@@ -14,6 +14,9 @@ set -gx GPG_TTY (tty)
 
 set -gx PROJECTS $HOME/Documents/Developement
 
+set -gx EDITOR (which hx)
+set -gx BROWSER (which firefox)
+
 # Add tools to path
 fish_add_path \
     $HOME/go/bin \

@@ -4,9 +4,14 @@ browser = "firefox"
 [build]
 rustc-wrapper = "sccache"
 
+[source]
+local-mirror = { registry = "sparse+http://local.crates.io:8080/index/" }
+# crates-io = { replace-with = "local-mirror" }
+
 [target.x86_64-unknown-linux-gnu]
 linker = "clang"
-rustflags = ["-Clink-arg=-fuse-ld=lld", "-Ctarget-cpu=native"]
+rustflags = ["-Clink-arg=--ld-path=/usr/bin/mold", "-Ctarget-cpu=native"]
+# rustflags = ["-Clink-arg=-fuse-ld=lld", "-Ctarget-cpu=native"]
 
 [target.x86_64-apple-darwin]
 rustflags = ["-Clink-arg=-fuse-ld=lld", "-Ctarget-cpu=native"]

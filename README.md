@@ -12,3 +12,7 @@
 ### Firefox
 
 -   `layout.css.system-ui.enabled` to `false`: I prefer to use the website preferred font
+
+### XInput
+
+-   `xinput enable/disable 13`: for touch-screen

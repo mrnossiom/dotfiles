@@ -32,12 +32,15 @@
 	st = status -sb
 
 	cm = commit -m
+	oups = commit --amend
+	
 	ui = !gitui
 
 	rv = remote -v
 
 	a = add
 	ap = add --patch
+	ac = add .
 	al = add -A
 
 	pu = push
@@ -49,6 +52,8 @@
 
 	s = switch
 	sc = switch --create
+
+	ck = checkout
 
 	df = diff
 	dfs = diff --staged
@@ -68,8 +73,6 @@
 	editor = hx
 	pager = delta
 	hooksPath = /home/milomoisson/.git/hooks
-[help]
-	autocorrect = 20
 [pull]
 	ff = only
 [init]

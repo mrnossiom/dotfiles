@@ -1,3 +1,5 @@
+if not status is-interactive; exit; end
+
 set -l platform (uname)
 
 fish_add_path \
