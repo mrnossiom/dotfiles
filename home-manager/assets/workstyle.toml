@@ -1,0 +1,28 @@
+# NOTE: if multiple patterns are present in the same application name,
+# precedence is given in order of apparition in this file.
+
+"github" = ""
+"rust" = ""
+"google" = ""
+"firefox" = ""
+
+"kitty" = ""
+"file manager" = ""
+"libreoffice calc" = ""
+
+"nvim" = ""
+"transmission" = ""
+"music" = ""
+"visual studio code" = "󰘐"
+
+# TODO fix
+"libreoffice writer" = ""
+"libreoffice" = ""
+"calculator" = ""
+"videostream" = ""
+"mpv" = ""
+"disk usage" = ""
+".pdf" = ""
+
+[other]
+"fallback_icon" = ""
