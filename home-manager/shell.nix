@@ -13,12 +13,17 @@ with lib;
       settings = {
         theme = "onedark";
         editor = {
+          auto-save = true;
+          auto-format = true;
           line-number = "relative";
           mouse = false;
+          text-width = 80;
           indent-guides = {
             render = true;
             characters = "╎";
           };
+          lsp.display-inlay-hints = true;
+          soft-wrap.wrap-at-text-width = true;
         };
         keys = rec {
           insert = {
@@ -34,18 +39,42 @@ with lib;
       languages = {
         # Language server for nix
         language-server.rnix-lsp.command = "${pkgs.rnix-lsp}/bin/rnix-lsp";
+        language-server.typst-lsp.command = "${pkgs.typst-lsp}/bin/typst-lsp";
 
-        language = [{
-          name = "nix";
-          language-servers = [ "rnix-lsp" ];
-        }];
+        grammar = [
+          # Doesn't work
+          {
+            name = "typst";
+            source = { git = "https://github.com/frozolotl/tree-sitter-typst"; rev = "master"; };
+          }
+        ];
+
+        language = [
+          {
+            name = "nix";
+            language-servers = [ "rnix-lsp" ];
+            auto-format = true;
+          }
+          {
+            name = "typst";
+            scope = "source.typst";
+            auto-format = true;
+            language-servers = [ "typst-lsp" ];
+            file-types = [ "typ" ];
+            roots = [ "typst.toml" ];
+            comment-token = "//";
+            indent = { tab-width = 4; unit = "\t"; };
+            auto-pairs = { "(" = ")"; "{" = "}"; "[" = "]"; "\"" = "\""; "`" = "`"; "$" = "$"; };
+            injection-regex = "^typ(st)?$";
+            grammar = "typst";
+          }
+        ];
       };
     };
 
     programs.fish = {
       enable = true;
 
-      # TODO: verify security and check swayidle
       loginShellInit = ''
         if test (id --user $USER) -ge 1000 && test (tty) = "/dev/tty1"
           exec sway
@@ -110,6 +139,19 @@ with lib;
           echo 'Current directory is '(set_color brgreen)(pwd)(set_color normal)
         '';
         last_history_item = "echo $history[1]";
+
+        change-mac = ''
+          set dev (nmcli --get-values GENERAL.DEVICE,GENERAL.TYPE device show | sed '/^wifi/!{h;d;};x;q')
+          sudo ip link set $dev down
+    
+          if test "$argv[1]" = "reset";
+              sudo ${pkgs.macchanger}/bin/macchanger --permanent $dev
+          else;
+              sudo ${pkgs.macchanger}/bin/macchanger --another $dev
+          end
+
+          sudo ip link set $dev up
+        '';
 
         # Quickly cd into a derivation
         # NOTE: another channel can be specified after the derivation, tail uses the last derivation

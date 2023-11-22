@@ -52,6 +52,7 @@
   # TODO: should be configurable
   networking.hostName = "archaic-wiro-laptop";
   networking.networkmanager.enable = true;
+  networking.nameservers = [ "1.1.1.1" "8.8.8.8" "9.9.9.9" ];
 
   time.timeZone = "Europe/Paris";
 
@@ -97,7 +98,11 @@
 
   services.udev.packages = with pkgs; [ numworks-udev-rules ];
 
-  security.sudo-rs.enable = true;
+  services.transmission.enable = true;
+
+  services.devmon.enable = true;
+
+  # security.sudo-rs.enable = true;
 
   security.polkit.enable = true;
 

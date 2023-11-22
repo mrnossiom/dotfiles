@@ -20,7 +20,6 @@ in
       textColor = "#ffffff";
 
       icons = true;
-      # TODO: iconPath = "";
 
       width = 500;
       maxVisible = 5;
@@ -63,8 +62,8 @@ in
           resumeCommand = "${pkgs.sway}/bin/swaymsg \"output * power on\"";
         }
 
-        { timeout = 60 * 1; command = "${pkgs.sway}/bin/swaymsg \"output * power off\""; resumeCommand = "${pkgs.sway}/bin/swaymsg \"output * power on\""; }
-        { timeout = 60 * 5; command = "${pkgs.systemd}/bin/loginctl lock-session"; }
+        { timeout = 60 * 5; command = "${pkgs.sway}/bin/swaymsg \"output * power off\""; resumeCommand = "${pkgs.sway}/bin/swaymsg \"output * power on\""; }
+        { timeout = 60 * 10; command = "${pkgs.systemd}/bin/loginctl lock-session"; }
         { timeout = 60 * 15; command = "${pkgs.systemd}/bin/systemctl suspend"; }
       ];
       events = [
@@ -287,8 +286,8 @@ in
             "${up}" = "resize shrink height 10 px";
             "${right}" = "resize grow width 10 px";
 
-            "${modifier}" = "mode default";
             "${modifier}+r" = "mode default";
+            "Space" = "mode default";
             "Return" = "mode default";
             "Escape" = "mode default";
           };
@@ -316,6 +315,7 @@ in
             block = "cpu";
             interval = 5;
           }
+          { block = "tea_timer"; }
           {
             block = "pomodoro";
             notify_cmd = "notify-send -w '{msg}'";
@@ -344,6 +344,8 @@ in
     };
 
     services.blueman-applet.enable = true;
+
+    services.poweralertd.enable = true;
 
     services.wlsunset = {
       enable = true;

@@ -30,6 +30,7 @@
         "vscode"
         "thorium-browser"
         "unrar"
+        "geogebra"
       ];
     };
   };
@@ -44,6 +45,7 @@
 
     sessionVariables = {
       EDITOR = "${pkgs.helix}/bin/hx";
+      XDG_DESKTOP_DIR = "$HOME";
     };
 
     packages = with pkgs; [
@@ -52,14 +54,17 @@
       discord
       spotify
       thorium
+      (geogebra6.overrideAttrs (previousAttrs: {
+        installPhase = previousAttrs.installPhase + ''rm -rd "$out/locales/"'';
+      }))
 
       spotify-tui
 
       cinnamon.nemo
-      firefox
-      # Firefox needs speedd for voice synthesis web api
+      # Firefox needs speechd for voice synthesis web api
       speechd
-      transmission
+      transmission-gtk
+      gnome.gnome-disk-utility
 
       xdg-utils
       rustup
@@ -72,6 +77,7 @@
       fd
       delta
       ripgrep
+      glow
 
       imv
       mpv
@@ -93,12 +99,19 @@
   # Nicely reload system units when changing configs
   systemd.user.startServices = "sd-switch";
 
+  programs.firefox = {
+    enable = true;
+    package = (pkgs.firefox.override {
+      cfg = { enableTridactylNative = true; };
+    });
+  };
   programs.qutebrowser.enable = true;
 
   programs.kitty = {
     enable = true;
     settings = {
       confirm_os_window_close = 0;
+      enable_audio_bell = "no";
 
       # foreground = "#${config.colorScheme.colors.base05}";
       # background = "#${config.colorScheme.colors.base00}";
@@ -113,11 +126,7 @@
   # TODO: configure
   services.spotifyd.enable = true;
 
-  programs.gpg = {
-    enable = true;
-
-  };
-
+  programs.gpg.enable = true;
 
   programs.topgrade = {
     enable = true;

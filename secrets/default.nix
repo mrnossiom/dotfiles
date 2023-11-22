@@ -1,5 +1,5 @@
 { ... }: {
   age.secrets = {
-    pgpkey.file = ./pgpkey.age;
+    pgpkey.file = ./CA5E-pgp-key.age;
   };
 }
