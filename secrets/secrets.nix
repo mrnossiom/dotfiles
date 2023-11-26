@@ -4,5 +4,9 @@ let
   systems = [ old-neo archaic ];
 in
 {
-  "CA5E-pgp-key.age".publicKeys = systems;
+  "ca5e.pgp.age".publicKeys = systems;
+  "digital-ocean.api.age".publicKeys = systems;
+  "gitguardian.api.age".publicKeys = systems;
+  "googledrive.rclone.conf.age".publicKeys = systems;
+  "restic-backup-pass.age".publicKeys = systems;
 }

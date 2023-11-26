@@ -45,6 +45,11 @@
       baseModules = [
         ./nixos/configuration.nix
         disko.nixosModules.disko
+
+        agenix.nixosModules.default
+        ./secrets
+        { age.identityPaths = [ "/home/milomoisson/.ssh/id_ed25519" ]; }
+
       ];
     in
     {
@@ -91,6 +96,7 @@
             # Nix colors
             nix-colors.homeManagerModules.default
             { colorScheme = nix-colors.colorSchemes.onedark; }
+
             ./secrets
 
             # Unstable module taken from master branch

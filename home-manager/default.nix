@@ -44,7 +44,6 @@
     homeDirectory = "/home/milomoisson";
 
     sessionVariables = {
-      EDITOR = "${pkgs.helix}/bin/hx";
       XDG_DESKTOP_DIR = "$HOME";
     };
 

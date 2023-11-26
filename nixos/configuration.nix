@@ -6,6 +6,12 @@
 , ...
 }:
 
+let
+
+  hostname = "archaic-wiro-laptop";
+  main-user = "milomoisson";
+
+in
 {
   # Hardware is imported in the flake to be machine specific
 
@@ -49,8 +55,7 @@
 
   services.blueman.enable = true;
 
-  # TODO: should be configurable
-  networking.hostName = "archaic-wiro-laptop";
+  networking.hostName = hostname;
   networking.networkmanager.enable = true;
   networking.nameservers = [ "1.1.1.1" "8.8.8.8" "9.9.9.9" ];
 
@@ -98,11 +103,65 @@
 
   services.udev.packages = with pkgs; [ numworks-udev-rules ];
 
-  services.transmission.enable = true;
-
   services.devmon.enable = true;
 
   # security.sudo-rs.enable = true;
+
+  services.restic.backups = {
+    # Backup documents and repos code
+    google-drive = {
+      repository = "rclone:googledrive:/Backups/${hostname}";
+      initialize = true;
+      passwordFile = config.age.secrets.restic-backup-pass.path;
+      rcloneConfigFile = config.age.secrets.googledrive-rclone-config.path;
+
+      paths = [
+        "/home/${main-user}/Documents"
+        # Equivalent of `~/Developement` but needs extra handling as explained below
+        "/home/${main-user}/.local/backup/repos"
+      ];
+
+      # Extra handling for Developement folder to respect `.gitignore` files.
+      #
+      # Backup folder sould be stored somewhere to avoid changing ctimes
+      # which would cause otherwise unchanged files to be backed up again.
+      # Since `--link-dest` is used, file contents won't be duplicated on disk.
+      backupPrepareCommand = ''
+        # Remove stale Restic locks
+        ${pkgs.restic}/bin/restic unlock || true
+
+        ${pkgs.rsync}/bin/rsync \
+          ${"\\" /* Archive mode and delete files that are not in the source directory. `--mkpath` is like `mkdir`'s `-p` option */}
+          --archive --delete --mkpath \
+          ${"\\" /* `:-` operator uses .gitignore files as exclude patterns */}
+          --filter=':- .gitignore' \
+          ${"\\" /* Exclude nixpkgs repository because they have some weird symlink test files that break rsync */}
+          --exclude 'nixpkgs' \
+          ${"\\" /* Hardlink files to avoid taking up more space */}
+          --link-dest=/home/${main-user}/Developement \
+          /home/${main-user}/Developement/ /home/${main-user}/.local/backup/repos
+      '';
+
+      pruneOpts = [
+        "--keep-daily 7"
+        "--keep-weekly 5"
+        "--keep-yearly 10"
+      ];
+
+      timerConfig = {
+        OnCalendar = "00:05";
+        RandomizedDelaySec = "5h";
+      };
+    };
+
+    # Backup documents and large files
+    archaic-bak = {
+      initialize = true;
+      passwordFile = config.age.secrets.restic-backup-pass.path;
+      paths = [ "/home/${main-user}/Documents" ];
+      repository = "/mnt/${main-user}/ArchaicBak/Backups/${hostname}";
+    };
+  };
 
   security.polkit.enable = true;
 

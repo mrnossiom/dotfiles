@@ -1,11 +1,16 @@
 { config, lib, pkgs, ... }:
+
 with lib;
+
 {
   config = {
     programs.nix-index.enableFishIntegration = false;
     programs.nix-index-database.comma.enable = true;
 
     programs.starship.enable = true;
+
+    # Assumes that helix is installed, use configured version of helix
+    sessionVariables.EDITOR = "hx";
 
     programs.helix = {
       enable = true;
