@@ -3,12 +3,12 @@
 , pkgs
 , ...
 }:
+
 with lib;
 with builtins;
 
 let
   workspaces-range = zipListsWith (num: ws: { inherit ws num; }) [ 1 2 3 4 5 6 7 8 9 0 ] (range 1 10);
-  swaylock-args = [ ];
 in
 {
   config = {
@@ -69,7 +69,7 @@ in
       events = [
         { event = "before-sleep"; command = "${pkgs.playerctl}/bin/playerctl pause"; }
         # Can be triggered with `loginctl lock-session`
-        { event = "lock"; command = "${pkgs.swaylock}/bin/swaylock -feF --indicator-y-position 980 --indicator-x-position 100 -i ${./assets/BinaryCloud.png}"; }
+        { event = "lock"; command = "${pkgs.swaylock}/bin/swaylock -feF --indicator-y-position 980 --indicator-x-position 100 -i ${../assets/BinaryCloud.png}"; }
       ];
     };
 
@@ -366,7 +366,7 @@ in
 
     # We could've used `(pkgs.formats.toml { }).generate "config.toml" { <opts> }`
     # but this doesn't keep ordering, and ordering is important here
-    xdg.configFile."workstyle/config.toml".source = ./assets/workstyle.toml;
+    xdg.configFile."workstyle/config.toml".source = ../assets/workstyle.toml;
 
     # Could be included to access nix-colors
     xdg.configFile."tofi/config".text = with config.colorScheme.colors; lib.generators.toKeyValue { } {

@@ -3,14 +3,40 @@
 , lib
 , config
 , pkgs
+, osConfig ? null
 , ...
-}: {
-  imports = [
+}:
+
+let
+
+  # Says is the config has been loaded by the NixOS HM module or is it a standalone installation.
+  isNixosManaged = osConfig != null;
+
+in
+{
+  imports = with inputs; [
     (inputs.home-manager-unstable + /modules/services/darkman.nix)
 
-    ./vm.nix
-    ./git.nix
-    ./shell.nix
+    # Agenix secrets manager
+    agenix.homeManagerModules.default
+    # TODO: dont hardcode system
+    { home.packages = [ agenix.packages.x86_64-linux.default ]; }
+
+    # Setup `comma`, which allow to easily run command that are not present on the system
+    nix-index-database.hmModules.nix-index
+
+    # Nix colors
+    nix-colors.homeManagerModules.default
+    { colorScheme = nix-colors.colorSchemes.onedark; }
+
+    ../../secrets
+
+    # Unstable module taken from master branch
+    # outputs.homeManagerModules.darkman
+
+    ../modules/vm.nix
+    ../modules/git.nix
+    ../modules/shell.nix
   ];
 
   nixpkgs = {
@@ -35,7 +61,7 @@
     };
   };
 
-  programs.home-manager.enable = true;
+  programs.home-manager.enable = !isNixosManaged;
 
   home = {
     # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion

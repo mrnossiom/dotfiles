@@ -10,7 +10,7 @@ with lib;
     programs.starship.enable = true;
 
     # Assumes that helix is installed, use configured version of helix
-    sessionVariables.EDITOR = "hx";
+    home.sessionVariables.EDITOR = "hx";
 
     programs.helix = {
       enable = true;

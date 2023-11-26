@@ -36,21 +36,15 @@
     hardware.url = "github:nixos/nixos-hardware";
   };
 
-  outputs = { self, nixpkgs, home-manager, agenix, nix-index-database, disko, nix-colors, ... }@inputs:
+  outputs = { self, nixpkgs, home-manager, agenix, nix-index-database, disko, nix-colors, nixos-hardware, ... }@inputs:
     let
       inherit (self) outputs;
+
       systems = [ "aarch64-linux" "i686-linux" "x86_64-linux" "aarch64-darwin" "x86_64-darwin" ];
       forAllSystems = nixpkgs.lib.genAttrs systems;
 
-      baseModules = [
-        ./nixos/configuration.nix
-        disko.nixosModules.disko
-
-        agenix.nixosModules.default
-        ./secrets
-        { age.identityPaths = [ "/home/milomoisson/.ssh/id_ed25519" ]; }
-
-      ];
+      # Local lib
+      llib = import ./lib { };
     in
     {
       packages = forAllSystems (system: import ./pkgs nixpkgs.legacyPackages.${system});
@@ -63,45 +57,35 @@
       nixosConfigurations = {
         "neo-wiro-laptop" = nixpkgs.lib.nixosSystem {
           specialArgs = { inherit inputs outputs; };
-          modules = baseModules ++ [
-            # TODO: copy when generated
-            # ./nixos/hardware/neo.nix
+          modules = [
+            (llib.createSystem "neo-wiro-laptop" ./nixos/laptop.nix)
+            (llib.createUser "milomoisson" {
+              description = "Milo Moisson";
+              config = ./home-manager/profiles/desktop.nix;
+            })
           ];
         };
 
         "archaic-wiro-laptop" = nixpkgs.lib.nixosSystem {
           specialArgs = { inherit inputs outputs; };
-          modules = baseModules ++ [
-            ./nixos/hardware/archaic.nix
+          modules = [
+            (llib.createSystem "archaic-wiro-laptop" ./nixos/profiles/laptop.nix)
+            (llib.createUser "milomoisson" {
+              description = "Milo Moisson";
+              config = ./home-manager/profiles/desktop.nix;
+            })
           ];
         };
       };
 
+      # In non-NixOS contexts, you can still home manager to manage dotfiles.
+      # Else, configuration is loaded by the HM NixOS module which create system generations and free rollbacks.
       homeConfigurations = {
         "milomoisson" = home-manager.lib.homeManagerConfiguration {
           # Home-manager requires 'pkgs' instance
           pkgs = nixpkgs.legacyPackages.x86_64-linux;
           extraSpecialArgs = { inherit inputs outputs; };
-          modules = [
-            ./home-manager
-
-            # Agenix secrets manager
-            agenix.homeManagerModules.default
-            # TODO: dont hardcode system
-            { home.packages = [ agenix.packages.x86_64-linux.default ]; }
-
-            # Setup `comma`, which allow to easily run command that are not present on the system
-            nix-index-database.hmModules.nix-index
-
-            # Nix colors
-            nix-colors.homeManagerModules.default
-            { colorScheme = nix-colors.colorSchemes.onedark; }
-
-            ./secrets
-
-            # Unstable module taken from master branch
-            # outputs.homeManagerModules.darkman
-          ];
+          modules = [ ./home-manager/profiles/desktop.nix ];
         };
       };
     };
