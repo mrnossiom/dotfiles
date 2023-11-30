@@ -78,7 +78,7 @@
   };
 
   fonts = {
-    fonts = with pkgs; [ (nerdfonts.override { fonts = [ "JetBrainsMono" ]; }) inter noto-fonts noto-fonts-emoji font-awesome ];
+    packages = with pkgs; [ (nerdfonts.override { fonts = [ "JetBrainsMono" ]; }) inter noto-fonts noto-fonts-emoji font-awesome ];
     fontconfig = {
       # Set `Noto Sans` as fallback font
       defaultFonts = {
@@ -99,7 +99,7 @@
 
   services.devmon.enable = true;
 
-  # security.sudo-rs.enable = true;
+  security.sudo-rs.enable = true;
 
   programs.nm-applet.enable = true;
 
@@ -114,6 +114,8 @@
     pulse.enable = true;
     jack.enable = true;
   };
+
+  virtualisation.waydroid.enable = true;
 
   virtualisation.docker = {
     enable = true;

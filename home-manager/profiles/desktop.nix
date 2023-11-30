@@ -31,9 +31,6 @@ in
 
     ../../secrets
 
-    # Unstable module taken from master branch
-    # outputs.homeManagerModules.darkman
-
     ../modules/vm.nix
     ../modules/git.nix
     ../modules/shell.nix
@@ -86,8 +83,6 @@ in
       spotify-tui
 
       cinnamon.nemo
-      # Firefox needs speechd for voice synthesis web api
-      speechd
       transmission-gtk
       gnome.gnome-disk-utility
 
@@ -128,7 +123,7 @@ in
   programs.firefox = {
     enable = true;
     package = (pkgs.firefox.override {
-      cfg = { enableTridactylNative = true; };
+      nativeMessagingHosts = with pkgs; [ tridactyl-native ];
     });
   };
   programs.qutebrowser.enable = true;
