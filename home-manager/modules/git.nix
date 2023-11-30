@@ -17,6 +17,8 @@ with lib;
 
       difftastic.enable = true;
 
+      ignores = [ ".direnv/" ];
+
       aliases = {
         b = "branch --all";
         brm = "branch --delete";

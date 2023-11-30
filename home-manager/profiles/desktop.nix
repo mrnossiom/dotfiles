@@ -103,6 +103,7 @@ in
       delta
       ripgrep
       glow
+      fzf
 
       imv
       mpv
@@ -172,7 +173,7 @@ in
       };
 
       # TODO: sepcify via global config 
-      git.repos = [ "~/Documents/Developement/*/*" "~/.config/dotfiles" ];
+      git.repos = [ "~/Developement/*/*" "~/.config/dotfiles" ];
     };
   };
 }

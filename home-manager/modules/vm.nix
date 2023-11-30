@@ -55,10 +55,10 @@ in
     services.swayidle = {
       enable = true;
       timeouts = [
-        # TODO: this doesn't work find a way to quickly cut output when locked and idle
+        # TODO: this doesnjt work find a way to quickly cut output when locked and idle
         {
           timeout = 1;
-          command = "if pgrep -x swaylock; then ${pkgs.sway}/bin/swaymsg \"output * power off\"; fi";
+          command = "if ${pkgs.busybox}/bin/pgrep -x swaylock; then ${pkgs.sway}/bin/swaymsg \"output * power off\"; fi";
           resumeCommand = "${pkgs.sway}/bin/swaymsg \"output * power on\"";
         }
 
@@ -76,7 +76,7 @@ in
     wayland.windowManager.sway = {
       enable = true;
       config = rec {
-        modifier = "Mod4";
+        modifier = "Mod4"; # Super key
         terminal = "${pkgs.kitty}/bin/kitty";
         menu = "${pkgs.tofi}/bin/tofi-drun  --font ${pkgs.inter}/share/fonts/opentype/Inter-Regular.otf | xargs swaymsg exec --";
 
@@ -202,10 +202,7 @@ in
 
             # Would be nice to have rounded corners and padding when appearing
 
-            # Doesn't add icons
-            extraConfig = ''
-              icon_theme Papirus
-            '';
+            extraConfig = "icon_theme Papirus";
           }
         ];
 
@@ -250,6 +247,8 @@ in
           "${modifier}+Shift+${down}" = "move down";
           "${modifier}+Shift+${up}" = "move up";
           "${modifier}+Shift+${right}" = "move right";
+          "${modifier}+b" = "split vertical";
+          "${modifier}+n" = "split horizontal";
 
           "${modifier}+r" = "mode resize";
           "${modifier}+f" = "fullscreen toggle";
@@ -277,7 +276,7 @@ in
         }
         // listToAttrs (map (num: { name = "${modifier}+${toString num.num}"; value = "workspace number ${toString num.ws}"; }) workspaces-range)
         // listToAttrs (map (num: { name = "${modifier}+Alt+${toString num.num}"; value = "move container to workspace number ${toString num.ws}"; }) workspaces-range)
-        // listToAttrs (map (num: { name = "${modifier}+Alt+Shift+${toString num.num}"; value = "move container to workspace number ${toString num.ws}; workspace number ${toString num.ws}"; }) workspaces-range);
+        // listToAttrs (map (num: { name = "${modifier}+Shift+${toString num.num}"; value = "move container to workspace number ${toString num.ws}; workspace number ${toString num.ws}"; }) workspaces-range);
 
         modes = {
           resize = {
@@ -368,7 +367,6 @@ in
     # but this doesn't keep ordering, and ordering is important here
     xdg.configFile."workstyle/config.toml".source = ../assets/workstyle.toml;
 
-    # Could be included to access nix-colors
     xdg.configFile."tofi/config".text = with config.colorScheme.colors; lib.generators.toKeyValue { } {
       font-size = 14;
 
@@ -412,3 +410,4 @@ in
     };
   };
 }
+

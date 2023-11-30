@@ -90,8 +90,10 @@
     };
   };
 
+  # This option is already filled with aliases that snowball and have 
+  # priority on fish internal `ls` aliases
+  environment.shellAliases = { ls = null; ll = null; l = null; };
   programs.fish.enable = true;
-
 
   services.udev.packages = with pkgs; [ numworks-udev-rules ];
 
@@ -99,6 +101,7 @@
 
   # security.sudo-rs.enable = true;
 
+  programs.nm-applet.enable = true;
 
   security.polkit.enable = true;
 

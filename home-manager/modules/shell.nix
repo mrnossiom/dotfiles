@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ inputs, config, lib, pkgs, ... }:
 
 with lib;
 
@@ -77,6 +77,11 @@ with lib;
       };
     };
 
+    programs.direnv = {
+      enable = true;
+      nix-direnv.enable = true;
+    };
+
     programs.fish = {
       enable = true;
 
@@ -87,12 +92,17 @@ with lib;
       '';
 
       interactiveShellInit = ''
-        # Use exa instead of ls
-        set -U __fish_ls_command ${pkgs.exa}/bin/exa
-        set -U __fish_ls_color_opt '--color=auto'
-
         abbr -a !! --position anywhere --function last_history_item
       '';
+
+      shellAliases = {
+        # Use `exa` for `ls` invocations
+        #
+        # This is also a more pure version than using `__fish_ls_*` variables
+        # that depends on fish internal ls wrappers and can be overriden by
+        # bad configuration. (e.g. NixOS `environment.shellAliases` default)
+        ls = "${pkgs.exa}/bin/exa --color=auto $argv";
+      };
 
       shellAbbrs = {
         # One letter abbrs
