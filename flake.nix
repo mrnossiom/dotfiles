@@ -7,12 +7,7 @@
     # Also see the 'unstable-packages' overlay at 'overlays/default.nix'.
 
     home-manager = {
-      url = "github:nix-community/home-manager/release-23.05";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    home-manager-unstable = {
-      url = "github:nix-community/home-manager/master";
+      url = "github:nix-community/home-manager/release-23.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -33,7 +28,7 @@
 
     nix-colors.url = "github:misterio77/nix-colors";
 
-    hardware.url = "github:nixos/nixos-hardware";
+    nixos-hardware.url = "github:nixos/nixos-hardware";
   };
 
   outputs = { self, nixpkgs, home-manager, agenix, nix-index-database, disko, nix-colors, nixos-hardware, ... }@inputs:

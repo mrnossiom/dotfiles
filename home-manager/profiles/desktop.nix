@@ -15,8 +15,6 @@ let
 in
 {
   imports = with inputs; [
-    (inputs.home-manager-unstable + /modules/services/darkman.nix)
-
     # Agenix secrets manager
     agenix.homeManagerModules.default
     # TODO: dont hardcode system
