@@ -1,0 +1,3 @@
+{
+  xcompose = import ./xcompose.nix;
+}

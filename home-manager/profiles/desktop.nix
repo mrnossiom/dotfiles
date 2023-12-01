@@ -36,10 +36,11 @@ in
 
   nixpkgs = {
     overlays = with outputs.overlays; [
+      local-lib
       additions
-      modifications
       unstable-packages
     ];
+
     config = {
       # Disable if you don't want unfree packages
       allowUnfree = true;
@@ -97,6 +98,7 @@ in
       ripgrep
       glow
       fzf
+      btop
 
       imv
       mpv
@@ -123,6 +125,9 @@ in
     package = (pkgs.firefox.override {
       nativeMessagingHosts = with pkgs; [ tridactyl-native ];
     });
+    # profiles."${config.users.main.username}" = {
+    #   settings = { };
+    # };
   };
   programs.qutebrowser.enable = true;
 

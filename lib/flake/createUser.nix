@@ -12,7 +12,6 @@ with lib;
   options = {
     users.main.username = mkOption {
       type = types.str;
-      default = "user";
       description = "The name of the user account.";
     };
   };

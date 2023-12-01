@@ -40,7 +40,7 @@
   };
 
   nixpkgs = {
-    overlays = with outputs.overlays; [ additions modifications unstable-packages ];
+    overlays = with outputs.overlays; [ local-lib additions unstable-packages ];
     config.allowUnfree = true;
   };
 
@@ -138,6 +138,16 @@
   };
 
   services.upower.enable = true;
+
+  xdg.portal = {
+    enable = true;
+    wlr.enable = true;
+
+    extraPortals = with pkgs; [ xdg-desktop-portal-gtk ];
+    xdgOpenUsePortal = true;
+
+    config.common.default = "*";
+  };
 
   services.logind = {
     lidSwitch = "lock";

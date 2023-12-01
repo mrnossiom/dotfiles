@@ -76,6 +76,7 @@ in
     wayland.windowManager.sway = {
       enable = true;
       config = rec {
+        # TODO: support multiple modifier keys
         modifier = "Mod4"; # Super key
         terminal = "${pkgs.kitty}/bin/kitty";
         menu = "${pkgs.tofi}/bin/tofi-drun  --font ${pkgs.inter}/share/fonts/opentype/Inter-Regular.otf | xargs swaymsg exec --";
@@ -160,6 +161,7 @@ in
             statusCommand = "${pkgs.i3status-rust}/bin/i3status-rs ${config.home.homeDirectory}/${config.xdg.configFile."i3status-rust/config-default.toml".target}";
             hiddenState = "hide";
             mode = "hide";
+            fonts.size = 11.0;
 
             colors = with config.colorScheme.colors; {
               background = "#${base00}";
@@ -211,8 +213,8 @@ in
             xkb_layout = "us,fr";
             xkb_options = "grp:menu_toggle,compose:caps";
 
-            repeat_delay = toString 250;
-            repeat_rate = toString 45;
+            repeat_delay = toString 300;
+            repeat_rate = toString 30;
           };
         };
 
@@ -259,6 +261,7 @@ in
           # TODO: replace swatty by satty
           "${modifier}+Shift+s" = "exec ${pkgs.wl-clipboard}/bin/wl-paste | ${pkgs.swappy}/bin/swappy --file - --output-file - | ${pkgs.wl-clipboard}/bin/wl-copy";
 
+          # TODO: Add some keys in extraconfig to user bindsym with `--locked` directive to allow use on lock screen
 
           # Soundcontrol Keys
           XF86AudioPrev = "exec ${pkgs.playerctl}/bin/playerctl previous";
@@ -359,6 +362,10 @@ in
         lng = 2.3;
         usegeoclue = true;
       };
+
+      # TODO: fix bash not found issue, see service logs
+      darkModeScripts.gtk-theme = ''${pkgs.dconf}/bin/dconf write /org/gnome/desktop/interface/color-scheme "'prefer-dark'"'';
+      lightModeScripts.gtk-theme = ''${pkgs.dconf}/bin/dconf write /org/gnome/desktop/interface/color-scheme "'prefer-light'"'';
     };
 
     services.avizo.enable = true;

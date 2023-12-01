@@ -38,8 +38,8 @@
       systems = [ "aarch64-linux" "i686-linux" "x86_64-linux" "aarch64-darwin" "x86_64-darwin" ];
       forAllSystems = nixpkgs.lib.genAttrs systems;
 
-      # Local lib
-      llib = import ./lib { };
+      # Local flake helpers
+      lfh = import ./lib/flake nixpkgs;
     in
     {
       packages = forAllSystems (system: import ./pkgs nixpkgs.legacyPackages.${system});
@@ -53,8 +53,8 @@
         "neo-wiro-laptop" = nixpkgs.lib.nixosSystem {
           specialArgs = { inherit inputs outputs; };
           modules = [
-            (llib.createSystem "neo-wiro-laptop" ./nixos/laptop.nix)
-            (llib.createUser "milomoisson" {
+            (lfh.createSystem "neo-wiro-laptop" ./nixos/laptop.nix)
+            (lfh.createUser "milomoisson" {
               description = "Milo Moisson";
               config = ./home-manager/profiles/desktop.nix;
             })
@@ -64,8 +64,8 @@
         "archaic-wiro-laptop" = nixpkgs.lib.nixosSystem {
           specialArgs = { inherit inputs outputs; };
           modules = [
-            (llib.createSystem "archaic-wiro-laptop" ./nixos/profiles/laptop.nix)
-            (llib.createUser "milomoisson" {
+            (lfh.createSystem "archaic-wiro-laptop" ./nixos/profiles/laptop.nix)
+            (lfh.createUser "milomoisson" {
               description = "Milo Moisson";
               config = ./home-manager/profiles/desktop.nix;
             })
