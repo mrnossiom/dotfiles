@@ -1,4 +1,6 @@
-{ inputs, ... }@pkgs: {
+{ inputs, ... }: rec {
+  all = [ local-lib additions patches unstable-packages ];
+
   # Bring our local lib
   local-lib = final: prev: { lib = { local = import ../lib final; } // prev.lib; };
 

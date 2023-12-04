@@ -101,7 +101,7 @@ with lib;
         # This is also a more pure version than using `__fish_ls_*` variables
         # that depends on fish internal ls wrappers and can be overriden by
         # bad configuration. (e.g. NixOS `environment.shellAliases` default)
-        ls = "${pkgs.eza}/bin/eza --color=auto $argv";
+        ls = "${pkgs.eza}/bin/eza --color=auto";
       };
 
       shellAbbrs = {

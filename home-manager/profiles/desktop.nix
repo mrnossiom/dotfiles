@@ -35,11 +35,7 @@ in
   ];
 
   nixpkgs = {
-    overlays = with outputs.overlays; [
-      local-lib
-      additions
-      unstable-packages
-    ];
+    overlays = outputs.overlays.all;
 
     config = {
       # Disable if you don't want unfree packages

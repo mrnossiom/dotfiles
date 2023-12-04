@@ -6,14 +6,18 @@
 , ...
 }:
 
+let
+  inherit (inputs) disko agenix;
+  inherit (outputs) overlays;
+in
 {
   # Hardware is imported in the flake to be machine specific
   imports = [
     ../modules/backup.nix
 
-    inputs.disko.nixosModules.disko
+    disko.nixosModules.disko
 
-    inputs.agenix.nixosModules.default
+    agenix.nixosModules.default
     ../../secrets
     { age.identityPaths = [ "/home/${config.users.main.username}/.ssh/id_ed25519" ]; }
   ];
@@ -40,7 +44,7 @@
   };
 
   nixpkgs = {
-    overlays = with outputs.overlays; [ local-lib additions unstable-packages ];
+    overlays = overlays.all;
     config.allowUnfree = true;
   };
 
