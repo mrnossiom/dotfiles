@@ -34,15 +34,30 @@ in
     home.file.".XCompose".text =
       let
 
-        seqs = attrsToList cfg.sequences;
+        comboListToString = foldl (acc: val: acc + "<${val}> ") "";
+        sanitizeComboResult = escape [ ''"'' ];
+
+        comboSetToList = ip: flatten (mapAttrsToList
+          (name: value:
+            if isAttrs value then
+              let vs = comboSetToList value;
+              in
+              map ({ combo, value }: { combo = [ name ] ++ combo; inherit value; }) vs
+            else if isString value then
+              { combo = [ name ]; inherit value; }
+            else throw "combo value must be a string"
+          )
+          ip);
+        complexListToSimple = map ({ combo, value }: { combo = comboListToString combo; value = sanitizeComboResult value; });
+        toComposeFile = foldl (acc: val: acc + "${val.combo}: \"${val.value}\"\n") "";
+
+        processComposeSet = set: toComposeFile (complexListToSimple (comboSetToList set));
 
       in
       ''
         ${optionalString cfg.includeLocaleCompose "include \"%L\""}
 
-        # Combining characters
-        <Multi_key> <comma> : "̧" # Combining cedille
-        <Multi_key> <h> <i> : "helo"
+        ${processComposeSet cfg.sequences}
       '';
   };
 }

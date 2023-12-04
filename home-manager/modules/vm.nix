@@ -1,6 +1,7 @@
 { config
 , lib
 , pkgs
+, outputs
 , ...
 }:
 
@@ -11,7 +12,21 @@ let
   workspaces-range = zipListsWith (num: ws: { inherit ws num; }) [ 1 2 3 4 5 6 7 8 9 0 ] (range 1 10);
 in
 {
+  imports = [ outputs.homeManagerModules.xcompose ];
+
   config = {
+    programs.xcompose = {
+      enable = true;
+      includeLocaleCompose = true;
+
+      sequences = {
+        Multi_key = {
+          comma = "̧";
+          h.i = "helo";
+        };
+      };
+    };
+
     services.mako = with config.colorScheme.colors; {
       enable = true;
 
