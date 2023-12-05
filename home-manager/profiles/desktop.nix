@@ -29,7 +29,7 @@ in
 
     ../../secrets
 
-    ../modules/vm.nix
+    ../modules/vm
     ../modules/git.nix
     ../modules/shell.nix
   ];
@@ -95,6 +95,7 @@ in
       glow
       fzf
       btop
+      tealdeer
 
       imv
       mpv
@@ -121,9 +122,12 @@ in
     package = (pkgs.firefox.override {
       nativeMessagingHosts = with pkgs; [ tridactyl-native ];
     });
-    # profiles."${config.users.main.username}" = {
-    #   settings = { };
-    # };
+    profiles.default = {
+      isDefault = true;
+      settings = {
+        "browser.newtabpage.pinned" = [{ title = "NixOS"; url = "https://nixos.org"; }];
+      };
+    };
   };
   programs.qutebrowser.enable = true;
 
