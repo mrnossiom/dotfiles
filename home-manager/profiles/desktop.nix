@@ -71,9 +71,7 @@ in
       discord
       spotify
       thorium
-      (geogebra6.overrideAttrs (previousAttrs: {
-        installPhase = previousAttrs.installPhase + ''rm -rd "$out/locales/"'';
-      }))
+      geogebra6
 
       spotify-tui
 

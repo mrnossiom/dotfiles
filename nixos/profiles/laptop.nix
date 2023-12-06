@@ -7,7 +7,7 @@
 }:
 
 let
-  inherit (inputs) disko agenix;
+  inherit (inputs) disko nixos-generators agenix;
   inherit (outputs) overlays;
 in
 {
@@ -16,6 +16,8 @@ in
     ../modules/backup.nix
 
     disko.nixosModules.disko
+
+    nixos-generators.nixosModules.all-formats
 
     agenix.nixosModules.default
     ../../secrets

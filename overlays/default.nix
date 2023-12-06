@@ -7,6 +7,8 @@
   # Bring our custom packages from the `pkgs` directory
   additions = final: _prev: import ../pkgs final;
 
+  patches = import ./patches.nix;
+
   # Makes the unstable nixpkgs set accessible through `pkgs.unstable`
   unstable-packages = final: _prev: {
     unstable = import inputs.nixpkgs-unstable {

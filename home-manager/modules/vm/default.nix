@@ -95,6 +95,8 @@ in
         up = "k";
         right = "l";
 
+        fonts = { names = [ "sans-serif" ]; size = 11.0; };
+
         window = {
           titlebar = false;
           commands = [
