@@ -3,9 +3,11 @@
 , pkgs
 , outputs
 , ...
-}: {
-  imports = [ ];
+}:
 
+with lib;
+
+{
   options = { };
 
   config = {
@@ -59,7 +61,7 @@
 
     wayland.windowManager.sway.config.bars = [
       {
-        statusCommand = "${pkgs.i3status-rust}/bin/i3status-rs ${config.home.homeDirectory}/${config.xdg.configFile."i3status-rust/config-default.toml".target}";
+        statusCommand = "${getExe pkgs.i3status-rust} ${config.home.homeDirectory}/${config.xdg.configFile."i3status-rust/config-default.toml".target}";
         hiddenState = "hide";
         mode = "hide";
         fonts.size = 11.0;

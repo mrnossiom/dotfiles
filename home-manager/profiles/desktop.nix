@@ -78,6 +78,7 @@ in
       cinnamon.nemo
       transmission-gtk
       gnome.gnome-disk-utility
+      # flatpak
 
       xdg-utils
       rustup

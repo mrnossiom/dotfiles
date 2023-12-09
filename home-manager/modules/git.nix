@@ -32,7 +32,7 @@ with lib;
         cm = "commit --message";
         oups = "commit --amend";
 
-        ui = "!${pkgs.gitui}/bin/gitui";
+        ui = "!${getExe pkgs.gitui}";
 
         rv = "remote --verbose";
 
@@ -70,12 +70,13 @@ with lib;
         fetch.prune = true;
         color.ui = true;
         init.defaultBranch = "main";
+        log.date = "human";
 
         # TODO: connect to a SSOT
         github.user = "mrnossiom";
 
-        credential.helper = "${pkgs.git.override { withLibsecret = true; }}/bin/git-credential-libsecret";
-        "credentials \"https://github.com\"".helper = "!${pkgs.gh}/bin/gh auth git-credential";
+        credential.helper = "${getExe' (pkgs.git.override { withLibsecret = true; }) "git-credential-libsecret"}";
+        "credentials \"https://github.com\"".helper = "!${getExe pkgs.gh} auth git-credential";
 
         leaveTool.defaultFolder = "~/Documents";
       };

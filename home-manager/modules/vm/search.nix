@@ -3,13 +3,15 @@
 , pkgs
 , outputs
 , ...
-}: {
-  imports = [ ];
+}:
 
+with lib;
+
+{
   options = { };
 
   config = {
-    wayland.windowManager.sway.config.menu = "${pkgs.tofi}/bin/tofi-drun  --font ${pkgs.inter}/share/fonts/opentype/Inter-Regular.otf | xargs swaymsg exec --";
+    wayland.windowManager.sway.config.menu = "${getExe' pkgs.tofi "tofi-drun"} --font ${pkgs.inter}/share/fonts/opentype/Inter-Regular.otf | xargs ${getExe' pkgs.sway "swaymsg"} exec --";
 
     xdg.configFile."tofi/config".text = with config.colorScheme.colors;
       lib.generators.toKeyValue { } {

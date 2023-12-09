@@ -15,6 +15,7 @@ with lib;
     programs.helix = {
       enable = true;
       package = pkgs.unstable.helix;
+
       settings = {
         theme = "onedark";
         editor = {
@@ -42,9 +43,18 @@ with lib;
         };
       };
       languages = {
-        # Language server for nix
-        language-server.rnix-lsp.command = "${pkgs.rnix-lsp}/bin/rnix-lsp";
-        language-server.typst-lsp.command = "${pkgs.typst-lsp}/bin/typst-lsp";
+        language-server = {
+          # Language server for nix
+          rnix-lsp.command = getExe' pkgs.rnix-lsp "rnix-lsp";
+          typst-lsp.command = getExe pkgs.typst-lsp;
+
+          # Default language servers
+          tuplo.command = getExe pkgs.taplo;
+          marksman.command = getExe' pkgs.marksman "marksman";
+          vscode-css-language-server.command = getExe' pkgs.vscode-langservers-extracted "vscode-css-language-server";
+          vscode-html-language-server.command = getExe' pkgs.vscode-langservers-extracted "vscode-html-language-server";
+          vscode-json-language-server.command = getExe' pkgs.vscode-langservers-extracted "vscode-json-language-server";
+        };
 
         grammar = [
           # Doesn't work
@@ -101,7 +111,7 @@ with lib;
         # This is also a more pure version than using `__fish_ls_*` variables
         # that depends on fish internal ls wrappers and can be overriden by
         # bad configuration. (e.g. NixOS `environment.shellAliases` default)
-        ls = "${pkgs.eza}/bin/eza --color=auto";
+        ls = "${getExe pkgs.eza} --color=auto";
       };
 
       shellAbbrs = {
@@ -160,9 +170,9 @@ with lib;
           sudo ip link set $dev down
     
           if test "$argv[1]" = "reset";
-              sudo ${pkgs.macchanger}/bin/macchanger --permanent $dev
+              sudo ${getExe' pkgs.macchanger "macchanger"} --permanent $dev
           else;
-              sudo ${pkgs.macchanger}/bin/macchanger --another $dev
+              sudo ${getExe' pkgs.macchanger "macchanger"} --another $dev
           end
 
           sudo ip link set $dev up

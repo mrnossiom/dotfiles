@@ -60,6 +60,8 @@ in
     efi.canTouchEfiVariables = true;
   };
 
+  boot.extraModulePackages = with config.boot.kernelPackages; [ xone ];
+
   security.pam.services.swaylock.text = "auth include login";
   programs.dconf.enable = true;
 
@@ -103,8 +105,11 @@ in
 
   services.udev.packages = with pkgs; [ numworks-udev-rules ];
 
+  services.flatpak.enable = true;
+
   services.devmon.enable = true;
 
+  security.sudo.enable = false;
   security.sudo-rs.enable = true;
 
   programs.nm-applet.enable = true;

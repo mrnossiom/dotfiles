@@ -9,16 +9,20 @@ with lib;
 with builtins;
 
 let
+  inherit (outputs) homeManagerModules;
+
   sway-cfg = config.wayland.windowManager.sway.config;
 
   workspaces-range = zipListsWith (num: ws: { inherit ws num; }) [ 1 2 3 4 5 6 7 8 9 0 ] (range 1 10);
 in
 {
-  imports = [ ./swaybar.nix ./xcompose.nix ./search.nix ];
+  imports = [ homeManagerModules.wl-clip-persist ./swaybar.nix ./xcompose.nix ./search.nix ];
 
   options = { };
 
   config = {
+    services.wl-clip-persist.enable = true;
+
     services.mako = with config.colorScheme.colors;
       {
         enable = true;
@@ -63,21 +67,21 @@ in
     services.swayidle = {
       enable = true;
       timeouts = [
-        # TODO: this doesnjt work find a way to quickly cut output when locked and idle
+        # TODO: this doesn't work find a way to quickly cut output when locked and idle
         {
           timeout = 1;
-          command = "if ${pkgs.busybox}/bin/pgrep -x swaylock; then ${pkgs.sway}/bin/swaymsg \"output * power off\"; fi";
-          resumeCommand = "${pkgs.sway}/bin/swaymsg \"output * power on\"";
+          command = "if ${getExe' pkgs.busybox "pgrep"} -x swaylock; then ${getExe' pkgs.sway "swaymsg"} \"output * power off\"; fi";
+          resumeCommand = "${getExe' pkgs.sway "swaymsg"} \"output * power on\"";
         }
 
-        { timeout = 60 * 5; command = "${pkgs.sway}/bin/swaymsg \"output * power off\""; resumeCommand = "${pkgs.sway}/bin/swaymsg \"output * power on\""; }
-        { timeout = 60 * 10; command = "${pkgs.systemd}/bin/loginctl lock-session"; }
-        { timeout = 60 * 15; command = "${pkgs.systemd}/bin/systemctl suspend"; }
+        { timeout = 60 * 5; command = ''${getExe pkgs.chayang} -d5 && ${getExe' pkgs.sway "swaymsg"} "output * power off"''; resumeCommand = ''${getExe' pkgs.sway "swaymsg"} "output * power on"''; }
+        { timeout = 60 * 10; command = "${getExe' pkgs.systemd "loginctl"} lock-session"; }
+        { timeout = 60 * 15; command = "${getExe' pkgs.systemd "systemctl"} suspend"; }
       ];
       events = [
-        { event = "before-sleep"; command = "${pkgs.playerctl}/bin/playerctl pause"; }
+        { event = "before-sleep"; command = "${getExe pkgs.playerctl} pause"; }
         # Can be triggered with `loginctl lock-session`
-        { event = "lock"; command = "${pkgs.swaylock}/bin/swaylock -feF --indicator-y-position 980 --indicator-x-position 100 -i ${../../assets/BinaryCloud.png}"; }
+        { event = "lock"; command = "${getExe pkgs.swaylock} -feF --indicator-y-position 980 --indicator-x-position 100 -i ${../../assets/BinaryCloud.png}"; }
       ];
     };
 
@@ -86,7 +90,7 @@ in
       config = {
         # TODO: support multiple modifier keys
         modifier = "Mod4"; # Super key
-        terminal = "${pkgs.kitty}/bin/kitty";
+        terminal = "${getExe pkgs.kitty}";
 
         defaultWorkspace = "workspace number 1";
 
@@ -99,22 +103,15 @@ in
 
         window = {
           titlebar = false;
-          commands = [
-            {
-              # Tag of shame
-              command = ''title_format "%title <small>[XWayland]</small>"'';
-              criteria = {
-                shell = "xwayland";
-              };
-            }
-          ];
+          commands = [{
+            # Tag of shame
+            command = ''title_format "%title <small>[%shell]</small>"'';
+            criteria.shell = "^((?!xdg_shell).)*$";
+          }];
         };
 
         startup = [
-          {
-            command = "${pkgs.workstyle}/bin/workstyle &> /tmp/workstyle.log";
-            always = true;
-          }
+          { command = "${getExe' pkgs.workstyle "workstyle"} &> /tmp/workstyle.log"; always = true; }
         ];
 
         focus.followMouse = false;
@@ -191,13 +188,20 @@ in
           (map
             (modifier: {
               "${modifier}+Return" = "exec ${sway-cfg.terminal}";
-              "${modifier}+Shift+Return" = "exec ${pkgs.cinnamon.nemo}/bin/nemo";
+              "${modifier}+Shift+Return" = "exec ${getExe pkgs.cinnamon.nemo}";
               "${modifier}+Shift+q" = "kill";
               "${modifier}+d" = "exec ${sway-cfg.menu}";
-              "${modifier}+Space" = "exec ${pkgs.mako}/bin/makoctl dismiss";
+              "${modifier}+Space" = "exec ${getExe' pkgs.mako "makoctl"} dismiss";
 
-              "${modifier}+Escape" = "exec loginctl lock-session";
-              "${modifier}+Shift+Escape" = "exec ${pkgs.swaylock-effects}/bin/swaylock -feFS --indicator-y-position 980 --indicator-x-position 100";
+              "${modifier}+Escape" = "exec ${getExe' pkgs.systemd "loginctl"} lock-session";
+              "${modifier}+Alt+Escape" = "exec ${pkgs.writeShellScript "lock-screenshot.sh" ''
+                tmpimg=$(${getExe' pkgs.coreutils "mktemp"} /tmp/lock-bg.XXX)
+
+                ${getExe pkgs.grim} > $tmpimg
+                ${getExe pkgs.swaylock} -feF --image $tmpimg --indicator-y-position 980 --indicator-x-position 100 
+
+                rm $tmpimg
+              ''}";
 
               "${modifier}+${sway-cfg.left}" = "focus left";
               "${modifier}+${sway-cfg.down}" = "focus down";
@@ -216,22 +220,22 @@ in
               "${modifier}+Shift+space" = "floating toggle";
 
               # Screenshotting
-              "${modifier}+s" = ''exec ${pkgs.grim}/bin/grim -g "$(${pkgs.slurp}/bin/slurp)" - | ${pkgs.wl-clipboard}/bin/wl-copy'';
-              "${modifier}+Shift+s" = "exec ${pkgs.wl-clipboard}/bin/wl-paste | ${pkgs.swappy}/bin/swappy --file - --output-file - | ${pkgs.wl-clipboard}/bin/wl-copy";
+              "${modifier}+s" = ''exec ${getExe pkgs.grim} -g "$(${getExe pkgs.slurp})" - | ${getExe' pkgs.wl-clipboard "wl-copy"}'';
+              "${modifier}+Shift+s" = "exec ${getExe' pkgs.wl-clipboard "wl-paste"} | ${getExe pkgs.swappy} --file - --output-file - | ${getExe' pkgs.wl-clipboard "wl-copy"}";
 
               # Soundcontrol Keys
-              "--locked XF86AudioPrev" = "exec ${pkgs.playerctl}/bin/playerctl previous";
-              "--locked XF86AudioNext" = "exec ${pkgs.playerctl}/bin/playerctl next";
-              "--locked XF86AudioPlay" = "exec ${pkgs.playerctl}/bin/playerctl play-pause";
-              "--locked XF86AudioStop" = "exec ${pkgs.playerctl}/bin/playerctl stop";
+              "--locked XF86AudioPrev" = "exec ${getExe pkgs.playerctl} previous";
+              "--locked XF86AudioNext" = "exec ${getExe pkgs.playerctl} next";
+              "--locked XF86AudioPlay" = "exec ${getExe pkgs.playerctl} play-pause";
+              "--locked XF86AudioStop" = "exec ${getExe pkgs.playerctl} stop";
 
               # Avizo controled
-              "--locked XF86AudioRaiseVolume" = "exec ${pkgs.avizo}/bin/volumectl -u up";
-              "--locked XF86AudioLowerVolume" = "exec ${pkgs.avizo}/bin/volumectl -u down";
-              "--locked XF86AudioMute" = "exec ${pkgs.avizo}/bin/volumectl toggle-mute";
-              "--locked XF86AudioMicMute" = "exec ${pkgs.avizo}/bin/volumectl -m toggle-mute";
-              "--locked XF86MonBrightnessUp" = "exec ${pkgs.avizo}/bin/lightctl up";
-              "--locked XF86MonBrightnessDown" = "exec ${pkgs.avizo}/bin/lightctl down";
+              "--locked XF86AudioRaiseVolume" = "exec ${getExe' pkgs.avizo "volumectl"} -u up";
+              "--locked XF86AudioLowerVolume" = "exec ${getExe' pkgs.avizo "volumectl"} -u down";
+              "--locked XF86AudioMute" = "exec ${getExe' pkgs.avizo "volumectl"} toggle-mute";
+              "--locked XF86AudioMicMute" = "exec ${getExe' pkgs.avizo "volumectl"} -m toggle-mute";
+              "--locked XF86MonBrightnessUp" = "exec ${getExe' pkgs.avizo "lightctl"} up";
+              "--locked XF86MonBrightnessDown" = "exec ${getExe' pkgs.avizo "lightctl"} down";
             }
             // listToAttrs (flatten (map
               (num: [
@@ -276,8 +280,8 @@ in
         usegeoclue = true;
       };
 
-      darkModeScripts.gtk-theme = ''${pkgs.dconf}/bin/dconf write /org/gnome/desktop/interface/color-scheme "'prefer-dark'"'';
-      lightModeScripts.gtk-theme = ''${pkgs.dconf}/bin/dconf write /org/gnome/desktop/interface/color-scheme "'prefer-light'"'';
+      darkModeScripts.gtk-theme = ''${getExe' pkgs.dconf "dconf"} write /org/gnome/desktop/interface/color-scheme "'prefer-dark'"'';
+      lightModeScripts.gtk-theme = ''${getExe' pkgs.dconf "dconf"} write /org/gnome/desktop/interface/color-scheme "'prefer-light'"'';
     };
 
     services.avizo.enable = true;

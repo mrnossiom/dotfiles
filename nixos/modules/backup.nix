@@ -6,6 +6,8 @@
 , ...
 }:
 
+with lib;
+
 let
 
   hostname = config.networking.hostName;
@@ -34,9 +36,9 @@ in
       # Since `--link-dest` is used, file contents won't be duplicated on disk.
       backupPrepareCommand = ''
         # Remove stale Restic locks
-        ${pkgs.restic}/bin/restic unlock || true
+        ${getExe' pkgs.restic "restic"} unlock || true
 
-        ${pkgs.rsync}/bin/rsync \
+        ${getExe pkgs.rsync} \
           ${"\\" /* Archive mode and delete files that are not in the source directory. `--mkpath` is like `mkdir`'s `-p` option */}
           --archive --delete --mkpath \
           ${"\\" /* `:-` operator uses .gitignore files as exclude patterns */}
