@@ -4,9 +4,6 @@ final: prev: {
     installPhase = previousAttrs.installPhase + ''rm -rf "$out/locales/"'';
   });
 
-  # Fixes Discord inability to open links
-  discord = prev.discord.override { nss = final.nss_latest; };
-
   # TODO: fix darkman Go patch
   _darkman =
     let

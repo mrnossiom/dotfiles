@@ -26,11 +26,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nixos-generators = {
-      url = "github:nix-community/nixos-generators";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     nix-colors.url = "github:misterio77/nix-colors";
 
     nixos-hardware.url = "github:nixos/nixos-hardware";
@@ -47,7 +42,8 @@
       lfh = import ./lib/flake nixpkgs;
     in
     {
-      packages = forAllSystems (system: import ./pkgs nixpkgs.legacyPackages.${system});
+      packages = forAllSystems (system: import ./pkgs nixpkgs.legacyPackages.${system}
+        // { installer = import pkgs/installer.nix (nixpkgs // { inherit system; }); });
       formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.nixpkgs-fmt);
 
       overlays = import ./overlays { inherit inputs; };
@@ -58,7 +54,7 @@
         "neo-wiro-laptop" = nixpkgs.lib.nixosSystem {
           specialArgs = { inherit inputs outputs; };
           modules = [
-            (lfh.createSystem "neo-wiro-laptop" ./nixos/laptop.nix)
+            (lfh.createSystem "neo-wiro-laptop" ./nixos/profiles/laptop.nix)
             (lfh.createUser "milomoisson" {
               description = "Milo Moisson";
               config = ./home-manager/profiles/desktop.nix;

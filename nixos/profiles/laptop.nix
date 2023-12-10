@@ -6,8 +6,10 @@
 , ...
 }:
 
+with lib;
+
 let
-  inherit (inputs) disko nixos-generators agenix;
+  inherit (inputs) nixpkgs disko agenix;
   inherit (outputs) overlays;
 in
 {
@@ -16,8 +18,6 @@ in
     ../modules/backup.nix
 
     disko.nixosModules.disko
-
-    nixos-generators.nixosModules.all-formats
 
     agenix.nixosModules.default
     ../../secrets
@@ -149,6 +149,15 @@ in
   };
 
   services.upower.enable = true;
+
+  # TODO: maybe useful for printing
+  services.avahi = {
+    enable = true;
+    nssmdns = true;
+    openFirewall = true;
+  };
+
+  services.printing.enable = true;
 
   xdg.portal = {
     enable = true;
