@@ -1,11 +1,13 @@
-{ modulesPath, ... }: {
+{ lib, modulesPath, ... }:
+
+{
   imports = [ "${modulesPath}/installer/cd-dvd/installation-cd-graphical-base.nix" ];
 
   config = {
-    isoImage = {
-      # TODO: find what is it's purpose
-      edition = "yolo";
-      squashfsCompression = "zstd -Xcompression-level 10";
-    };
+    # Default compression is never-ending, this gets done in a minute with better results
+    isoImage.squashfsCompression = "zstd -Xcompression-level 10";
+
+    # Disable annoying warning
+    boot.swraid.enable = lib.mkForce false;
   };
 }

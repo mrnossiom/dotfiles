@@ -42,9 +42,11 @@
       lfh = import ./lib/flake nixpkgs;
     in
     {
-      packages = forAllSystems (system: import ./pkgs nixpkgs.legacyPackages.${system}
-        // { installer = import pkgs/installer.nix (nixpkgs // { inherit system; }); });
       formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.nixpkgs-fmt);
+
+      packages = forAllSystems (system: import ./pkgs nixpkgs.legacyPackages.${system});
+      apps = forAllSystems (system: import ./apps (nixpkgs.legacyPackages.${system}
+        // { inherit (nixpkgs.lib) nixosSystem; inherit system; }));
 
       overlays = import ./overlays { inherit inputs; };
       nixosModules = import ./modules/nixos;
