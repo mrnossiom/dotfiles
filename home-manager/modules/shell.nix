@@ -51,6 +51,7 @@ with lib;
           # Default language servers
           tuplo.command = getExe pkgs.taplo;
           marksman.command = getExe' pkgs.marksman "marksman";
+          pylsp.command = getExe pkgs.python311Packages.python-lsp-server;
           vscode-css-language-server.command = getExe' pkgs.vscode-langservers-extracted "vscode-css-language-server";
           vscode-html-language-server.command = getExe' pkgs.vscode-langservers-extracted "vscode-html-language-server";
           vscode-json-language-server.command = getExe' pkgs.vscode-langservers-extracted "vscode-json-language-server";

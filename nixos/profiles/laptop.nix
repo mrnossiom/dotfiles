@@ -88,11 +88,11 @@ in
   fonts = {
     packages = with pkgs; [ (nerdfonts.override { fonts = [ "JetBrainsMono" ]; }) inter noto-fonts noto-fonts-emoji font-awesome ];
     fontconfig = {
-      # Set `Noto Sans` as fallback font
-      defaultFonts = {
-        monospace = [ "JetBrainsMono Nerd Font" "Noto Sans" ];
-        sansSerif = [ "Inter" "Noto Sans" ];
-        serif = [ "Inter" "Noto Sans" ];
+      defaultFonts = rec {
+        monospace = [ "JetBrainsMono Nerd Font" "Noto Sans Mono" ];
+        sansSerif = [ "Inter" "Noto Sans" "Noto Sans Japanese" "Noto Sans Korean" ];
+        # Serif is ugly
+        serif = sansSerif;
         emoji = [ "Noto Color Emoji" ];
       };
     };

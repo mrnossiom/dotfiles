@@ -197,7 +197,9 @@ in
               "${modifier}+Alt+Escape" = "exec ${pkgs.writeShellScript "lock-screenshot.sh" ''
                 tmpimg=$(${getExe' pkgs.coreutils "mktemp"} /tmp/lock-bg.XXX)
 
-                ${getExe pkgs.grim} > $tmpimg
+                # Give some time to hide the bar
+                sleep 1
+                ${getExe pkgs.grim} $tmpimg
                 ${getExe pkgs.swaylock} -feF --image $tmpimg --indicator-y-position 980 --indicator-x-position 100 
 
                 rm $tmpimg
@@ -215,7 +217,10 @@ in
               "${modifier}+b" = "split vertical";
               "${modifier}+n" = "split horizontal";
 
-              "${modifier}+r" = "mode resize";
+              "${modifier}+Alt+${sway-cfg.left}" = "resize shrink width 10 px";
+              "${modifier}+Alt+${sway-cfg.down}" = "resize grow height 10 px";
+              "${modifier}+Alt+${sway-cfg.up}" = "resize shrink height 10 px";
+              "${modifier}+Alt+${sway-cfg.right}" = "resize grow width 10 px";
               "${modifier}+f" = "fullscreen toggle";
               "${modifier}+Shift+space" = "floating toggle";
 
@@ -245,20 +250,6 @@ in
               ])
               workspaces-range))
             ) [ sway-cfg.modifier "Alt_R" ]);
-
-        modes = {
-          resize = {
-            "${sway-cfg.left}" = "resize shrink width 10 px";
-            "${sway-cfg.down}" = "resize grow height 10 px";
-            "${sway-cfg.up}" = "resize shrink height 10 px";
-            "${sway-cfg.right}" = "resize grow width 10 px";
-
-            "${sway-cfg.modifier}+r" = "mode default";
-            "Space" = "mode default";
-            "Return" = "mode default";
-            "Escape" = "mode default";
-          };
-        };
       };
     };
 
