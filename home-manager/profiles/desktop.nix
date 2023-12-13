@@ -9,12 +9,15 @@
 
 let
 
+  inherit (inputs) agenix nix-index-database nix-colors;
+
+
   # Says is the config has been loaded by the NixOS HM module or is it a standalone installation.
   isNixosManaged = osConfig != null;
 
 in
 {
-  imports = with inputs; [
+  imports = [
     # Agenix secrets manager
     agenix.homeManagerModules.default
     # TODO: dont hardcode system

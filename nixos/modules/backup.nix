@@ -1,6 +1,4 @@
-{ inputs
-, outputs
-, lib
+{ lib
 , config
 , pkgs
 , ...

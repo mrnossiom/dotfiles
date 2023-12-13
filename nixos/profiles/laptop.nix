@@ -9,15 +9,13 @@
 with lib;
 
 let
-  inherit (inputs) nixpkgs disko agenix;
+  inherit (inputs) nixpkgs agenix;
   inherit (outputs) overlays;
 in
 {
   # Hardware is imported in the flake to be machine specific
   imports = [
     ../modules/backup.nix
-
-    disko.nixosModules.disko
 
     agenix.nixosModules.default
     ../../secrets
