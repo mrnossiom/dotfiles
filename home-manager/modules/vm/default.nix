@@ -223,6 +223,8 @@ in
               "${modifier}+Alt+${sway-cfg.right}" = "resize grow width 10 px";
               "${modifier}+f" = "fullscreen toggle";
               "${modifier}+Shift+space" = "floating toggle";
+              # Change between tiling and floating focus
+              "${modifier}+space" = "focus mode_toggle";
 
               # Screenshotting
               "${modifier}+s" = ''exec ${getExe pkgs.grim} -g "$(${getExe pkgs.slurp})" - | ${getExe' pkgs.wl-clipboard "wl-copy"}'';

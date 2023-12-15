@@ -66,6 +66,14 @@ with lib;
         shp = "stash pop";
       };
 
+      hooks = {
+        git-guardian = pkgs.writeShellScript "git-guardian" ''
+          GITGUARDIAN_API_KEY="$(cat ${config.age.secrets.gitguardian-api-key.path})"
+          ${getExe' pkgs.ggshield "ggshield"} secret scan pre-commit "$@"
+        '';
+      };
+
+
       extraConfig = {
         fetch.prune = true;
         color.ui = true;
