@@ -1,19 +1,27 @@
+system:
 { lib, config, inputs, outputs, modulesPath, pkgs, ... }:
 
 with lib;
 
 let
-  disko = pkgs.writeShellScriptBin "disko" ''${config.system.build.diskoScript}'';
-  diskoFormat = pkgs.writeShellScriptBin "disko-format" "${config.system.build.formatScript}";
-  diskoMount = pkgs.writeShellScriptBin "disko-mount" "${config.system.build.mountScript}";
+  inherit (inputs) disko;
+  inherit (pkgs) writeShellScriptBin writeShellApplication;
 
-  system = outputs.nixosConfigurations.archaic-wiro-laptop.config.system.build.toplevel;
+  # If the disk layout is managed, add disko bin and commands to install script
+  diskLayoutIsManaged = system.config.local.disk.id;
 
-  installSystem = pkgs.writeShellApplication {
+  diskoCli = writeShellScriptBin "disko" ''${system.config.system.build.diskoScript}'';
+  diskoFormat = writeShellScriptBin "disko-format" "${system.config.system.build.formatScript}";
+  diskoMount = writeShellScriptBin "disko-mount" "${system.config.system.build.mountScript}";
+
+  installSystem = writeShellApplication {
     name = "install-system";
     runtimeInputs = [ diskoFormat diskoMount ];
 
     text = ''
+      echo "Wiping initial disk table..."
+      parted /dev/${system.config.local.disk.id} -- mklabel gpt
+
       echo "Formatting disks..."
       disko-format
 
@@ -21,7 +29,7 @@ let
       disko-mount
 
       echo "Installing system..."
-      nixos-install --system ${system}
+      nixos-install --system ${system.config.system.build.toplevel}
 
       echo "Done!"
     '';
@@ -29,28 +37,20 @@ let
 
 in
 {
-  imports = [
-    "${modulesPath}/installer/cd-dvd/installation-cd-minimal-new-kernel.nix"
-
-    inputs.disko.nixosModules.disko
-    ../layout/luks-btrfs.nix
-  ];
+  imports = [ "${modulesPath}/installer/cd-dvd/installation-cd-minimal-new-kernel.nix" ];
 
   config = {
     # Default compression is never-ending, this gets done in a minute with better results
     isoImage.squashfsCompression = "zstd -Xcompression-level 10";
 
     # Disable annoying warning
-    boot.swraid.enable = lib.mkForce false;
-
-    # we don't want to generate filesystem entries on this image
-    disko.enableConfig = lib.mkDefault false;
+    boot.swraid.enable = mkForce false;
 
     services.getty.helpLine = ''
       You can use `${installSystem.meta.mainProgram}` to format and mount disks.
       It then installs the selected system : ${"<system>"}.
     '';
 
-    environment.systemPackages = [ disko diskoFormat diskoMount installSystem ];
+    environment.systemPackages = [ diskoCli diskoFormat diskoMount installSystem ];
   };
 }

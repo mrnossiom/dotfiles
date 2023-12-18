@@ -31,43 +31,45 @@
     nixos-hardware.url = "github:nixos/nixos-hardware";
   };
 
-  outputs = { self, nixpkgs, home-manager, agenix, nix-index-database, disko, nix-colors, nixos-hardware, ... }@inputs:
+  outputs = { self, nixpkgs, home-manager, nixos-hardware, ... }:
     let
-      inherit (self) outputs;
+      inherit (self) inputs outputs;
+      inherit (nixpkgs.lib) nixosSystem genAttrs;
+      inherit (home-manager) homeManagerConfiguration;
 
-      systems = [ "aarch64-linux" "i686-linux" "x86_64-linux" "aarch64-darwin" "x86_64-darwin" ];
-      forAllSystems = nixpkgs.lib.genAttrs systems;
-
-      # Local flake helpers
-      lfh = import ./lib/flake nixpkgs;
+      flake-lib = import ./lib/flake (nixpkgs // { inherit self; });
+      forAllSystems = genAttrs [ "aarch64-linux" "i686-linux" "x86_64-linux" "aarch64-darwin" "x86_64-darwin" ];
     in
     {
       formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.nixpkgs-fmt);
 
       packages = forAllSystems (system: import ./pkgs nixpkgs.legacyPackages.${system});
-      apps = forAllSystems (system: import ./apps (nixpkgs.legacyPackages.${system} // { inherit self system; }));
+      apps = forAllSystems (system: import ./apps (nixpkgs.legacyPackages.${system} // { inherit self; }));
 
-      overlays = import ./overlays { inherit inputs; };
+      overlays = import ./overlays { inherit self; };
       nixosModules = import ./modules/nixos;
       homeManagerModules = import ./modules/home-manager;
 
       nixosConfigurations = {
-        "neo-wiro-laptop" = nixpkgs.lib.nixosSystem {
+        "neo-wiro-laptop" = nixosSystem {
           specialArgs = { inherit inputs outputs; };
           modules = [
-            (lfh.createSystem "neo-wiro-laptop" ./nixos/profiles/laptop.nix)
-            (lfh.createUser "milomoisson" {
+            ./nixos/hardware/neo-wiro-laptop.nix
+            (flake-lib.system "neo-wiro-laptop" ./nixos/profiles/laptop.nix)
+            (flake-lib.managedDiskLayout "nvme0n1" ./nixos/layout/luks-btrfs.nix)
+            (flake-lib.user "milomoisson" {
               description = "Milo Moisson";
               config = ./home-manager/profiles/desktop.nix;
             })
           ];
         };
 
-        "archaic-wiro-laptop" = nixpkgs.lib.nixosSystem {
+        "archaic-wiro-laptop" = nixosSystem {
           specialArgs = { inherit inputs outputs; };
           modules = [
-            (lfh.createSystem "archaic-wiro-laptop" ./nixos/profiles/laptop.nix)
-            (lfh.createUser "milomoisson" {
+            ./nixos/hardware/archaic-wiro-laptop.nix
+            (flake-lib.system "archaic-wiro-laptop" ./nixos/profiles/laptop.nix)
+            (flake-lib.user "milomoisson" {
               description = "Milo Moisson";
               config = ./home-manager/profiles/desktop.nix;
             })
@@ -78,7 +80,7 @@
       # In non-NixOS contexts, you can still home manager to manage dotfiles.
       # Else, configuration is loaded by the HM NixOS module which create system generations and free rollbacks.
       homeConfigurations = {
-        "milomoisson" = home-manager.lib.homeManagerConfiguration {
+        milomoisson = homeManagerConfiguration {
           # Home-manager requires 'pkgs' instance
           pkgs = nixpkgs.legacyPackages.x86_64-linux;
           extraSpecialArgs = { inherit inputs outputs; };

@@ -20,8 +20,7 @@ in
   imports = [
     # Agenix secrets manager
     agenix.homeManagerModules.default
-    # TODO: dont hardcode system
-    { home.packages = [ agenix.packages.x86_64-linux.default ]; }
+    { home.packages = [ agenix.packages.${pkgs.system}.default ]; }
 
     # Setup `comma`, which allow to easily run command that are not present on the system
     nix-index-database.hmModules.nix-index
@@ -41,9 +40,6 @@ in
     overlays = outputs.overlays.all;
 
     config = {
-      # Disable if you don't want unfree packages
-      allowUnfree = true;
-      # Workaround for https://github.com/nix-community/home-manager/issues/2942
       allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
         "authy"
         "discord"
@@ -81,14 +77,15 @@ in
       cinnamon.nemo
       transmission-gtk
       gnome.gnome-disk-utility
+      greenlight
+      cura
+      blender
 
       xdg-utils
       rustup
 
-      # For VSCode nix ext, find workaround for this not to be in path
-      rnix-lsp
-
       # Cli tools
+      busybox
       bat
       fd
       delta
@@ -141,11 +138,6 @@ in
       # foreground = "#${config.colorScheme.colors.base05}";
       # background = "#${config.colorScheme.colors.base00}";
     };
-  };
-
-  programs.vscode = {
-    enable = true;
-    # package = pkgs.unstable.vscode;
   };
 
   # TODO: configure

@@ -18,8 +18,8 @@ in
     ../modules/backup.nix
 
     agenix.nixosModules.default
+    { age.identityPaths = [ "/home/${config.local.user.username}/.ssh/id_ed25519" ]; }
     ../../secrets
-    { age.identityPaths = [ "/home/${config.users.main.username}/.ssh/id_ed25519" ]; }
   ];
 
 

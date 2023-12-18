@@ -224,7 +224,7 @@ in
               "${modifier}+f" = "fullscreen toggle";
               "${modifier}+Shift+space" = "floating toggle";
               # Change between tiling and floating focus
-              "${modifier}+space" = "focus mode_toggle";
+              "${modifier}+Alt+space" = "focus mode_toggle";
 
               # Screenshotting
               "${modifier}+s" = ''exec ${getExe pkgs.grim} -g "$(${getExe pkgs.slurp})" - | ${getExe' pkgs.wl-clipboard "wl-copy"}'';
@@ -251,7 +251,8 @@ in
                 { name = "${modifier}+Shift+${toString num.num}"; value = "move container to workspace number ${toString num.ws}; workspace number ${toString num.ws}"; }
               ])
               workspaces-range))
-            ) [ sway-cfg.modifier "Alt_R" ]);
+            ) [ sway-cfg.modifier ]);
+        #   ↑ Maybe have a second key as a modifier (like "Right Alt")
       };
     };
 

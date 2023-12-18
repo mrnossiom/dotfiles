@@ -4,10 +4,7 @@ with lib;
 
 let
 
-  # TODO: be modulable
-  cfg = {
-    device = "/dev/nvme0n1";
-  };
+  cfg = config.local.disk;
 
 in
 {

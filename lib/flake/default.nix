@@ -1,12 +1,11 @@
-{ ... }@pkgs: {
-  createSystem = hostName: config: {
-    imports = [
-      ../../nixos/hardware/${hostName}.nix
-      config
-    ];
+pkgs:
 
+{
+  system = hostName: profile: {
+    imports = [ profile ];
     networking.hostName = hostName;
   };
 
-  createUser = import ./createUser.nix;
+  user = import ./user.nix;
+  managedDiskLayout = import ./managedDiskLayout.nix;
 }

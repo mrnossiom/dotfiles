@@ -1,19 +1,22 @@
-{ inputs, ... }: rec {
+{ self, ... }:
+
+let
+  inherit (self) inputs;
+in
+rec {
   all = [ local-lib additions patches unstable-packages ];
 
-  # Bring our local lib
+  # Merge our local library to nixpkgs'
   local-lib = final: prev: { lib = { local = import ../lib final; } // prev.lib; };
 
   # Bring our custom packages from the `pkgs` directory
-  additions = final: _prev: import ../pkgs final;
+  additions = final: prev: import ../pkgs prev;
 
+  # Custom derivation patches
   patches = import ./patches.nix;
 
   # Makes the unstable nixpkgs set accessible through `pkgs.unstable`
   unstable-packages = final: _prev: {
-    unstable = import inputs.nixpkgs-unstable {
-      system = final.system;
-      config.allowUnfree = true;
-    };
+    unstable = import inputs.nixpkgs-unstable { system = final.system; config.allowUnfree = true; };
   };
 }

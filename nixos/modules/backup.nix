@@ -9,7 +9,7 @@ with lib;
 let
 
   hostname = config.networking.hostName;
-  mainUsername = config.users.main.username;
+  mainUsername = config.local.user.username;
 
 in
 {

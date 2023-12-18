@@ -10,16 +10,16 @@ with lib;
   ];
 
   options = {
-    users.main.username = mkOption {
+    local.user.username = mkOption {
       type = types.str;
       description = "The name of the user account.";
     };
   };
 
   config = {
-    users.main.username = name;
+    local.user.username = name;
 
-    users.users."${name}" = {
+    users.users.${name} = {
       isNormalUser = true;
       inherit description;
       extraGroups = [ "networkmanager" "wheel" ];
@@ -36,7 +36,7 @@ with lib;
       useUserPackages = true;
       useGlobalPkgs = false;
 
-      users."${name}" = import config;
+      users.${name} = import config;
     };
   };
 }

@@ -147,7 +147,9 @@ with lib;
         diff = "delta";
 
         # Nix-related
-        ns = "nix-shell -p";
+        # TODO: maybe move to a shell alias?
+        ns = "nix shell";
+        ur = " unlink result";
 
         # Do not keep these commands in history
         shutdown = " shutdown";
@@ -158,11 +160,9 @@ with lib;
       };
 
       functions = {
-        # Fish specific
-        fish_greeting = ''
-          echo 'Hello '(set_color brblue)(whoami)(set_color normal)' you are on '(set_color brred)(uname)(set_color normal)'.'
-          echo 'Current directory is '(set_color brgreen)(pwd)(set_color normal)
-        '';
+        # Executed on interactive shell start
+        fish_greeting = ''# Do nothing'';
+
         last_history_item = "echo $history[1]";
 
         change-mac = ''
@@ -193,10 +193,9 @@ with lib;
           end
         '';
 
-        # Quickly cd into a derivation
-        # NOTE: another channel can be specified after the derivation, tail uses the last derivation
-        # e.g. `cdd fontforge` or `cdd fontforge '<nixpkgs-unstable>'`
-        cdd = "cd (nix-build --no-out-link '<nixpkgs>' -A $argv | tail -n1)";
+        # Quickly explore a derivation (using registry syntax)
+        # e.g. `cdd nixpkgs#fontforge` or `cdd nixpkgs-unstable#fontforge` 
+        cdd = "cd (nix build --no-link --print-out-paths $argv | tail -n1)";
       };
     };
   };

@@ -68,7 +68,7 @@ with lib;
 
       hooks = {
         git-guardian = pkgs.writeShellScript "git-guardian" ''
-          GITGUARDIAN_API_KEY="$(cat ${config.age.secrets.gitguardian-api-key.path})"
+          export GITGUARDIAN_API_KEY="$(cat ${config.age.secrets.gitguardian-api-key.path})"
           ${getExe' pkgs.ggshield "ggshield"} secret scan pre-commit "$@"
         '';
       };
@@ -86,16 +86,15 @@ with lib;
         credential.helper = "${getExe' (pkgs.git.override { withLibsecret = true; }) "git-credential-libsecret"}";
         "credentials \"https://github.com\"".helper = "!${getExe pkgs.gh} auth git-credential";
 
-        leaveTool.defaultFolder = "~/Documents";
+        # TODO: change to $PROJECTS env var?
+        leaveTool.defaultFolder = "~/Developement";
       };
     };
 
-    programs.gh = {
-      enable = true;
-      # extensions = with pkgs; [ gh-dash ];
-    };
+    home.packages = with pkgs; [ git-leave ];
 
-    # TODO: unstable hm
-    # programs.gh-dash.enable = true;
+    programs.gh.enable = true;
+
+    programs.gh-dash.enable = true;
   };
 }
