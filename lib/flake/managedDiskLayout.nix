@@ -1,12 +1,12 @@
 device: layout:
 
-{ inputs, outputs, pkgs, lib, ... }:
+{ self, pkgs, lib, ... }:
 
 with lib;
 
 let
 
-  inherit (inputs) disko;
+  inherit (self.inputs) disko;
 
 in
 {

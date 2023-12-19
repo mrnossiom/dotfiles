@@ -1,7 +1,7 @@
-{ config
+{ self
+, config
 , lib
 , pkgs
-, outputs
 , ...
 }:
 
@@ -9,7 +9,7 @@ with lib;
 with builtins;
 
 let
-  inherit (outputs) homeManagerModules;
+  inherit (self.outputs) homeManagerModules;
 
   sway-cfg = config.wayland.windowManager.sway.config;
 
@@ -69,12 +69,17 @@ in
       timeouts = [
         # TODO: this doesn't work find a way to quickly cut output when locked and idle
         {
-          timeout = 1;
+          timeout = 10;
           command = "if ${getExe' pkgs.busybox "pgrep"} -x swaylock; then ${getExe' pkgs.sway "swaymsg"} \"output * power off\"; fi";
           resumeCommand = "${getExe' pkgs.sway "swaymsg"} \"output * power on\"";
         }
 
-        { timeout = 60 * 5; command = ''${getExe pkgs.chayang} -d5 && ${getExe' pkgs.sway "swaymsg"} "output * power off"''; resumeCommand = ''${getExe' pkgs.sway "swaymsg"} "output * power on"''; }
+        {
+          timeout = 60 * 5;
+          # ——————————————— Dims the screen for n seconds ↓↓ and then switch it off
+          command = ''${getExe pkgs.chayang} -d${toString 10} && ${getExe' pkgs.sway "swaymsg"} "output * power off"'';
+          resumeCommand = ''${getExe' pkgs.sway "swaymsg"} "output * power on"'';
+        }
         { timeout = 60 * 10; command = "${getExe' pkgs.systemd "loginctl"} lock-session"; }
         { timeout = 60 * 15; command = "${getExe' pkgs.systemd "systemctl"} suspend"; }
       ];
@@ -88,9 +93,8 @@ in
     wayland.windowManager.sway = {
       enable = true;
       config = {
-        # TODO: support multiple modifier keys
         modifier = "Mod4"; # Super key
-        terminal = "${getExe pkgs.kitty}";
+        terminal = getExe pkgs.kitty;
 
         defaultWorkspace = "workspace number 1";
 
@@ -111,6 +115,7 @@ in
         };
 
         startup = [
+          # TODO: pipe to other log file, like a standard log output folder
           { command = "${getExe' pkgs.workstyle "workstyle"} &> /tmp/workstyle.log"; always = true; }
         ];
 

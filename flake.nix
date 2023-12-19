@@ -51,30 +51,24 @@
       homeManagerModules = import ./modules/home-manager;
 
       nixosConfigurations = {
-        "neo-wiro-laptop" = nixosSystem {
-          specialArgs = { inherit inputs outputs; };
-          modules = [
-            ./nixos/hardware/neo-wiro-laptop.nix
-            (flake-lib.system "neo-wiro-laptop" ./nixos/profiles/laptop.nix)
-            (flake-lib.managedDiskLayout "nvme0n1" ./nixos/layout/luks-btrfs.nix)
-            (flake-lib.user "milomoisson" {
-              description = "Milo Moisson";
-              config = ./home-manager/profiles/desktop.nix;
-            })
-          ];
-        };
+        "neo-wiro-laptop" = flake-lib.createSystem [
+          ./nixos/hardware/neo-wiro-laptop.nix
+          (flake-lib.system "neo-wiro-laptop" ./nixos/profiles/laptop.nix)
+          (flake-lib.managedDiskLayout "nvme0n1" ./nixos/layout/luks-btrfs.nix)
+          (flake-lib.user "milomoisson" {
+            description = "Milo Moisson";
+            config = ./home-manager/profiles/desktop.nix;
+          })
+        ];
 
-        "archaic-wiro-laptop" = nixosSystem {
-          specialArgs = { inherit inputs outputs; };
-          modules = [
-            ./nixos/hardware/archaic-wiro-laptop.nix
-            (flake-lib.system "archaic-wiro-laptop" ./nixos/profiles/laptop.nix)
-            (flake-lib.user "milomoisson" {
-              description = "Milo Moisson";
-              config = ./home-manager/profiles/desktop.nix;
-            })
-          ];
-        };
+        "archaic-wiro-laptop" = flake-lib.createSystem [
+          ./nixos/hardware/archaic-wiro-laptop.nix
+          (flake-lib.system "archaic-wiro-laptop" ./nixos/profiles/laptop.nix)
+          (flake-lib.user "milomoisson" {
+            description = "Milo Moisson";
+            config = ./home-manager/profiles/desktop.nix;
+          })
+        ];
       };
 
       # In non-NixOS contexts, you can still home manager to manage dotfiles.
@@ -82,8 +76,8 @@
       homeConfigurations = {
         milomoisson = homeManagerConfiguration {
           # Home-manager requires 'pkgs' instance
-          pkgs = nixpkgs.legacyPackages.x86_64-linux;
-          extraSpecialArgs = { inherit inputs outputs; };
+          pkgs = nixpkgs.pkgs;
+          extraSpecialArgs = { inherit self; };
           modules = [ ./home-manager/profiles/desktop.nix ];
         };
       };

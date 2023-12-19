@@ -1,10 +1,15 @@
-{ config
+{ self
+, config
 , lib
 , pkgs
-, outputs
 , ...
-}: {
-  imports = [ outputs.homeManagerModules.xcompose ];
+}:
+
+let
+  inherit (self.outputs) homeManagerModules;
+in
+{
+  imports = [ homeManagerModules.xcompose ];
 
   options = { };
 

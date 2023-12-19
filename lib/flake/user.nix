@@ -1,13 +1,14 @@
 name: { description, config, user ? { } }:
 
-{ inputs, outputs, pkgs, lib, ... }:
+{ self, pkgs, lib, ... }:
 
 with lib;
 
+let
+  inherit (self.inputs) home-manager;
+in
 {
-  imports = [
-    inputs.home-manager.nixosModules.home-manager
-  ];
+  imports = [ home-manager.nixosModules.home-manager ];
 
   options = {
     local.user.username = mkOption {
@@ -30,7 +31,7 @@ with lib;
     } // user;
 
     home-manager = {
-      extraSpecialArgs = { inherit inputs outputs; };
+      extraSpecialArgs = { inherit self; };
       backupFileExtension = "bak";
 
       useUserPackages = true;

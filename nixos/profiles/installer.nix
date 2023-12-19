@@ -1,10 +1,10 @@
 system:
-{ lib, config, inputs, outputs, modulesPath, pkgs, ... }:
+{ lib, config, modulesPath, pkgs, ... }:
 
 with lib;
 
 let
-  inherit (inputs) disko;
+  inherit (self.inputs) disko;
   inherit (pkgs) writeShellScriptBin writeShellApplication;
 
   # If the disk layout is managed, add disko bin and commands to install script

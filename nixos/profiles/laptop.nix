@@ -1,5 +1,4 @@
-{ inputs
-, outputs
+{ self
 , lib
 , config
 , pkgs
@@ -9,8 +8,8 @@
 with lib;
 
 let
-  inherit (inputs) nixpkgs agenix;
-  inherit (outputs) overlays;
+  inherit (self.inputs) nixpkgs agenix;
+  inherit (self.outputs) overlays;
 in
 {
   # Hardware is imported in the flake to be machine specific
@@ -24,13 +23,12 @@ in
 
 
   nix = {
-    # This will add each flake input as a registry
-    # To make nix3 commands consistent with your flake
-    registry = lib.mapAttrs (_: value: { flake = value; }) inputs;
+    # Make system registry consistent with flake inputs
+    # Add `self` registry input that refers to flake
+    registry = mapAttrs (_: value: { flake = value; }) (self.inputs // { inherit self; });
 
-    # This will additionally add your inputs to the system's legacy channels
-    # Making legacy nix commands consistent as well, awesome!
-    nixPath = lib.mapAttrsToList (key: value: "${key}=${value.to.path}") config.nix.registry;
+    # Make NixOS system's legacy channels consistent with registry and flake inputs
+    nixPath = mapAttrsToList (key: value: "${key}=${value.to.path}") config.nix.registry;
 
     gc = {
       automatic = true;
@@ -197,4 +195,3 @@ in
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
   system.stateVersion = "23.05";
 }
-

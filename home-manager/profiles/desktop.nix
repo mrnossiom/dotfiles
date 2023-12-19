@@ -1,5 +1,4 @@
-{ inputs
-, outputs
+{ self
 , lib
 , config
 , pkgs
@@ -9,8 +8,7 @@
 
 let
 
-  inherit (inputs) agenix nix-index-database nix-colors;
-
+  inherit (self.inputs) agenix nix-index-database nix-colors;
 
   # Says is the config has been loaded by the NixOS HM module or is it a standalone installation.
   isNixosManaged = osConfig != null;
@@ -37,7 +35,7 @@ in
   ];
 
   nixpkgs = {
-    overlays = outputs.overlays.all;
+    overlays = self.outputs.overlays.all;
 
     config = {
       allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
@@ -85,7 +83,6 @@ in
       rustup
 
       # Cli tools
-      busybox
       bat
       fd
       delta
