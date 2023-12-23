@@ -9,6 +9,7 @@
 let
 
   inherit (self.inputs) agenix nix-index-database nix-colors;
+  inherit (self.outputs) overlays;
 
   # Says is the config has been loaded by the NixOS HM module or is it a standalone installation.
   isNixosManaged = osConfig != null;
@@ -35,7 +36,7 @@ in
   ];
 
   nixpkgs = {
-    overlays = self.outputs.overlays.all;
+    overlays = [ overlays.all ];
 
     config = {
       allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [

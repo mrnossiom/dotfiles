@@ -14,6 +14,7 @@
     agenix = {
       url = "github:ryantm/agenix";
       inputs.nixpkgs.follows = "nixpkgs";
+      inputs.home-manager.follows = "home-manager";
     };
 
     nix-index-database = {
@@ -43,10 +44,10 @@
     {
       formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.nixpkgs-fmt);
 
-      packages = forAllSystems (system: import ./pkgs nixpkgs.legacyPackages.${system});
+      packages = forAllSystems (system: import ./pkgs (import nixpkgs { inherit system; config.allowUnfree = true; }));
       apps = forAllSystems (system: import ./apps (nixpkgs.legacyPackages.${system} // { inherit self; }));
 
-      overlays = import ./overlays { inherit self; };
+      overlays = import ./overlays (nixpkgs // { inherit self; });
       nixosModules = import ./modules/nixos;
       homeManagerModules = import ./modules/home-manager;
 

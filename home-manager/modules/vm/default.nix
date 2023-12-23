@@ -230,6 +230,7 @@ in
               "${modifier}+Shift+space" = "floating toggle";
               # Change between tiling and floating focus
               "${modifier}+Alt+space" = "focus mode_toggle";
+              "${modifier}+p" = "sticky toggle";
 
               # Screenshotting
               "${modifier}+s" = ''exec ${getExe pkgs.grim} -g "$(${getExe pkgs.slurp})" - | ${getExe' pkgs.wl-clipboard "wl-copy"}'';

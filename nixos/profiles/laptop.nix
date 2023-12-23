@@ -38,11 +38,23 @@ in
     settings = {
       experimental-features = [ "nix-command" "flakes" ];
       auto-optimise-store = true;
+
+      keep-going = true;
+
+      trusted-users = [ config.local.user.username ];
+      extra-substituters = [
+        "https://nix-community.cachix.org"
+        "https://mrnossiom.cachix.org"
+      ];
+      extra-trusted-public-keys = [
+        "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+        "mrnossiom.cachix.org-1:WKo+xfDFaT6pRP4YiIFsEXvyBzI/Pm9uGhURgF1wlQg="
+      ];
     };
   };
 
   nixpkgs = {
-    overlays = overlays.all;
+    overlays = [ overlays.all ];
     config.allowUnfree = true;
   };
 

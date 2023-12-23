@@ -4,10 +4,16 @@ with lib;
 
 {
   config = {
-    programs.nix-index.enableFishIntegration = false;
     programs.nix-index-database.comma.enable = true;
 
-    programs.starship.enable = true;
+    programs.starship = {
+      enable = true;
+      settings.nix_shell = {
+        # Remove nix shell name
+        format = "via [$symbol$state]($style) ";
+        symbol = " ";
+      };
+    };
 
     # Assumes that helix is installed, use configured version of helix
     home.sessionVariables.EDITOR = "hx";
@@ -28,6 +34,7 @@ with lib;
             render = true;
             characters = "╎";
           };
+          file-picker.hidden = false;
           lsp.display-inlay-hints = true;
           soft-wrap.wrap-at-text-width = true;
         };
@@ -43,18 +50,20 @@ with lib;
         };
       };
       languages = {
-        language-server = {
+        language-server = with pkgs; {
           # Language server for nix
-          rnix-lsp.command = getExe' pkgs.rnix-lsp "rnix-lsp";
-          typst-lsp.command = getExe pkgs.typst-lsp;
+          rnix-lsp.command = getExe' rnix-lsp "rnix-lsp";
+          typst-lsp.command = getExe typst-lsp;
 
           # Default language servers
-          tuplo.command = getExe pkgs.taplo;
-          marksman.command = getExe' pkgs.marksman "marksman";
-          pylsp.command = getExe pkgs.python311Packages.python-lsp-server;
-          vscode-css-language-server.command = getExe' pkgs.vscode-langservers-extracted "vscode-css-language-server";
-          vscode-html-language-server.command = getExe' pkgs.vscode-langservers-extracted "vscode-html-language-server";
-          vscode-json-language-server.command = getExe' pkgs.vscode-langservers-extracted "vscode-json-language-server";
+          tuplo.command = getExe taplo;
+          marksman.command = getExe' marksman "marksman";
+          pylsp.command = getExe python311Packages.python-lsp-server;
+          vscode-css-language-server.command = getExe' vscode-langservers-extracted "vscode-css-language-server";
+          vscode-html-language-server.command = getExe' vscode-langservers-extracted "vscode-html-language-server";
+          vscode-json-language-server.command = getExe' vscode-langservers-extracted "vscode-json-language-server";
+          yaml-language-server.command = getExe yaml-language-server;
+          ansible-language-server.command = getExe' ansible-language-server "ansible-language-server";
         };
 
         grammar = [
@@ -160,8 +169,8 @@ with lib;
       };
 
       functions = {
-        # Executed on interactive shell start
-        fish_greeting = ''# Do nothing'';
+        # Executed on interactive shell start, greet with a short quote
+        fish_greeting = "${getExe pkgs.fortune} -s";
 
         last_history_item = "echo $history[1]";
 

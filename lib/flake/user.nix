@@ -34,7 +34,7 @@ in
       extraSpecialArgs = { inherit self; };
       backupFileExtension = "bak";
 
-      useUserPackages = true;
+      useUserPackages = false;
       useGlobalPkgs = false;
 
       users.${name} = import config;

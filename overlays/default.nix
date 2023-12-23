@@ -1,13 +1,16 @@
-{ self, ... }:
+{ self, lib, ... }:
 
 let
   inherit (self) inputs;
+  inherit (lib) composeManyExtensions;
 in
 rec {
-  all = [ local-lib additions patches unstable-packages ];
+  all = composeManyExtensions [ local-lib additions patches unstable-packages ];
 
   # Merge our local library to nixpkgs'
-  local-lib = final: prev: { lib = { local = import ../lib final; } // prev.lib; };
+  local-lib = final: prev: {
+    lib = { local = import ../lib final; } // prev.lib;
+  };
 
   # Bring our custom packages from the `pkgs` directory
   additions = final: prev: import ../pkgs prev;
