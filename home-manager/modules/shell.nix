@@ -56,9 +56,11 @@ with lib;
           typst-lsp.command = getExe typst-lsp;
 
           # Default language servers
-          tuplo.command = getExe taplo;
+          gopls.command = getExe gopls;
           marksman.command = getExe' marksman "marksman";
           pylsp.command = getExe python311Packages.python-lsp-server;
+          tuplo.command = getExe taplo;
+          typescript-language-server.command = getExe nodePackages.typescript-language-server;
           vscode-css-language-server.command = getExe' vscode-langservers-extracted "vscode-css-language-server";
           vscode-html-language-server.command = getExe' vscode-langservers-extracted "vscode-html-language-server";
           vscode-json-language-server.command = getExe' vscode-langservers-extracted "vscode-json-language-server";
@@ -121,7 +123,7 @@ with lib;
         # This is also a more pure version than using `__fish_ls_*` variables
         # that depends on fish internal ls wrappers and can be overriden by
         # bad configuration. (e.g. NixOS `environment.shellAliases` default)
-        ls = "${getExe pkgs.eza} --color=auto";
+        ls = "${getExe pkgs.eza} --color=auto --icons=auto --hyperlink";
       };
 
       shellAbbrs = {
@@ -144,9 +146,8 @@ with lib;
         mkdir = "mkdir -v";
 
         # Listing utilities
-        l = "ls -GlhFa";
+        l = "ls -Fa";
         ll = "ls -lhFa";
-        ls = "ls -Fa";
         ld = "ls -FD";
         tree = "ls -T";
 

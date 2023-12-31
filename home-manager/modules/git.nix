@@ -80,6 +80,8 @@ with lib;
         init.defaultBranch = "main";
         log.date = "human";
 
+        advice.addEmptyPathspec = false;
+
         # TODO: connect to a SSOT
         github.user = "mrnossiom";
 

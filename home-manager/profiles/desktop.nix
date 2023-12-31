@@ -6,14 +6,16 @@
 , ...
 }:
 
-let
+with lib;
 
+let
   inherit (self.inputs) agenix nix-index-database nix-colors;
   inherit (self.outputs) overlays;
 
   # Says is the config has been loaded by the NixOS HM module or is it a standalone installation.
   isNixosManaged = osConfig != null;
 
+  tomlFormat = pkgs.formats.toml { };
 in
 {
   imports = [
@@ -39,7 +41,7 @@ in
     overlays = [ overlays.all ];
 
     config = {
-      allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
+      allowUnfreePredicate = pkg: builtins.elem (getName pkg) [
         "authy"
         "discord"
         "spotify"
@@ -61,7 +63,22 @@ in
 
     sessionVariables = {
       XDG_DESKTOP_DIR = "$HOME";
+
+      # Respect XDG spec
+      BUN_INSTALL = "${config.xdg.dataHome}/bun";
+      CALCHISTFILE = "${config.xdg.cacheHome}/calc_history";
+      HISTFILE = "${config.xdg.dataHome}/bash_history";
+      RUSTUP_HOME = "${config.xdg.dataHome}/rustup";
+      WAKATIME_HOME = "${config.xdg.configHome}/wakatime";
     };
+
+    # Respect XDG spec
+    file.".npmrc".text = ''
+      prefix=${config.xdg.dataHome}/npm
+      cache=${config.xdg.cacheHome}/npm
+      init-module=${config.xdg.configHome}/npm/config/npm-init.js
+      logs-dir=${config.xdg.stateHome}/npm/logs
+    '';
 
     packages = with pkgs; [
       # Unfree packages
@@ -71,19 +88,20 @@ in
       thorium
       geogebra6
 
-      spotify-tui
-
+      # GUIs
       cinnamon.nemo
       transmission-gtk
       gnome.gnome-disk-utility
       greenlight
       cura
       blender
+      element-desktop
 
       xdg-utils
-      rustup
+      rustup # TODO: not sure to keep rustup in path
+      spotify-tui
 
-      # Cli tools
+      # CLI tools
       bat
       fd
       delta
@@ -92,12 +110,54 @@ in
       fzf
       btop
       tealdeer
+      jq
+      calc
 
       imv
       mpv
       wl-clipboard
       wf-recorder
     ];
+  };
+
+  xdg.configFile."tealdeer/config.toml".source = tomlFormat.generate "tealdeer-config" {
+    updates.auto_update = true;
+  };
+
+  programs.broot.enable = true;
+
+  programs.yazi = {
+    enable = true;
+
+    enableBashIntegration = true;
+    enableFishIntegration = true;
+    enableNushellIntegration = true;
+    enableZshIntegration = true;
+  };
+
+  programs.go = {
+    enable = true;
+    goPath = ".local/share/go";
+  };
+
+  home.file.".cargo/config.toml".source = tomlFormat.generate "cargo-config" {
+    build.rustc-wrapper = getExe' pkgs.sccache "sccache";
+
+    source = {
+      local-mirror.registry = "sparse+http://local.crates.io:8080/index/";
+      # crates-io.replace-with = "local-mirror";
+    };
+
+    target = {
+      x86_64-unknown-linux-gnu = {
+        linker = getExe pkgs.llvmPackages.clang;
+        rustflags = [ "-Clink-arg=--ld-path=${getExe pkgs.mold}" "-Ctarget-cpu=native" ];
+      };
+      x86_64-apple-darwin.rustflags = [ "-Clink-arg=-fuse-ld=${getExe' pkgs.llvmPackages.lld "lld"}" "-Ctarget-cpu=native" ];
+      aarch64-apple-darwin.rustflags = [ "-Clink-arg=-fuse-ld=${getExe' pkgs.llvmPackages.lld "lld"}" "-Ctarget-cpu=native" ];
+    };
+
+    unstable.gc = true;
   };
 
   xdg.mimeApps = {
