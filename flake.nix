@@ -44,7 +44,7 @@
     {
       formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.nixpkgs-fmt);
 
-      packages = forAllSystems (system: import ./pkgs (import nixpkgs { inherit system; config.allowUnfree = true; }));
+      packages = forAllSystems (system: import ./pkgs (import nixpkgs { inherit system; config.allowUnfreePredicate = import ../lib/unfree nixpkgs.legacyPackages.${system}; }));
       apps = forAllSystems (system: import ./apps (nixpkgs.legacyPackages.${system} // { inherit self; }));
 
       overlays = import ./overlays (nixpkgs // { inherit self; });

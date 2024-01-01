@@ -2,6 +2,7 @@
 , lib
 , config
 , pkgs
+  # Provides the NixOS configuration if HM was loaded through the NixOS module
 , osConfig ? null
 , ...
 }:
@@ -11,9 +12,6 @@ with lib;
 let
   inherit (self.inputs) agenix nix-index-database nix-colors;
   inherit (self.outputs) overlays;
-
-  # Says is the config has been loaded by the NixOS HM module or is it a standalone installation.
-  isNixosManaged = osConfig != null;
 
   tomlFormat = pkgs.formats.toml { };
 in
@@ -37,192 +35,187 @@ in
     ../modules/shell.nix
   ];
 
-  nixpkgs = {
-    overlays = [ overlays.all ];
-
-    config = {
-      allowUnfreePredicate = pkg: builtins.elem (getName pkg) [
-        "authy"
-        "discord"
-        "spotify"
-        "vscode"
-        "thorium-browser"
-        "unrar"
-        "geogebra"
-      ];
+  config = {
+    nixpkgs = {
+      overlays = [ overlays.all ];
+      config.allowUnfreePredicate = import ../../lib/unfree.nix pkgs;
     };
-  };
 
-  programs.home-manager.enable = !isNixosManaged;
+    programs.home-manager.enable = osConfig == null;
 
-  home = {
-    # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
-    stateVersion = "23.05";
-    username = "milomoisson";
-    homeDirectory = "/home/milomoisson";
+    home = {
+      stateVersion =
+        if osConfig != null
+        then osConfig.system.stateVersion
+        else "23.11";
 
-    sessionVariables = {
-      XDG_DESKTOP_DIR = "$HOME";
+      username = "milomoisson";
+      homeDirectory = "/home/milomoisson";
+
+      sessionVariables = {
+        XDG_DESKTOP_DIR = "$HOME";
+
+        NIXOS_OZONE_WL = "1";
+
+        # Respect XDG spec
+        BUN_INSTALL = "${config.xdg.dataHome}/bun";
+        CALCHISTFILE = "${config.xdg.cacheHome}/calc_history";
+        HISTFILE = "${config.xdg.dataHome}/bash_history";
+        RUSTUP_HOME = "${config.xdg.dataHome}/rustup";
+        WAKATIME_HOME = "${config.xdg.configHome}/wakatime";
+      };
 
       # Respect XDG spec
-      BUN_INSTALL = "${config.xdg.dataHome}/bun";
-      CALCHISTFILE = "${config.xdg.cacheHome}/calc_history";
-      HISTFILE = "${config.xdg.dataHome}/bash_history";
-      RUSTUP_HOME = "${config.xdg.dataHome}/rustup";
-      WAKATIME_HOME = "${config.xdg.configHome}/wakatime";
+      file.".npmrc".text = ''
+        prefix=${config.xdg.dataHome}/npm
+        cache=${config.xdg.cacheHome}/npm
+        init-module=${config.xdg.configHome}/npm/config/npm-init.js
+        logs-dir=${config.xdg.stateHome}/npm/logs
+      '';
+
+      packages = with pkgs; [
+        authy
+        discord
+        spotify
+        thorium
+        geogebra6
+
+        # GUIs
+        cinnamon.nemo
+        transmission-gtk
+        gnome.gnome-disk-utility
+        greenlight
+        cura
+        blender
+        element-desktop
+
+        xdg-utils
+        rustup # TODO: not sure to keep rustup in path
+        spotify-tui
+
+        # CLI tools
+        bat
+        fd
+        delta
+        ripgrep
+        glow
+        fzf
+        btop
+        tealdeer
+        jq
+        calc
+
+        imv
+        mpv
+        wl-clipboard
+        wf-recorder
+      ];
     };
 
-    # Respect XDG spec
-    file.".npmrc".text = ''
-      prefix=${config.xdg.dataHome}/npm
-      cache=${config.xdg.cacheHome}/npm
-      init-module=${config.xdg.configHome}/npm/config/npm-init.js
-      logs-dir=${config.xdg.stateHome}/npm/logs
-    '';
-
-    packages = with pkgs; [
-      # Unfree packages
-      authy
-      discord
-      spotify
-      thorium
-      geogebra6
-
-      # GUIs
-      cinnamon.nemo
-      transmission-gtk
-      gnome.gnome-disk-utility
-      greenlight
-      cura
-      blender
-      element-desktop
-
-      xdg-utils
-      rustup # TODO: not sure to keep rustup in path
-      spotify-tui
-
-      # CLI tools
-      bat
-      fd
-      delta
-      ripgrep
-      glow
-      fzf
-      btop
-      tealdeer
-      jq
-      calc
-
-      imv
-      mpv
-      wl-clipboard
-      wf-recorder
-    ];
-  };
-
-  xdg.configFile."tealdeer/config.toml".source = tomlFormat.generate "tealdeer-config" {
-    updates.auto_update = true;
-  };
-
-  programs.broot.enable = true;
-
-  programs.yazi = {
-    enable = true;
-
-    enableBashIntegration = true;
-    enableFishIntegration = true;
-    enableNushellIntegration = true;
-    enableZshIntegration = true;
-  };
-
-  programs.go = {
-    enable = true;
-    goPath = ".local/share/go";
-  };
-
-  home.file.".cargo/config.toml".source = tomlFormat.generate "cargo-config" {
-    build.rustc-wrapper = getExe' pkgs.sccache "sccache";
-
-    source = {
-      local-mirror.registry = "sparse+http://local.crates.io:8080/index/";
-      # crates-io.replace-with = "local-mirror";
+    xdg.configFile."tealdeer/config.toml".source = tomlFormat.generate "tealdeer-config" {
+      updates.auto_update = true;
     };
 
-    target = {
-      x86_64-unknown-linux-gnu = {
-        linker = getExe pkgs.llvmPackages.clang;
-        rustflags = [ "-Clink-arg=--ld-path=${getExe pkgs.mold}" "-Ctarget-cpu=native" ];
+    programs.broot.enable = true;
+
+    programs.yazi = {
+      enable = true;
+
+      enableBashIntegration = true;
+      enableFishIntegration = true;
+      enableNushellIntegration = true;
+      enableZshIntegration = true;
+    };
+
+    programs.go = {
+      enable = true;
+      goPath = ".local/share/go";
+    };
+
+    home.file.".cargo/config.toml".source = tomlFormat.generate "cargo-config" {
+      build.rustc-wrapper = getExe' pkgs.sccache "sccache";
+
+      source = {
+        local-mirror.registry = "sparse+http://local.crates.io:8080/index/";
+        # crates-io.replace-with = "local-mirror";
       };
-      x86_64-apple-darwin.rustflags = [ "-Clink-arg=-fuse-ld=${getExe' pkgs.llvmPackages.lld "lld"}" "-Ctarget-cpu=native" ];
-      aarch64-apple-darwin.rustflags = [ "-Clink-arg=-fuse-ld=${getExe' pkgs.llvmPackages.lld "lld"}" "-Ctarget-cpu=native" ];
+
+      target = {
+        x86_64-unknown-linux-gnu = {
+          linker = getExe pkgs.llvmPackages.clang;
+          rustflags = [ "-Clink-arg=--ld-path=${getExe pkgs.mold}" "-Ctarget-cpu=native" ];
+        };
+        x86_64-apple-darwin.rustflags = [ "-Clink-arg=-fuse-ld=${getExe' pkgs.llvmPackages.lld "lld"}" "-Ctarget-cpu=native" ];
+        aarch64-apple-darwin.rustflags = [ "-Clink-arg=-fuse-ld=${getExe' pkgs.llvmPackages.lld "lld"}" "-Ctarget-cpu=native" ];
+      };
+
+      unstable.gc = true;
     };
 
-    unstable.gc = true;
-  };
-
-  xdg.mimeApps = {
-    enable = true;
-    associations.added = {
-      "application/pdf" = [ "firefox.desktop" ];
+    xdg.mimeApps = {
+      enable = true;
+      associations.added = {
+        "application/pdf" = [ "firefox.desktop" ];
+      };
+      defaultApplications = {
+        "application/pdf" = [ "firefox.desktop" ];
+      };
     };
-    defaultApplications = {
-      "application/pdf" = [ "firefox.desktop" ];
+
+    # Nicely reload system units when changing configs
+    systemd.user.startServices = "sd-switch";
+
+    programs.firefox = {
+      enable = true;
+      package = (pkgs.firefox.override {
+        nativeMessagingHosts = with pkgs; [ tridactyl-native ];
+      });
+      profiles.default = {
+        isDefault = true;
+        settings = {
+          "browser.newtabpage.pinned" = [{ title = "NixOS"; url = "https://nixos.org"; }];
+        };
+      };
     };
-  };
+    programs.qutebrowser.enable = true;
 
-  # Nicely reload system units when changing configs
-  systemd.user.startServices = "sd-switch";
-
-  programs.firefox = {
-    enable = true;
-    package = (pkgs.firefox.override {
-      nativeMessagingHosts = with pkgs; [ tridactyl-native ];
-    });
-    profiles.default = {
-      isDefault = true;
+    programs.kitty = {
+      enable = true;
       settings = {
-        "browser.newtabpage.pinned" = [{ title = "NixOS"; url = "https://nixos.org"; }];
+        confirm_os_window_close = 0;
+        enable_audio_bell = "no";
+
+        # foreground = "#${config.colorScheme.colors.base05}";
+        # background = "#${config.colorScheme.colors.base00}";
       };
     };
-  };
-  programs.qutebrowser.enable = true;
 
-  programs.kitty = {
-    enable = true;
-    settings = {
-      confirm_os_window_close = 0;
-      enable_audio_bell = "no";
+    # TODO: configure
+    services.spotifyd.enable = true;
 
-      # foreground = "#${config.colorScheme.colors.base05}";
-      # background = "#${config.colorScheme.colors.base00}";
-    };
-  };
+    programs.gpg.enable = true;
 
-  # TODO: configure
-  services.spotifyd.enable = true;
+    programs.topgrade = {
+      enable = true;
+      package = pkgs.unstable.topgrade;
+      settings = {
+        misc = {
+          # Don't ask for confirmations
+          assume_yes = true;
 
-  programs.gpg.enable = true;
+          # Run `sudo -v` to cache credentials at the start of the run; this avoids a
+          # blocking password prompt in the middle of a possibly-unattended run.
+          pre_sudo = true;
 
-  programs.topgrade = {
-    enable = true;
-    package = pkgs.unstable.topgrade;
-    settings = {
-      misc = {
-        # Don't ask for confirmations
-        assume_yes = true;
+          skip_notify = true;
+          disable = [ "rustup" ];
+          no_retry = true;
+          cleanup = true;
+        };
 
-        # Run `sudo -v` to cache credentials at the start of the run; this avoids a
-        # blocking password prompt in the middle of a possibly-unattended run.
-        pre_sudo = true;
-
-        skip_notify = true;
-        disable = [ "rustup" ];
-        no_retry = true;
-        cleanup = true;
+        # TODO: sepcify via global config 
+        git.repos = [ "~/Developement/*/*" "~/.config/dotfiles" ];
       };
-
-      # TODO: sepcify via global config 
-      git.repos = [ "~/Developement/*/*" "~/.config/dotfiles" ];
     };
   };
 }

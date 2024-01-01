@@ -13,7 +13,7 @@ let
 
 in
 {
-  services.restic.backups = {
+  config.services.restic.backups = {
     # Backup documents and repos code
     google-drive = {
       repository = "rclone:googledrive:/Backups/${hostname}";

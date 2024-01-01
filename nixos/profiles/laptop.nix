@@ -14,51 +14,15 @@ in
 {
   # Hardware is imported in the flake to be machine specific
   imports = [
+    ../modules/agenix.nix
     ../modules/backup.nix
-
-    agenix.nixosModules.default
-    { age.identityPaths = [ "/home/${config.local.user.username}/.ssh/id_ed25519" ]; }
-    ../../secrets
-
-    nixosModules.logiops
+    ../modules/gaming.nix
+    ../modules/logiops.nix
+    ../modules/nix.nix
+    ../modules/security.nix
+    ../modules/virtualisation.nix
+    ../modules/wireless.nix
   ];
-
-
-  nix = {
-    # Make system registry consistent with flake inputs
-    # Add `self` registry input that refers to flake
-    registry = mapAttrs (_: value: { flake = value; }) (self.inputs // { inherit self; });
-
-    # Make NixOS system's legacy channels consistent with registry and flake inputs
-    nixPath = mapAttrsToList (key: value: "${key}=${value.to.path}") config.nix.registry;
-
-    gc = {
-      automatic = true;
-      dates = "weekly";
-    };
-
-    settings = {
-      experimental-features = [ "nix-command" "flakes" ];
-      auto-optimise-store = true;
-
-      keep-going = true;
-
-      trusted-users = [ config.local.user.username ];
-      extra-substituters = [
-        "https://nix-community.cachix.org"
-        "https://mrnossiom.cachix.org"
-      ];
-      extra-trusted-public-keys = [
-        "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
-        "mrnossiom.cachix.org-1:WKo+xfDFaT6pRP4YiIFsEXvyBzI/Pm9uGhURgF1wlQg="
-      ];
-    };
-  };
-
-  nixpkgs = {
-    overlays = [ overlays.all ];
-    config.allowUnfree = true;
-  };
 
   hardware.opengl = {
     enable = true;
@@ -72,13 +36,7 @@ in
 
   boot.extraModulePackages = with config.boot.kernelPackages; [ xone ];
 
-  security.pam.services.swaylock.text = "auth include login";
   programs.dconf.enable = true;
-
-  services.blueman.enable = true;
-
-  networking.networkmanager.enable = true;
-  networking.nameservers = [ "1.1.1.1" "8.8.8.8" "9.9.9.9" ];
 
   time.timeZone = "Europe/Paris";
 
@@ -115,87 +73,7 @@ in
 
   services.udev.packages = with pkgs; [ numworks-udev-rules ];
 
-  services.logiops = {
-    enable = true;
-    settings =
-      let
-        cid = {
-          #                  Control IDs │ reprog? │ fn key? │ mouse key? │ gesture support?
-          leftMouse = 80; #         0x50 │         │         │ YES        │ 
-          rightMouse = 81; #        0x51 │         │         │ YES        │ 
-          middleMouse = 81; #       0x52 │ YES     │         │ YES        │ YES
-          back = 83; #              0x53 │ YES     │         │ YES        │ YES
-          forward = 86; #           0x56 │ YES     │         │ YES        │ YES
-          switchRecievers = 215; #  0xD7 │ YES     │         │            │ YES
-          mouseSensitivity = 253; # 0xFD │ YES     │         │ YES        │ YES
-        };
-      in
-      {
-        devices = [{
-          name = "MX Vertical Advanced Ergonomic Mouse";
-
-          dpi = 1500;
-
-          hiresscroll = {
-            hires = true;
-            invert = false;
-            target = false;
-          };
-
-          buttons = [
-            {
-              cid = cid.forward;
-              action = {
-                type = "Keypress";
-                keys = [ "KEY_FORWARD" ];
-                # type = "Gestures";
-                # gestures = [
-                # {
-                #   direction = "Left";
-                #   mode = "OnTreshold";
-                #   action = {
-                #     type = "Keypress";
-                #     keys = ["KEY_LEFTMETA" "KEY_LEFTCTRL" "KEY_LEFTSHIFT" "KEY_TAB"];
-                #   };
-                # }
-                # ];
-              };
-            }
-            {
-              cid = cid.back;
-              action = {
-                type = "Keypress";
-                keys = [ "KEY_BACK" ];
-              };
-            }
-            {
-              cid = cid.mouseSensitivity;
-              action = {
-                type = "Keypress";
-                keys = [ "KEY_LEFTMETA" ];
-              };
-            }
-            {
-              cid = cid.switchRecievers;
-              action.type = "None";
-            }
-          ];
-        }];
-      };
-  };
-
-  services.flatpak.enable = true;
-
   services.devmon.enable = true;
-
-  security.sudo.enable = false;
-  security.sudo-rs.enable = true;
-
-  programs.nm-applet.enable = true;
-
-  security.polkit.enable = true;
-
-  security.rtkit.enable = true;
 
   services.pipewire = {
     enable = true;
@@ -205,76 +83,14 @@ in
     jack.enable = true;
   };
 
-  virtualisation.waydroid.enable = true;
-
-  virtualisation.docker = {
-    enable = true;
-    rootless = {
-      enable = true;
-      setSocketVariable = true;
-    };
-  };
-
-  # TODO: see if it works on neo laptop
-  services.fprintd.enable = true;
-
-  services.gnome.gnome-keyring.enable = true;
-
-  # TODO: should not be here
-  programs.steam = {
-    enable = true;
-    remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
-    dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
-  };
-
   services.upower.enable = true;
-
-  # TODO: maybe useful for printing
-  services.avahi = {
-    enable = true;
-    nssmdns = true;
-    openFirewall = true;
-  };
-
-  services.printing.enable = true;
 
   xdg.portal = {
     enable = true;
     wlr.enable = true;
 
     extraPortals = with pkgs; [ xdg-desktop-portal-gtk ];
-    xdgOpenUsePortal = true;
 
     config.common.default = "*";
   };
-
-  services.logind = {
-    lidSwitch = "lock";
-    lidSwitchDocked = "suspend";
-    lidSwitchExternalPower = "lock";
-    extraConfig = lib.generators.toKeyValue { } {
-      IdleAction = "lock";
-      # Don’t shutdown when power button is short-pressed
-      HandlePowerKey = "lock";
-      HandlePowerKeyLongPress = "suspend";
-    };
-  };
-
-  programs.gnupg.agent = {
-    enable = true;
-    enableSSHSupport = true;
-  };
-
-  services.openssh = {
-    enable = true;
-    settings = {
-      PermitRootLogin = "no";
-      PasswordAuthentication = false;
-    };
-  };
-
-  hardware.bluetooth.enable = true;
-
-  # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
-  system.stateVersion = "23.05";
 }

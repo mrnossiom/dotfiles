@@ -1,7 +1,10 @@
-{ self, lib, ... }:
+{ self
+, lib
+, ...
+}:
 
 let
-  inherit (self) inputs;
+  inherit (self.inputs) nixpkgs-unstable;
   inherit (lib) composeManyExtensions;
 in
 rec {
@@ -19,7 +22,7 @@ rec {
   patches = import ./patches.nix;
 
   # Makes the unstable nixpkgs set accessible through `pkgs.unstable`
-  unstable-packages = final: _prev: {
-    unstable = import inputs.nixpkgs-unstable { system = final.system; config.allowUnfree = true; };
+  unstable-packages = final: prev: {
+    unstable = import nixpkgs-unstable { inherit (final) system config; };
   };
 }
