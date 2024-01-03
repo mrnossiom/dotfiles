@@ -6,6 +6,9 @@
 
 with lib;
 
+let
+  theme = config.colorScheme.colors;
+in
 {
   options = { };
 
@@ -58,57 +61,55 @@ with lib;
       };
     };
 
-    wayland.windowManager.sway.config.bars = [
-      {
-        statusCommand = "${getExe pkgs.i3status-rust} ${config.home.homeDirectory}/${config.xdg.configFile."i3status-rust/config-default.toml".target}";
-        hiddenState = "hide";
-        mode = "hide";
-        fonts.size = 11.0;
+    wayland.windowManager.sway.config.bars = [{
+      statusCommand = "${getExe pkgs.i3status-rust} ${config.home.homeDirectory}/${config.xdg.configFile."i3status-rust/config-default.toml".target}";
+      hiddenState = "hide";
+      mode = "hide";
+      fonts.size = 11.0;
 
-        colors = with config.colorScheme.colors; {
-          background = "#${base00}";
-          focusedBackground = "#${base00}";
-          separator = "#cccccc";
-          focusedSeparator = "#cccccc";
-          statusline = "#cccccc";
-          focusedStatusline = "#cccccc";
+      colors = {
+        background = "#${theme.base00}";
+        focusedBackground = "#${theme.base00}";
+        separator = "#cccccc";
+        focusedSeparator = "#cccccc";
+        statusline = "#cccccc";
+        focusedStatusline = "#cccccc";
 
-          focusedWorkspace = rec {
-            text = "#${base07}";
-            background = "#${base0C}";
-            border = background;
-          };
-
-          inactiveWorkspace = rec {
-            text = "#${base05}";
-            background = "#${base01}";
-            border = background;
-          };
-
-          activeWorkspace = rec {
-            text = "#${base08}";
-            background = "#${base0C}";
-            border = background;
-          };
-
-          urgentWorkspace = rec {
-            text = "#ffffff";
-            background = "#${base0F}";
-            border = background;
-          };
-
-          bindingMode = rec {
-            text = "#ffffff";
-            background = "#${base0F}";
-            border = background;
-          };
+        focusedWorkspace = rec {
+          text = "#${theme.base07}";
+          background = "#${theme.base0C}";
+          border = background;
         };
 
-        # Would be nice to have rounded corners and padding when appearing
+        inactiveWorkspace = rec {
+          text = "#${theme.base05}";
+          background = "#${theme.base01}";
+          border = background;
+        };
 
-        extraConfig = "icon_theme Papirus";
-      }
-    ];
+        activeWorkspace = rec {
+          text = "#${theme.base08}";
+          background = "#${theme.base0C}";
+          border = background;
+        };
+
+        urgentWorkspace = rec {
+          text = "#ffffff";
+          background = "#${theme.base0F}";
+          border = background;
+        };
+
+        bindingMode = rec {
+          text = "#ffffff";
+          background = "#${theme.base0F}";
+          border = background;
+        };
+      };
+
+      # Would be nice to have rounded corners and padding when appearing
+
+      extraConfig = "icon_theme Papirus";
+    }];
 
 
     # We could've used `(pkgs.formats.toml { }).generate "config.toml" { <opts> }`

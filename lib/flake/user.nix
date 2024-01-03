@@ -13,7 +13,7 @@ in
   options = {
     local.user.username = mkOption {
       type = types.str;
-      description = "The name of the user account.";
+      description = "The name of the main user account";
     };
   };
 
@@ -23,7 +23,7 @@ in
     users.users.${name} = {
       isNormalUser = true;
       inherit description;
-      extraGroups = [ "networkmanager" "wheel" ];
+      extraGroups = [ "wheel" "networkmanager" ];
       shell = pkgs.fish;
 
       # TODO: Add your SSH public key(s) here, if you plan on using SSH to connect
@@ -32,7 +32,6 @@ in
 
     home-manager = {
       extraSpecialArgs = { inherit self; };
-      backupFileExtension = "bak";
 
       useUserPackages = false;
       useGlobalPkgs = false;

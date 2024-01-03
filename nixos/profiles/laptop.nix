@@ -67,6 +67,12 @@ in
     };
   };
 
+  programs.wireshark = {
+    enable = true;
+    package = pkgs.wireshark;
+  };
+  users.users.${config.local.user.username}.extraGroups = [ "wireshark" ];
+
   # This option is already filled with aliases that snowball and have 
   # priority on fish internal `ls` aliases
   environment.shellAliases = { ls = null; ll = null; l = null; };

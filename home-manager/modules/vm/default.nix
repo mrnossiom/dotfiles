@@ -12,14 +12,13 @@ with builtins;
 let
   inherit (self.outputs) homeManagerModules;
 
-  sway-cfg = config.wayland.windowManager.sway.config;
+  theme = config.colorScheme.colors;
+  swayCfg = config.wayland.windowManager.sway.config;
 
-  workspaces-range = zipListsWith (num: ws: { inherit ws num; }) [ 1 2 3 4 5 6 7 8 9 0 ] (range 1 10);
+  workspacesRange = zipListsWith (num: ws: { inherit ws num; }) [ 1 2 3 4 5 6 7 8 9 0 ] (range 1 10);
 in
 {
   imports = [ homeManagerModules.wl-clip-persist ./swaybar.nix ./xcompose.nix ./search.nix ];
-
-  options = { };
 
   config = {
     services.wl-clip-persist.enable = true;
@@ -47,26 +46,29 @@ in
         };
     };
 
-        font = "sans-serif 10";
-        backgroundColor = "#${base0D}";
-        textColor = "#ffffff";
+    services.mako = {
+      enable = true;
 
-        icons = true;
+      font = "sans-serif 10";
+      backgroundColor = "#${theme.base0D}";
+      textColor = "#ffffff";
 
-        width = 500;
-        maxVisible = 5;
-        sort = "-priority";
+      icons = true;
 
-        borderSize = 0;
-        borderRadius = 5;
+      width = 500;
+      maxVisible = 5;
+      sort = "-priority";
 
-        extraConfig = ''
-          [urgency="low"]
-          background-color=#${base0A}
-          [urgency="critical"]
-          background-color=#${base0F}
-        '';
-      };
+      borderSize = 0;
+      borderRadius = 5;
+
+      extraConfig = ''
+        [urgency="low"]
+        background-color=#${theme.base0A}
+        [urgency="critical"]
+        background-color=#${theme.base0F}
+      '';
+    };
 
     gtk = {
       enable = true;
@@ -143,8 +145,8 @@ in
 
         gaps.smartBorders = "no_gaps";
 
-        colors = with config.colorScheme.colors; {
-          background = "#${base00}";
+        colors = {
+          background = "#${theme.base00}";
 
           focused = {
             background = "#285577";
@@ -198,6 +200,8 @@ in
           };
         };
 
+        output."*".bg = "#000000 solid_color";
+
         seat = {
           "seat0" = {
             xcursor_theme = "Bibata-Modern-Ice";
@@ -212,10 +216,10 @@ in
         keybindings = foldl (acc: val: acc // val) { }
           (map
             (modifier: {
-              "${modifier}+Return" = "exec ${sway-cfg.terminal}";
+              "${modifier}+Return" = "exec ${swayCfg.terminal}";
               "${modifier}+Shift+Return" = "exec ${getExe pkgs.cinnamon.nemo}";
               "${modifier}+Shift+q" = "kill";
-              "${modifier}+d" = "exec ${sway-cfg.menu}";
+              "${modifier}+d" = "exec ${swayCfg.menu}";
               "${modifier}+Space" = "exec ${getExe' pkgs.mako "makoctl"} dismiss";
 
               "${modifier}+Escape" = "exec ${getExe' pkgs.systemd "loginctl"} lock-session";
@@ -231,22 +235,22 @@ in
                 rm $tmpimg
               ''}";
 
-              "${modifier}+${sway-cfg.left}" = "focus left";
-              "${modifier}+${sway-cfg.down}" = "focus down";
-              "${modifier}+${sway-cfg.up}" = "focus up";
-              "${modifier}+${sway-cfg.right}" = "focus right";
+              "${modifier}+${swayCfg.left}" = "focus left";
+              "${modifier}+${swayCfg.down}" = "focus down";
+              "${modifier}+${swayCfg.up}" = "focus up";
+              "${modifier}+${swayCfg.right}" = "focus right";
 
-              "${modifier}+Shift+${sway-cfg.left}" = "move left";
-              "${modifier}+Shift+${sway-cfg.down}" = "move down";
-              "${modifier}+Shift+${sway-cfg.up}" = "move up";
-              "${modifier}+Shift+${sway-cfg.right}" = "move right";
+              "${modifier}+Shift+${swayCfg.left}" = "move left";
+              "${modifier}+Shift+${swayCfg.down}" = "move down";
+              "${modifier}+Shift+${swayCfg.up}" = "move up";
+              "${modifier}+Shift+${swayCfg.right}" = "move right";
               "${modifier}+b" = "split vertical";
               "${modifier}+n" = "split horizontal";
 
-              "${modifier}+Alt+${sway-cfg.left}" = "resize shrink width 10 px";
-              "${modifier}+Alt+${sway-cfg.down}" = "resize grow height 10 px";
-              "${modifier}+Alt+${sway-cfg.up}" = "resize shrink height 10 px";
-              "${modifier}+Alt+${sway-cfg.right}" = "resize grow width 10 px";
+              "${modifier}+Alt+${swayCfg.left}" = "resize shrink width 10 px";
+              "${modifier}+Alt+${swayCfg.down}" = "resize grow height 10 px";
+              "${modifier}+Alt+${swayCfg.up}" = "resize shrink height 10 px";
+              "${modifier}+Alt+${swayCfg.right}" = "resize grow width 10 px";
               "${modifier}+f" = "fullscreen toggle";
               "${modifier}+Shift+space" = "floating toggle";
               # Change between tiling and floating focus
@@ -277,8 +281,8 @@ in
                 { name = "${modifier}+Alt+${toString num.num}"; value = "move container to workspace number ${toString num.ws}"; }
                 { name = "${modifier}+Shift+${toString num.num}"; value = "move container to workspace number ${toString num.ws}; workspace number ${toString num.ws}"; }
               ])
-              workspaces-range))
-            ) [ sway-cfg.modifier ]);
+              workspacesRange))
+            ) [ swayCfg.modifier ]);
         #   ↑ Maybe have a second key as a modifier (like "Right Alt")
       };
     };
