@@ -22,6 +22,7 @@ in
     ../modules/security.nix
     ../modules/virtualisation.nix
     ../modules/wireless.nix
+    ../modules/info.nix
   ];
 
   hardware.opengl = {

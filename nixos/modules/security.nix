@@ -29,7 +29,8 @@ with lib;
       };
     };
 
-    security.pam.services.swaylock.text = "auth include login";
+    # Required when using swaylock
+    security.pam.services.swaylock = { };
 
     # Signing
     programs.gnupg.agent = {

@@ -1,5 +1,6 @@
 { self
 , config
+, osConfig
 , lib
 , pkgs
 , ...
@@ -23,9 +24,28 @@ in
   config = {
     services.wl-clip-persist.enable = true;
 
-    services.mako = with config.colorScheme.colors;
-      {
-        enable = true;
+    programs.swaylock = {
+      enable = true;
+      settings =
+        let
+          cfg = if osConfig != null then osConfig.local.screen else null;
+        in
+        {
+          daemonize = true;
+          ignore-empty-password = true;
+          show-failed-attempts = true;
+
+          indicator-y-position =
+            if cfg != null
+            then ((cfg.height * 0.9) / cfg.scale)
+            else null;
+          indicator-x-position =
+            if cfg != null
+            then 100
+            else null;
+          image = toString ../../assets/BinaryCloud.png;
+        };
+    };
 
         font = "sans-serif 10";
         backgroundColor = "#${base0D}";
@@ -86,7 +106,7 @@ in
       events = [
         { event = "before-sleep"; command = "${getExe pkgs.playerctl} pause"; }
         # Can be triggered with `loginctl lock-session`
-        { event = "lock"; command = "${getExe pkgs.swaylock} -feF --indicator-y-position 980 --indicator-x-position 100 -i ${../../assets/BinaryCloud.png}"; }
+        { event = "lock"; command = getExe pkgs.swaylock; }
       ];
     };
 
@@ -204,8 +224,9 @@ in
 
                 # Give some time to hide the bar
                 sleep 1
+
                 ${getExe pkgs.grim} $tmpimg
-                ${getExe pkgs.swaylock} -feF --image $tmpimg --indicator-y-position 980 --indicator-x-position 100 
+                ${getExe pkgs.swaylock} --image $tmpimg
 
                 rm $tmpimg
               ''}";
