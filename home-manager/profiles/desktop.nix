@@ -38,7 +38,7 @@ in
   config = {
     nixpkgs = {
       overlays = [ overlays.all ];
-      config.allowUnfreePredicate = import ../../lib/unfree.nix pkgs;
+      config.allowUnfreePredicate = import ../../lib/unfree.nix;
     };
 
     programs.home-manager.enable = osConfig == null;

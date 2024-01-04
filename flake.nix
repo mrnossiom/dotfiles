@@ -38,14 +38,20 @@
       inherit (nixpkgs.lib) nixosSystem genAttrs;
       inherit (home-manager) homeManagerConfiguration;
 
-      flake-lib = import ./lib/flake (nixpkgs // { inherit self; });
       forAllSystems = genAttrs [ "aarch64-linux" "i686-linux" "x86_64-linux" "aarch64-darwin" "x86_64-darwin" ];
+      flake-lib = import ./lib/flake (nixpkgs // { inherit self; });
+
+      pkgs = forAllSystems (system: (import nixpkgs {
+        inherit system;
+        config.allowUnfreePredicate = import ./lib/unfree.nix;
+        overlays = [ outputs.overlays.all ];
+      }) // { inherit self; });
     in
     {
-      formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.nixpkgs-fmt);
+      formatter = forAllSystems (system: pkgs.${system}.nixpkgs-fmt);
 
-      packages = forAllSystems (system: import ./pkgs (import nixpkgs { inherit system; config.allowUnfreePredicate = import ../lib/unfree nixpkgs.legacyPackages.${system}; }));
-      apps = forAllSystems (system: import ./apps (nixpkgs.legacyPackages.${system} // { inherit self; }));
+      packages = forAllSystems (system: import ./pkgs pkgs.${system});
+      apps = forAllSystems (system: import ./apps pkgs.${system});
 
       overlays = import ./overlays (nixpkgs // { inherit self; });
       nixosModules = import ./modules/nixos;
@@ -53,7 +59,6 @@
 
       nixosConfigurations = {
         "neo-wiro-laptop" = flake-lib.createSystem [
-          ./nixos/hardware/neo-wiro-laptop.nix
           (flake-lib.system "neo-wiro-laptop" ./nixos/profiles/laptop.nix)
           (flake-lib.managedDiskLayout "nvme0n1" ./nixos/layout/luks-btrfs.nix)
           (flake-lib.user "milomoisson" {
@@ -63,7 +68,6 @@
         ];
 
         "archaic-wiro-laptop" = flake-lib.createSystem [
-          ./nixos/hardware/archaic-wiro-laptop.nix
           (flake-lib.system "archaic-wiro-laptop" ./nixos/profiles/laptop.nix)
           (flake-lib.user "milomoisson" {
             description = "Milo Moisson";
@@ -76,7 +80,6 @@
       # Else, configuration is loaded by the HM NixOS module which create system generations and free rollbacks.
       homeConfigurations = {
         milomoisson = homeManagerConfiguration {
-          # Home-manager requires 'pkgs' instance
           pkgs = nixpkgs.pkgs;
           extraSpecialArgs = { inherit self; };
           modules = [ ./home-manager/profiles/desktop.nix ];

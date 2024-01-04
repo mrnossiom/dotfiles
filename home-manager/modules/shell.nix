@@ -157,7 +157,6 @@ with lib;
         diff = "delta";
 
         # Nix-related
-        # TODO: maybe move to a shell alias?
         ns = "nix shell";
         ur = " unlink result";
 

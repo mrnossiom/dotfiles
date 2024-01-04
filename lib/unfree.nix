@@ -1,12 +1,5 @@
-pkgs:
-
 # List of all unfree packages authorized
-
-let
-  inherit (builtins) elem;
-  inherit (pkgs.lib) getName;
-in
-package: elem (getName package) [
+package: builtins.elem package.pname [
   # NixOS
   "steam"
   "steam-original"

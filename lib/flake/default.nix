@@ -9,7 +9,7 @@ with lib;
   };
 
   system = hostName: profile: {
-    imports = [ profile ];
+    imports = [ profile ../../nixos/hardware/${hostName}.nix ];
     networking.hostName = hostName;
   };
   user = import ./user.nix;
