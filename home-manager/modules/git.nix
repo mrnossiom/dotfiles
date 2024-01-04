@@ -93,7 +93,7 @@ with lib;
       };
     };
 
-    home.packages = with pkgs; [ git-leave ];
+    home.packages = with pkgs; [ git-leave radicle-cli radicle-httpd radicle-node ];
 
     programs.gh.enable = true;
 
