@@ -12,7 +12,7 @@ let
 in
 {
   config = {
-    wayland.windowManager.sway.config.menu = "${getExe' pkgs.tofi "tofi-drun"} --font ${pkgs.inter}/share/fonts/opentype/Inter-Regular.otf | xargs ${getExe' pkgs.sway "swaymsg"} exec --";
+    wayland.windowManager.sway.config.menu = "${getExe' pkgs.tofi "tofi-drun"} --font ${pkgs.nerdfonts.override { fonts = [ "JetBrainsMono" ]; }}/share/fonts/truetype/JetBrainsMonoNerdFont-Regular.ttf | xargs ${getExe' pkgs.sway "swaymsg"} exec --";
 
     xdg.configFile."tofi/config".text = keyValueFormat {
       font-size = 14;

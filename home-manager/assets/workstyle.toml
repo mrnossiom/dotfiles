@@ -7,22 +7,14 @@
 "firefox" = ""
 
 "kitty" = ""
-"file manager" = ""
-"libreoffice calc" = ""
+"ya" = ""
 
-"nvim" = ""
+"helix" = "🧬"
 "transmission" = ""
 "music" = ""
-"visual studio code" = "󰘐"
 
-# TODO fix
-"libreoffice writer" = ""
-"libreoffice" = ""
-"calculator" = ""
-"videostream" = ""
-"mpv" = ""
-"disk usage" = ""
-".pdf" = ""
+"mpv" = ""
+"imv" = ""
 
 [other]
 "fallback_icon" = ""

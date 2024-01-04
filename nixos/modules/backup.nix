@@ -7,10 +7,9 @@
 with lib;
 
 let
-
+  inherit (config.age.secrets) restic-backup-pass googledrive-rclone-config;
   hostname = config.networking.hostName;
   mainUsername = config.local.user.username;
-
 in
 {
   config.services.restic.backups = {
@@ -18,8 +17,8 @@ in
     google-drive = {
       repository = "rclone:googledrive:/Backups/${hostname}";
       initialize = true;
-      passwordFile = config.age.secrets.restic-backup-pass.path;
-      rcloneConfigFile = config.age.secrets.googledrive-rclone-config.path;
+      passwordFile = restic-backup-pass.path;
+      rcloneConfigFile = googledrive-rclone-config.path;
 
       paths = [
         "/home/${mainUsername}/Documents"
@@ -63,8 +62,9 @@ in
     # Backup documents and large files
     archaic-bak = {
       initialize = true;
-      passwordFile = config.age.secrets.restic-backup-pass.path;
+      passwordFile = restic-backup-pass.path;
       paths = [ "/home/${mainUsername}/Documents" ];
+      # TODO
       repository = "/mnt/${mainUsername}/ArchaicBak/Backups/${hostname}";
     };
   };

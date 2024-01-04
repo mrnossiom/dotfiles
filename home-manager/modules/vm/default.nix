@@ -136,10 +136,7 @@ in
           }];
         };
 
-        startup = [
-          # TODO: pipe to other log file, like a standard log output folder
-          { command = "${getExe' pkgs.workstyle "workstyle"} &> /tmp/workstyle.log"; always = true; }
-        ];
+        startup = [{ command = "${getExe' pkgs.workstyle "workstyle"} &> /var/log/workstyle.log"; always = true; }];
 
         focus.followMouse = false;
 
