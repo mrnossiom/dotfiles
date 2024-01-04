@@ -34,15 +34,11 @@ in
           ignore-empty-password = true;
           show-failed-attempts = true;
 
-          indicator-y-position =
-            if cfg != null
-            then ((cfg.height * 0.9) / cfg.scale)
-            else null;
-          indicator-x-position =
-            if cfg != null
-            then 100
-            else null;
           image = toString ../../assets/BinaryCloud.png;
+        }
+        // optionalAttrs (cfg != null) {
+          indicator-y-position = ((cfg.height * 0.9) / cfg.scale);
+          indicator-x-position = 100;
         };
     };
 

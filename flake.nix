@@ -6,37 +6,34 @@
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     # Also see the 'unstable-packages' overlay at 'overlays/default.nix'.
 
-    home-manager = {
-      url = "github:nix-community/home-manager/release-23.11";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    home-manager.url = "github:nix-community/home-manager/release-23.11";
+    home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
-    agenix = {
-      url = "github:ryantm/agenix";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.home-manager.follows = "home-manager";
-    };
+    agenix.url = "github:ryantm/agenix";
+    agenix.inputs.nixpkgs.follows = "nixpkgs";
+    agenix.inputs.home-manager.follows = "home-manager";
 
-    nix-index-database = {
-      url = "github:Mic92/nix-index-database";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    nix-index-database.url = "github:Mic92/nix-index-database";
+    nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
 
-    disko = {
-      url = "github:nix-community/disko";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    disko.url = "github:nix-community/disko";
+    disko.inputs.nixpkgs.follows = "nixpkgs";
 
     nix-colors.url = "github:misterio77/nix-colors";
 
     nixos-hardware.url = "github:nixos/nixos-hardware";
+
+    git-leave.url = "github:mrnossiom/git-leave";
+    git-leave.inputs.nixpkgs.follows = "nixpkgs";
+
+    radicle.url = "git+https://seed.radicle.xyz/z3gqcJUoA1n9HaHKufZs5FCSGazv5";
+    radicle.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { self, nixpkgs, home-manager, nixos-hardware, ... }:
+  outputs = { self, nixpkgs, nixos-hardware, ... }:
     let
       inherit (self) inputs outputs;
       inherit (nixpkgs.lib) nixosSystem genAttrs;
-      inherit (home-manager) homeManagerConfiguration;
 
       forAllSystems = genAttrs [ "aarch64-linux" "i686-linux" "x86_64-linux" "aarch64-darwin" "x86_64-darwin" ];
       flake-lib = import ./lib/flake (nixpkgs // { inherit self; });
@@ -45,7 +42,7 @@
         inherit system;
         config.allowUnfreePredicate = import ./lib/unfree.nix;
         overlays = [ outputs.overlays.all ];
-      }) // { inherit self; });
+      }));
     in
     {
       formatter = forAllSystems (system: pkgs.${system}.nixpkgs-fmt);
@@ -76,14 +73,14 @@
         ];
       };
 
-      # In non-NixOS contexts, you can still home manager to manage dotfiles.
-      # Else, configuration is loaded by the HM NixOS module which create system generations and free rollbacks.
+      # I bundle my Home Manager config via the NixOS modules which create system generations and give free rollbacks.
+      # However, in non-NixOS contexts, you can still use Home Manager to manage dotfiles using this template.
       homeConfigurations = {
-        milomoisson = homeManagerConfiguration {
-          pkgs = nixpkgs.pkgs;
-          extraSpecialArgs = { inherit self; };
-          modules = [ ./home-manager/profiles/desktop.nix ];
-        };
+        # "<username>@<hostname>" = homeManagerConfiguration {
+        #   pkgs = pkgs."<system>";
+        #   extraSpecialArgs = { inherit self; osConfig = null; };
+        #   modules = [ ./home-manager/profiles/desktop.nix ];
+        # };
       };
     };
 }

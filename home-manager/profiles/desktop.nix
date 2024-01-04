@@ -63,6 +63,8 @@ in
         HISTFILE = "${config.xdg.dataHome}/bash_history";
         RUSTUP_HOME = "${config.xdg.dataHome}/rustup";
         WAKATIME_HOME = "${config.xdg.configHome}/wakatime";
+        W3M_DIR = "${config.xdg.configHome}/w3m";
+
       };
 
       # Respect XDG spec
@@ -90,7 +92,6 @@ in
         element-desktop
 
         xdg-utils
-        rustup # TODO: not sure to keep rustup in path
         spotify-tui
 
         # CLI tools
@@ -126,6 +127,9 @@ in
       enableNushellIntegration = true;
       enableZshIntegration = true;
     };
+
+    # Force override file which is not symlinked for whatever reason and causes errors on rebuilds
+    xdg.configFile."mimeapps.list".force = true;
 
     programs.go = {
       enable = true;
