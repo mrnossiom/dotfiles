@@ -1,7 +1,15 @@
-{ config, lib, pkgs, modulesPath, ... }:
+{ self, config, lib, pkgs, modulesPath, ... }:
 
+let
+  inherit (self.outputs) nixosModules;
+in
 {
-  imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
+  imports = [
+    "${modulesPath}/installer/scan/not-detected.nix"
+
+    # Patches ACPI tables to fix sound issue
+    nixosModules.hardware.asus.zenbook.ux3402za.sound
+  ];
 
   config = {
     local.screen = {
