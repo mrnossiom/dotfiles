@@ -95,6 +95,7 @@ in
         spotify-tui
 
         # CLI tools
+        just
         bat
         fd
         delta

@@ -27,7 +27,7 @@ in
       enable = true;
       settings =
         let
-          cfg = if osConfig != null then osConfig.local.screen else null;
+          cfg = osConfig.local.screen or null;
         in
         {
           daemonize = true;
