@@ -7,32 +7,23 @@
 
 { lib, pkgs, ... }:
 
+with lib;
+
 let
-  inherit (pkgs) stdenv acpica-tools cpio;
+  inherit (pkgs) runCommand acpica-tools cpio;
 
-  ssdt-csc2551-patched-acpi-table = stdenv.mkDerivation {
-    name = "ssdt-csc2551";
-    src = ./ssdt-csc3551.dsl;
-    buildInputs = [ acpica-tools cpio ];
+  ssdt-csc2551-acpi-table-patch = runCommand "ssdt-csc2551" { } ''
+    mkdir iasl
+    cp ${./ssdt-csc3551.dsl} iasl/ssdt-csc3551.dsl
+    ${getExe' acpica-tools "iasl"} -ia iasl/ssdt-csc3551.dsl
 
-    unpackPhase = "true";
-    buildPhase = ''
-      mkdir iasl
-      cp $src iasl/ssdt-csc3551.dsl
-      iasl -ia iasl/ssdt-csc3551.dsl
-
-      mkdir -p kernel/firmware/acpi
-      cp iasl/ssdt-csc3551.aml kernel/firmware/acpi/
-      find kernel | cpio -H newc --create > patched-acpi-tables.cpio
-    '';
-
-    installPhase = ''
-      cp patched-acpi-tables.cpio $out
-    '';
-  };
+    mkdir -p kernel/firmware/acpi
+    cp iasl/ssdt-csc3551.aml kernel/firmware/acpi/
+    find kernel | ${getExe cpio} -H newc --create > patched-acpi-tables.cpio
+    
+    cp patched-acpi-tables.cpio $out
+  '';
 in
 {
-  config = {
-    boot.initrd.prepend = [ (toString ssdt-csc2551-patched-acpi-table) ];
-  };
+  config.boot.initrd.prepend = [ (toString ssdt-csc2551-acpi-table-patch) ];
 }
