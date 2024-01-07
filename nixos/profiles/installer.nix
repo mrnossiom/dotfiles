@@ -1,39 +1,55 @@
-system:
-{ lib, config, modulesPath, pkgs, ... }:
+{ self, lib, modulesPath, pkgs, ... }:
 
 with lib;
 
 let
   inherit (self.inputs) disko;
-  inherit (pkgs) writeShellScriptBin writeShellApplication;
+  inherit (pkgs) writeShellScriptBin writeShellApplication pastebinit;
 
-  # If the disk layout is managed, add disko bin and commands to install script
-  diskLayoutIsManaged = system.config.local.disk.id;
+  binName = drv: drv.meta.mainProgram;
 
-  diskoCli = writeShellScriptBin "disko" ''${system.config.system.build.diskoScript}'';
-  diskoFormat = writeShellScriptBin "disko-format" "${system.config.system.build.formatScript}";
-  diskoMount = writeShellScriptBin "disko-mount" "${system.config.system.build.mountScript}";
+  flakeUri = "github:mrnossiom/dotfiles/nixos";
 
-  installSystem = writeShellApplication {
-    name = "install-system";
-    runtimeInputs = [ diskoFormat diskoMount ];
+  ## Wireless related
 
-    text = ''
-      echo "Wiping initial disk table..."
-      parted /dev/${system.config.local.disk.id} -- mklabel gpt
+  # connect-wifi <interface> <BSSID>
+  connect-wifi = writeShellScriptBin "connect-wifi" ''
+    if [ -z "$1" ]; then echo "Interface unset"; exit; fi
+    if [ -z "$2" ]; then echo "SSID unset"; exit; fi
+    
+    CONFIG=$(mktemp)
+    wpa_passphrase $2 > $CONFIG 
+    sudo wpa_supplicant -B -i$1 -c$CONFIG
+  '';
 
-      echo "Formatting disks..."
-      disko-format
+  ## Formatting related
 
-      echo "Mounting disks..."
-      disko-mount
+  # Does the whole destroy, format, mount disko cycle
+  # disko-cycle <hostname>
+  disko-cycle = writeShellScriptBin "disko-cycle" ''
+    if [ -z "$1" ]; then echo "Hostname unset"; exit; fi
 
-      echo "Installing system..."
-      nixos-install --system ${system.config.system.build.toplevel}
+    echo "Running disko destroy, format and mount script for $1"
+    nix build ${flakeUri}#nixosConfigurations.$1.config.system.build.diskoScript
+    sudo bash result
+  '';
 
-      echo "Done!"
-    '';
-  };
+  ## NixOS install related
+
+  # Generates hardware related config and uploads it to pastebin
+  # link-hardware-config [root]
+  link-hardware-config = writeShellScriptBin "link-hardware-config" ''
+    nixos-generate-config --root ''${1:-/mnt} --show-hardware-config | ${getExe pastebinit}
+  '';
+
+  # Install specified flake system to /mnt
+  # install-system <hostname>
+  install-system = writeShellScriptBin "install-system" ''
+    if [ -z "$1" ]; then echo "Hostname unset"; exit; fi
+
+    echo "Installing $1"
+    nixos-install --system ${flakeUri}#$1
+  '';
 
 in
 {
@@ -46,11 +62,32 @@ in
     # Disable annoying warning
     boot.swraid.enable = mkForce false;
 
+    nix.settings = {
+      experimental-features = [ "nix-command" "flakes" ];
+      extra-substituters = [
+        "https://nix-community.cachix.org"
+        "https://mrnossiom.cachix.org"
+      ];
+      extra-trusted-public-keys = [
+        "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+        "mrnossiom.cachix.org-1:WKo+xfDFaT6pRP4YiIFsEXvyBzI/Pm9uGhURgF1wlQg="
+      ];
+    };
+
+    # Start wpa_supplicant rigth away
+    systemd.services.wpa_supplicant.wantedBy = mkForce [ "multi-user.target" ];
+
     services.getty.helpLine = ''
-      You can use `${installSystem.meta.mainProgram}` to format and mount disks.
-      It then installs the selected system : ${"<system>"}.
+      Available custom tools:
+      - Networking: ${binName connect-wifi}
+      - File System: ${binName disko-cycle}
+      - Installation: ${binName link-hardware-config}, ${binName install-system}
+
+      Troubleshoot:
+      - If the disko installer fails to finish due to a dark error just wipe the disk table
+        $ parted /dev/<disk-id> -- mklabel gpt
     '';
 
-    environment.systemPackages = [ diskoCli diskoFormat diskoMount installSystem ];
+    environment.systemPackages = [ connect-wifi disko-cycle link-hardware-config install-system ];
   };
 }

@@ -1,13 +1,11 @@
-currentNixosSystem:
 { self, system, lib, writeShellApplication, ... }@pkgs:
 
 with lib;
 
 let
-  inherit (self) inputs outputs;
-  inherit (inputs) nixpkgs;
+  inherit (self.inputs) nixpkgs;
 
-  iso = nixpkgs.lib.nixosSystem { inherit system; specialArgs = { inherit inputs outputs; }; modules = [ (import ../nixos/profiles/installer.nix currentNixosSystem) ]; };
+  iso = nixpkgs.lib.nixosSystem { inherit system; specialArgs = { inherit self; }; modules = [ ../nixos/profiles/installer.nix ]; };
   # Build installer ISO
   isoPath = "${iso.config.system.build.isoImage}/iso/${iso.config.isoImage.isoName}";
 
