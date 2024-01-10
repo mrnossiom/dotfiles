@@ -17,9 +17,8 @@ let
 in
 {
   imports = [
-    # Agenix secrets manager
     agenix.homeManagerModules.default
-    { home.packages = [ agenix.packages.${pkgs.system}.default ]; }
+    ../../secrets
 
     # Setup `comma`, which allow to easily run command that are not present on the system
     nix-index-database.hmModules.nix-index
@@ -27,8 +26,6 @@ in
     # Nix colors
     nix-colors.homeManagerModules.default
     { colorScheme = nix-colors.colorSchemes.onedark; }
-
-    ../../secrets
 
     ../modules/vm
     ../modules/git.nix

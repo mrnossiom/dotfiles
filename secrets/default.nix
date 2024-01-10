@@ -1,9 +1,12 @@
 { ... }: {
   age.secrets = {
-    ca5e-pgp.file = ./ca5e.pgp.age;
-    digital-ocean-api-key.file = ./digital-ocean.api.age;
-    gitguardian-api-key.file = ./gitguardian.api.age;
-    googledrive-rclone-config.file = ./googledrive.rclone.conf.age;
-    restic-backup-pass.file = ./restic-backup-pass.age;
+    pgp-ca5e.file = ./pgp-ca5e.age;
+    ssh-uxgi.file = ./ssh-uxgi.age;
+
+    api-digital-ocean.file = ./api-digital-ocean.age;
+    api-gitguardian.file = ./api-gitguardian.age;
+
+    backup-rclone-googledrive.file = ./backup/rclone-googledrive.age;
+    backup-restic-key.file = ./backup/restic-key.age;
   };
 }

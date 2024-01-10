@@ -68,7 +68,7 @@ with lib;
 
       hooks = {
         git-guardian = pkgs.writeShellScript "git-guardian" ''
-          export GITGUARDIAN_API_KEY="$(cat ${config.age.secrets.gitguardian-api-key.path})"
+          export GITGUARDIAN_API_KEY="$(cat ${config.age.secrets.api-gitguardian.path})"
           ${getExe' pkgs.ggshield "ggshield"} secret scan pre-commit "$@"
         '';
       };

@@ -8,6 +8,12 @@ let
 in
 {
   imports = [ agenix.nixosModules.default ../../secrets ];
-  config.age.identityPaths = [ "/home/${config.local.user.username}/.ssh/id_ed25519" ];
+
+  config = {
+    # By default, agenix uses host machine keys
+    # It is better than user ones since they are not always available at boot
+    # (e.g btrfs with luks doesn't load home partition right away)
+    # age.identityPaths = [ ];
+  };
 }
 
