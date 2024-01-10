@@ -26,6 +26,9 @@
     git-leave.url = "github:mrnossiom/git-leave";
     git-leave.inputs.nixpkgs.follows = "nixpkgs";
 
+    mind.url = "github:sayanarijit/mind";
+    mind.inputs.nixpkgs.follows = "nixpkgs";
+
     radicle.url = "git+https://seed.radicle.xyz/z3gqcJUoA1n9HaHKufZs5FCSGazv5";
     radicle.inputs.nixpkgs.follows = "nixpkgs";
   };
@@ -49,6 +52,7 @@
 
       packages = forAllSystems (system: import ./pkgs pkgs.${system});
       apps = forAllSystems (system: import ./apps pkgs.${system});
+      devShells = forAllSystems (system: import ./shells.nix pkgs.${system});
 
       overlays = import ./overlays (nixpkgs // { inherit self; });
       nixosModules = import ./modules/nixos;
