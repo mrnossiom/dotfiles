@@ -33,7 +33,7 @@ in
       # Since `--link-dest` is used, file contents won't be duplicated on disk.
       backupPrepareCommand = ''
         # Remove stale Restic locks
-        ${getExe' pkgs.restic "restic"} unlock || true
+        ${getExe pkgs.restic} unlock || true
 
         ${getExe pkgs.rsync} \
           ${"\\" /* Archive mode and delete files that are not in the source directory. `--mkpath` is like `mkdir`'s `-p` option */}

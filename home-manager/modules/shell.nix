@@ -52,12 +52,12 @@ with lib;
       languages = {
         language-server = with pkgs; {
           # Language server for nix
-          rnix-lsp.command = getExe' rnix-lsp "rnix-lsp";
+          rnix-lsp.command = getExe rnix-lsp;
           typst-lsp.command = getExe typst-lsp;
 
           # Default language servers
           gopls.command = getExe gopls;
-          marksman.command = getExe' marksman "marksman";
+          marksman.command = getExe marksman;
           pylsp.command = getExe python311Packages.python-lsp-server;
           tuplo.command = getExe taplo;
           typescript-language-server.command = getExe nodePackages.typescript-language-server;
@@ -179,9 +179,9 @@ with lib;
           sudo ip link set $dev down
     
           if test "$argv[1]" = "reset";
-              sudo ${getExe' pkgs.macchanger "macchanger"} --permanent $dev
+              sudo ${getExe pkgs.macchanger} --permanent $dev
           else;
-              sudo ${getExe' pkgs.macchanger "macchanger"} --ending --another $dev
+              sudo ${getExe pkgs.macchanger} --ending --another $dev
           end
 
           sudo ip link set $dev up

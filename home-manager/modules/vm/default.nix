@@ -133,7 +133,7 @@ in
           }];
         };
 
-        startup = [{ command = "${getExe' pkgs.workstyle "workstyle"} &> /tmp/workstyle.log"; always = true; }];
+        startup = [{ command = "${getExe pkgs.workstyle} &> /tmp/workstyle.log"; always = true; }];
 
         focus.followMouse = false;
 
@@ -299,8 +299,8 @@ in
         usegeoclue = true;
       };
 
-      darkModeScripts.gtk-theme = ''${getExe' pkgs.dconf "dconf"} write /org/gnome/desktop/interface/color-scheme "'prefer-dark'"'';
-      lightModeScripts.gtk-theme = ''${getExe' pkgs.dconf "dconf"} write /org/gnome/desktop/interface/color-scheme "'prefer-light'"'';
+      darkModeScripts.gtk-theme = ''${getExe pkgs.dconf} write /org/gnome/desktop/interface/color-scheme "'prefer-dark'"'';
+      lightModeScripts.gtk-theme = ''${getExe pkgs.dconf} write /org/gnome/desktop/interface/color-scheme "'prefer-light'"'';
     };
 
     services.avizo.enable = true;
