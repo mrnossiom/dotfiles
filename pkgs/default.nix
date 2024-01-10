@@ -1,17 +1,19 @@
 { self, system, ... }@pkgs:
 
 let
-  inherit (self.inputs) git-leave radicle;
+  inherit (self.inputs) agenix git-leave mind radicle;
 in
 {
-  thorium = pkgs.callPackage ./thorium.nix { };
   greenlight = pkgs.callPackage ./greenlight.nix { };
+  overlayed = pkgs.callPackage ./overlayed.nix { };
+  thorium = pkgs.callPackage ./thorium.nix { };
 
   # Replace with custom crafted package
   findUnicode = pkgs.callPackage ./findUnicode.nix { };
 
   # Import packages defined in foreign repositories
-  # IDEA: move to a NUR repository
+  inherit (agenix.packages.${system}) agenix;
   inherit (git-leave.packages.${system}) git-leave;
+  inherit (mind.packages.${system}) mind;
   inherit (radicle.packages.${system}) radicle-cli radicle-remote-helper radicle-httpd radicle-node;
 }
