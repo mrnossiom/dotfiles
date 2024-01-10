@@ -9,10 +9,8 @@ with lib;
 {
   config = {
     # Wifi
-    networking.networkmanager.enable = true;
     networking.nameservers = [ "1.1.1.1" "8.8.8.8" "9.9.9.9" ];
-
-    programs.nm-applet.enable = true;
+    networking.networkmanager.enable = true;
 
     # Bluetooth
     hardware.bluetooth.enable = true;

@@ -132,6 +132,7 @@ with lib;
         d = "docker";
         g = "git";
         j = "just";
+        n = "nix";
 
         # Docker
         dcu = "docker compose up -d";
@@ -157,7 +158,6 @@ with lib;
         diff = "delta";
 
         # Nix-related
-        ns = "nix shell";
         ur = " unlink result";
 
         # Do not keep these commands in history
@@ -181,7 +181,7 @@ with lib;
           if test "$argv[1]" = "reset";
               sudo ${getExe' pkgs.macchanger "macchanger"} --permanent $dev
           else;
-              sudo ${getExe' pkgs.macchanger "macchanger"} --another $dev
+              sudo ${getExe' pkgs.macchanger "macchanger"} --ending --another $dev
           end
 
           sudo ip link set $dev up

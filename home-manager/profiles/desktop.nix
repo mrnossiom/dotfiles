@@ -61,6 +61,7 @@ in
         BUN_INSTALL = "${config.xdg.dataHome}/bun";
         CALCHISTFILE = "${config.xdg.cacheHome}/calc_history";
         HISTFILE = "${config.xdg.dataHome}/bash_history";
+        CARGO_HOME = "${config.xdg.dataHome}/cargo";
         RUSTUP_HOME = "${config.xdg.dataHome}/rustup";
         WAKATIME_HOME = "${config.xdg.configHome}/wakatime";
         W3M_DIR = "${config.xdg.configHome}/w3m";
@@ -86,7 +87,6 @@ in
         cinnamon.nemo
         transmission-gtk
         gnome.gnome-disk-utility
-        greenlight
         cura
         blender
         element-desktop
@@ -106,6 +106,7 @@ in
         tealdeer
         jq
         calc
+        mind
 
         imv
         mpv

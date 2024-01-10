@@ -103,6 +103,7 @@ in
       ];
       events = [
         { event = "before-sleep"; command = "${getExe pkgs.playerctl} pause"; }
+        { event = "before-sleep"; command = "${getExe' pkgs.systemd "loginctl"} lock-session"; }
         # Can be triggered with `loginctl lock-session`
         { event = "lock"; command = getExe pkgs.swaylock; }
       ];

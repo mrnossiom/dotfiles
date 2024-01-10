@@ -18,9 +18,8 @@ with lib;
 
     # Systemd Login
     services.logind = {
-      lidSwitch = "lock";
-      lidSwitchDocked = "suspend";
-      lidSwitchExternalPower = "lock";
+      # TODO: fix issues on neo laptop
+      lidSwitch = "suspend";
       extraConfig = lib.generators.toKeyValue { } {
         IdleAction = "lock";
         # Don’t shutdown when power button is short-pressed
