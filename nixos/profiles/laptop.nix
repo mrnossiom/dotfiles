@@ -36,7 +36,7 @@ in
     efi.canTouchEfiVariables = true;
   };
 
-  boot.extraModulePackages = with config.boot.kernelPackages; [ xone ];
+  boot.extraModulePackages = with config.boot.kernelPackages; [ apfs xone ];
 
   programs.dconf.enable = true;
 
