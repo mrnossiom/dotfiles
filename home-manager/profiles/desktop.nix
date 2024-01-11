@@ -57,12 +57,11 @@ in
         # Respect XDG spec
         BUN_INSTALL = "${config.xdg.dataHome}/bun";
         CALCHISTFILE = "${config.xdg.cacheHome}/calc_history";
-        HISTFILE = "${config.xdg.dataHome}/bash_history";
         CARGO_HOME = "${config.xdg.dataHome}/cargo";
+        HISTFILE = "${config.xdg.dataHome}/bash_history";
         RUSTUP_HOME = "${config.xdg.dataHome}/rustup";
-        WAKATIME_HOME = "${config.xdg.configHome}/wakatime";
         W3M_DIR = "${config.xdg.configHome}/w3m";
-
+        WAKATIME_HOME = "${config.xdg.configHome}/wakatime";
       };
 
       # Respect XDG spec
@@ -74,41 +73,44 @@ in
       '';
 
       packages = with pkgs; [
+        # Unfree
         authy
         discord
+        geogebra6
         spotify
         thorium
-        geogebra6
 
         # GUIs
-        cinnamon.nemo
-        transmission-gtk
-        gnome.gnome-disk-utility
-        cura
         blender
+        cinnamon.nemo
+        cura
         element-desktop
-
-        xdg-utils
-        spotify-tui
-
-        # CLI tools
-        just
-        bat
-        fd
-        delta
-        ripgrep
-        glow
-        fzf
-        btop
-        tealdeer
-        jq
-        calc
-        mind
-
+        gnome.gnome-disk-utility
         imv
         mpv
-        wl-clipboard
+        transmission-gtk
+
+        # CLI tools
+        bat
+        btop
+        calc
+        delta
+        du-dust
+        fastfetch
+        fd
+        fzf
+        glow
+        gping
+        jq
+        just
+        mind
+        ripgrep
+        speedtest-go
+        spotify-tui
+        tealdeer
         wf-recorder
+        wl-clipboard
+        xdg-utils
       ];
     };
 
