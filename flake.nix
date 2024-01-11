@@ -39,7 +39,7 @@
       inherit (nixpkgs.lib) nixosSystem genAttrs;
 
       forAllSystems = genAttrs [ "aarch64-linux" "i686-linux" "x86_64-linux" "aarch64-darwin" "x86_64-darwin" ];
-      flake-lib = import ./lib/flake (nixpkgs // { inherit self; });
+      flakeLib = import ./lib/flake (nixpkgs // { inherit self; });
 
       pkgs = forAllSystems (system: (import nixpkgs {
         inherit system;
@@ -58,22 +58,16 @@
       nixosModules = import ./modules/nixos;
       homeManagerModules = import ./modules/home-manager;
 
-      nixosConfigurations = {
-        "neo-wiro-laptop" = flake-lib.createSystem [
-          (flake-lib.system "neo-wiro-laptop" ./nixos/profiles/laptop.nix)
-          (flake-lib.managedDiskLayout "nvme0n1" ./nixos/layout/luks-btrfs.nix)
-          (flake-lib.user "milomoisson" {
-            description = "Milo Moisson";
-            config = ./home-manager/profiles/desktop.nix;
-          })
+      nixosConfigurations = with flakeLib; {
+        "neo-wiro-laptop" = createSystem [
+          (system "neo-wiro-laptop" "laptop")
+          (managedDiskLayout "luks-btrfs" { device = "nvme0n1"; swapSize = 12; })
+          (user "milomoisson" { description = "Milo Moisson"; profile = "desktop"; })
         ];
 
-        "archaic-wiro-laptop" = flake-lib.createSystem [
-          (flake-lib.system "archaic-wiro-laptop" ./nixos/profiles/laptop.nix)
-          (flake-lib.user "milomoisson" {
-            description = "Milo Moisson";
-            config = ./home-manager/profiles/desktop.nix;
-          })
+        "archaic-wiro-laptop" = createSystem [
+          (system "archaic-wiro-laptop" "laptop")
+          (user "milomoisson" { description = "Milo Moisson"; profile = "desktop"; })
         ];
       };
 

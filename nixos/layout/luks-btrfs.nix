@@ -1,11 +1,7 @@
 { config, lib, ... }:
 
-with lib;
-
 let
-
   cfg = config.local.disk;
-
 in
 {
   options = { };
@@ -29,8 +25,6 @@ in
           content = {
             type = "luks";
             name = "crypted";
-            # The password used to initialize LUKS
-            # passwordFile = "/tmp/secret.key";
             settings = {
               allowDiscards = true;
               # yubiKey = I want a YubiKey
@@ -53,7 +47,7 @@ in
                 };
                 "/swap" = {
                   mountpoint = "/.swapvol";
-                  swap.swapfile.size = "20M";
+                  swap.swapfile.size = "${toString cfg.swapSize}G";
                 };
               };
             };

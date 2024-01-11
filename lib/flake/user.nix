@@ -1,4 +1,4 @@
-name: { description, config, user ? { } }:
+name: { description, profile, user ? { } }:
 
 { self, pkgs, lib, ... }:
 
@@ -36,7 +36,7 @@ in
       useUserPackages = false;
       useGlobalPkgs = false;
 
-      users.${name} = import config;
+      users.${name} = import ../../home-manager/profiles/${profile}.nix;
     };
   };
 }
