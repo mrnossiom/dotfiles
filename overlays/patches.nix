@@ -1,5 +1,5 @@
-pkgs: prev:
-with pkgs.lib;
+final: prev:
+with final.lib;
 {
   # Geogebra locales clashes with Authy locales (why? I don't care)
   geogebra6 = prev.geogebra6.overrideAttrs (previousAttrs: {
@@ -11,8 +11,8 @@ with pkgs.lib;
     assert assertMsg (prevAttrs.version == "1.5.4")
       "FIXME: oblolete fix, darkman v${prevAttrs.version} shouldn't use bash to invoke scripts anymore";
     {
-      nativeBuildInputs = prevAttrs.nativeBuildInputs ++ [ pkgs.makeWrapper ];
-      postFixup = "wrapProgram $out/bin/darkman --suffix PATH : ${pkgs.lib.makeBinPath (with pkgs; [ bash ])}";
+      nativeBuildInputs = prevAttrs.nativeBuildInputs ++ [ final.makeWrapper ];
+      postFixup = "wrapProgram $out/bin/darkman --suffix PATH : ${makeBinPath (with final; [ bash ])}";
     }
   );
 }
