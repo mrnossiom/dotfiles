@@ -1,0 +1,45 @@
+{
+  inputs = {
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.11";
+
+    flake-utils.url = "github:numtide/flake-utils";
+
+    rust-overlay = {
+      url = "github:oxalica/rust-overlay";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        flake-utils.follows = "flake-utils";
+      };
+    };
+
+    gitignore = {
+      url = "github:hercules-ci/gitignore.nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+  };
+
+  outputs = { self, nixpkgs, flake-utils, rust-overlay, gitignore }: flake-utils.lib.eachDefaultSystem (system:
+    let
+      overlays = [ (import rust-overlay) ];
+      pkgs = import nixpkgs { inherit system overlays; };
+      rustToolchain = pkgs.pkgsBuildHost.rust-bin.fromRustupToolchainFile ./rust-toolchain.toml;
+
+      nativeBuildInputs = with pkgs; [ rustToolchain ];
+      buildInputs = with pkgs; [ ];
+    in
+    {
+      packages = rec {
+        default = my-app;
+        my-app = pkgs.callPackage ./package.nix { inherit gitignore; };
+      };
+      apps = rec {
+        default = my-app;
+        my-app = flake-utils.lib.mkApp { drv = self.packages.${system}.my-app; };
+      };
+
+      devShells.default = pkgs.mkShellNoCC {
+        inherit nativeBuildInputs buildInputs;
+      };
+    }
+  );
+}

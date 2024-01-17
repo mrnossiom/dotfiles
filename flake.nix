@@ -57,6 +57,7 @@
       overlays = import ./overlays (nixpkgs // { inherit self; });
       nixosModules = import ./modules/nixos;
       homeManagerModules = import ./modules/home-manager;
+      templates = import ./templates;
 
       nixosConfigurations = with flakeLib; {
         "neo-wiro-laptop" = createSystem [
