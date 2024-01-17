@@ -94,8 +94,10 @@ in
         bat
         btop
         calc
+        daemon
         delta
         du-dust
+        encfs
         fastfetch
         fd
         fzf

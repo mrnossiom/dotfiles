@@ -9,18 +9,14 @@ with lib;
     programs.starship = {
       enable = true;
       settings.nix_shell = {
-        # Remove nix shell name
-        format = "via [$symbol$state]($style) ";
+        format = "via [$symbol$state]($style) "; # Remove nix shell name
         symbol = " ";
       };
     };
 
-    # Assumes that helix is installed, use configured version of helix
-    home.sessionVariables.EDITOR = "hx";
-
     programs.helix = {
       enable = true;
-      package = pkgs.unstable.helix;
+      defaultEditor = true;
 
       settings = {
         theme = "onedark";
@@ -103,6 +99,13 @@ with lib;
       enable = true;
       nix-direnv.enable = true;
     };
+    # Entering in shells is indicated by starship
+    home.sessionVariables.DIRENV_LOG_FORMAT = "";
+
+    programs.zellij = {
+      enable = true;
+      enableFishIntegration = true;
+    };
 
     programs.fish = {
       enable = true;
@@ -124,6 +127,9 @@ with lib;
         # that depends on fish internal ls wrappers and can be overriden by
         # bad configuration. (e.g. NixOS `environment.shellAliases` default)
         ls = "${getExe pkgs.eza} --color=auto --icons=auto --hyperlink";
+
+        # Quickly get outta here to test something
+        cdtmp = "cd (${getExe' pkgs.mktemp "mktemp"} -d /tmp/cd-XXXXXX)";
       };
 
       shellAbbrs = {

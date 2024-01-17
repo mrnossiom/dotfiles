@@ -7,7 +7,7 @@ let
 
   allSelfPackages = mapAttrsToList (_: value: value) packages.${system};
 
-  mkPackageShell = packages: pkgs.mkShellNoCC { inherit packages; };
+  mkPackageShell = packages: pkgs.mkShell { inherit packages; };
 
 in
 {

@@ -11,6 +11,17 @@ in
   options.programs.xcompose = {
     enable = mkEnableOption "XCompose keyboard configuration";
 
+    loadConfigInEnv = mkOption {
+      description = ''
+        Load the XCompose file by passing the XCOMPOSEFILE environnement variable instead of linking to ~/.XCompose.
+        
+        That is nice to avoid cluttering the HOME directory, it's preferable to disable it when experimenting
+        with your compose config to reload faster than having to reload your VM
+      '';
+      default = true;
+      type = types.bool;
+    };
+
     includeLocaleCompose = mkOption {
       description = "Wether to include the base libX11 locale compose file";
       default = false;
@@ -18,12 +29,18 @@ in
     };
 
     sequences = mkOption {
-      description = "Shapeless tree of macros, keys name can be found <insert>";
+      description = ''
+        Shapeless tree of macros
+        - Keys name can be easily found with wev (or xev)
+        - http://compart.com — Lists all Unicode characters
+      '';
       default = { };
       example = {
         Multi_key = {
-          comma = "̧";
-          h.i = "helo";
+          "g" = {
+            a = "α";
+            b = "β";
+          };
         };
       };
       type = types.anything;
@@ -51,15 +68,14 @@ in
 
       processComposeSet = set: toComposeFile (complexListToSimple (comboSetToList set));
 
+      # TODO: see if include changes if put after compose declarations
       composeFile = pkgs.writeText "XCompose" ''
         ${optionalString cfg.includeLocaleCompose "include \"%L\""}
-
         ${processComposeSet cfg.sequences}
       '';
     in
     mkIf cfg.enable {
-      # I use an env var to avoid cluttering my home directory
-      home.sessionVariables.XCOMPOSEFILE = composeFile;
-      # home.file.".XCompose".text = composeContent;
+      home.sessionVariables = mkIf cfg.loadConfigInEnv { XCOMPOSEFILE = composeFile; };
+      home.file = mkIf (!cfg.loadConfigInEnv) { ".XCompose".source = composeFile; };
     };
 }

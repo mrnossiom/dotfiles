@@ -36,6 +36,8 @@ with lib;
 
         rv = "remote --verbose";
 
+        ri = "rebase --interactive";
+
         a = "add";
         al = "add --all";
         ac = "add .";
@@ -93,7 +95,7 @@ with lib;
       };
     };
 
-    home.packages = with pkgs; [ git-leave radicle-cli radicle-httpd radicle-node ];
+    home.packages = with pkgs; [ git-leave git-along radicle-cli radicle-httpd radicle-node ];
 
     programs.gh.enable = true;
 
