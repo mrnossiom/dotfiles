@@ -1,23 +1,22 @@
-{ lib, fetchFromGitHub, buildGoPackage, scdoc, nix-update-script }:
+{ lib, fetchFromGitHub, buildGoModule }:
 
-buildGoPackage rec {
+buildGoModule rec {
   pname = "git-along";
-  version = "1.5.4";
-
-
-  goPackagePath = "github.com/nyarly/${pname}";
+  version = "0.0.0";
 
   src = fetchFromGitHub {
-    owner = "nyarly";
+    # owner = "nyarly";
+    owner = "mrnossiom";
     repo = pname;
-    rev = "a1c51e8b554312173c4922bdfe3c10a9b500f7ce";
-    sha256 = "sha256-q/XZrZ4jW9ZPVf8zcW6gsdMS42d56Ze/aF6HKAwM7XM=";
+    rev = "v${version}";
+    sha256 = "sha256-2pjaA0llShG8dxILWCvP45VgLFWhFbinAiNiOLM7ovg=";
   };
+
+  vendorHash = null;
 
   meta = with lib; {
     description = "Manage project configuration and environment in side branches";
     homepage = "https://github.com/nyarly/git-along";
-    # license = licenses.isc;
     maintainers = [ "mrnossiom" ];
     platforms = platforms.linux;
     mainProgram = "git-along";
