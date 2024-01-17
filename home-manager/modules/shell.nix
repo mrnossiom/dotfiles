@@ -104,8 +104,13 @@ with lib;
 
     programs.zellij = {
       enable = true;
-      enableFishIntegration = true;
+      settings = {
+        default_layout = "compact";
+        simplified_ui = true;
+      };
     };
+
+    programs.nushell.enable = true;
 
     programs.fish = {
       enable = true;
@@ -127,9 +132,6 @@ with lib;
         # that depends on fish internal ls wrappers and can be overriden by
         # bad configuration. (e.g. NixOS `environment.shellAliases` default)
         ls = "${getExe pkgs.eza} --color=auto --icons=auto --hyperlink";
-
-        # Quickly get outta here to test something
-        cdtmp = "cd (${getExe' pkgs.mktemp "mktemp"} -d /tmp/cd-XXXXXX)";
       };
 
       shellAbbrs = {
@@ -178,7 +180,15 @@ with lib;
         # Executed on interactive shell start, greet with a short quote
         fish_greeting = "${getExe pkgs.fortune} -s";
 
+        # Used in interactiveShellInit
         last_history_item = "echo $history[1]";
+
+        # Quickly get outta here to test something
+        cdtmp = ''
+          set -l tmp /tmp/(${getExe pkgs.names})
+          mkdir $tmp
+          cd $tmp
+        '';
 
         change-mac = ''
           set dev (nmcli --get-values GENERAL.DEVICE,GENERAL.TYPE device show | sed '/^wifi/!{h;d;};x;q')

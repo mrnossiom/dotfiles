@@ -1,4 +1,7 @@
-{ lib, rustPlatform, fetchFromGitHub }:
+{ lib
+, rustPlatform
+, fetchFromGitHub
+}:
 
 rustPlatform.buildRustPackage rec {
   pname = "rust-sloth";
@@ -21,5 +24,3 @@ rustPlatform.buildRustPackage rec {
     mainProgram = "sloth";
   };
 }
-
-

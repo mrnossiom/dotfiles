@@ -5,9 +5,10 @@ let
 in
 {
   findUnicode = pkgs.callPackage ./findUnicode.nix { };
-  greenlight = pkgs.callPackage ./greenlight.nix { };
-  overlayed = pkgs.callPackage ./overlayed.nix { };
   git-along = pkgs.callPackage ./git-along.nix { };
+  greenlight = pkgs.callPackage ./greenlight.nix { };
+  names = pkgs.callPackage ./names.nix { };
+  overlayed = pkgs.callPackage ./overlayed.nix { };
   rust-sloth = pkgs.callPackage ./rust-sloth.nix { };
   rusty-rain = pkgs.callPackage ./rusty-rain { };
   thorium = pkgs.callPackage ./thorium.nix { };

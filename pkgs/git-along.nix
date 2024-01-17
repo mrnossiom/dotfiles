@@ -1,4 +1,7 @@
-{ lib, fetchFromGitHub, buildGoModule }:
+{ lib
+, fetchFromGitHub
+, buildGoModule
+}:
 
 buildGoModule rec {
   pname = "git-along";
@@ -21,4 +24,3 @@ buildGoModule rec {
     mainProgram = "git-along";
   };
 }
-

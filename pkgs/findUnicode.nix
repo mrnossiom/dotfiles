@@ -1,4 +1,7 @@
-{ lib, rustPlatform, fetchFromGitHub }:
+{ lib
+, rustPlatform
+, fetchFromGitHub
+}:
 
 rustPlatform.buildRustPackage rec {
   pname = "find_unicode";
@@ -13,14 +16,10 @@ rustPlatform.buildRustPackage rec {
 
   cargoHash = "sha256-Ap7aLgmwh1xJWUxL/PQcPo6KxlJNE47LFs+WNxLFWi8=";
 
-  nativeBuildInputs = [ ];
-  buildInputs = [ ];
-
-  meta = {
+  meta = with lib; {
     description = "Find Unicode characters, the easy way! A simple command line application to find unicode characters with minimum effort.";
     homepage = "https://github.com/pierrechevalier83/find_unicode";
     maintainers = [ "mrnossiom" ];
     mainProgram = "fu";
   };
-}
-
+} 
