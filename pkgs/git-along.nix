@@ -18,7 +18,6 @@ buildGoModule rec {
     description = "Manage project configuration and environment in side branches";
     homepage = "https://github.com/nyarly/git-along";
     maintainers = [ "mrnossiom" ];
-    platforms = platforms.linux;
     mainProgram = "git-along";
   };
 }

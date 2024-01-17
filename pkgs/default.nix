@@ -4,12 +4,13 @@ let
   inherit (self.inputs) agenix git-leave mind radicle;
 in
 {
+  findUnicode = pkgs.callPackage ./findUnicode.nix { };
   greenlight = pkgs.callPackage ./greenlight.nix { };
   overlayed = pkgs.callPackage ./overlayed.nix { };
+  git-along = pkgs.callPackage ./git-along.nix { };
+  rust-sloth = pkgs.callPackage ./rust-sloth.nix { };
+  rusty-rain = pkgs.callPackage ./rusty-rain { };
   thorium = pkgs.callPackage ./thorium.nix { };
-
-  # Replace with custom crafted package
-  findUnicode = pkgs.callPackage ./findUnicode.nix { };
 
   # Import packages defined in foreign repositories
   inherit (agenix.packages.${system}) agenix;
