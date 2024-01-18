@@ -17,7 +17,13 @@ with lib;
 
       difftastic.enable = true;
 
-      ignores = [ ".direnv/" ];
+      # Ignore very specific stuff that is not common to much repos
+      ignores = [
+        # Direnv cache
+        ".direnv/"
+        # Nix build result link
+        "result"
+      ];
 
       aliases = {
         b = "branch --all";

@@ -34,6 +34,10 @@ in
         experimental-features = [ "nix-command" "flakes" ];
         auto-optimise-store = true;
 
+        # Disable flake registry to keep system pure and
+        # avoid network calls each nix invoation.
+        flake-registry = "";
+
         keep-going = true;
 
         trusted-users = [ config.local.user.username ];
