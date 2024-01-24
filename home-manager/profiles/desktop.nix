@@ -82,6 +82,7 @@ in
 
         # GUIs
         blender
+        bottles
         cinnamon.nemo
         cura
         element-desktop
@@ -105,11 +106,13 @@ in
         gping
         jq
         just
+        killall
         mind
         ripgrep
         speedtest-go
         spotify-tui
         tealdeer
+        trash-cli
         wf-recorder
         wl-clipboard
         xdg-utils

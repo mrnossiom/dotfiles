@@ -18,7 +18,13 @@ let
   workspacesRange = zipListsWith (num: ws: { inherit ws num; }) [ 1 2 3 4 5 6 7 8 9 0 ] (range 1 10);
 in
 {
-  imports = [ homeManagerModules.wl-clip-persist ./swaybar.nix ./xcompose.nix ./search.nix ];
+  imports = [
+    homeManagerModules.wl-clip-persist
+
+    ./swaybar.nix
+    ./xcompose.nix
+    ./search.nix
+  ];
 
   config = {
     services.wl-clip-persist.enable = true;
@@ -293,14 +299,19 @@ in
 
     services.darkman = {
       enable = true;
-      settings = {
-        lat = 48.8;
-        lng = 2.3;
-        usegeoclue = true;
-      };
+      settings.usegeoclue = true;
 
       darkModeScripts.gtk-theme = ''${getExe pkgs.dconf} write /org/gnome/desktop/interface/color-scheme "'prefer-dark'"'';
       lightModeScripts.gtk-theme = ''${getExe pkgs.dconf} write /org/gnome/desktop/interface/color-scheme "'prefer-light'"'';
+    };
+
+    services.gammastep = {
+      enable = true;
+      provider = "geoclue2";
+      settings.general = {
+        adjustment-method = "wayland";
+        gamma = 0.8;
+      };
     };
 
     services.avizo.enable = true;

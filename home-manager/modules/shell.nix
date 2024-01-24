@@ -51,7 +51,9 @@ with lib;
           rnix-lsp.command = getExe rnix-lsp;
           typst-lsp.command = getExe typst-lsp;
 
+          # TODO: make them default, they don't load if there already a binary in env. Avoiding shadowing flake envs
           # Default language servers
+          clangd.command = getExe' clang-tools "clangd";
           gopls.command = getExe gopls;
           marksman.command = getExe marksman;
           pylsp.command = getExe python311Packages.python-lsp-server;
@@ -77,6 +79,11 @@ with lib;
             name = "nix";
             language-servers = [ "rnix-lsp" ];
             auto-format = true;
+          }
+          {
+            name = "c";
+            auto-format = true;
+            formatter = { command = getExe' pkgs.clang-tools "clang-format"; args = [ ]; };
           }
           {
             name = "typst";
@@ -105,12 +112,25 @@ with lib;
     programs.zellij = {
       enable = true;
       settings = {
-        default_layout = "compact";
-        simplified_ui = true;
+        # TODO: enable when more advenced
+        # default_layout = "compact";
       };
+
+      # TODO: modify HM module to define layouts in here directly
     };
 
-    programs.nushell.enable = true;
+    programs.carapace.enable = true;
+
+    programs.nushell = {
+      enable = true;
+
+      extraConfig = ''
+        $env.config = {
+          show_banner: false,
+        }
+      '';
+    };
+
 
     programs.fish = {
       enable = true;

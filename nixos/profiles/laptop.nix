@@ -17,12 +17,12 @@ in
     ../modules/agenix.nix
     ../modules/backup.nix
     ../modules/gaming.nix
+    ../modules/info.nix
     ../modules/logiops.nix
     ../modules/nix.nix
     ../modules/security.nix
     ../modules/virtualisation.nix
     ../modules/wireless.nix
-    ../modules/info.nix
   ];
 
   hardware.opengl = {
@@ -36,7 +36,7 @@ in
     efi.canTouchEfiVariables = true;
   };
 
-  boot.extraModulePackages = with config.boot.kernelPackages; [ apfs xone ];
+  boot.extraModulePackages = with config.boot.kernelPackages; [ apfs perf xone ];
 
   programs.dconf.enable = true;
 
@@ -54,6 +54,9 @@ in
     LC_TELEPHONE = "fr_FR.UTF-8";
     LC_TIME = "fr_FR.UTF-8";
   };
+
+  # This is needed for services like `darkman` and `gammastep`
+  services.geoclue2.enable = true;
 
   fonts = {
     packages = with pkgs; [ (nerdfonts.override { fonts = [ "JetBrainsMono" ]; }) inter noto-fonts noto-fonts-cjk-sans noto-fonts-emoji font-awesome ];

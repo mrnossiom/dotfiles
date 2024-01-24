@@ -3,9 +3,7 @@
 with lib;
 
 let
-
   cfg = config.services.wl-clip-persist;
-
 in
 {
   options.services.wl-clip-persist = {
