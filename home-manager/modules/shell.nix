@@ -119,8 +119,6 @@ with lib;
       # TODO: modify HM module to define layouts in here directly
     };
 
-    programs.carapace.enable = true;
-
     programs.nushell = {
       enable = true;
 
