@@ -134,5 +134,7 @@ stdenv.mkDerivation rec {
     platforms = platforms.linux;
     license = licenses.gpl3Only;
     maintainers = with maintainers; [ "mrnossiom" ];
+
+    broken = true; # TODO: doesn't build
   };
 }

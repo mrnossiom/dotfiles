@@ -91,5 +91,7 @@ rec {
     platforms = [ "x86_64-linux" ];
     license = licenses.mit;
     maintainers = with maintainers; [ mrnossiom ];
+
+    broken = true; # TODO: doesn't build
   };
 }

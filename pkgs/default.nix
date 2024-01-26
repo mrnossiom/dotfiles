@@ -4,6 +4,7 @@ let
   inherit (self.inputs) agenix git-leave mind radicle;
 in
 {
+  cspell-lsp = pkgs.callPackage ./cspell-lsp { };
   findUnicode = pkgs.callPackage ./findUnicode.nix { };
   git-along = pkgs.callPackage ./git-along.nix { };
   greenlight = pkgs.callPackage ./greenlight.nix { };
