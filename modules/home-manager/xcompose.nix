@@ -3,9 +3,7 @@
 with lib;
 
 let
-
   cfg = config.programs.xcompose;
-
 in
 {
   options.programs.xcompose = {
@@ -32,7 +30,7 @@ in
       description = ''
         Shapeless tree of macros
         - Keys name can be easily found with wev (or xev)
-        - http://compart.com — Lists all Unicode characters
+        - https://www.compart.com — Lists all Unicode characters
       '';
       default = { };
       example = {
