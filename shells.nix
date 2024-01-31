@@ -1,4 +1,8 @@
-{ self, lib, system, ... }@pkgs:
+{ self
+, lib
+, system
+, ...
+}@pkgs:
 
 with lib;
 
@@ -8,13 +12,19 @@ let
   allSelfPackages = mapAttrsToList (_: value: value) packages.${system};
 
   mkPackageShell = packages: pkgs.mkShell { inherit packages; };
-
 in
+
+with pkgs;
+
 {
   # Import packages of this flake along with useful tools for managing dotfiles
   default = mkPackageShell (allSelfPackages ++ [ ]);
 
   # Add presets that I can quicky use
 
-  rust = mkPackageShell (with pkgs; [ cargo ]);
+  rust = mkPackageShell [ cargo ];
+
+  python =
+    let pythonEnv = python3.withPackages (ps: with ps; [ ipython ]);
+    in mkPackageShell [ pythonEnv ];
 }

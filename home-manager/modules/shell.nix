@@ -232,7 +232,7 @@ with lib;
           end
         '';
 
-        nix-develop = "nix develop --command fish $argv";
+        nix-develop = "nix develop $argv --command fish";
 
         # Quickly explore a derivation (using registry syntax)
         # e.g. `cdd nixpkgs#fontforge` or `cdd nixpkgs-unstable#fontforge` 

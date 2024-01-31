@@ -7,10 +7,6 @@
 
 with lib;
 
-let
-  inherit (self.inputs) nixpkgs agenix;
-  inherit (self.outputs) overlays nixosModules;
-in
 {
   # Hardware is imported in the flake to be machine specific
   imports = [
@@ -54,6 +50,8 @@ in
     LC_TELEPHONE = "fr_FR.UTF-8";
     LC_TIME = "fr_FR.UTF-8";
   };
+
+  programs.command-not-found.enable = false;
 
   # This is needed for services like `darkman` and `gammastep`
   services.geoclue2.enable = true;
