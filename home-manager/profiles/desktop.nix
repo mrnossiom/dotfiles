@@ -10,7 +10,7 @@
 with lib;
 
 let
-  inherit (self.inputs) agenix nix-index-database nix-colors;
+  inherit (self.inputs) agenix nix-colors;
   inherit (self.outputs) overlays;
 
   tomlFormat = pkgs.formats.toml { };
@@ -19,9 +19,6 @@ in
   imports = [
     agenix.homeManagerModules.default
     ../../secrets
-
-    # Setup `comma`, which allow to easily run command that are not present on the system
-    nix-index-database.hmModules.nix-index
 
     # Nix colors
     nix-colors.homeManagerModules.default

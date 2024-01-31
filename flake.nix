@@ -13,9 +13,6 @@
     agenix.inputs.nixpkgs.follows = "nixpkgs";
     agenix.inputs.home-manager.follows = "home-manager";
 
-    nix-index-database.url = "github:Mic92/nix-index-database";
-    nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
-
     disko.url = "github:nix-community/disko";
     disko.inputs.nixpkgs.follows = "nixpkgs";
 
@@ -33,10 +30,10 @@
     radicle.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { self, nixpkgs, nixos-hardware, ... }:
+  outputs = { self, nixpkgs, ... }:
     let
-      inherit (self) inputs outputs;
-      inherit (nixpkgs.lib) nixosSystem genAttrs;
+      inherit (self) outputs;
+      inherit (nixpkgs.lib) genAttrs;
 
       forAllSystems = genAttrs [ "aarch64-linux" "i686-linux" "x86_64-linux" "aarch64-darwin" "x86_64-darwin" ];
       flakeLib = import ./lib/flake (nixpkgs // { inherit self; });

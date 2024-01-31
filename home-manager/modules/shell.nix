@@ -1,11 +1,9 @@
-{ config, lib, pkgs, ... }:
+{ lib, pkgs, ... }:
 
 with lib;
 
 {
   config = {
-    programs.nix-index-database.comma.enable = true;
-
     programs.starship = {
       enable = true;
       settings.nix_shell = {
@@ -48,7 +46,7 @@ with lib;
       languages = {
         language-server = with pkgs; {
           # Language server for nix
-          rnix-lsp.command = getExe rnix-lsp;
+          nil.command = getExe nil;
           typst-lsp.command = getExe typst-lsp;
 
           # TODO: make them default, they don't load if there already a binary in env. Avoiding shadowing flake envs
@@ -77,7 +75,7 @@ with lib;
         language = [
           {
             name = "nix";
-            language-servers = [ "rnix-lsp" ];
+            language-servers = [ "nil" ];
             auto-format = true;
           }
           {
@@ -150,6 +148,8 @@ with lib;
         # that depends on fish internal ls wrappers and can be overriden by
         # bad configuration. (e.g. NixOS `environment.shellAliases` default)
         ls = "${getExe pkgs.eza} --color=auto --icons=auto --hyperlink";
+
+        tb = "nc termbin.com 9999";
       };
 
       shellAbbrs = {
@@ -159,10 +159,6 @@ with lib;
         g = "git";
         j = "just";
         n = "nix";
-
-        # Docker
-        dcu = "docker compose up -d";
-        dcd = "docker compose down";
 
         # Edit utilities
         rm = "rm -i";
@@ -235,6 +231,8 @@ with lib;
               fish -c "$command $package_name"
           end
         '';
+
+        nix-develop = "nix develop --command fish $argv";
 
         # Quickly explore a derivation (using registry syntax)
         # e.g. `cdd nixpkgs#fontforge` or `cdd nixpkgs-unstable#fontforge` 
