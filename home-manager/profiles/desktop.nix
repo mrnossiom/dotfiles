@@ -84,6 +84,7 @@ in
         imv
         mpv
         transmission-gtk
+        audacity
         libreoffice-qt
 
         # Needed for libreoffice
@@ -113,6 +114,7 @@ in
         speedtest-go
         spotify-tui
         tealdeer
+        thokr
         trash-cli
         wf-recorder
         wl-clipboard
