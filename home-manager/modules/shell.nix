@@ -44,33 +44,37 @@ with lib;
         };
       };
       languages = {
-        language-server = with pkgs; {
-          # Language server for nix
-          nil.command = getExe nil;
-          typst-lsp.command = getExe typst-lsp;
-
-          # TODO: make them default, they don't load if there already a binary in env. Avoiding shadowing flake envs
-          # Default language servers
-          clangd.command = getExe' clang-tools "clangd";
-          gopls.command = getExe gopls;
-          marksman.command = getExe marksman;
-          pylsp.command = getExe python311Packages.python-lsp-server;
-          tuplo.command = getExe taplo;
-          typescript-language-server.command = getExe nodePackages.typescript-language-server;
-          vscode-css-language-server.command = getExe' vscode-langservers-extracted "vscode-css-language-server";
-          vscode-html-language-server.command = getExe' vscode-langservers-extracted "vscode-html-language-server";
-          vscode-json-language-server.command = getExe' vscode-langservers-extracted "vscode-json-language-server";
-          yaml-language-server.command = getExe yaml-language-server;
-          ansible-language-server.command = getExe' ansible-language-server "ansible-language-server";
-        };
-
-        grammar = [
-          # Doesn't work
+        language-server = with pkgs;
+          let
+            # Allows to have LSP for pretty much everylanguage I can encounter without overriding the ones in env
+            exeOrFallback = exe: fallbackPkg: writeShellScript "exe-or-fallback-${exe}" ''
+              [ -x "$(command -v ${exe})" ] && ${exe} || ${getExe' fallbackPkg exe}
+            '';
+          in
           {
-            name = "typst";
-            source = { git = "https://github.com/frozolotl/tree-sitter-typst"; rev = "master"; };
-          }
-        ];
+            # Language server for nix
+            nil.command = exeOrFallback "nil" nil;
+            typst-lsp.command = exeOrFallback "typst-lsp" typst-lsp;
+
+            # Default language servers
+            clangd.command = exeOrFallback "clangd" clang-tools;
+            gopls.command = exeOrFallback "gopls" gopls;
+            marksman.command = exeOrFallback "marksman" marksman;
+            pylsp.command = exeOrFallback "python-lsp-server" python311Packages.python-lsp-server;
+            tuplo.command = exeOrFallback "taplo" taplo;
+            typescript-language-server.command = exeOrFallback "typescript-language-server" nodePackages.typescript-language-server;
+            vscode-css-language-server.command = exeOrFallback "vscode-css-language-server" vscode-langservers-extracted;
+            vscode-html-language-server.command = exeOrFallback "vscode-html-language-server" vscode-langservers-extracted;
+            vscode-json-language-server.command = exeOrFallback "vscode-json-language-server" vscode-langservers-extracted;
+            yaml-language-server.command = exeOrFallback "yaml-language-server" yaml-language-server;
+            ansible-language-server.command = exeOrFallback "ansible-language-server" ansible-language-server;
+          };
+
+        grammar = [{
+          # TODO: broken
+          name = "typst";
+          source = { git = "https://github.com/frozolotl/tree-sitter-typst"; rev = "master"; };
+        }];
 
         language = [
           {
