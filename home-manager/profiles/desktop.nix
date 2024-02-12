@@ -84,6 +84,13 @@ in
         imv
         mpv
         transmission-gtk
+        libreoffice-qt
+
+        # Needed for libreoffice
+        hunspell
+        hunspellDicts.fr-moderne
+        hunspellDicts.en_US-large
+        hunspellDicts.en_GB-large
 
         # CLI tools
         bat
