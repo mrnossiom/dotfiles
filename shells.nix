@@ -24,6 +24,8 @@ with pkgs;
 
   rust = mkPackageShell [ cargo ];
 
+  go = mkPackageShell [ go ];
+
   python =
     let pythonEnv = python3.withPackages (ps: with ps; [ ipython ]);
     in mkPackageShell [ pythonEnv ];
