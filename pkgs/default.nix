@@ -5,7 +5,7 @@ let
 in
 {
   # Commented packages are broken
-  
+
   # cspell-lsp = pkgs.callPackage ./cspell-lsp { };
   findUnicode = pkgs.callPackage ./findUnicode.nix { };
   git-along = pkgs.callPackage ./git-along.nix { };

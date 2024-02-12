@@ -114,8 +114,7 @@ with lib;
     programs.zellij = {
       enable = true;
       settings = {
-        # TODO: enable when more advenced
-        # default_layout = "compact";
+        default_layout = "compact";
       };
 
       # TODO: modify HM module to define layouts in here directly

@@ -90,7 +90,7 @@ in
       l.equal = "≤";
       g.equal = "≥";
       s.u.m = "∑";
-      acsiitilde.asciitilde = "≈";
+      asciitilde.asciitilde = "≈";
 
       # Math double-struck symbols
       M = {
