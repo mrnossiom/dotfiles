@@ -50,6 +50,7 @@ with lib;
         ap = "add --patch";
 
         pu = "push";
+        puf = "push --force-with-lease";
         pl = "pull";
 
         f = "fetch";
