@@ -12,4 +12,6 @@ package: builtins.elem package.pname [
   "thorium-browser"
   "unrar"
   "geogebra"
+
+  "datagrip"
 ]

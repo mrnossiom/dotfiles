@@ -72,6 +72,8 @@ in
         spotify
         thorium
 
+        jetbrains.datagrip
+
         # GUIs
         blender
         bottles
