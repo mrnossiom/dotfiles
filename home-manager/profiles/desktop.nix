@@ -55,19 +55,14 @@ in
         BUN_INSTALL = "${config.xdg.dataHome}/bun";
         CALCHISTFILE = "${config.xdg.cacheHome}/calc_history";
         CARGO_HOME = "${config.xdg.dataHome}/cargo";
+        DOCKER_CONFIG = "${config.xdg.configHome}/docker";
         HISTFILE = "${config.xdg.dataHome}/bash_history";
+        NPM_CONFIG_USERCONFIG = "${config.xdg.dataHome}/npm/npmrc";
+        RAD_HOME = "${config.xdg.dataHome}/radicle";
         RUSTUP_HOME = "${config.xdg.dataHome}/rustup";
         W3M_DIR = "${config.xdg.configHome}/w3m";
         WAKATIME_HOME = "${config.xdg.configHome}/wakatime";
       };
-
-      # Respect XDG spec
-      file.".npmrc".text = ''
-        prefix=${config.xdg.dataHome}/npm
-        cache=${config.xdg.cacheHome}/npm
-        init-module=${config.xdg.configHome}/npm/config/npm-init.js
-        logs-dir=${config.xdg.stateHome}/npm/logs
-      '';
 
       packages = with pkgs; [
         # Unfree
@@ -115,6 +110,14 @@ in
         xdg-utils
       ];
     };
+
+    # Make NPM respect XDG spec
+    xdg.configFile."npm/npmrc".text = ''
+      prefix=${config.xdg.dataHome}/npm
+      cache=${config.xdg.cacheHome}/npm
+      init-module=${config.xdg.configHome}/npm/config/npm-init.js
+      logs-dir=${config.xdg.stateHome}/npm/logs
+    '';
 
     xdg.configFile."tealdeer/config.toml".source = tomlFormat.generate "tealdeer-config" {
       updates.auto_update = true;
@@ -197,7 +200,10 @@ in
     # TODO: configure
     services.spotifyd.enable = true;
 
-    programs.gpg.enable = true;
+    programs.gpg = {
+      enable = true;
+      homedir = "${config.xdg.dataHome}/gnupg";
+    };
 
     programs.topgrade = {
       enable = true;
