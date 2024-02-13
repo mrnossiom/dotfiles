@@ -7,7 +7,7 @@
 with lib;
 
 let
-  theme = config.colorScheme.colors;
+  theme = config.colorScheme.palette;
 in
 {
   options = { };
@@ -15,7 +15,7 @@ in
   config = {
     programs.i3status-rust = {
       enable = true;
-      bars.default = rec {
+      bars.default = {
         theme = "modern";
         icons = "awesome6";
         blocks = [

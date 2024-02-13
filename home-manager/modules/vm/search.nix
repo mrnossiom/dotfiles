@@ -7,7 +7,7 @@
 with lib;
 
 let
-  theme = config.colorScheme.colors;
+  theme = config.colorScheme.palette;
   keyValueFormat = lib.generators.toKeyValue { };
 in
 {

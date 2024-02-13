@@ -17,5 +17,7 @@ with lib;
     };
 
     virtualisation.waydroid.enable = true;
+
+    services.flatpak.enable = true;
   };
 }

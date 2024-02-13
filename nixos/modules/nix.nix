@@ -1,22 +1,13 @@
 { self
 , lib
 , config
-, pkgs
 , ...
 }:
 
 with lib;
 
-let
-  inherit (self.outputs) overlays;
-in
 {
   config = {
-    nixpkgs = {
-      overlays = [ overlays.all ];
-      config.allowUnfreePredicate = import ../../lib/unfree.nix;
-    };
-
     nix = {
       # Make system registry consistent with flake inputs
       # Add `self` registry input that refers to flake

@@ -12,7 +12,7 @@ with builtins;
 let
   inherit (self.outputs) homeManagerModules;
 
-  theme = config.colorScheme.colors;
+  theme = config.colorScheme.palette;
   swayCfg = config.wayland.windowManager.sway.config;
 
   workspacesRange = zipListsWith (num: ws: { inherit ws num; }) [ 1 2 3 4 5 6 7 8 9 0 ] (range 1 10);

@@ -31,10 +31,10 @@ in
     } // user;
 
     home-manager = {
-      extraSpecialArgs = { inherit self; };
+      extraSpecialArgs = self.flakeLib.specialModuleArgs pkgs;
 
       useUserPackages = false;
-      useGlobalPkgs = false;
+      useGlobalPkgs = true;
 
       users.${name} = import ../../home-manager/profiles/${profile}.nix;
     };

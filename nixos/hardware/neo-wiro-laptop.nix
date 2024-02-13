@@ -1,12 +1,10 @@
-{ self, config, lib, pkgs, modulesPath, ... }:
+{ self, config, lib, ... }:
 
 let
   inherit (self.outputs) nixosModules;
 in
 {
   imports = [
-    "${modulesPath}/installer/scan/not-detected.nix"
-
     # Patches ACPI tables to fix sound issue
     nixosModules.hardware.asus.zenbook.ux3402za.sound
   ];
@@ -36,5 +34,8 @@ in
 
     nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
     hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+
+    # Replaces `<modules>/installer/scan/not-detected.nix` import
+    hardware.enableRedistributableFirmware = lib.mkDefault true;
   };
 }

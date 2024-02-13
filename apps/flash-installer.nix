@@ -1,11 +1,11 @@
-{ self, system, lib, writeShellApplication, ... }@pkgs:
+{ self, lib, writeShellApplication, ... }@pkgs:
 
 with lib;
 
 let
-  inherit (self.inputs) nixpkgs;
+  inherit (self.outputs) flakeLib;
 
-  iso = nixpkgs.lib.nixosSystem { inherit system; specialArgs = { inherit self; }; modules = [ ../nixos/profiles/installer.nix ]; };
+  iso = flakeLib.createSystem pkgs [ ../nixos/profiles/installer.nix ];
   # Build installer ISO
   isoPath = "${iso.config.system.build.isoImage}/iso/${iso.config.isoImage.isoName}";
 

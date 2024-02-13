@@ -16,6 +16,7 @@
     disko.url = "github:nix-community/disko";
     disko.inputs.nixpkgs.follows = "nixpkgs";
 
+    # TODO: replace with a custom module, this just acts as a module definition
     nix-colors.url = "github:misterio77/nix-colors";
 
     nixos-hardware.url = "github:nixos/nixos-hardware";
@@ -35,9 +36,10 @@
       inherit (self) outputs;
       inherit (nixpkgs.lib) genAttrs;
 
-      forAllSystems = genAttrs [ "aarch64-linux" "i686-linux" "x86_64-linux" "aarch64-darwin" "x86_64-darwin" ];
+      forAllSystems = genAttrs [ "x86_64-linux" "aarch64-linux" "aarch64-darwin" ];
       flakeLib = import ./lib/flake (nixpkgs // { inherit self; });
 
+      # This sould be the only constructed nixpkgs instance in this flake
       pkgs = forAllSystems (system: (import nixpkgs {
         inherit system;
         config.allowUnfreePredicate = import ./lib/unfree.nix;
@@ -56,14 +58,18 @@
       homeManagerModules = import ./modules/home-manager;
       templates = import ./templates;
 
+      # Custom exports
+      inherit flakeLib;
+      lib = forAllSystems (system: import ./lib pkgs.${system});
+
       nixosConfigurations = with flakeLib; {
-        "neo-wiro-laptop" = createSystem [
+        "neo-wiro-laptop" = createSystem pkgs."x86_64-linux" [
           (system "neo-wiro-laptop" "laptop")
           (managedDiskLayout "luks-btrfs" { device = "nvme0n1"; swapSize = 12; })
           (user "milomoisson" { description = "Milo Moisson"; profile = "desktop"; })
         ];
 
-        "archaic-wiro-laptop" = createSystem [
+        "archaic-wiro-laptop" = createSystem pkgs."x86_64-linux" [
           (system "archaic-wiro-laptop" "laptop")
           (user "milomoisson" { description = "Milo Moisson"; profile = "desktop"; })
         ];

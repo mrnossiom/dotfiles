@@ -3,8 +3,7 @@
 with lib;
 
 let
-  inherit (self.inputs) disko;
-  inherit (pkgs) writeShellScriptBin writeShellApplication pastebinit;
+  inherit (pkgs) writeShellScriptBin pastebinit;
 
   binName = drv: drv.meta.mainProgram;
 

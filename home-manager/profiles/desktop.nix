@@ -1,5 +1,6 @@
 { self
 , lib
+, llib
 , config
 , pkgs
   # Provides the NixOS configuration if HM was loaded through the NixOS module
@@ -11,7 +12,6 @@ with lib;
 
 let
   inherit (self.inputs) agenix nix-colors;
-  inherit (self.outputs) overlays;
 
   tomlFormat = pkgs.formats.toml { };
 in
@@ -22,7 +22,7 @@ in
 
     # Nix colors
     nix-colors.homeManagerModules.default
-    { colorScheme = nix-colors.colorSchemes.onedark; }
+    { config.colorScheme = llib.colorSchemes.oneDark; }
 
     ../modules/vm
     ../modules/git.nix
@@ -30,11 +30,6 @@ in
   ];
 
   config = {
-    nixpkgs = {
-      overlays = [ overlays.all ];
-      config.allowUnfreePredicate = import ../../lib/unfree.nix;
-    };
-
     programs.home-manager.enable = osConfig == null;
 
     home = {
@@ -82,9 +77,11 @@ in
         element-desktop
         gnome.gnome-disk-utility
         imv
+        (lutris.override { extraPkgs = pkgs: [ winetricks vulkan-loader ]; })
         mpv
         transmission-gtk
         audacity
+
         libreoffice-qt
 
         # Needed for libreoffice
@@ -214,29 +211,6 @@ in
     programs.gpg = {
       enable = true;
       homedir = "${config.xdg.dataHome}/gnupg";
-    };
-
-    programs.topgrade = {
-      enable = true;
-      package = pkgs.unstable.topgrade;
-      settings = {
-        misc = {
-          # Don't ask for confirmations
-          assume_yes = true;
-
-          # Run `sudo -v` to cache credentials at the start of the run; this avoids a
-          # blocking password prompt in the middle of a possibly-unattended run.
-          pre_sudo = true;
-
-          skip_notify = true;
-          disable = [ "rustup" ];
-          no_retry = true;
-          cleanup = true;
-        };
-
-        # TODO: sepcify via global config 
-        git.repos = [ "~/Developement/*/*" "~/.config/dotfiles" ];
-      };
     };
   };
 }

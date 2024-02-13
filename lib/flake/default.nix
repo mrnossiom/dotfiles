@@ -1,11 +1,24 @@
-{ self, lib, ... }@pkgs:
+{ self, lib, ... }:
 
 with lib;
 
+let
+  inherit (self.inputs) nixpkgs-unstable;
+in
 {
-  createSystem = modules: nixosSystem {
-    specialArgs = { inherit self; };
-    inherit modules;
+  # Makes
+  # - flake accessible through `self`
+  # - local flake library accessible through `llib`
+  # - unstable nixpkgs set accessible through `upkgs`
+  specialModuleArgs = pkgs: {
+    inherit self;
+    llib = import ../. pkgs;
+    upkgs = import nixpkgs-unstable { inherit (pkgs) system config; };
+  };
+
+  createSystem = pkgs: modules: nixosSystem {
+    inherit pkgs modules;
+    specialArgs = self.flakeLib.specialModuleArgs pkgs;
   };
 
   system = hostName: profile: {
