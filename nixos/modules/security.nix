@@ -4,8 +4,6 @@
 , ...
 }:
 
-with lib;
-
 {
   config = {
     # Sudo
@@ -29,14 +27,13 @@ with lib;
     };
 
     # Required when using swaylock
-    security.pam.services.swaylock = { };
+    security.pam.services."swaylock" = { };
 
     # Signing
-    programs.gnupg.agent = {
-      enable = true;
-      enableSSHSupport = true;
-    };
+    programs.gnupg.agent.enable = true;
     services.gnome.gnome-keyring.enable = true;
+
+    programs.ssh.startAgent = true;
 
     # SSH
     services.openssh = {
