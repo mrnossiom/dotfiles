@@ -29,8 +29,8 @@ with lib;
         b = "branch --all";
         brm = "branch --delete";
 
-        ll = "log --graph --oneline";
-        lla = "log --graph --oneline --all";
+        ll = "log --graph --oneline --pretty=custom";
+        lla = "log --graph --oneline --pretty=custom --all";
         last = "log -1 HEAD --stat";
 
         st = "status --short --branch";
@@ -60,6 +60,8 @@ with lib;
 
         ck = "checkout";
 
+        cp = "cherry-pick";
+
         df = "diff";
         dfs = "diff --staged";
         dfc = "diff --cached";
@@ -87,6 +89,8 @@ with lib;
         fetch.prune = true;
         color.ui = true;
         init.defaultBranch = "main";
+
+        pretty.custom = "format:%C(red)%h%C(reset) -%C(yellow)%d%C(reset) %s %C(green)(%cd) %C(bold blue)<%an>";
         log.date = "human";
 
         advice.addEmptyPathspec = false;
