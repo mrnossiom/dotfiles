@@ -202,9 +202,11 @@ with lib;
 
         # Quickly get outta here to test something
         cdtmp = ''
-          set -l tmp /tmp/(${getExe pkgs.names})
-          mkdir $tmp
-          cd $tmp
+          set -l name $argv[1] (${getExe pkgs.names})
+          set -l dir /tmp/$name[1]
+
+          mkdir $dir
+          cd $dir
         '';
 
         change-mac = ''
