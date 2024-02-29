@@ -60,7 +60,7 @@ with lib;
             clangd.command = exeOrFallback "clangd" clang-tools;
             gopls.command = exeOrFallback "gopls" gopls;
             marksman.command = exeOrFallback "marksman" marksman;
-            pylsp.command = exeOrFallback "python-lsp-server" python311Packages.python-lsp-server;
+            pylsp.command = exeOrFallback "pylsp" python311Packages.python-lsp-server;
             tuplo.command = exeOrFallback "taplo" taplo;
             typescript-language-server.command = exeOrFallback "typescript-language-server" nodePackages.typescript-language-server;
             vscode-css-language-server.command = exeOrFallback "vscode-css-language-server" vscode-langservers-extracted;
