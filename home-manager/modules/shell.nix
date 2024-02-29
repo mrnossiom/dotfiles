@@ -130,6 +130,10 @@ with lib;
       '';
     };
 
+    programs.zoxide = {
+      enable = true;
+      options = [ "--cmd cd" ];
+    };
 
     programs.fish = {
       enable = true;
@@ -176,11 +180,6 @@ with lib;
         ll = "ls -lhFa";
         ld = "ls -FD";
         tree = "ls -T";
-
-        # Renamed tools
-        grep = "rg";
-        cat = "bat";
-        diff = "delta";
 
         # Nix-related
         ur = " unlink result";
