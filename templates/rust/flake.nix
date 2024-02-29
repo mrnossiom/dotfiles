@@ -24,21 +24,35 @@
       pkgs = import nixpkgs { inherit system overlays; };
       rustToolchain = pkgs.pkgsBuildHost.rust-bin.fromRustupToolchainFile ./rust-toolchain.toml;
 
-      nativeBuildInputs = with pkgs; [ rustToolchain ];
-      buildInputs = with pkgs; [ ];
+      libraries = [ ];
+
+      nativeBuildInputs = with pkgs; [
+        pkg-config
+        rustToolchain
+        rust-analyzer
+        act
+      ];
+      buildInputs = [ ];
     in
     {
+      formatter = pkgs.nixpkgs-fmt;
+
       packages = rec {
-        default = my-app;
-        my-app = pkgs.callPackage ./package.nix { inherit gitignore; };
+        default = app;
+        app = pkgs.callPackage ./package.nix { inherit gitignore; };
       };
       apps = rec {
-        default = my-app;
-        my-app = flake-utils.lib.mkApp { drv = self.packages.${system}.my-app; };
+        default = app;
+        app = flake-utils.lib.mkApp { drv = self.packages.${system}.app; };
       };
 
-      devShells.default = pkgs.mkShellNoCC {
+      devShells.default = pkgs.mkShell {
         inherit nativeBuildInputs buildInputs;
+
+        RUST_SRC_PATH = pkgs.rustPlatform.rustLibSrc;
+        LD_LIBRARY_PATH = pkgs.lib.makeLibraryPath libraries;
+
+        RUST_LOG = "";
       };
     }
   );

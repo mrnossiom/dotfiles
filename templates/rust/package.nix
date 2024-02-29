@@ -1,4 +1,4 @@
-{ lib, rustPlatform, gitignore, pkg-config, openssl }:
+{ lib, rustPlatform, gitignore }:
 
 let
   inherit (gitignore.lib) gitignoreSource;
@@ -20,6 +20,6 @@ rustPlatform.buildRustPackage {
   meta = {
     inherit (cargoTOML.package) description homepage license;
     maintainers = cargoTOML.package.authors;
-    mainProgram = "my-app";
+    mainProgram = "app";
   };
 }
