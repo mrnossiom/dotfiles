@@ -22,7 +22,7 @@ with pkgs;
 
   # Add presets that I can quicky use
 
-  rust = mkPackageShell [ cargo ];
+  rust = mkPackageShell [ rustup ];
 
   go = mkPackageShell [ go ];
 
