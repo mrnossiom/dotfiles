@@ -1,10 +1,4 @@
-{ lib
-, config
-, pkgs
-, ...
-}:
-
-with lib;
+{ ... }:
 
 {
   config = {
@@ -15,8 +9,6 @@ with lib;
         setSocketVariable = true;
       };
     };
-
-    virtualisation.waydroid.enable = true;
 
     services.flatpak.enable = true;
   };
