@@ -70,17 +70,18 @@ in
         jetbrains.datagrip
 
         # GUIs
+        audacity
         blender
         bottles
-        cinnamon.nemo
         cura
         element-desktop
         gnome.gnome-disk-utility
+        gnome.nautilus
         imv
         (lutris.override { extraPkgs = pkgs: [ winetricks vulkan-loader ]; })
         mpv
+        pavucontrol
         transmission-gtk
-        audacity
 
         libreoffice-qt
 
@@ -106,6 +107,7 @@ in
         jq
         just
         killall
+        mc
         mind
         ripgrep
         speedtest-go
@@ -113,6 +115,7 @@ in
         tealdeer
         thokr
         trash-cli
+        wdisplays
         wf-recorder
         wl-clipboard
         xdg-utils
