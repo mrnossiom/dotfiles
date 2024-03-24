@@ -122,7 +122,7 @@ in
       enable = true;
       config = {
         modifier = "Mod4"; # Super key
-        terminal = getExe pkgs.kitty;
+        terminal = config.home.sessionVariables.TERMINAL;
 
         defaultWorkspace = "workspace number 1";
 

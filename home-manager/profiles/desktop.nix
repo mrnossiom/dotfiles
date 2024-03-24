@@ -42,8 +42,11 @@ in
       homeDirectory = "/home/milomoisson";
 
       sessionVariables = {
-        XDG_DESKTOP_DIR = "$HOME";
+        # EDITOR is set in the helix module
+        TERMINAL = getExe pkgs.kitty;
+        BROWSER = getExe pkgs.firefox;
 
+        XDG_DESKTOP_DIR = "$HOME";
         NIXOS_OZONE_WL = "1";
 
         # Respect XDG spec
@@ -158,7 +161,7 @@ in
       goPath = ".local/share/go";
     };
 
-    home.file.".cargo/config.toml".source = tomlFormat.generate "cargo-config" {
+    home.file."${config.home.sessionVariables.CARGO_HOME}/config.toml".source = tomlFormat.generate "cargo-config" {
       build.rustc-wrapper = getExe' pkgs.sccache "sccache";
 
       source = {
@@ -178,14 +181,45 @@ in
       unstable.gc = true;
     };
 
+    # TODO: move out
     xdg.mimeApps = {
       enable = true;
+
+      defaultApplications =
+        let
+          browser = [ "firefox.desktop" ];
+          images = [ "imv.desktop" ];
+        in
+        {
+          "application/pdf" = browser;
+          "text/html" = browser;
+          "x-scheme-handler/http" = browser;
+          "x-scheme-handler/https" = browser;
+          "x-scheme-handler/about" = browser;
+          "x-scheme-handler/unknown" = browser;
+
+          # Associate images to `imv`
+          "image/bmp" = images;
+          "image/gif" = images;
+          "image/jpeg" = images;
+          "image/jpg" = images;
+          "image/pjpeg" = images;
+          "image/png" = images;
+          "image/tiff" = images;
+          "image/heif" = images;
+        };
+
       associations.added = {
         "application/pdf" = [ "firefox.desktop" ];
+        "x-scheme-handler/about" = [ "firefox.desktop" ];
+        "x-scheme-handler/unknown" = [ "firefox.desktop" ];
+
+        ## Correct LibreOffice applications
+        "application/vnd.oasis.opendocument.text" = [ "writer.desktop" ];
+        # Word : `.docx`
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document" = [ "writer.desktop" ];
       };
-      defaultApplications = {
-        "application/pdf" = [ "firefox.desktop" ];
-      };
+      associations.removed = { };
     };
 
     # Nicely reload system units when changing configs
@@ -200,6 +234,8 @@ in
         isDefault = true;
         settings = {
           "browser.newtabpage.pinned" = [{ title = "NixOS"; url = "https://nixos.org"; }];
+          "browser.gesture.swipe.left" = "";
+          "browser.gesture.swipe.right" = "";
         };
       };
     };
