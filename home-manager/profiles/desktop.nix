@@ -72,19 +72,21 @@ in
         audacity
         blender
         bottles
+        calibre
+        chromium
         cura
         element-desktop
+        figma-linux
         gnome.gnome-disk-utility
         gnome.nautilus
         imv
-        (lutris.override { extraPkgs = pkgs: [ winetricks vulkan-loader ]; })
+        libreoffice-qt
+        lutris
         mpv
         pavucontrol
         transmission-gtk
 
-        libreoffice-qt
-
-        # Needed for libreoffice
+        # Needed for libreoffice spellchecking
         hunspell
         hunspellDicts.fr-moderne
         hunspellDicts.en_US-large
@@ -100,6 +102,8 @@ in
         encfs
         fastfetch
         fd
+        ffmpeg
+        file
         fzf
         glow
         gping
@@ -114,6 +118,7 @@ in
         srgn
         tealdeer
         thokr
+        tokei
         trash-cli
         wdisplays
         wf-recorder
