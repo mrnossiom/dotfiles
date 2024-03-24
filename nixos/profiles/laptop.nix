@@ -84,6 +84,8 @@ with lib;
 
   services.devmon.enable = true;
 
+  services.gvfs.enable = true;
+
   services.pipewire = {
     enable = true;
     alsa.enable = true;
