@@ -28,6 +28,7 @@ with lib;
             render = true;
             characters = "╎";
           };
+          bufferline = "multiple";
           file-picker.hidden = false;
           lsp.display-inlay-hints = true;
           soft-wrap.wrap-at-text-width = true;
@@ -43,32 +44,35 @@ with lib;
           normal = insert;
         };
       };
-      languages = {
-        language-server = with pkgs;
-          let
-            # Allows to have LSP for pretty much everylanguage I can encounter without overriding the ones in env
-            exeOrFallback = exe: fallbackPkg: writeShellScript "exe-or-fallback-${exe}" ''
-              [ -x "$(command -v ${exe})" ] && ${exe} || ${getExe' fallbackPkg exe}
-            '';
-          in
-          {
-            # Language server for nix
-            nil.command = exeOrFallback "nil" nil;
-            typst-lsp.command = exeOrFallback "typst-lsp" typst-lsp;
 
-            # Default language servers
-            clangd.command = exeOrFallback "clangd" clang-tools;
-            gopls.command = exeOrFallback "gopls" gopls;
-            marksman.command = exeOrFallback "marksman" marksman;
-            pylsp.command = exeOrFallback "pylsp" python311Packages.python-lsp-server;
-            tuplo.command = exeOrFallback "taplo" taplo;
-            typescript-language-server.command = exeOrFallback "typescript-language-server" nodePackages.typescript-language-server;
-            vscode-css-language-server.command = exeOrFallback "vscode-css-language-server" vscode-langservers-extracted;
-            vscode-html-language-server.command = exeOrFallback "vscode-html-language-server" vscode-langservers-extracted;
-            vscode-json-language-server.command = exeOrFallback "vscode-json-language-server" vscode-langservers-extracted;
-            yaml-language-server.command = exeOrFallback "yaml-language-server" yaml-language-server;
-            ansible-language-server.command = exeOrFallback "ansible-language-server" ansible-language-server;
+      # TODO: should change module definition to put these as suffix and avoid shadowing
+      extraPackages = with pkgs; [
+        ansible-language-server
+        clang-tools
+        gopls
+        kotlin-language-server
+        ltex-ls
+        marksman
+        nil
+        nodePackages.typescript-language-server
+        python311Packages.python-lsp-server
+        taplo
+        typst-lsp
+        vscode-langservers-extracted
+        yaml-language-server
+      ];
+
+      languages = {
+        language-server = {
+          rust-analyser = {
+            config = { check.command = "clippy"; };
+            command = "rust-analyser";
           };
+
+          typst-lsp.command = "typst-lsp";
+          ltex-ls.command = "ltex-ls";
+        };
+
 
         grammar = [{
           # TODO: broken
@@ -77,6 +81,10 @@ with lib;
         }];
 
         language = [
+          {
+            name = "markdown";
+            language-servers = [ "marksman" ];
+          }
           {
             name = "nix";
             language-servers = [ "nil" ];
