@@ -14,6 +14,7 @@ in
   # overlayed = pkgs.callPackage ./overlayed.nix { };
   rust-sloth = pkgs.callPackage ./rust-sloth.nix { };
   rusty-rain = pkgs.callPackage ./rusty-rain { };
+  srgn = pkgs.callPackage ./srgn.nix { };
 
   # Import packages defined in foreign repositories
   inherit (agenix.packages.${system}) agenix;

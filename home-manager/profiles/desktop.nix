@@ -111,6 +111,7 @@ in
         ripgrep
         speedtest-go
         spotify-tui
+        srgn
         tealdeer
         thokr
         trash-cli
