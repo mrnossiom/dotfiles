@@ -106,6 +106,16 @@ with lib;
       };
     };
 
+    programs.jujutsu = {
+      enable = true;
+      settings = {
+        user = {
+          name = "Milo Moisson";
+          email = "milomoisson@gmail.com";
+        };
+      };
+    };
+
     home.packages = with pkgs; [ git-leave git-along radicle-cli radicle-httpd radicle-node ];
 
     programs.gh.enable = true;
