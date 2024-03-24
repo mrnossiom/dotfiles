@@ -220,17 +220,23 @@ in
         };
 
         bindkeysToCode = true;
-        keybindings = foldl (acc: val: acc // val) { }
-          (map
-            (modifier: {
-              "${modifier}+Return" = "exec ${swayCfg.terminal}";
-              "${modifier}+Shift+Return" = "exec ${getExe pkgs.cinnamon.nemo}";
-              "${modifier}+Shift+q" = "kill";
-              "${modifier}+d" = "exec ${swayCfg.menu}";
-              "${modifier}+Space" = "exec ${getExe' pkgs.mako "makoctl"} dismiss";
+        keybindings =
+          let
+            pamixer = getExe pkgs.pamixer;
+            playerctl = getExe pkgs.playerctl;
+            brightnessctl = getExe pkgs.brightnessctl;
+          in
+          foldl (acc: val: acc // val) { }
+            (map
+              (modifier: {
+                "${modifier}+Return" = "exec ${swayCfg.terminal}";
+                "${modifier}+Shift+Return" = "exec ${getExe' pkgs.gnome.nautilus "nautilus"}";
+                "${modifier}+Shift+q" = "kill";
+                "${modifier}+d" = "exec ${swayCfg.menu}";
+                "${modifier}+Space" = "exec ${getExe' pkgs.mako "makoctl"} dismiss";
 
-              "${modifier}+Escape" = "exec ${getExe' pkgs.systemd "loginctl"} lock-session";
-              "${modifier}+Alt+Escape" = "exec ${pkgs.writeShellScript "lock-screenshot.sh" ''
+                "${modifier}+Escape" = "exec ${getExe' pkgs.systemd "loginctl"} lock-session";
+                "${modifier}+Alt+Escape" = "exec ${pkgs.writeShellScript "lock-screenshot.sh" ''
                 tmpimg=$(${getExe' pkgs.coreutils "mktemp"} /tmp/lock-bg.XXX)
 
                 # Give some time to hide the bar
@@ -242,54 +248,52 @@ in
                 rm $tmpimg
               ''}";
 
-              "${modifier}+${swayCfg.left}" = "focus left";
-              "${modifier}+${swayCfg.down}" = "focus down";
-              "${modifier}+${swayCfg.up}" = "focus up";
-              "${modifier}+${swayCfg.right}" = "focus right";
+                "${modifier}+${swayCfg.left}" = "focus left";
+                "${modifier}+${swayCfg.down}" = "focus down";
+                "${modifier}+${swayCfg.up}" = "focus up";
+                "${modifier}+${swayCfg.right}" = "focus right";
 
-              "${modifier}+Shift+${swayCfg.left}" = "move left";
-              "${modifier}+Shift+${swayCfg.down}" = "move down";
-              "${modifier}+Shift+${swayCfg.up}" = "move up";
-              "${modifier}+Shift+${swayCfg.right}" = "move right";
-              "${modifier}+b" = "split vertical";
-              "${modifier}+n" = "split horizontal";
+                "${modifier}+Shift+${swayCfg.left}" = "move left";
+                "${modifier}+Shift+${swayCfg.down}" = "move down";
+                "${modifier}+Shift+${swayCfg.up}" = "move up";
+                "${modifier}+Shift+${swayCfg.right}" = "move right";
+                "${modifier}+b" = "split vertical";
+                "${modifier}+n" = "split horizontal";
 
-              "${modifier}+Alt+${swayCfg.left}" = "resize shrink width 10 px";
-              "${modifier}+Alt+${swayCfg.down}" = "resize grow height 10 px";
-              "${modifier}+Alt+${swayCfg.up}" = "resize shrink height 10 px";
-              "${modifier}+Alt+${swayCfg.right}" = "resize grow width 10 px";
-              "${modifier}+f" = "fullscreen toggle";
-              "${modifier}+Shift+space" = "floating toggle";
-              # Change between tiling and floating focus
-              "${modifier}+Alt+space" = "focus mode_toggle";
-              "${modifier}+p" = "sticky toggle";
+                "${modifier}+Alt+${swayCfg.left}" = "resize shrink width 10 px";
+                "${modifier}+Alt+${swayCfg.down}" = "resize grow height 10 px";
+                "${modifier}+Alt+${swayCfg.up}" = "resize shrink height 10 px";
+                "${modifier}+Alt+${swayCfg.right}" = "resize grow width 10 px";
+                "${modifier}+f" = "fullscreen toggle";
+                "${modifier}+Shift+space" = "floating toggle";
+                # Change between tiling and floating focus
+                "${modifier}+Alt+space" = "focus mode_toggle";
+                "${modifier}+p" = "sticky toggle";
 
-              # Screenshotting
-              "${modifier}+s" = ''exec ${getExe pkgs.grim} -g "$(${getExe pkgs.slurp})" - | ${getExe' pkgs.wl-clipboard "wl-copy"}'';
-              "${modifier}+Shift+s" = "exec ${getExe' pkgs.wl-clipboard "wl-paste"} | ${getExe pkgs.swappy} --file - --output-file - | ${getExe' pkgs.wl-clipboard "wl-copy"}";
+                # Screenshotting
+                "${modifier}+s" = ''exec ${getExe pkgs.grim} -g "$(${getExe pkgs.slurp})" - | ${getExe' pkgs.wl-clipboard "wl-copy"}'';
+                "${modifier}+Shift+s" = "exec ${getExe' pkgs.wl-clipboard "wl-paste"} | ${getExe pkgs.swappy} --file - --output-file - | ${getExe' pkgs.wl-clipboard "wl-copy"}";
 
-              # Soundcontrol Keys
-              "--locked XF86AudioPrev" = "exec ${getExe pkgs.playerctl} previous";
-              "--locked XF86AudioNext" = "exec ${getExe pkgs.playerctl} next";
-              "--locked XF86AudioPlay" = "exec ${getExe pkgs.playerctl} play-pause";
-              "--locked XF86AudioStop" = "exec ${getExe pkgs.playerctl} stop";
-
-              # Avizo controled
-              "--locked XF86AudioRaiseVolume" = "exec ${getExe' pkgs.avizo "volumectl"} -u up";
-              "--locked XF86AudioLowerVolume" = "exec ${getExe' pkgs.avizo "volumectl"} -u down";
-              "--locked XF86AudioMute" = "exec ${getExe' pkgs.avizo "volumectl"} toggle-mute";
-              "--locked XF86AudioMicMute" = "exec ${getExe' pkgs.avizo "volumectl"} -m toggle-mute";
-              "--locked XF86MonBrightnessUp" = "exec ${getExe' pkgs.avizo "lightctl"} up";
-              "--locked XF86MonBrightnessDown" = "exec ${getExe' pkgs.avizo "lightctl"} down";
-            }
-            // listToAttrs (flatten (map
-              (num: [
-                { name = "${modifier}+${toString num.num}"; value = "workspace number ${toString num.ws}"; }
-                { name = "${modifier}+Alt+${toString num.num}"; value = "move container to workspace number ${toString num.ws}"; }
-                { name = "${modifier}+Shift+${toString num.num}"; value = "move container to workspace number ${toString num.ws}; workspace number ${toString num.ws}"; }
-              ])
-              workspacesRange))
-            ) [ swayCfg.modifier ]);
+                # Soundcontrol Keys
+                "--locked XF86AudioPrev" = "exec ${playerctl} previous";
+                "--locked XF86AudioNext" = "exec ${playerctl} next";
+                "--locked XF86AudioPlay" = "exec ${playerctl} play-pause";
+                "--locked XF86AudioStop" = "exec ${playerctl} stop";
+                "--locked XF86AudioRaiseVolume" = "exec ${pamixer} --unmute --increase 5";
+                "--locked XF86AudioLowerVolume" = "exec ${pamixer} --unmute --decrease 5";
+                "--locked XF86AudioMute" = "exec ${pamixer} --toggle-mute";
+                "--locked XF86AudioMicMute" = "exec ${pamixer} --default-source --toggle-mute";
+                "--locked XF86MonBrightnessUp" = "exec ${brightnessctl} set 10%+";
+                "--locked XF86MonBrightnessDown" = "exec ${brightnessctl} set 10%- --min-value=5";
+              }
+              // listToAttrs (flatten (map
+                (num: [
+                  { name = "${modifier}+${toString num.num}"; value = "workspace number ${toString num.ws}"; }
+                  { name = "${modifier}+Alt+${toString num.num}"; value = "move container to workspace number ${toString num.ws}"; }
+                  { name = "${modifier}+Shift+${toString num.num}"; value = "move container to workspace number ${toString num.ws}; workspace number ${toString num.ws}"; }
+                ])
+                workspacesRange))
+              ) [ swayCfg.modifier ]);
         #   ↑ Maybe have a second key as a modifier (like "Right Alt")
       };
     };
@@ -320,7 +324,5 @@ in
         gamma = 0.8;
       };
     };
-
-    services.avizo.enable = true;
   };
 }

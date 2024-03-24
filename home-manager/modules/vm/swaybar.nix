@@ -19,32 +19,21 @@ in
         theme = "modern";
         icons = "awesome6";
         blocks = [
-          { block = "focused_window"; }
+          { block = "music"; }
           {
-            block = "disk_space";
-            path = "/";
-            info_type = "available";
-            interval = 60;
-            warning = 20.0;
-            alert = 10.0;
+            block = "memory";
+            format = " $icon $mem_used_percents.eng(w:2) ";
           }
-          { block = "memory"; }
           {
             block = "cpu";
             interval = 5;
           }
-          { block = "tea_timer"; }
-          {
-            block = "pomodoro";
-            notify_cmd = "notify-send -w '{msg}'";
-            blocking_cmd = true;
-          }
-          { block = "music"; }
           {
             format = " 󰌌 $layout ";
             block = "keyboard_layout";
             driver = "sway";
           }
+          { block = "backlight"; device = "intel_backlight"; }
           { block = "sound"; }
           { block = "battery"; }
           {
