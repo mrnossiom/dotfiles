@@ -65,7 +65,6 @@ in
         discord
         geogebra6
         spotify
-        thorium
 
         jetbrains.datagrip
 
