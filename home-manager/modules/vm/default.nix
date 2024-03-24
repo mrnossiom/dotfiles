@@ -201,6 +201,10 @@ in
             repeat_delay = toString 300;
             repeat_rate = toString 30;
           };
+          "type:touchpad" = { events = "disabled_on_external_mouse"; };
+
+          # Disable touchscreen by default
+          "type:touch" = { events = "disabled"; };
         };
 
         output."*".bg = "#000000 solid_color";
