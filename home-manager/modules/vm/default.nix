@@ -142,8 +142,6 @@ in
           }];
         };
 
-        startup = [{ command = "${getExe pkgs.workstyle} &> /tmp/workstyle.log"; always = true; }];
-
         focus.followMouse = false;
 
         gaps.smartBorders = "no_gaps";

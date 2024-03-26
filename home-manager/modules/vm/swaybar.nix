@@ -99,10 +99,5 @@ in
 
       extraConfig = "icon_theme Papirus";
     }];
-
-
-    # We could've used `(pkgs.formats.toml { }).generate "config.toml" { <opts> }`
-    # but this doesn't keep ordering, and ordering is important here
-    xdg.configFile."workstyle/config.toml".source = ../../assets/workstyle.toml;
   };
 }
