@@ -5,7 +5,8 @@ keybinds clear-defaults=true {
 
     shared_except "locked" {
         bind "Ctrl g" { SwitchToMode "Locked"; }
-        bind "Ctrl q" { Quit; }
+        // I prefer to detach by default
+        bind "Ctrl q" { Detach; }
 
         bind "Alt n" { NewPane; }
         bind "Alt i" { GoToNextTab; }
@@ -83,6 +84,8 @@ keybinds clear-defaults=true {
         bind "Tab" { ToggleTab; }
         bind "r" { SwitchToMode "RenameTab"; TabNameInput 0; }
 
+        // Add bindings for moving tabs
+
         bind "n" { NewTab; SwitchToMode "Normal"; }
         bind "x" { CloseTab; SwitchToMode "Normal"; }
         bind "s" { ToggleActiveSyncTab; SwitchToMode "Normal"; }
@@ -159,6 +162,7 @@ keybinds clear-defaults=true {
         bind "Ctrl o" { SwitchToMode "Normal"; }
         bind "Ctrl s" { SwitchToMode "Scroll"; }
         bind "d" { Detach; }
+        bind "k" { Quit; }
         bind "w" {
             LaunchOrFocusPlugin "zellij:session-manager" {
                 floating true
@@ -169,19 +173,19 @@ keybinds clear-defaults=true {
     }
 }
 
+default_layout "compact"
+mouse_mode true
 on_force_close "detach"
-
-// TODO: make sure I like it
 pane_frames false
+scroll_buffer_size 10000
+
+// Whether sessions should be serialized to the cache folder (including their tabs/panes, cwds and running commands) so that they can later be resurrected
+// Options: bool
+session_serialization false
 
 // Toggle between having Zellij lay out panes according to a predefined set of layouts whenever possible
 // Options: bool
 // auto_layout true
-
-// Whether sessions should be serialized to the cache folder (including their tabs/panes, cwds and running commands) so that they can later be resurrected
-// Options: bool
-// TODO: configure
-// session_serialization false
 
 // Define color themes for Zellij
 // For more examples, see: https://github.com/zellij-org/zellij/tree/main/example/themes
@@ -203,14 +207,3 @@ pane_frames false
 //     }
 // }
 
-default_layout "compact"
-
-mouse_mode true
-
-// Configure the scroll back buffer size
-// This is the number of lines zellij stores for each pane in the scroll back
-// buffer. Excess number of lines are discarded in a FIFO fashion.
-// Valid values: positive integers
-// Default value: 10000
-//
-// scroll_buffer_size 10000

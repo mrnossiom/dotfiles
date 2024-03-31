@@ -281,8 +281,9 @@ in
                 "--locked XF86AudioLowerVolume" = "exec ${pamixer} --unmute --decrease 5";
                 "--locked XF86AudioMute" = "exec ${pamixer} --toggle-mute";
                 "--locked XF86AudioMicMute" = "exec ${pamixer} --default-source --toggle-mute";
-                "--locked XF86MonBrightnessUp" = "exec ${brightnessctl} set 10%+";
-                "--locked XF86MonBrightnessDown" = "exec ${brightnessctl} set 10%- --min-value=5";
+                "--locked XF86MonBrightnessUp" = "exec ${brightnessctl} set 5%+";
+                "--locked XF86MonBrightnessDown" = "exec ${brightnessctl} set 5%- --min-value=5";
+                "--locked XF86TouchpadToggle" = ''input "type:touchpad" events toggle enabled disabled_on_external_mouse'';
               }
               // listToAttrs (flatten (map
                 (num: [
