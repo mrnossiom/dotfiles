@@ -27,7 +27,8 @@ in
   ];
 
   config = {
-    services.wl-clip-persist.enable = true;
+    # TODO: seems to have troubles with encoding
+    # services.wl-clip-persist.enable = true;
 
     programs.swaylock = {
       enable = true;

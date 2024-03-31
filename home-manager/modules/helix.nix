@@ -23,16 +23,14 @@ with lib;
           lsp.display-inlay-hints = true;
           soft-wrap.wrap-at-text-width = true;
         };
-        keys = rec {
-          insert = {
-            up = "no_op";
-            down = "no_op";
-            left = "no_op";
-            right = "no_op";
+        keys =
+          let
+            no_op_arrow_keys = { up = "no_op"; down = "no_op"; left = "no_op"; right = "no_op"; };
+          in
+          {
+            normal = no_op_arrow_keys;
+            insert = no_op_arrow_keys;
           };
-          # Work the same in normal mode
-          normal = insert;
-        };
       };
 
       # TODO: should change module definition to put these as suffix and avoid shadowing
@@ -44,6 +42,7 @@ with lib;
         ltex-ls
         marksman
         nil
+        nodePackages.bash-language-server
         nodePackages.typescript-language-server
         python311Packages.python-lsp-server
         taplo

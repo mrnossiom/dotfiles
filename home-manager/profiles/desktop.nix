@@ -23,10 +23,11 @@ in
     # Nix colors
     nix-colors.homeManagerModules.default
     { config.colorScheme = llib.colorSchemes.oneDark; }
-
-    ../modules/vm
-    ../modules/git.nix
-    ../modules/shell.nix
+  ] ++ map (modPath: ../modules/${modPath}) [
+    "git.nix"
+    "shell.nix"
+    "taskwarrior.nix"
+    "vm"
   ];
 
   config = {

@@ -9,16 +9,16 @@ with lib;
 
 {
   # Hardware is imported in the flake to be machine specific
-  imports = [
-    ../modules/agenix.nix
-    ../modules/backup.nix
-    ../modules/gaming.nix
-    ../modules/info.nix
-    ../modules/logiops.nix
-    ../modules/nix.nix
-    ../modules/security.nix
-    ../modules/virtualisation.nix
-    ../modules/wireless.nix
+  imports = map (modPath: ../modules/${modPath}) [
+    "agenix.nix"
+    "backup.nix"
+    "gaming.nix"
+    "info.nix"
+    "logiops.nix"
+    "nix.nix"
+    "security.nix"
+    "virtualisation.nix"
+    "wireless.nix"
   ];
 
   hardware.opengl = {
