@@ -65,7 +65,6 @@ in
 
       packages = with pkgs; [
         # Unfree
-        authy
         discord
         geogebra6
         spotify

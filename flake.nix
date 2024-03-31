@@ -21,6 +21,7 @@
 
     nixos-hardware.url = "github:nixos/nixos-hardware";
 
+    # ——— Packages
     git-leave.url = "github:mrnossiom/git-leave";
     git-leave.inputs.nixpkgs.follows = "nixpkgs";
 

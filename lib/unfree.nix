@@ -6,7 +6,6 @@ package: builtins.elem package.pname [
   "steam-run"
 
   # Home Manager
-  "authy"
   "discord"
   "spotify"
   "thorium-browser"
