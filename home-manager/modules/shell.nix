@@ -1,4 +1,8 @@
-{ lib, pkgs, ... }:
+{ lib
+, pkgs
+, upkgs
+, ...
+}:
 
 with lib;
 
@@ -59,7 +63,7 @@ with lib;
         # This is also a more pure version than using `__fish_ls_*` variables
         # that depends on fish internal ls wrappers and can be overriden by
         # bad configuration. (e.g. NixOS `environment.shellAliases` default)
-        ls = "${getExe pkgs.eza} --color=auto --icons=auto --hyperlink";
+        ls = "${getExe upkgs.eza} --color=auto --icons=auto --hyperlink";
 
         tb = "nc termbin.com 9999";
       };
@@ -142,7 +146,7 @@ with lib;
         '';
 
         launch = ''$argv & disown'';
-        
+
         # Quickly explore a derivation (using registry syntax)
         # e.g. `cdd nixpkgs#fontforge` or `cdd nixpkgs-unstable#fontforge` 
         cdd = "cd (nix build --no-link --print-out-paths $argv | ${getExe pkgs.fzf})";

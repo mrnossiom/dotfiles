@@ -1,4 +1,6 @@
-{ pkgs
+{ self
+, config
+, pkgs
 , upkgs
 , lib
 , ...
@@ -6,7 +8,13 @@
 
 with lib;
 
+let
+  inherit (self) homeManagerModules;
+  inherit (config.age) secrets;
+in
 {
+  imports = [ homeManagerModules.wakatime ];
+
   config = {
     programs.helix = {
       enable = true;
@@ -57,6 +65,7 @@ with lib;
         typst-lsp
         vscode-langservers-extracted
         yaml-language-server
+        wakatime-lsp
       ];
 
       languages = {
@@ -64,16 +73,21 @@ with lib;
           rust-analyzer.config = { check.command = "clippy"; };
 
           ltex-ls.command = "ltex-ls";
+          wakatime.command = "wakatime-lsp";
         };
 
         language = [
           {
             name = "markdown";
-            language-servers = [ "marksman" ];
+            language-servers = [ "marksman" "wakatime" ];
+          }
+          {
+            name = "rust";
+            language-servers = [ "rust-analyzer" "wakatime" ];
           }
           {
             name = "nix";
-            language-servers = [ "nil" ];
+            language-servers = [ "nil" "wakatime" ];
             auto-format = true;
           }
           {
@@ -83,6 +97,11 @@ with lib;
           }
         ];
       };
+    };
+
+    programs.wakatime = {
+      enable = true;
+      apiKeyFile = secrets.api-wakatime.path;
     };
   };
 }

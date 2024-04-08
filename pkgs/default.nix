@@ -1,7 +1,7 @@
 { self, system, ... }@pkgs:
 
 let
-  inherit (self.inputs) agenix git-leave mind radicle;
+  inherit (self.inputs) agenix git-leave mind radicle wakatime-lsp;
 in
 {
   # Commented packages are broken
@@ -21,4 +21,5 @@ in
   inherit (git-leave.packages.${system}) git-leave;
   inherit (mind.packages.${system}) mind;
   inherit (radicle.packages.${system}) radicle-cli radicle-remote-helper radicle-httpd radicle-node;
+  inherit (wakatime-lsp.packages.${system}) wakatime-lsp;
 }

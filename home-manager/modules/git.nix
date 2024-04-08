@@ -84,11 +84,11 @@ with lib;
         '';
       };
 
-
       extraConfig = {
         fetch.prune = true;
         color.ui = true;
         init.defaultBranch = "main";
+        push.autoSetupRemote = true;
 
         pretty.custom = "format:%C(red)%h%C(reset) -%C(yellow)%d%C(reset) %s %C(green)(%cd) %C(bold blue)<%an>";
         log.date = "human";
