@@ -1,9 +1,16 @@
-{ pkgs, lib, ... }:
+{ pkgs
+, upkgs
+, lib
+, ...
+}:
+
 with lib;
+
 {
   config = {
     programs.helix = {
       enable = true;
+      package = upkgs.helix;
       defaultEditor = true;
 
       settings = {
@@ -22,6 +29,7 @@ with lib;
           file-picker.hidden = false;
           lsp.display-inlay-hints = true;
           soft-wrap.wrap-at-text-width = true;
+          rulers = [ 80 ];
         };
         keys =
           let
@@ -53,21 +61,10 @@ with lib;
 
       languages = {
         language-server = {
-          rust-analyser = {
-            config = { check.command = "clippy"; };
-            command = "rust-analyser";
-          };
+          rust-analyzer.config = { check.command = "clippy"; };
 
-          typst-lsp.command = "typst-lsp";
           ltex-ls.command = "ltex-ls";
         };
-
-
-        grammar = [{
-          # TODO: broken
-          name = "typst";
-          source = { git = "https://github.com/frozolotl/tree-sitter-typst"; rev = "master"; };
-        }];
 
         language = [
           {
@@ -83,19 +80,6 @@ with lib;
             name = "c";
             auto-format = true;
             formatter = { command = getExe' pkgs.clang-tools "clang-format"; args = [ ]; };
-          }
-          {
-            name = "typst";
-            scope = "source.typst";
-            auto-format = true;
-            language-servers = [ "typst-lsp" ];
-            file-types = [ "typ" ];
-            roots = [ "typst.toml" ];
-            comment-token = "//";
-            indent = { tab-width = 4; unit = "\t"; };
-            auto-pairs = { "(" = ")"; "{" = "}"; "[" = "]"; "\"" = "\""; "`" = "`"; "$" = "$"; };
-            injection-regex = "^typ(st)?$";
-            grammar = "typst";
           }
         ];
       };
