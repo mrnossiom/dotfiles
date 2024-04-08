@@ -26,7 +26,6 @@ in
   ] ++ map (modPath: ../modules/${modPath}) [
     "git.nix"
     "shell.nix"
-    "taskwarrior.nix"
     "vm"
   ];
 
@@ -79,6 +78,7 @@ in
         chromium
         cura
         element-desktop
+        evince
         figma-linux
         gnome.gnome-disk-utility
         gnome.nautilus
@@ -187,10 +187,13 @@ in
 
       defaultApplications =
         let
+          files = [ "org.gnome.Nautilus.desktop" ];
           browser = [ "firefox.desktop" ];
           images = [ "imv.desktop" ];
         in
         {
+          "inode/directory" = files;
+          
           "application/pdf" = browser;
           "text/html" = browser;
           "x-scheme-handler/http" = browser;

@@ -81,9 +81,9 @@ with lib;
         mkdir = "mkdir -v";
 
         # Listing utilities
-        l = "ls -Fa";
-        ll = "ls -lhFa";
-        ld = "ls -FD";
+        l = "ls -aF";
+        ll = "ls -lhaF";
+        ld = "ls -DF";
         tree = "ls -T";
 
         # Nix-related
@@ -141,8 +141,8 @@ with lib;
           end
         '';
 
-        nix-develop = "nix develop $argv --command fish";
-
+        launch = ''$argv & disown'';
+        
         # Quickly explore a derivation (using registry syntax)
         # e.g. `cdd nixpkgs#fontforge` or `cdd nixpkgs-unstable#fontforge` 
         cdd = "cd (nix build --no-link --print-out-paths $argv | ${getExe pkgs.fzf})";

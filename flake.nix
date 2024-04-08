@@ -38,6 +38,8 @@
       inherit (nixpkgs.lib) genAttrs;
 
       forAllSystems = genAttrs [ "x86_64-linux" "aarch64-linux" "aarch64-darwin" ];
+      forAllPkgs = function: forAllSystems (system: function pkgs.${system});
+
       flakeLib = import ./lib/flake (nixpkgs // { inherit self; });
 
       # This sould be the only constructed nixpkgs instance in this flake
@@ -48,11 +50,11 @@
       }));
     in
     {
-      formatter = forAllSystems (system: pkgs.${system}.nixpkgs-fmt);
+      formatter = forAllPkgs (pkgs: pkgs.nixpkgs-fmt);
 
-      packages = forAllSystems (system: import ./pkgs pkgs.${system});
-      apps = forAllSystems (system: import ./apps pkgs.${system});
-      devShells = forAllSystems (system: import ./shells.nix pkgs.${system});
+      packages = forAllPkgs (import ./pkgs);
+      apps = forAllPkgs (import ./apps);
+      devShells = forAllPkgs (import ./shells.nix);
 
       overlays = import ./overlays (nixpkgs // { inherit self; });
       nixosModules = import ./modules/nixos;
@@ -61,7 +63,7 @@
 
       # Custom exports
       inherit flakeLib;
-      lib = forAllSystems (system: import ./lib pkgs.${system});
+      lib = forAllPkgs (import ./lib);
 
       nixosConfigurations = with flakeLib; {
         "neo-wiro-laptop" = createSystem pkgs."x86_64-linux" [
