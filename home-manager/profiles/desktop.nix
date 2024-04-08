@@ -13,12 +13,19 @@ with lib;
 let
   inherit (self.inputs) agenix nix-colors;
 
+  all-secrets = import ../../secrets;
+
   tomlFormat = pkgs.formats.toml { };
 in
 {
   imports = [
     agenix.homeManagerModules.default
-    ../../secrets
+    {
+      age.secrets = all-secrets.home-manager;
+      # This allows us to decrypt user space secrets without having to use a
+      # passwordless ssh key as you cannot interact with age in the service.
+      age.identityPaths = [ "${config.home.homeDirectory}/.ssh/id_home_manager" ];
+    }
 
     # Nix colors
     nix-colors.homeManagerModules.default
