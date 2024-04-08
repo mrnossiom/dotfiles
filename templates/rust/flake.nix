@@ -2,14 +2,9 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.11";
 
-    flake-utils.url = "github:numtide/flake-utils";
-
     rust-overlay = {
       url = "github:oxalica/rust-overlay";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-        flake-utils.follows = "flake-utils";
-      };
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     gitignore = {
@@ -18,42 +13,52 @@
     };
   };
 
-  outputs = { self, nixpkgs, flake-utils, rust-overlay, gitignore }: flake-utils.lib.eachDefaultSystem (system:
+  outputs = { self, nixpkgs, rust-overlay, gitignore }:
     let
-      overlays = [ (import rust-overlay) ];
-      pkgs = import nixpkgs { inherit system overlays; };
-      rustToolchain = pkgs.pkgsBuildHost.rust-bin.fromRustupToolchainFile ./rust-toolchain.toml;
+      inherit (nixpkgs.lib) genAttrs;
 
-      libraries = [ ];
+      forAllSystems = genAttrs [ "x86_64-linux" "aarch64-linux" "aarch64-darwin" ];
+      forAllPkgs = function: forAllSystems (system: function pkgs.${system});
 
-      nativeBuildInputs = with pkgs; [
-        pkg-config
-        rustToolchain
-        rust-analyzer
-        act
-      ];
-      buildInputs = [ ];
+      mkApp = (program: { type = "app"; inherit program; });
+
+      pkgs = forAllSystems (system: (import nixpkgs {
+        inherit system;
+        overlays = [ (import rust-overlay) ];
+      }));
     in
     {
-      formatter = pkgs.nixpkgs-fmt;
+      formatter = forAllPkgs (pkgs: pkgs.nixpkgs-fmt);
 
-      packages = rec {
+      packages = forAllPkgs (pkgs: rec {
         default = app;
         app = pkgs.callPackage ./package.nix { inherit gitignore; };
-      };
-      apps = rec {
+      });
+      apps = forAllSystems (system: rec {
         default = app;
-        app = flake-utils.lib.mkApp { drv = self.packages.${system}.app; };
-      };
+        app = mkApp (pkgs.getExe self.packages.${system}.app);
+      });
 
-      devShells.default = pkgs.mkShell {
-        inherit nativeBuildInputs buildInputs;
+      devShells = forAllPkgs (pkgs:
+        with pkgs.lib;
+        let
+          file-rust-toolchain = pkgs.rust-bin.fromRustupToolchainFile ./rust-toolchain.toml;
+          rust-toolchain = file-rust-toolchain.override { extensions = [ "rust-analyzer" ]; };
+        in
+        {
+          default = pkgs.mkShell rec {
+            nativeBuildInputs = with pkgs; [
+              pkg-config
+              rust-toolchain
+              act
+            ];
+            buildInputs = with pkgs; [ ];
 
-        RUST_SRC_PATH = pkgs.rustPlatform.rustLibSrc;
-        LD_LIBRARY_PATH = pkgs.lib.makeLibraryPath libraries;
+            RUST_SRC_PATH = pkgs.rustPlatform.rustLibSrc;
+            LD_LIBRARY_PATH = makeLibraryPath buildInputs;
 
-        RUST_LOG = "";
-      };
-    }
-  );
+            RUST_LOG = "";
+          };
+        });
+    };
 }
