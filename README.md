@@ -18,3 +18,11 @@
 - `pkgs`: Custom packages either not eligible or missing from repositories
 - `secrets`: `agenix` encrypted secrets
 - `templates`: Quickstart files for different languages
+
+## Add a new device
+
+- Rekey secrets with device root ssh key, and create a session age key.
+
+---
+
+Milo Moisson © 2023-2024

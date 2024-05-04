@@ -21,6 +21,10 @@ with lib;
     "wireless.nix"
   ];
 
+  networking.hosts = {
+    "127.0.0.1" = [ "www.youtube.com" ];
+  };
+
   hardware.opengl = {
     enable = true;
     driSupport = true;
@@ -60,7 +64,14 @@ with lib;
   services.geoclue2.enable = true;
 
   fonts = {
-    packages = with pkgs; [ (nerdfonts.override { fonts = [ "JetBrainsMono" ]; }) inter noto-fonts noto-fonts-cjk-sans noto-fonts-emoji font-awesome ];
+    packages = with pkgs; [
+      (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
+      inter
+      noto-fonts
+      noto-fonts-cjk-sans
+      upkgs.noto-fonts-emoji
+      font-awesome
+    ];
     fontconfig = {
       defaultFonts = rec {
         monospace = [ "JetBrainsMono Nerd Font" "Noto Sans Mono" ];
@@ -83,7 +94,11 @@ with lib;
   environment.shellAliases = { ls = null; ll = null; l = null; };
   programs.fish.enable = true;
 
-  services.udev.packages = with pkgs; [ numworks-udev-rules ];
+  services.udev.packages = with pkgs; [
+    arduino-udev-rules
+    numworks-udev-rules
+    probe-rs-udev-rules
+  ];
 
   services.devmon.enable = true;
 
