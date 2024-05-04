@@ -1,4 +1,4 @@
-name: { description, profile, user ? { } }:
+name: { description, profile, keys ? [ ], user ? { } }:
 
 { self, pkgs, lib, ... }:
 
@@ -26,8 +26,7 @@ in
       extraGroups = [ "wheel" "networkmanager" ];
       shell = pkgs.fish;
 
-      # TODO: Add your SSH public key(s) here, if you plan on using SSH to connect
-      openssh.authorizedKeys.keys = [ ];
+      openssh.authorizedKeys.keys = keys;
     } // user;
 
     home-manager = {

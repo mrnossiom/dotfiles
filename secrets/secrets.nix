@@ -4,11 +4,11 @@ let
   neo = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINR1/9o1HLnSRkXt3xxAM5So1YCCNdJpBN1leSu7giuR";
   systems = [ archaic neo ];
 
-  # Sessions specific age key (~/.ssh/id_home_manager)
+  # Sessions specific age key (~/.ssh/id_home_manager.pub)
   neo-milomoisson = "age1vz2zmduaqhaw5jrqh277pmp36plyth8rz5k9ccxeftfcl2nlhalqwvx5xz";
   sessions = [ neo-milomoisson ];
 
-  # User keys 
+  # User keys (~/.ssh/id_ed25519.pub)
   milomoisson = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJdt7atyPTOfaBIsgDYYb0DG1yid2u78abaCDji6Uxgi";
   users = [ milomoisson ];
 
@@ -21,6 +21,7 @@ in
   "backup/restic-key.age".publicKeys = nixos;
 
   # Used in Home Manager
+  "api-crates-io.age".publicKeys = home-manager;
   "api-digital-ocean.age".publicKeys = home-manager;
   "api-gitguardian.age".publicKeys = home-manager;
   "api-wakatime.age".publicKeys = home-manager;
