@@ -26,6 +26,7 @@ in
         editor = {
           auto-save = true;
           auto-format = true;
+          auto-pairs = false;
           line-number = "relative";
           mouse = false;
           text-width = 80;

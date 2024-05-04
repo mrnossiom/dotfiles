@@ -43,6 +43,7 @@ with lib;
       enable = true;
       options = [ "--cmd cd" ];
     };
+    home.sessionVariables._ZO_EXCLUDE_DIRS = "$HOME:/nix/store/*";
 
     programs.fish = {
       enable = true;
@@ -92,6 +93,11 @@ with lib;
 
         # Nix-related
         ur = " unlink result";
+
+        # Use newer tools
+        cat = "# Nah"; # bat
+        grep = "# Nah"; # rg
+        tr = "# Nah"; # srgn
 
         # Do not keep these commands in history
         shutdown = " shutdown";

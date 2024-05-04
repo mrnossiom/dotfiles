@@ -5,6 +5,7 @@
   };
 
   home-manager = {
+    api-crates-io.file = ./api-crates-io.age;
     api-digital-ocean.file = ./api-digital-ocean.age;
     api-gitguardian.file = ./api-gitguardian.age;
     api-wakatime.file = ./api-wakatime.age;

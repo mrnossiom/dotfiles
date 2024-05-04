@@ -6,10 +6,7 @@ package: builtins.elem package.pname [
   "steam-run"
 
   # Home Manager
-  "discord"
   "spotify"
-  "thorium-browser"
-  "unrar"
   "geogebra"
 
   "datagrip"

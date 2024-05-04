@@ -15,7 +15,7 @@ let
 
   all-secrets = import ../../secrets;
 
-  tomlFormat = pkgs.formats.toml { };
+  toml-format = pkgs.formats.toml { };
 in
 {
   imports = [
@@ -71,7 +71,6 @@ in
 
       packages = with pkgs; [
         # Unfree
-        discord
         geogebra6
         spotify
 
@@ -87,14 +86,19 @@ in
         element-desktop
         evince
         figma-linux
+        gnome.file-roller
         gnome.gnome-disk-utility
         gnome.nautilus
+        gnome.simple-scan
+        heroic
         imv
         libreoffice-qt
         lutris
         mpv
+        obs-studio
         pavucontrol
-        transmission-gtk
+        transmission_4-gtk
+        vesktop
 
         # Needed for libreoffice spellchecking
         hunspell
@@ -103,7 +107,6 @@ in
         hunspellDicts.en_GB-large
 
         # CLI tools
-        bat
         btop
         calc
         daemon
@@ -121,10 +124,11 @@ in
         just
         killall
         mc
+        mediainfo
         mind
+        pv
         ripgrep
         speedtest-go
-        spotify-tui
         srgn
         tealdeer
         thokr
@@ -145,19 +149,17 @@ in
       logs-dir=${config.xdg.stateHome}/npm/logs
     '';
 
-    xdg.configFile."tealdeer/config.toml".source = tomlFormat.generate "tealdeer-config" {
+    xdg.configFile."tealdeer/config.toml".source = toml-format.generate "tealdeer-config" {
       updates.auto_update = true;
     };
 
     programs.broot.enable = true;
 
-    programs.yazi = {
+    programs.bat = {
       enable = true;
-
-      enableBashIntegration = true;
-      enableFishIntegration = true;
-      enableNushellIntegration = true;
-      enableZshIntegration = true;
+      config = {
+        style = "plain";
+      };
     };
 
     # Force override file which is not symlinked for whatever reason and causes errors on rebuilds
@@ -168,9 +170,12 @@ in
       goPath = ".local/share/go";
     };
 
-    home.file."${config.home.sessionVariables.CARGO_HOME}/config.toml".source = tomlFormat.generate "cargo-config" {
+    home.sessionPath = [ "${config.home.sessionVariables.CARGO_HOME}/bin" ];
+    home.file."${config.home.sessionVariables.CARGO_HOME}/config.toml".source = toml-format.generate "cargo-config" {
       build.rustc-wrapper = getExe' pkgs.sccache "sccache";
 
+      registry.global-credential-providers = ["cargo:token-from-stdout cat ${config.age.secrets.api-crates-io.path}"];
+      
       source = {
         local-mirror.registry = "sparse+http://local.crates.io:8080/index/";
         # crates-io.replace-with = "local-mirror";
@@ -200,7 +205,7 @@ in
         in
         {
           "inode/directory" = files;
-          
+
           "application/pdf" = browser;
           "text/html" = browser;
           "x-scheme-handler/http" = browser;
@@ -243,7 +248,7 @@ in
       profiles.default = {
         isDefault = true;
         settings = {
-          "browser.newtabpage.pinned" = [{ title = "NixOS"; url = "https://nixos.org"; }];
+          # Disable swipe gesture
           "browser.gesture.swipe.left" = "";
           "browser.gesture.swipe.right" = "";
         };
@@ -258,9 +263,6 @@ in
         enable_audio_bell = "no";
       };
     };
-
-    # TODO: configure
-    services.spotifyd.enable = true;
 
     programs.gpg = {
       enable = true;

@@ -179,10 +179,6 @@ on_force_close "detach"
 pane_frames false
 scroll_buffer_size 10000
 
-// Whether sessions should be serialized to the cache folder (including their tabs/panes, cwds and running commands) so that they can later be resurrected
-// Options: bool
-session_serialization false
-
 // Toggle between having Zellij lay out panes according to a predefined set of layouts whenever possible
 // Options: bool
 // auto_layout true

@@ -1,11 +1,5 @@
-{ self
-, config
-, lib
-, pkgs
-, ...
-}:
+{ self, ... }:
 
-with lib;
 
 let
   inherit (self.outputs) homeManagerModules;
@@ -53,13 +47,14 @@ in
         m = "μ";
         n = "ν";
         x = "ξ";
-        o = "ο";
+        q.o = "ο";
         p = "π";
         r = "ρ";
         s = "σ";
         t = "τ";
         y = "υ";
         f = "φ";
+        o = "ω";
       };
       # Upper case [G]reek letters
       G = {
@@ -77,13 +72,14 @@ in
         M = "Μ";
         N = "Ν";
         X = "Ξ";
-        O = "Ο";
+        Q.O = "Ο";
         P = "Π";
         R = "Ρ";
         S = "Σ";
         T = "Τ";
         Y = "Υ";
         F = "Φ";
+        O = "Ω";
       };
 
       # Math
