@@ -174,8 +174,8 @@ in
     home.file."${config.home.sessionVariables.CARGO_HOME}/config.toml".source = toml-format.generate "cargo-config" {
       build.rustc-wrapper = getExe' pkgs.sccache "sccache";
 
-      registry.global-credential-providers = ["cargo:token-from-stdout cat ${config.age.secrets.api-crates-io.path}"];
-      
+      registry.global-credential-providers = [ "cargo:token-from-stdout ${pkgs.writeShellScript "get-crates-io-token" "cat ${config.age.secrets.api-crates-io.path}"}" ];
+
       source = {
         local-mirror.registry = "sparse+http://local.crates.io:8080/index/";
         # crates-io.replace-with = "local-mirror";

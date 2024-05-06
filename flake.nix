@@ -43,6 +43,7 @@
       forAllSystems = genAttrs [ "x86_64-linux" "aarch64-linux" "aarch64-darwin" ];
       forAllPkgs = function: forAllSystems (system: function pkgs.${system});
 
+      keys = import ./secrets/keys.nix;
       flakeLib = import ./lib/flake (nixpkgs // { inherit self; });
 
       # This sould be the only constructed nixpkgs instance in this flake
@@ -69,28 +70,23 @@
       lib = forAllPkgs (import ./lib);
 
       nixosConfigurations = with flakeLib;
-        let
-          userKeys = [
-            "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJdt7atyPTOfaBIsgDYYb0DG1yid2u78abaCDji6Uxgi"
-          ];
-        in
         {
           # Desktops
           "neo-wiro-laptop" = createSystem pkgs."x86_64-linux" [
             (system "neo-wiro-laptop" "laptop")
             (managedDiskLayout "luks-btrfs" { device = "nvme0n1"; swapSize = 12; })
-            (user "milomoisson" { description = "Milo Moisson"; profile = "desktop"; keys = userKeys; })
+            (user "milomoisson" { description = "Milo Moisson"; profile = "desktop"; keys = keys.users; })
           ];
 
           "archaic-wiro-laptop" = createSystem pkgs."x86_64-linux" [
             (system "archaic-wiro-laptop" "laptop")
-            (user "milomoisson" { description = "Milo Moisson"; profile = "desktop"; keys = userKeys; })
+            (user "milomoisson" { description = "Milo Moisson"; profile = "desktop"; keys = keys.users; })
           ];
 
           # # Servers
           # "weird-row-server" = createSystem pkgs."x86_64-linux" [
           #   (system "weird-row-server" "server")
-          #   (user "milomoisson" { description = "Milo Moisson"; profile = "minimal"; keys = userKeys; })
+          #   (user "milomoisson" { description = "Milo Moisson"; profile = "minimal"; keys = keys.users; })
           # ];
         };
 

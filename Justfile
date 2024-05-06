@@ -9,5 +9,3 @@ build:
 
 check: build
 	@unlink result
-
-# TODO: custom rekey entry to rekey every secret avoiding to retype it everytime
