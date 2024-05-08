@@ -103,6 +103,9 @@ in
     programs.wakatime = {
       enable = true;
       apiKeyFile = secrets.api-wakatime.path;
+      settings = {
+        exclude_unknown_project = true;
+      };
     };
   };
 }

@@ -9,7 +9,7 @@ with lib;
 let
   cfg = config.programs.wakatime;
 
-  configFormat = pkgs.formats.ini { };
+  ini-format = pkgs.formats.ini { };
 in
 {
   options.programs.wakatime = {
@@ -21,7 +21,11 @@ in
     };
 
     settings = mkOption {
-      description = "Wakatime CLI settings that impacts every extension";
+      description = ''
+        Wakatime CLI settings that impacts every extension
+
+        See options at <https://github.com/wakatime/wakatime-cli/blob/develop/USAGE.md#ini-config-file>
+      '';
       default = { };
       example = {
         exclude = [
@@ -32,7 +36,8 @@ in
         ];
         include = [ ".*" ];
       };
-      type = configFormat.type;
+      # We only want a single INI section type
+      type = ini-format.type.nestedTypes.elemType;
     };
 
     extraConfig = mkOption {
@@ -44,20 +49,24 @@ in
           project_from_git_remote = false;
         };
       };
-      type = configFormat.type;
+      type = ini-format.type;
     };
   };
 
   config =
     let
-      merged-settings = cfg.settings // { settings.api_key_vault_cmd = pkgs.writeShellScript "cat-wakatime-api-key" "cat ${cfg.apiKeyFile}"; };
-      merged-config = cfg.extraConfig // merged-settings;
+      # Bash script is needed cause file path can contain env variables
+      # e.g. agenix uses `$XDG_RUNTIME_DIR`
+      wakatime-key = pkgs.writeShellScript "cat-wakatime-api-key" "cat ${cfg.apiKeyFile}";
+
+      merged-settings = cfg.settings // { api_key_vault_cmd = "${wakatime-key}"; };
+      final-config = cfg.extraConfig // { settings = merged-settings; };
     in
     mkIf cfg.enable {
       home.sessionVariables.WAKATIME_HOME = "${config.xdg.configHome}/wakatime";
 
       xdg.configFile = {
-        "wakatime/.wakatime.cfg".source = configFormat.generate "wakatime-config" merged-config;
+        "wakatime/.wakatime.cfg".source = ini-format.generate "wakatime-config" final-config;
       };
     };
 }
