@@ -18,6 +18,7 @@ in
   rusty-rain = pkgs.callPackage ./rusty-rain { };
   # serenityos-emoji-font = pkgs.callPackage ./serenityos-emoji-font.nix { };
   srgn = pkgs.callPackage ./srgn.nix { };
+  sweep = pkgs.callPackage ./sweep.nix { };
 
   # Import packages defined in foreign repositories
   inherit (agenix.packages.${system}) agenix;

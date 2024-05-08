@@ -130,6 +130,7 @@ in
         ripgrep
         speedtest-go
         srgn
+        sweep
         tealdeer
         thokr
         tokei
