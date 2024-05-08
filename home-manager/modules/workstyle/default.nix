@@ -9,8 +9,8 @@ with lib;
       always = true;
     }];
 
-    # We could've used `(pkgs.formats.toml { }).generate "config.toml" { <opts> }`
-    # but this doesn't keep ordering, and ordering is important here
+    # We could've used `pkgs.formats.toml { }` but this doesn't keep
+    # ordering, and ordering is important here
     xdg.configFile."workstyle/config.toml".source = ./config.toml;
   };
 }

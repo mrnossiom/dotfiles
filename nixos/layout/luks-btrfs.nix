@@ -24,6 +24,7 @@ in
           size = "100%";
           content = {
             type = "luks";
+            # TODO: change to encrypted
             name = "crypted";
             settings = {
               allowDiscards = true;

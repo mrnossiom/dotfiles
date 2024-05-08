@@ -4,7 +4,9 @@ with lib;
 
 let
   cfg = config.services.logiops;
-  renderedConfig = (pkgs.formats.libconfig { }).generate "logid.cfg" cfg.settings;
+
+  libconfig-format = pkgs.formats.libconfig { };
+  rendered-config = libconfig-format.generate "logid.cfg" cfg.settings;
 in
 {
   options.services.logiops = {
@@ -13,7 +15,7 @@ in
     package = mkPackageOption pkgs "logiops" { };
 
     settings = mkOption {
-      type = (pkgs.formats.libconfig { }).type;
+      type = libconfig-format.type;
       default = { };
       example = {
         devices = [{
@@ -60,12 +62,12 @@ in
 
   config = mkIf cfg.enable {
     services.udev.packages = [ pkgs.logitech-udev-rules ];
-    environment.etc."logid.cfg".source = renderedConfig;
+    environment.etc."logid.cfg".source = rendered-config;
 
     systemd.packages = [ cfg.package ];
     systemd.services.logid = {
       wantedBy = [ "multi-user.target" ];
-      restartTriggers = [ renderedConfig ];
+      restartTriggers = [ rendered-config ];
     };
   };
 

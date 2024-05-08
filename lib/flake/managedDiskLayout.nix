@@ -26,7 +26,7 @@ in
       description = ''
         Size (in GB) of the swap file
 
-        The recommanded amount from RedHat is:
+        The recommended amount from RedHat is:
 
         Amount of RAM    Recommended swap space       Recommended swap space 
         in the system                                 if allowing for hibernation

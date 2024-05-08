@@ -11,7 +11,7 @@ in
 
     loadConfigInEnv = mkOption {
       description = ''
-        Load the XCompose file by passing the XCOMPOSEFILE environnement variable instead of linking to ~/.XCompose.
+        Load the XCompose file by passing the `XCOMPOSEFILE` environment variable instead of linking to ~/.XCompose.
         
         That is nice to avoid cluttering the HOME directory, it's preferable to disable it when experimenting
         with your compose config to reload faster than having to reload your VM
@@ -21,7 +21,7 @@ in
     };
 
     includeLocaleCompose = mkOption {
-      description = "Wether to include the base libX11 locale compose file";
+      description = "Whether to include the base libX11 locale compose file";
       default = false;
       type = types.bool;
     };

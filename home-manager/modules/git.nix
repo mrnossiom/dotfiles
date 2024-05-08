@@ -102,7 +102,7 @@ with lib;
         "credentials \"https://github.com\"".helper = "!${getExe pkgs.gh} auth git-credential";
 
         # TODO: change to $PROJECTS env var?
-        leaveTool.defaultFolder = "~/Developement";
+        leaveTool.defaultFolder = "~/Development";
       };
     };
 

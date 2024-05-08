@@ -20,7 +20,7 @@ with pkgs;
   # Import packages of this flake along with useful tools for managing dotfiles
   default = mkPackageShell (allSelfPackages ++ [ ]);
 
-  # Add presets that I can quicky use
+  # Add presets that I can quickly use
 
   rust = mkPackageShell [ rustup ];
 

@@ -23,13 +23,13 @@ in
 
       paths = [
         "/home/${mainUsername}/Documents"
-        # Equivalent of `~/Developement` but needs extra handling as explained below
+        # Equivalent of `~/Development` but needs extra handling as explained below
         "/home/${mainUsername}/.local/backup/repos"
       ];
 
-      # Extra handling for Developement folder to respect `.gitignore` files.
+      # Extra handling for Development folder to respect `.gitignore` files.
       #
-      # Backup folder sould be stored somewhere to avoid changing ctimes
+      # Backup folder should be stored somewhere to avoid changing ctimes
       # which would cause otherwise unchanged files to be backed up again.
       # Since `--link-dest` is used, file contents won't be duplicated on disk.
       backupPrepareCommand = ''
@@ -44,8 +44,8 @@ in
           ${"\\" /* Exclude nixpkgs repository because they have some weird symlink test files that break rsync */}
           --exclude 'nixpkgs' \
           ${"\\" /* Hardlink files to avoid taking up more space */}
-          --link-dest=/home/${mainUsername}/Developement \
-          /home/${mainUsername}/Developement/ /home/${mainUsername}/.local/backup/repos
+          --link-dest=/home/${mainUsername}/Development \
+          /home/${mainUsername}/Development/ /home/${mainUsername}/.local/backup/repos
       '';
 
       pruneOpts = [

@@ -1,11 +1,6 @@
 { self
-, lib
-, config
-, pkgs
 , ...
 }:
-
-with lib;
 
 let
   inherit (self.outputs) nixosModules;
@@ -24,7 +19,7 @@ in
           middleMouse = 81; #       0x52 │ YES     │         │ YES        │ YES
           back = 83; #              0x53 │ YES     │         │ YES        │ YES
           forward = 86; #           0x56 │ YES     │         │ YES        │ YES
-          switchRecievers = 215; #  0xD7 │ YES     │         │            │ YES
+          switchReceivers = 215; #  0xD7 │ YES     │         │            │ YES
           mouseSensitivity = 253; # 0xFD │ YES     │         │ YES        │ YES
         };
       in
@@ -50,7 +45,7 @@ in
                 # gestures = [
                 # {
                 #   direction = "Left";
-                #   mode = "OnTreshold";
+                #   mode = "OnThreshold";
                 #   action = {
                 #     type = "Keypress";
                 #     keys = ["KEY_LEFTMETA" "KEY_LEFTCTRL" "KEY_LEFTSHIFT" "KEY_TAB"];
@@ -74,7 +69,7 @@ in
               };
             }
             {
-              cid = cid.switchRecievers;
+              cid = cid.switchReceivers;
               action.type = "None";
             }
           ];
