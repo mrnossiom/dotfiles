@@ -35,6 +35,9 @@ with lib;
     efi.canTouchEfiVariables = true;
   };
 
+  # This is needed to build cross platform ISOs in `apps/flash-installer.nix`
+  boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
+
   boot.extraModulePackages = with config.boot.kernelPackages; [ apfs perf xone ];
 
   programs.dconf.enable = true;

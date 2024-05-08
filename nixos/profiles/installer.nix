@@ -1,9 +1,16 @@
-{ self, lib, modulesPath, pkgs, ... }:
+{ lib
+, pkgs
+
+, modulesPath
+, ...
+}:
 
 with lib;
 
 let
   inherit (pkgs) writeShellScriptBin pastebinit;
+
+  keys = import ../../secrets/keys.nix;
 
   binName = drv: drv.meta.mainProgram;
 
@@ -61,6 +68,8 @@ in
     # Disable annoying warning
     boot.swraid.enable = mkForce false;
 
+    boot.kernelPackages = mkForce pkgs.linuxKernel.packages.linux_6_6;
+
     nix.settings = {
       experimental-features = [ "nix-command" "flakes" ];
       extra-substituters = [
@@ -73,7 +82,10 @@ in
       ];
     };
 
-    # Start wpa_supplicant rigth away
+    # Add our keys to default users for better remote experience
+    users.users.nixos.openssh.authorizedKeys.keys = keys.users;
+
+    # Start wpa_supplicant right away
     systemd.services.wpa_supplicant.wantedBy = mkForce [ "multi-user.target" ];
 
     services.getty.helpLine = ''
@@ -87,6 +99,11 @@ in
         $ parted /dev/<disk-id> -- mklabel gpt
     '';
 
-    environment.systemPackages = [ connect-wifi disko-cycle link-hardware-config install-system ];
+    environment.systemPackages = [
+      connect-wifi
+      disko-cycle
+      link-hardware-config
+      install-system
+    ];
   };
 }

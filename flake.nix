@@ -38,15 +38,14 @@
   outputs = { self, nixpkgs, ... }:
     let
       inherit (self) outputs;
-      inherit (nixpkgs.lib) genAttrs;
+      inherit (flakeLib) forAllSystems;
 
-      forAllSystems = genAttrs [ "x86_64-linux" "aarch64-linux" "aarch64-darwin" ];
-      forAllPkgs = function: forAllSystems (system: function pkgs.${system});
-
-      keys = import ./secrets/keys.nix;
       flakeLib = import ./lib/flake (nixpkgs // { inherit self; });
+      keys = import ./secrets/keys.nix;
 
-      # This sould be the only constructed nixpkgs instance in this flake
+      forAllPkgs = func: forAllSystems (system: func pkgs.${system});
+
+      # This should be the only constructed nixpkgs instances in this flake
       pkgs = forAllSystems (system: (import nixpkgs {
         inherit system;
         config.allowUnfreePredicate = import ./lib/unfree.nix;
@@ -57,7 +56,7 @@
       formatter = forAllPkgs (pkgs: pkgs.nixpkgs-fmt);
 
       packages = forAllPkgs (import ./pkgs);
-      apps = forAllPkgs (import ./apps);
+      apps = forAllPkgs (import ./apps { inherit forAllPkgs; });
       devShells = forAllPkgs (import ./shells.nix);
 
       overlays = import ./overlays (nixpkgs // { inherit self; });

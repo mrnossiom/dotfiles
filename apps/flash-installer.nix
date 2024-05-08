@@ -1,11 +1,18 @@
-{ self, lib, writeShellApplication, ... }@pkgs:
+targetSystemPkgs:
+
+{ self
+, lib
+
+, writeShellApplication
+, ...
+}@pkgs:
 
 with lib;
 
 let
   inherit (self.outputs) flakeLib;
 
-  iso = flakeLib.createSystem pkgs [ ../nixos/profiles/installer.nix ];
+  iso = flakeLib.createSystem targetSystemPkgs [ ../nixos/profiles/installer.nix ];
   # Build installer ISO
   isoPath = "${iso.config.system.build.isoImage}/iso/${iso.config.isoImage.isoName}";
 
@@ -16,9 +23,15 @@ getExe (writeShellApplication {
 
   text = ''
     # Select disk to flash
-    # ———————————————————————————————→ This eqality checks for disks with removable tag (RM) ↓↓↓↓↓↓↓
-    dev="/dev/$(lsblk -d -n --output RM,NAME,FSTYPE,SIZE,LABEL,TYPE,VENDOR,UUID | awk '{ if ($1 == 1) { print } }' | fzf | awk '{print $2}')"
+    if [[ -n $"''${1-}" ]]; then
+      dev="/dev/$1"
+    else
+      # —————————————————————————————— ↓↓ ———————————————→ Check disks with removable tag (RM) ↓↓↓↓↓↓↓
+      dev="/dev/$(lsblk -d -n --output RM,NAME,FSTYPE,SIZE,LABEL,TYPE,VENDOR,UUID | awk '{ if ($1 == 1) { print } }' | fzf | awk '{print $2}')"
+    fi
 
+    echo "Flashing to $dev"
+    
     # Format selected disk
     pv -tpreb "${isoPath}" | sudo dd bs=4M of="$dev" iflag=fullblock conv=notrunc,noerror oflag=sync
   '';

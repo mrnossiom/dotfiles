@@ -1,4 +1,7 @@
-{ self, lib, ... }:
+{ self
+, lib
+, ...
+}:
 
 with lib;
 
@@ -6,6 +9,8 @@ let
   inherit (self.inputs) nixpkgs-unstable;
 in
 {
+  forAllSystems = genAttrs [ "x86_64-linux" "aarch64-linux" "aarch64-darwin" ];
+
   # Makes
   # - flake accessible through `self`
   # - local flake library accessible through `llib`
