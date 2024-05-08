@@ -16,7 +16,7 @@ in
   probe-rs-udev-rules = pkgs.callPackage ./probe-rs-udev-rules.nix { };
   rust-sloth = pkgs.callPackage ./rust-sloth.nix { };
   rusty-rain = pkgs.callPackage ./rusty-rain { };
-  serenityos-emoji-font = pkgs.callPackage ./serenityos-emoji-font.nix { };
+  # serenityos-emoji-font = pkgs.callPackage ./serenityos-emoji-font.nix { };
   srgn = pkgs.callPackage ./srgn.nix { };
 
   # Import packages defined in foreign repositories

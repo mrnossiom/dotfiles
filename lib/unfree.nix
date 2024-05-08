@@ -6,8 +6,9 @@ package: builtins.elem package.pname [
   "steam-run"
 
   # Home Manager
-  "spotify"
   "geogebra"
+  "spotify"
 
+  ## JetBrains
   "datagrip"
 ]

@@ -10,4 +10,21 @@ with final.lib;
       postFixup = "wrapProgram $out/bin/darkman --suffix PATH : ${makeBinPath (with final; [ bash ])}";
     }
   );
+
+  figma-linux = prev.figma-linux.overrideAttrs (prevAttrs: {
+    buildInputs = prevAttrs.buildInputs ++ [ prev.makeWrapper ];
+    installPhase = ''
+      runHook preInstall
+
+      mkdir -p $out/lib && cp -r opt/figma-linux/* $_
+      mkdir -p $out/bin && ln -s $out/lib/figma-linux $_/figma-linux
+
+      cp -r usr/* $out
+
+      wrapProgramShell $out/bin/figma-linux \
+        --add-flags "\''${NIXOS_OZONE_WL:+\''${WAYLAND_DISPLAY:+--enable-features=UseOzonePlatform --ozone-platform=wayland}}"
+
+      runHook postInstall
+    '';
+  });
 }
