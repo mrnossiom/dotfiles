@@ -4,19 +4,13 @@ let
   inherit (self.inputs) agenix git-leave mind radicle wakatime-lsp;
 in
 {
-  # Commented packages are broken
-
   arduino-udev-rules = pkgs.callPackage ./arduino-udev-rules.nix { };
-  # cspell-lsp = pkgs.callPackage ./cspell-lsp { };
-  findUnicode = pkgs.callPackage ./findUnicode.nix { };
+  find-unicode = pkgs.callPackage ./find-unicode.nix { };
   git-along = pkgs.callPackage ./git-along.nix { };
-  # greenlight = pkgs.callPackage ./greenlight.nix { };
   names = pkgs.callPackage ./names.nix { };
-  # overlayed = pkgs.callPackage ./overlayed.nix { };
   probe-rs-udev-rules = pkgs.callPackage ./probe-rs-udev-rules.nix { };
   rust-sloth = pkgs.callPackage ./rust-sloth.nix { };
   rusty-rain = pkgs.callPackage ./rusty-rain { };
-  # serenityos-emoji-font = pkgs.callPackage ./serenityos-emoji-font.nix { };
   srgn = pkgs.callPackage ./srgn.nix { };
   sweep = pkgs.callPackage ./sweep.nix { };
 
