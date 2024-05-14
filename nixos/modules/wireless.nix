@@ -13,7 +13,12 @@
     services.blueman.enable = true;
 
     # Printing
-    services.printing.enable = true;
+    # Administration interface available at <http://localhost:631>
+
+    services.printing = {
+      enable = true;
+      drivers = [ pkgs.hplipWithPlugin ];
+    };
 
     services.avahi = {
       enable = true;
