@@ -1,4 +1,8 @@
-{ lib, rustPlatform, gitignore }:
+{ lib
+
+, rustPlatform
+, gitignore
+}:
 
 let
   inherit (gitignore.lib) gitignoreSource;

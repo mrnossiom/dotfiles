@@ -1,10 +1,4 @@
-{ lib
-, config
-, pkgs
-, ...
-}:
-
-with lib;
+{ ... }:
 
 {
   config = {

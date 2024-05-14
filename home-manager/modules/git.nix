@@ -1,5 +1,11 @@
-{ config, lib, pkgs, ... }:
+{ config
+, lib
+, pkgs
+, ...
+}:
+
 with lib;
+
 {
   config = {
     programs.git = {

@@ -1,4 +1,6 @@
-{ self, ... }:
+{ self
+, ...
+}:
 
 let
   inherit (self.inputs) agenix;

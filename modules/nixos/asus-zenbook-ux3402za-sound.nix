@@ -5,7 +5,10 @@
 # https://gist.github.com/lamperez/d5b385bc0c0c04928211e297a69f32d7
 # https://docs.kernel.org/admin-guide/acpi/initrd_table_override.html
 
-{ lib, pkgs, ... }:
+{ lib
+, pkgs
+, ...
+}:
 
 with lib;
 

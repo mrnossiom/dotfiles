@@ -1,4 +1,6 @@
-{ config, lib, ... }:
+{ config
+, ...
+}:
 
 let
   cfg = config.local.disk;
