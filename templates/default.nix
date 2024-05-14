@@ -3,7 +3,7 @@ rec {
 
   dotfiles = {
     path = ../.;
-    description = "";
+    description = "mrnossiom's dotfiles";
     welcomeText = ''
       Wait, someone cloned my dotfiles?
     '';

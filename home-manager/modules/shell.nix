@@ -43,7 +43,7 @@ with lib;
       enable = true;
       options = [ "--cmd cd" ];
     };
-    home.sessionVariables._ZO_EXCLUDE_DIRS = "$HOME:/nix/store/*";
+    home.sessionVariables._ZO_EXCLUDE_DIRS = "$HOME:/nix/store/*:/tmp/*";
 
     programs.fish = {
       enable = true;

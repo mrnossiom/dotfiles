@@ -49,11 +49,17 @@ in
       homeDirectory = "/home/milomoisson";
 
       sessionVariables = {
-        # EDITOR is set in the helix module
+        # EDITOR is set in the Helix module
         TERMINAL = getExe pkgs.kitty;
         BROWSER = getExe pkgs.firefox;
 
+        # Quick access to `~/Development` folder
+        DEV = "${config.home.homeDirectory}/Development";
+
+        # Would love to get rid of the Desktop folder
         XDG_DESKTOP_DIR = "$HOME";
+
+        # Makes electron apps use ozone and not crash because xwayland is not there
         NIXOS_OZONE_WL = "1";
 
         # Respect XDG spec
@@ -93,10 +99,12 @@ in
         heroic
         imv
         libreoffice-qt
+        localsend
         lutris
         mpv
         obs-studio
         pavucontrol
+        rawtherapee
         transmission_4-gtk
         vesktop
 

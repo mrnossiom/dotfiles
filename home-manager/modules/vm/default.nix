@@ -267,6 +267,7 @@ in
                 "${modifier}+Shift+space" = "floating toggle";
                 # Change between tiling and floating focus
                 "${modifier}+Alt+space" = "focus mode_toggle";
+                "${modifier}+Alt+c" = "move position cursor";
                 "${modifier}+p" = "sticky toggle";
 
                 # Screenshotting

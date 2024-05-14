@@ -9,25 +9,21 @@ keybinds clear-defaults=true {
         bind "Ctrl q" { Detach; }
 
         bind "Alt n" { NewPane; }
-        bind "Alt i" { GoToNextTab; }
-        bind "Alt o" { GoToPreviousTab; }
 
         bind "Alt h" { MoveFocusOrTab "Left"; }
         bind "Alt l" { MoveFocusOrTab "Right"; }
         bind "Alt j" { MoveFocus "Down"; }
         bind "Alt k" { MoveFocus "Up"; }
 
-        bind "Alt =" "Alt +" { Resize "Increase"; }
-        bind "Alt -" { Resize "Decrease"; }
         bind "Alt [" { PreviousSwapLayout; }
         bind "Alt ]" { NextSwapLayout; }
     }
 
     normal {
         bind "Ctrl p" { SwitchToMode "Pane"; }
-        bind "Ctrl n" { SwitchToMode "Resize"; }
+        bind "Ctrl r" { SwitchToMode "Resize"; }
         bind "Ctrl s" { SwitchToMode "Scroll"; }
-        bind "Ctrl o" { SwitchToMode "Session"; }
+        bind "Ctrl n" { SwitchToMode "Session"; }
         bind "Ctrl t" { SwitchToMode "Tab"; }
         bind "Ctrl h" { SwitchToMode "Move"; }
 	}
@@ -66,11 +62,14 @@ keybinds clear-defaults=true {
         bind "e" { TogglePaneEmbedOrFloating; SwitchToMode "Normal"; }
     }
 
+    // For `pane` mode
+    renamepane {
+        bind "Ctrl c" { SwitchToMode "Normal"; }
+        bind "Esc" { UndoRenamePane; SwitchToMode "Pane"; }
+    }
+
     move {
         bind "Ctrl h" { SwitchToMode "Normal"; }
-
-        bind "n" "Tab" { MovePane; }
-        bind "p" { MovePaneBackwards; }
 
         bind "h" { MovePane "Left"; }
         bind "j" { MovePane "Down"; }
@@ -105,6 +104,12 @@ keybinds clear-defaults=true {
         bind "9" { GoToTab 9; SwitchToMode "Normal"; }
     }
 
+    // For `tab` mode
+    renametab {
+        bind "Ctrl c" { SwitchToMode "Normal"; }
+        bind "Esc" { UndoRenameTab; SwitchToMode "Tab"; }
+    }
+
     scroll {
         bind "Ctrl s" { SwitchToMode "Normal"; }
 
@@ -120,6 +125,12 @@ keybinds clear-defaults=true {
 
         bind "d" { HalfPageScrollDown; }
         bind "u" { HalfPageScrollUp; }
+    }
+
+    // For `scroll` mode
+    entersearch {
+        bind "Ctrl c" "Esc" { SwitchToMode "Scroll"; }
+        bind "Enter" { SwitchToMode "Search"; }
     }
 
     search {
@@ -143,24 +154,9 @@ keybinds clear-defaults=true {
         bind "o" { SearchToggleOption "WholeWord"; }
     }
 
-    entersearch {
-        bind "Ctrl c" "Esc" { SwitchToMode "Scroll"; }
-        bind "Enter" { SwitchToMode "Search"; }
-    }
-
-    renametab {
-        bind "Ctrl c" { SwitchToMode "Normal"; }
-        bind "Esc" { UndoRenameTab; SwitchToMode "Tab"; }
-    }
-
-    renamepane {
-        bind "Ctrl c" { SwitchToMode "Normal"; }
-        bind "Esc" { UndoRenamePane; SwitchToMode "Pane"; }
-    }
-
     session {
-        bind "Ctrl o" { SwitchToMode "Normal"; }
-        bind "Ctrl s" { SwitchToMode "Scroll"; }
+        bind "Ctrl n" { SwitchToMode "Normal"; }
+
         bind "d" { Detach; }
         bind "k" { Quit; }
         bind "w" {
@@ -180,26 +176,23 @@ pane_frames false
 scroll_buffer_size 10000
 
 // Toggle between having Zellij lay out panes according to a predefined set of layouts whenever possible
-// Options: bool
 // auto_layout true
 
-// Define color themes for Zellij
-// For more examples, see: https://github.com/zellij-org/zellij/tree/main/example/themes
-// Once these themes are defined, one of them should to be selected in the "theme" section of this file
-//
-// themes {
-//     dracula {
-//         fg 248 248 242
-//         bg 40 42 54
-//         red 255 85 85
-//         green 80 250 123
-//         yellow 241 250 140
-//         blue 98 114 164
-//         magenta 255 121 198
-//         orange 255 184 108
-//         cyan 139 233 253
-//         black 0 0 0
-//         white 255 255 255
-//     }
-// }
+theme "onedark"
+
+themes {
+    onedark {
+        fg "#3B4048"
+        bg "#2C323C"
+        red "#E06C75"
+        green "#98C379"
+        yellow "#E5C07B"
+        blue "#61AFEF"
+        magenta "#C678DD"
+        orange "#D19A66"
+        cyan "#56B6C2"
+        black "#282C34"
+        white "#ABB2BF"
+    }
+}
 
