@@ -31,6 +31,7 @@ in
     nix-colors.homeManagerModules.default
     { config.colorScheme = llib.colorSchemes.oneDark; }
   ] ++ map (modPath: ../modules/${modPath}) [
+    "firefox.nix"
     "git.nix"
     "shell.nix"
     "vm"
@@ -49,9 +50,7 @@ in
       homeDirectory = "/home/milomoisson";
 
       sessionVariables = {
-        # EDITOR is set in the Helix module
         TERMINAL = getExe pkgs.kitty;
-        BROWSER = getExe pkgs.firefox;
 
         # Quick access to `~/Development` folder
         DEV = "${config.home.homeDirectory}/Development";
@@ -248,22 +247,6 @@ in
 
     # Nicely reload system units when changing configs
     systemd.user.startServices = "sd-switch";
-
-    programs.firefox = {
-      enable = true;
-      package = (pkgs.firefox.override {
-        nativeMessagingHosts = with pkgs; [ tridactyl-native ];
-      });
-      profiles.default = {
-        isDefault = true;
-        settings = {
-          # Disable swipe gesture
-          "browser.gesture.swipe.left" = "";
-          "browser.gesture.swipe.right" = "";
-        };
-      };
-    };
-    programs.qutebrowser.enable = true;
 
     programs.kitty = {
       enable = true;
