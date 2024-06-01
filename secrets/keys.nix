@@ -10,5 +10,6 @@ rec {
 
   # User keys (~/.ssh/id_ed25519.pub)
   milomoisson = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJdt7atyPTOfaBIsgDYYb0DG1yid2u78abaCDji6Uxgi";
-  users = [ milomoisson ];
+  wirody = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMdW6ijH9oTsrswUJmQBF2LQkhjrMFkJ1LktnirPuL2S";
+  users = [ milomoisson wirody ];
 }
