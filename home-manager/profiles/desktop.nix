@@ -103,6 +103,7 @@ in
         mpv
         obs-studio
         pavucontrol
+        prismlauncher
         rawtherapee
         transmission_4-gtk
         vesktop

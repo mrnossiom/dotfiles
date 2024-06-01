@@ -83,7 +83,8 @@ keybinds clear-defaults=true {
         bind "Tab" { ToggleTab; }
         bind "r" { SwitchToMode "RenameTab"; TabNameInput 0; }
 
-        // Add bindings for moving tabs
+        bind "Alt h" { MoveTab "Left"; }
+        bind "Alt l" { MoveTab "Right"; }
 
         bind "n" { NewTab; SwitchToMode "Normal"; }
         bind "x" { CloseTab; SwitchToMode "Normal"; }

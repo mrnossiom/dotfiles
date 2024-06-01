@@ -6,6 +6,10 @@
 
 with lib;
 
+let
+  clear-nix-env = true;
+in
+
 {
   config = {
     nix = {
@@ -13,8 +17,13 @@ with lib;
       # Add `self` registry input that refers to flake
       registry = mapAttrs (_: value: { flake = value; }) (self.inputs // { inherit self; });
 
-      # Make NixOS system's legacy channels consistent with registry and flake inputs
-      nixPath = mapAttrsToList (key: value: "${key}=${value.to.path}") config.nix.registry;
+      nixPath =
+        if clear-nix-env
+        # Actually make it empty to disable nix-* legacy commands
+        then [ ]
+        # Make NixOS system's legacy channels consistent with registry and flake inputs
+        else mapAttrsToList (key: value: "${key}=${value.to.path}") config.nix.registry;
+
 
       gc = {
         automatic = true;

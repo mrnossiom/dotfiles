@@ -83,6 +83,10 @@ in
             language-servers = [ "marksman" "wakatime" ];
           }
           {
+            name = "html";
+            language-servers = [ "vscode-html-language-server" "wakatime" ];
+          }
+          {
             name = "rust";
             language-servers = [ "rust-analyzer" "wakatime" ];
           }

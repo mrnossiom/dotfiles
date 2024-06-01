@@ -1,6 +1,7 @@
 { lib
 , config
 , pkgs
+, upkgs
 , ...
 }:
 
@@ -29,16 +30,19 @@ with lib;
     driSupport = true;
   };
 
-  boot.loader = {
-    systemd-boot.enable = true;
-    systemd-boot.consoleMode = "auto";
-    efi.canTouchEfiVariables = true;
+  boot = {
+    kernelPackages = upkgs.linuxKernel.packages.linux_zen;
+    extraModulePackages = with config.boot.kernelPackages; [ apfs perf xone ];
+
+    loader = {
+      systemd-boot.enable = true;
+      systemd-boot.consoleMode = "auto";
+      efi.canTouchEfiVariables = true;
+    };
+
+    # This is needed to build cross platform ISOs in `apps/flash-installer.nix`
+    binfmt.emulatedSystems = [ "aarch64-linux" ];
   };
-
-  # This is needed to build cross platform ISOs in `apps/flash-installer.nix`
-  boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
-
-  boot.extraModulePackages = with config.boot.kernelPackages; [ apfs perf xone ];
 
   programs.dconf.enable = true;
 
