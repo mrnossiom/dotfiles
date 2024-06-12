@@ -34,6 +34,7 @@ in
     "firefox.nix"
     "git.nix"
     "shell.nix"
+    "thunderbird.nix"
     "vm"
   ];
 

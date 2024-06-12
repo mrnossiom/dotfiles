@@ -18,6 +18,6 @@ in
   inherit (agenix.packages.${system}) agenix;
   inherit (git-leave.packages.${system}) git-leave;
   inherit (mind.packages.${system}) mind;
-  inherit (radicle.packages.${system}) radicle-cli radicle-remote-helper radicle-httpd radicle-node;
+  inherit (radicle.packages.${system}) radicle;
   inherit (wakatime-lsp.packages.${system}) wakatime-lsp;
 }

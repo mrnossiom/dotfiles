@@ -1,5 +1,7 @@
+{ lib }:
+
 # List of all unfree packages authorized
-package: builtins.elem package.pname [
+package: builtins.elem (lib.getName package) [
   # NixOS
   "hplip"
   "steam"

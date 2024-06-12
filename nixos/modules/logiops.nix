@@ -1,4 +1,5 @@
 { self
+, pkgs
 , ...
 }:
 
@@ -10,6 +11,8 @@ in
 
   config.services.logiops = {
     enable = true;
+    package = pkgs.logiops_0_2_3;
+
     settings =
       let
         cid = {

@@ -2,11 +2,11 @@
   description = "NixOS and Home Manager configuration for Milo's laptops";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-23.11";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.05";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     # Also see the 'unstable-packages' overlay at 'overlays/default.nix'.
 
-    home-manager.url = "github:nix-community/home-manager/release-23.11";
+    home-manager.url = "github:nix-community/home-manager/release-24.05";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
     agenix.url = "github:ryantm/agenix";
@@ -48,7 +48,7 @@
       # This should be the only constructed nixpkgs instances in this flake
       pkgs = forAllSystems (system: (import nixpkgs {
         inherit system;
-        config.allowUnfreePredicate = import ./lib/unfree.nix;
+        config.allowUnfreePredicate = import ./lib/unfree.nix { lib = nixpkgs.lib; };
         overlays = [ outputs.overlays.all ];
       }));
     in
