@@ -31,6 +31,8 @@ with lib;
   };
 
   boot = {
+    kernelParams = [ "quiet" ];
+    
     kernelPackages = upkgs.linuxKernel.packages.linux_zen;
     extraModulePackages = with config.boot.kernelPackages; [ apfs perf xone ];
 
@@ -44,12 +46,17 @@ with lib;
     binfmt.emulatedSystems = [ "aarch64-linux" ];
   };
 
+  # Once in a while, the session stop job hangs and lasts the full default
+  # time (1min30). I just want to shutdown my computer please.
+  systemd.extraConfig = ''
+    DefaultTimeoutStopSec = 10s
+  '';
+
   programs.dconf.enable = true;
 
   time.timeZone = "Europe/Paris";
 
-  # TODO: activate when it lands on stable
-  # services.ntpd-rs.enable = true;
+  services.ntpd-rs.enable = true;
 
   i18n.defaultLocale = "en_US.UTF-8";
   i18n.extraLocaleSettings = {
@@ -93,7 +100,7 @@ with lib;
     enable = true;
     package = pkgs.wireshark;
   };
-  users.users.${config.local.user.username}.extraGroups = [ "wireshark" ];
+  users.users.${config.local.user.username}.extraGroups = [ "wireshark" "plugdev" ];
 
   # This option is already filled with aliases that snowball and have 
   # priority on fish internal `ls` aliases
@@ -105,6 +112,8 @@ with lib;
     numworks-udev-rules
     probe-rs-udev-rules
   ];
+
+  users.groups.plugdev.name = "plugdev";
 
   services.devmon.enable = true;
 

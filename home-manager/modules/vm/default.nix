@@ -304,12 +304,6 @@ in
 
     services.poweralertd.enable = true;
 
-    services.wlsunset = {
-      enable = true;
-      latitude = toString 48.8;
-      longitude = toString 2.3;
-    };
-
     services.darkman = {
       enable = true;
       settings.usegeoclue = true;
