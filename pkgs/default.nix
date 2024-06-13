@@ -11,7 +11,6 @@ in
   probe-rs-udev-rules = pkgs.callPackage ./probe-rs-udev-rules.nix { };
   rust-sloth = pkgs.callPackage ./rust-sloth.nix { };
   rusty-rain = pkgs.callPackage ./rusty-rain { };
-  srgn = pkgs.callPackage ./srgn.nix { };
   sweep = pkgs.callPackage ./sweep.nix { };
 
   # Import packages defined in foreign repositories

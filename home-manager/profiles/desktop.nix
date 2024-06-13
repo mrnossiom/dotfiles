@@ -3,6 +3,7 @@
 , llib
 , config
 , pkgs
+, upkgs
   # Provides the NixOS configuration if HM was loaded through the NixOS module
 , osConfig ? null
 , ...
@@ -138,7 +139,7 @@ in
         pv
         ripgrep
         speedtest-go
-        srgn
+        upkgs.srgn
         sweep
         tealdeer
         thokr
