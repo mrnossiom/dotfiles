@@ -8,22 +8,39 @@
     networking.nameservers = [ "1.1.1.1" "8.8.8.8" "9.9.9.9" ];
     networking.networkmanager.enable = true;
 
+    # Firewall
+    networking.firewall = {
+      enable = true;
+
+      # Open arbitrary 4242 port to share things on local networks
+      allowedTCPPorts = [ 4242 ];
+    };
+
     # Bluetooth
     hardware.bluetooth.enable = true;
     services.blueman.enable = true;
 
+    # Avahi is a service that takes care of advertising the current machine on
+    # the network. AKA `Bonjour` in macOS lingua franca.
+    services.avahi = {
+      enable = true;
+
+      nssmdns4 = true;
+      openFirewall = true;
+
+      # Advertise the machine, so we can be found as `<hostname>.local`
+      publish = {
+        enable = true;
+        addresses = true;
+        workstation = true;
+      };
+    };
+
     # Printing
     # Administration interface available at <http://localhost:631>
-
     services.printing = {
       enable = true;
       drivers = [ pkgs.hplipWithPlugin ];
-    };
-
-    services.avahi = {
-      enable = true;
-      nssmdns4 = true;
-      openFirewall = true;
     };
   };
 }
