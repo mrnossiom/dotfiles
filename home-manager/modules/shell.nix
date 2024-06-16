@@ -9,7 +9,6 @@ with lib;
 {
   imports = [
     ./helix.nix
-    ./workstyle
     ./zellij
   ];
 
