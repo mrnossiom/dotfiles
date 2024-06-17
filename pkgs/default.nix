@@ -8,9 +8,8 @@ in
   find-unicode = pkgs.callPackage ./find-unicode.nix { };
   git-along = pkgs.callPackage ./git-along.nix { };
   names = pkgs.callPackage ./names.nix { };
+  otree = pkgs.callPackage ./otree.nix { };
   probe-rs-udev-rules = pkgs.callPackage ./probe-rs-udev-rules.nix { };
-  rust-sloth = pkgs.callPackage ./rust-sloth.nix { };
-  rusty-rain = pkgs.callPackage ./rusty-rain { };
   sweep = pkgs.callPackage ./sweep.nix { };
 
   # Import packages defined in foreign repositories

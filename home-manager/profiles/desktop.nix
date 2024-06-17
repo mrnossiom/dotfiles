@@ -136,6 +136,7 @@ in
         mc
         mediainfo
         mind
+        otree
         pv
         ripgrep
         speedtest-go
