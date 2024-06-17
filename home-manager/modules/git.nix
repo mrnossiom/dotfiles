@@ -44,7 +44,8 @@ with lib;
         cm = "commit --message";
         oups = "commit --amend";
 
-        ui = "!${getExe pkgs.gitui}";
+        # Plain binary ensures it is globally installed
+        ui = "!lazygit";
 
         rv = "remote --verbose";
 
@@ -127,5 +128,7 @@ with lib;
     programs.gh.enable = true;
 
     programs.gh-dash.enable = true;
+
+    programs.lazygit.enable = true;
   };
 }
