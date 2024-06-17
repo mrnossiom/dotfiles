@@ -1,4 +1,5 @@
-{ lib
+{ self
+, lib
 , config
 , pkgs
 , upkgs
@@ -7,9 +8,15 @@
 
 with lib;
 
+let
+  inherit (self.outputs) nixosModules;
+in
 {
   # Hardware is imported in the flake to be machine specific
-  imports = map (modPath: ../modules/${modPath}) [
+  imports = [
+    # Replaces nixpkgs module with a custom one that support fallback static location
+    nixosModules.geoclue2
+  ] ++ map (modPath: ../modules/${modPath}) [
     "agenix.nix"
     "backup.nix"
     "gaming.nix"
@@ -32,7 +39,7 @@ with lib;
 
   boot = {
     kernelParams = [ "quiet" ];
-    
+
     kernelPackages = upkgs.linuxKernel.packages.linux_zen;
     extraModulePackages = with config.boot.kernelPackages; [ apfs perf xone ];
 
@@ -58,23 +65,37 @@ with lib;
 
   services.ntpd-rs.enable = true;
 
-  i18n.defaultLocale = "en_US.UTF-8";
-  i18n.extraLocaleSettings = {
-    LC_ADDRESS = "fr_FR.UTF-8";
-    LC_IDENTIFICATION = "fr_FR.UTF-8";
-    LC_MEASUREMENT = "fr_FR.UTF-8";
-    LC_MONETARY = "fr_FR.UTF-8";
-    LC_NAME = "fr_FR.UTF-8";
-    LC_NUMERIC = "fr_FR.UTF-8";
-    LC_PAPER = "fr_FR.UTF-8";
-    LC_TELEPHONE = "fr_FR.UTF-8";
-    LC_TIME = "fr_FR.UTF-8";
-  };
+  i18n =
+    let
+      english-locale = "en_US.UTF-8";
+      french-locale = "fr_FR.UTF-8";
+    in
+    {
+      defaultLocale = english-locale;
+      extraLocaleSettings = {
+        LC_ADDRESS = french-locale;
+        LC_IDENTIFICATION = french-locale;
+        LC_MEASUREMENT = french-locale;
+        LC_MONETARY = french-locale;
+        LC_NAME = french-locale;
+        LC_NUMERIC = french-locale;
+        LC_PAPER = french-locale;
+        LC_TELEPHONE = french-locale;
+        LC_TIME = french-locale;
+      };
+    };
 
   programs.command-not-found.enable = false;
 
   # This is needed for services like `darkman` and `gammastep`
-  services.geoclue2.enable = true;
+  services.geoclue2 = {
+    enable = true;
+
+    # Fallback using custom geoclue2 module waitng for an alternative to MLS
+    # (Mozilla Location Services). See related module in repo.
+    # INFO:   lat vvvv  vvv long → Paris rough location
+    staticFile = "48.8\n2.3\n0\n0\n";
+  };
 
   fonts = {
     packages = with pkgs; [
