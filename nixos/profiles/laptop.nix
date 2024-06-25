@@ -103,7 +103,7 @@ in
       inter
       noto-fonts
       noto-fonts-cjk-sans
-      upkgs.noto-fonts-emoji
+      noto-fonts-color-emoji
       font-awesome
     ];
     fontconfig = {

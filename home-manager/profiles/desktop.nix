@@ -141,6 +141,7 @@ in
         ripgrep
         speedtest-go
         upkgs.srgn
+        sshfs
         sweep
         tealdeer
         thokr

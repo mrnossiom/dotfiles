@@ -1,10 +1,10 @@
 { lib
-, upkgs
 
+, rustPlatform
 , fetchFromGitHub
 }:
 
-upkgs.rustPlatform.buildRustPackage rec {
+rustPlatform.buildRustPackage rec {
   pname = "otree";
   version = "0.1.0";
 
