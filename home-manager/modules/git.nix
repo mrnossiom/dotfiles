@@ -44,8 +44,7 @@ with lib;
         cm = "commit --message";
         oups = "commit --amend";
 
-        # Plain binary ensures it is globally installed
-        ui = "!lazygit";
+        ui = "!${getExe pkgs.lazygit}";
 
         rv = "remote --verbose";
 
