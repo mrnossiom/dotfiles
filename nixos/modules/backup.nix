@@ -65,8 +65,10 @@ in
       initialize = true;
       passwordFile = secrets.backup-restic-key.path;
       paths = [ "/home/${mainUsername}/Documents" ];
-      # TODO
-      repository = "/mnt/${mainUsername}/ArchaicBak/Backups/${hostname}";
+      repository = "/run/media/${mainUsername}/ArchaicBak/Backups/${hostname}";
+
+      # Should only be ran manually when the backup Disk is attached
+      timerConfig = null;
     };
   };
 }
