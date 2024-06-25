@@ -7,6 +7,7 @@ in
   arduino-udev-rules = pkgs.callPackage ./arduino-udev-rules.nix { };
   find-unicode = pkgs.callPackage ./find-unicode.nix { };
   git-along = pkgs.callPackage ./git-along.nix { };
+  lazyjj = pkgs.callPackage ./lazyjj.nix { };
   names = pkgs.callPackage ./names.nix { };
   otree = pkgs.callPackage ./otree.nix { };
   probe-rs-udev-rules = pkgs.callPackage ./probe-rs-udev-rules.nix { };
