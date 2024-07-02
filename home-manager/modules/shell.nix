@@ -71,6 +71,7 @@ with lib;
         # One letter abbrs
         c = "cargo";
         d = "docker";
+        dc = "docker compose";
         g = "git";
         j = "just";
         n = "nix";

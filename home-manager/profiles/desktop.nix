@@ -32,11 +32,13 @@ in
     nix-colors.homeManagerModules.default
     { config.colorScheme = llib.colorSchemes.oneDark; }
   ] ++ map (modPath: ../modules/${modPath}) [
+    "chromium.nix"
     "firefox.nix"
     "git.nix"
     "shell.nix"
     "thunderbird.nix"
     "vm"
+    "vscodium.nix"
   ];
 
   config = {
@@ -88,7 +90,6 @@ in
         blender
         bottles
         calibre
-        chromium
         cura
         element-desktop
         evince
@@ -109,6 +110,7 @@ in
         rawtherapee
         transmission_4-gtk
         vesktop
+        wdisplays
 
         # Needed for libreoffice spellchecking
         hunspell
@@ -121,6 +123,7 @@ in
         calc
         daemon
         delta
+        devenv
         du-dust
         encfs
         fastfetch

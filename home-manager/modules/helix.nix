@@ -65,6 +65,7 @@ in
         taplo
         typst-lsp
         vscode-langservers-extracted
+        upkgs.vue-language-server
         yaml-language-server
         wakatime-lsp
       ];
@@ -99,6 +100,14 @@ in
             name = "c";
             auto-format = true;
             formatter = { command = getExe' pkgs.clang-tools "clang-format"; args = [ ]; };
+          }
+          {
+            name = "vue";
+            language-servers = [ "vuels" "typescript-language-server" "wakatime" ];
+          }
+          {
+            name = "typescript";
+            language-servers = [ "typescript-language-server" "wakatime" ];
           }
         ];
       };
