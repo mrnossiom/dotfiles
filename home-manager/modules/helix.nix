@@ -79,36 +79,14 @@ in
         };
 
         language = [
-          {
-            name = "markdown";
-            language-servers = [ "marksman" "wakatime" ];
-          }
-          {
-            name = "html";
-            language-servers = [ "vscode-html-language-server" "wakatime" ];
-          }
-          {
-            name = "rust";
-            language-servers = [ "rust-analyzer" "wakatime" ];
-          }
-          {
-            name = "nix";
-            language-servers = [ "nil" "wakatime" ];
-            auto-format = true;
-          }
-          {
-            name = "c";
-            auto-format = true;
-            formatter = { command = getExe' pkgs.clang-tools "clang-format"; args = [ ]; };
-          }
-          {
-            name = "vue";
-            language-servers = [ "vuels" "typescript-language-server" "wakatime" ];
-          }
-          {
-            name = "typescript";
-            language-servers = [ "typescript-language-server" "wakatime" ];
-          }
+          { name = "c"; auto-format = true; formatter = { command = getExe' pkgs.clang-tools "clang-format"; args = [ ]; }; }
+          { name = "html"; language-servers = [ "vscode-html-language-server" "wakatime" ]; }
+          { name = "markdown"; language-servers = [ "marksman" "wakatime" ]; }
+          { name = "nix"; language-servers = [ "nil" "wakatime" ]; auto-format = true; }
+          { name = "python"; language-servers = [ "pylsp" "wakatime" ]; }
+          { name = "rust"; language-servers = [ "rust-analyzer" "wakatime" ]; }
+          { name = "typescript"; language-servers = [ "typescript-language-server" "wakatime" ]; }
+          { name = "vue"; language-servers = [ "vuels" "typescript-language-server" "wakatime" ]; }
         ];
       };
     };

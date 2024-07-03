@@ -11,9 +11,19 @@ with lib;
       enable = true;
       package = pkgs.vscodium;
       extensions = with pkgs.vscode-extensions; [
+        eamodio.gitlens
+        esbenp.prettier-vscode
+        usernamehw.errorlens
         vue.volar
-
+        wakatime.vscode-wakatime
       ] ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
+        {
+          # https://marketplace.visualstudio.com/items?itemName=meganrogge.template-string-converter
+          name = "template-string-converter";
+          publisher = "meganrogge";
+          version = "0.6.1";
+          sha256 = "sha256-w0ppzh0m/9Hw3BPJbAKsNcMStdzoH9ODf3zweRcCG5k=";
+        }
         {
           # https://marketplace.visualstudio.com/items?itemName=akamud.vscode-theme-onedark
           name = "vscode-theme-onedark";

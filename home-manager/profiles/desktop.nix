@@ -100,6 +100,7 @@ in
         gnome.simple-scan
         heroic
         imv
+        insomnia
         libreoffice-qt
         localsend
         lutris
