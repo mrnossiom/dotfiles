@@ -22,4 +22,4 @@ rustPlatform.buildRustPackage rec {
     maintainers = [ "mrnossiom" ];
     mainProgram = "fu";
   };
-} 
+}

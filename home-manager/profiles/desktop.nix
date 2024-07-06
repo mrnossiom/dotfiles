@@ -82,7 +82,7 @@ in
         # Unfree
         geogebra6
         spotify
-
+        ## JetBrains
         jetbrains.datagrip
 
         # GUIs
@@ -119,8 +119,16 @@ in
         hunspellDicts.en_US-large
         hunspellDicts.en_GB-large
 
-        # CLI tools
+        # TUIs
+        asak
         btop
+        glow
+        gping
+        mc
+        otree
+        thokr
+
+        # CLIs
         calc
         daemon
         delta
@@ -132,15 +140,10 @@ in
         ffmpeg
         file
         fzf
-        glow
-        gping
         jq
         just
         killall
-        mc
         mediainfo
-        mind
-        otree
         pv
         ripgrep
         speedtest-go
@@ -148,10 +151,8 @@ in
         sshfs
         sweep
         tealdeer
-        thokr
         tokei
         trash-cli
-        wdisplays
         wf-recorder
         wl-clipboard
         xdg-utils
