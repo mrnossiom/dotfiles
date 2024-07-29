@@ -49,6 +49,13 @@ with lib;
         rv = "remote --verbose";
 
         ri = "rebase --interactive";
+        ris = "!git ri $(git slc)";
+        rc = "rebase --continue";
+        rs = "rebase --skip";
+        ra = "rebase --abort";
+
+        # Select commit
+        slc = "!git log --oneline --pretty=custom | fzf | awk '{printf $1}'";
 
         a = "add";
         al = "add --all";
@@ -95,6 +102,7 @@ with lib;
         color.ui = true;
         init.defaultBranch = "main";
 
+        rebase.autosquash = true;
         push.autoSetupRemote = true;
         pull.rebase = true;
 
