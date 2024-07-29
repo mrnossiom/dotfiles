@@ -143,6 +143,7 @@ in
         jq
         just
         killall
+        lsof
         mediainfo
         pv
         ripgrep

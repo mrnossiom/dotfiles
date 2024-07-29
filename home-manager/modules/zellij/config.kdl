@@ -176,6 +176,8 @@ on_force_close "detach"
 pane_frames false
 scroll_buffer_size 10000
 
+session_serialization true
+
 // Toggle between having Zellij lay out panes according to a predefined set of layouts whenever possible
 // auto_layout true
 

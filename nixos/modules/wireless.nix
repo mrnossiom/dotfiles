@@ -12,8 +12,14 @@
     networking.firewall = {
       enable = true;
 
-      # Open arbitrary 4242 port to share things on local networks
+      # TIP: Locally redirect ports with socat
+      # socat tcp-listen:4242,reuseaddr,fork tcp:localhost:8000
+
+      # Open arbitrary ports to share things on local networks
       allowedTCPPorts = [ 4242 ];
+      allowedTCPPortRanges = [
+        { from = 42420; to = 42429; }
+      ];
     };
 
     # Bluetooth

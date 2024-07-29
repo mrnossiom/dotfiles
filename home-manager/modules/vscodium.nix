@@ -11,6 +11,8 @@ with lib;
       enable = true;
       package = pkgs.vscodium;
       extensions = with pkgs.vscode-extensions; [
+        bradlc.vscode-tailwindcss
+        dbaeumer.vscode-eslint
         eamodio.gitlens
         esbenp.prettier-vscode
         usernamehw.errorlens
