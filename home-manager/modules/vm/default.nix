@@ -59,8 +59,10 @@ in
       icons = true;
 
       width = 500;
-      maxVisible = 5;
+      maxVisible = 3;
       sort = "-priority";
+
+      layer = "overlay";
 
       borderSize = 0;
       borderRadius = 5;
@@ -70,6 +72,9 @@ in
         background-color=#${theme.base0A}
         [urgency="critical"]
         background-color=#${theme.base0F}
+
+        [mode="dnd"]
+        invisible=1
       '';
     };
 
@@ -191,10 +196,10 @@ in
           };
         };
 
-
         input = {
           "type:keyboard" = {
             xkb_layout = "us,fr";
+            # xkb_variant = "ergol";
             xkb_options = "grp:menu_toggle,compose:caps";
 
             repeat_delay = toString 300;
@@ -225,6 +230,12 @@ in
             pamixer = getExe pkgs.pamixer;
             playerctl = getExe pkgs.playerctl;
             brightnessctl = getExe pkgs.brightnessctl;
+            makoctl = getExe' pkgs.mako "makoctl";
+
+            grim = getExe pkgs.grim;
+            slurp = getExe pkgs.slurp;
+            wl-copy = getExe' pkgs.wl-clipboard "wl-copy";
+            wl-paste = getExe' pkgs.wl-clipboard "wl-paste";
           in
           foldl (acc: val: acc // val) { }
             (map
@@ -233,7 +244,7 @@ in
                 "${modifier}+Shift+Return" = "exec ${getExe' pkgs.gnome.nautilus "nautilus"}";
                 "${modifier}+Shift+q" = "kill";
                 "${modifier}+d" = "exec ${swayCfg.menu}";
-                "${modifier}+Space" = "exec ${getExe' pkgs.mako "makoctl"} dismiss";
+                "${modifier}+Space" = "exec ${makoctl} dismiss";
 
                 "${modifier}+Escape" = "exec ${getExe' pkgs.systemd "loginctl"} lock-session";
                 "${modifier}+Alt+Escape" = "exec ${pkgs.writeShellScript "lock-screenshot.sh" ''
@@ -242,7 +253,7 @@ in
                   # Give some time to hide the bar
                   sleep 1
 
-                  ${getExe pkgs.grim} $tmpimg
+                  ${grim} $tmpimg
                   ${getExe pkgs.swaylock} --image $tmpimg
 
                   rm $tmpimg
@@ -272,8 +283,8 @@ in
                 "${modifier}+p" = "sticky toggle";
 
                 # Screenshotting
-                "${modifier}+s" = ''exec ${getExe pkgs.grim} -g "$(${getExe pkgs.slurp})" - | ${getExe' pkgs.wl-clipboard "wl-copy"}'';
-                "${modifier}+Shift+s" = "exec ${getExe' pkgs.wl-clipboard "wl-paste"} | ${getExe pkgs.swappy} --file - --output-file - | ${getExe' pkgs.wl-clipboard "wl-copy"}";
+                "${modifier}+s" = ''exec ${grim} -g "$(${slurp})" - | ${wl-copy}'';
+                "${modifier}+Shift+s" = "exec ${wl-paste} | ${getExe pkgs.swappy} --file - --output-file - | ${wl-copy}";
 
                 # Soundcontrol Keys
                 "--locked XF86AudioPrev" = "exec ${playerctl} previous";

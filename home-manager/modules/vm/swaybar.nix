@@ -19,6 +19,19 @@ in
         theme = "modern";
         icons = "awesome6";
         blocks = [
+          {
+            block = "custom";
+            command = "echo  $(${getExe' pkgs.mako "makoctl"} mode)";
+            click = [
+              {
+                button = "left";
+                cmd = "${getExe' pkgs.mako "makoctl"} mode -t dnd";
+                update = true;
+              }
+            ];
+            interval = "once";
+          }
+
           { block = "music"; }
           {
             block = "memory";
