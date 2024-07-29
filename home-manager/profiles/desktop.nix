@@ -35,6 +35,7 @@ in
     "chromium.nix"
     "firefox.nix"
     "git.nix"
+    "imv.nix"
     "shell.nix"
     "thunderbird.nix"
     "vm"
@@ -99,7 +100,6 @@ in
         gnome.nautilus
         gnome.simple-scan
         heroic
-        imv
         insomnia
         libreoffice-qt
         localsend
