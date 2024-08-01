@@ -18,7 +18,7 @@ in
   config = {
     programs.helix = {
       enable = true;
-      package = upkgs.helix;
+      package = pkgs.helix;
       defaultEditor = true;
 
       settings = {
