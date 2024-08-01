@@ -32,6 +32,7 @@ in
     nix-colors.homeManagerModules.default
     { config.colorScheme = llib.colorSchemes.oneDark; }
   ] ++ map (modPath: ../modules/${modPath}) [
+    "aws.nix"
     "chromium.nix"
     "firefox.nix"
     "git.nix"
