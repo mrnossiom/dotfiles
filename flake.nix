@@ -38,9 +38,9 @@
   outputs = { self, nixpkgs, ... }:
     let
       inherit (self) outputs;
-      inherit (flakeLib) forAllSystems;
+      inherit (flake-lib) forAllSystems;
 
-      flakeLib = import ./lib/flake (nixpkgs // { inherit self; });
+      flake-lib = import ./lib/flake (nixpkgs // { inherit self; });
       keys = import ./secrets/keys.nix;
 
       forAllPkgs = func: forAllSystems (system: func pkgs.${system});
@@ -65,30 +65,28 @@
       templates = import ./templates;
 
       # Custom exports
-      inherit flakeLib;
+      inherit flake-lib;
       lib = forAllPkgs (import ./lib);
 
-      nixosConfigurations = with flakeLib;
-        {
-          # Desktops
-          "neo-wiro-laptop" = createSystem pkgs."x86_64-linux" [
-            (system "neo-wiro-laptop" "laptop")
-            (managedDiskLayout "luks-btrfs" { device = "nvme0n1"; swapSize = 12; })
-            (user "milomoisson" { description = "Milo Moisson"; profile = "desktop"; keys = keys.users; })
-          ];
+      nixosConfigurations = with flake-lib; {
+        # Desktops
+        "neo-wiro-laptop" = createSystem pkgs."x86_64-linux" [
+          (system "neo-wiro-laptop" "laptop")
+          (managedDiskLayout "luks-btrfs" { device = "nvme0n1"; swapSize = 12; })
+          (user "milomoisson" { description = "Milo Moisson"; profile = "desktop"; keys = keys.users; })
+        ];
 
-          "archaic-wiro-laptop" = createSystem pkgs."x86_64-linux" [
-            (system "archaic-wiro-laptop" "laptop")
-            (user "milomoisson" { description = "Milo Moisson"; profile = "desktop"; keys = keys.users; })
-          ];
+        "archaic-wiro-laptop" = createSystem pkgs."x86_64-linux" [
+          (system "archaic-wiro-laptop" "laptop")
+          (user "milomoisson" { description = "Milo Moisson"; profile = "desktop"; keys = keys.users; })
+        ];
 
-          # # Servers
-          # "weird-row-server" = createSystem pkgs."x86_64-linux" [
-          #   (system "weird-row-server" "server")
-          #   (user "milomoisson" { description = "Milo Moisson"; profile = "minimal"; keys = keys.users; })
-          # ];
-        };
-
+        # # Servers
+        # "weird-row-server" = createSystem pkgs."x86_64-linux" [
+        #   (system "weird-row-server" "server")
+        #   (user "milomoisson" { description = "Milo Moisson"; profile = "minimal"; keys = keys.users; })
+        # ];
+      };
       # I bundle my Home Manager config via the NixOS modules which create system generations and give free rollbacks.
       # However, in non-NixOS contexts, you can still use Home Manager to manage dotfiles using this template.
       homeConfigurations = {

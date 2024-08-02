@@ -6,9 +6,12 @@
 with lib;
 
 let
-  inherit (self.inputs) nixpkgs-unstable;
+  inherit (self.inputs) nixpkgs-unstable nix-darwin;
+  inherit (self.flake-lib) specialModuleArgs;
+
+  inherit (nix-darwin.lib) darwinSystem;
 in
-{
+rec {
   forAllSystems = genAttrs [ "x86_64-linux" "aarch64-linux" "aarch64-darwin" ];
 
   # Makes
@@ -23,8 +26,9 @@ in
 
   createSystem = pkgs: modules: nixosSystem {
     inherit pkgs modules;
-    specialArgs = self.flakeLib.specialModuleArgs pkgs;
+    specialArgs = specialModuleArgs pkgs;
   };
+
 
   system = hostName: profile: {
     imports = [

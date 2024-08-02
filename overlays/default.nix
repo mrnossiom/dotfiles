@@ -11,7 +11,7 @@ rec {
   all = composeManyExtensions [ bringSpecialArgs additions patches ];
 
   # Bring `self`, `llib` and `upkgs`
-  bringSpecialArgs = final: prev: self.flakeLib.specialModuleArgs final;
+  bringSpecialArgs = final: prev: self.flake-lib.specialModuleArgs final;
 
   # Bring our custom packages from the `pkgs` directory
   additions = final: prev: import ../pkgs prev;

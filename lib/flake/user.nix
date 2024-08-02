@@ -6,6 +6,7 @@ with lib;
 
 let
   inherit (self.inputs) home-manager;
+  inherit (self.flake-lib) specialModuleArgs;
 in
 {
   imports = [ home-manager.nixosModules.home-manager ];
@@ -30,7 +31,7 @@ in
     } // user;
 
     home-manager = {
-      extraSpecialArgs = self.flakeLib.specialModuleArgs pkgs;
+      extraSpecialArgs = specialModuleArgs pkgs;
 
       useUserPackages = false;
       useGlobalPkgs = true;
