@@ -9,9 +9,9 @@ package: builtins.elem (lib.getName package) [
   "steam-run"
 
   # Home Manager
+  "cloudflare-warp"
   "geogebra"
   "spotify"
-
   ## JetBrains
   "datagrip"
 ]

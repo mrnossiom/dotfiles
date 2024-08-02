@@ -82,6 +82,7 @@ in
 
       packages = with pkgs; [
         # Unfree
+        cloudflare-warp
         geogebra6
         spotify
         ## JetBrains
