@@ -1,6 +1,8 @@
 { self
 , lib
+, pkgs
 , config
+, isDarwin
 , ...
 }:
 
@@ -27,8 +29,13 @@ in
 
       gc = {
         automatic = true;
-        dates = "weekly";
-      };
+      }
+      # Same option to say that GC is ran weekly at 3h15
+      // (if isDarwin then {
+        interval = { Weekday = 7; Hour = 3; Minute = 15; };
+      } else {
+        dates = "Sun *-*-* 03:15:00";
+      });
 
       settings = {
         experimental-features = [ "nix-command" "flakes" ];
@@ -45,11 +52,13 @@ in
           "https://nix-community.cachix.org"
           "https://mrnossiom.cachix.org"
           "https://radicle.cachix.org"
+          "https://helix.cachix.org"
         ];
         extra-trusted-public-keys = [
           "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
           "mrnossiom.cachix.org-1:WKo+xfDFaT6pRP4YiIFsEXvyBzI/Pm9uGhURgF1wlQg="
           "radicle.cachix.org-1:x7jrVNzziAP6GAAJF2wvgJBndqRhmh2EylgWr93ofx0="
+          "helix.cachix.org-1:ejp9KQpR1FBI2onstMQ34yogDm4OgU2ru6lIwPvuCVs="
         ];
       };
     };

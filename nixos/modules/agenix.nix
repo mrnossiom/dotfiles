@@ -1,4 +1,5 @@
 { self
+, isDarwin
 , ...
 }:
 
@@ -8,7 +9,9 @@ let
   all-secrets = import ../../secrets;
 in
 {
-  imports = [ agenix.nixosModules.default ];
+  imports = [
+    (if isDarwin then agenix.darwinModules.default else agenix.nixosModules.default)
+  ];
 
   config = {
     # By default, agenix uses host machine keys

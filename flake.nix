@@ -9,6 +9,9 @@
     home-manager.url = "github:nix-community/home-manager/release-24.05";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
+    nix-darwin.url = "github:LnL7/nix-darwin";
+    nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
+
     agenix.url = "github:ryantm/agenix";
     agenix.inputs.nixpkgs.follows = "nixpkgs";
     agenix.inputs.home-manager.follows = "home-manager";
@@ -87,6 +90,7 @@
         #   (user "milomoisson" { description = "Milo Moisson"; profile = "minimal"; keys = keys.users; })
         # ];
       };
+
       # I bundle my Home Manager config via the NixOS modules which create system generations and give free rollbacks.
       # However, in non-NixOS contexts, you can still use Home Manager to manage dotfiles using this template.
       homeConfigurations = {
@@ -95,6 +99,13 @@
         #   extraSpecialArgs = { inherit self; osConfig = null; };
         #   modules = [ ./home-manager/profiles/desktop.nix ];
         # };
+      };
+
+      darwinConfigurations = with flake-lib.darwin; {
+        "apple-wiro-laptop" = createSystem pkgs."aarch64-darwin" [
+          (system "apple-wiro-laptop" "macintosh")
+          (user "milomoisson" { description = "Milo Moisson"; profile = "macintosh"; keys = keys.users; })
+        ];
       };
     };
 }

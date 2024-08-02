@@ -1,5 +1,6 @@
 { lib
 , pkgs
+, isDarwin
 , ...
 }:
 
@@ -46,7 +47,8 @@ with lib;
     programs.fish = {
       enable = true;
 
-      loginShellInit = ''
+      # TODO: move to vm module
+      loginShellInit = optionalString (!isDarwin) ''
         if test (id --user $USER) -ge 1000 && test (tty) = "/dev/tty1"
           exec sway
         end
@@ -122,19 +124,6 @@ with lib;
           cd $dir
         '';
 
-        change-mac = ''
-          set dev (nmcli --get-values GENERAL.DEVICE,GENERAL.TYPE device show | sed '/^wifi/!{h;d;};x;q')
-          sudo ip link set $dev down
-    
-          if test "$argv[1]" = "reset";
-              sudo ${getExe pkgs.macchanger} --permanent $dev
-          else;
-              sudo ${getExe pkgs.macchanger} --ending --another $dev
-          end
-
-          sudo ip link set $dev up
-        '';
-
         repeat = ''
           set -l command (string join ' ' -- $argv)
 
@@ -155,6 +144,19 @@ with lib;
         # Quickly explore a derivation (using registry syntax)
         # e.g. `cdd nixpkgs#fontforge` or `cdd nixpkgs-unstable#fontforge` 
         cdd = "cd (nix build --no-link --print-out-paths $argv | ${getExe pkgs.fzf})";
+      } // optionalAttrs (!isDarwin) {
+        change-mac = ''
+          set dev (nmcli --get-values GENERAL.DEVICE,GENERAL.TYPE device show | sed '/^wifi/!{h;d;};x;q')
+          sudo ip link set $dev down
+    
+          if test "$argv[1]" = "reset";
+              sudo ${getExe pkgs.macchanger} --permanent $dev
+          else;
+              sudo ${getExe pkgs.macchanger} --ending --another $dev
+          end
+
+          sudo ip link set $dev up
+        '';
       };
     };
   };
