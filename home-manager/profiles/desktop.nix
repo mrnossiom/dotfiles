@@ -223,6 +223,7 @@ in
           files = [ "org.gnome.Nautilus.desktop" ];
           browser = [ "firefox.desktop" ];
           images = [ "imv.desktop" ];
+          terminal = [ "kitty-open.desktop" ];
         in
         {
           "inode/directory" = files;
@@ -243,6 +244,13 @@ in
           "image/png" = images;
           "image/tiff" = images;
           "image/heif" = images;
+
+          "text/plain" = terminal;
+          "text/markdown" = terminal;
+          "text/javascript" = terminal;
+          # this is how `.ts` files are matched
+          "text/vnd.trolltech.linguist" = terminal;
+          "text/x-java" = terminal;
         };
 
       associations.added = {
