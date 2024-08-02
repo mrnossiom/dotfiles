@@ -1,6 +1,11 @@
 name: { description, profile, keys ? [ ], user ? { } }:
 
-{ self, pkgs, lib, ... }:
+{ self
+, pkgs
+, lib
+, isDarwin
+, ...
+}:
 
 with lib;
 
@@ -9,7 +14,9 @@ let
   inherit (self.flake-lib) specialModuleArgs;
 in
 {
-  imports = [ home-manager.nixosModules.home-manager ];
+  imports = [
+    (if isDarwin then home-manager.darwinModules.home-manager else home-manager.nixosModules.home-manager)
+  ];
 
   options = {
     local.user.username = mkOption {
@@ -22,13 +29,17 @@ in
     local.user.username = name;
 
     users.users.${name} = {
-      isNormalUser = true;
       inherit description;
-      extraGroups = [ "wheel" "networkmanager" ];
       shell = pkgs.fish;
 
       openssh.authorizedKeys.keys = keys;
-    } // user;
+    } // (if isDarwin then {
+      home = "/Users/${name}";
+    } else {
+      home = "/home/${name}";
+      extraGroups = [ "wheel" "networkmanager" ];
+      isNormalUser = true;
+    }) // user;
 
     home-manager = {
       extraSpecialArgs = specialModuleArgs pkgs;

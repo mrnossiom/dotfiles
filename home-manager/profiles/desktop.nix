@@ -4,14 +4,18 @@
 , config
 , pkgs
 , upkgs
+, isDarwin
   # Provides the NixOS configuration if HM was loaded through the NixOS module
 , osConfig ? null
 , ...
 }:
 
+
 with lib;
 
 let
+  _check = if (isDarwin) then throw "this is a HM non-darwin config" else null;
+
   inherit (self.inputs) agenix nix-colors;
 
   all-secrets = import ../../secrets;
@@ -51,9 +55,6 @@ in
         if osConfig != null
         then osConfig.system.stateVersion
         else "23.11";
-
-      username = "milomoisson";
-      homeDirectory = "/home/milomoisson";
 
       sessionVariables = {
         TERMINAL = getExe pkgs.kitty;
@@ -154,6 +155,7 @@ in
         sshfs
         sweep
         tealdeer
+        termimage
         tokei
         trash-cli
         wf-recorder
