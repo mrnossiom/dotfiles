@@ -2,6 +2,7 @@
 , config
 , lib
 , pkgs
+, upkgs
 , ...
 }:
 
@@ -311,6 +312,7 @@ in
 
     services.darkman = {
       enable = true;
+      package = upkgs.darkman;
       settings.usegeoclue = true;
 
       darkModeScripts.gtk-theme = ''${getExe pkgs.dconf} write /org/gnome/desktop/interface/color-scheme "'prefer-dark'"'';
