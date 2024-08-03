@@ -20,7 +20,6 @@ in
     "agenix.nix"
     "backup.nix"
     "gaming.nix"
-    "info.nix"
     "logiops.nix"
     "nix.nix"
     "security.nix"
