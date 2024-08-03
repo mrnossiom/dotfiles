@@ -9,6 +9,15 @@ rec {
     '';
   };
 
+  blank = {
+    path = ./blank;
+    description = "Blank flake setup";
+    welcomeText = ''
+      You may want to run
+      $ direnv allow
+    '';
+  };
+
   rust = {
     path = ./rust;
     description = "Rust flake setup";
