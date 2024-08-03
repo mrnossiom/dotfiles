@@ -1,6 +1,5 @@
 { self
 , config
-, osConfig
 , lib
 , pkgs
 , ...
@@ -32,21 +31,16 @@ in
 
     programs.swaylock = {
       enable = true;
-      settings =
-        let
-          cfg = osConfig.local.screen or null;
-        in
-        {
-          daemonize = true;
-          ignore-empty-password = true;
-          show-failed-attempts = true;
+      settings = {
+        daemonize = true;
+        ignore-empty-password = true;
+        show-failed-attempts = true;
 
-          image = toString ../../assets/BinaryCloud.png;
-        }
-        // optionalAttrs (cfg != null) {
-          indicator-y-position = ((cfg.height * 0.9) / cfg.scale);
-          indicator-x-position = 100;
-        };
+        image = toString ../../assets/BinaryCloud.png;
+
+        indicator-y-position = -100;
+        indicator-x-position = 100;
+      };
     };
 
     services.mako = {
