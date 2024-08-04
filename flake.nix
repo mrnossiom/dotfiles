@@ -107,7 +107,5 @@
           (user "milomoisson" { description = "Milo Moisson"; profile = "macintosh"; keys = keys.users; })
         ];
       };
-
-      # darwinPackages = ...;
     };
 }

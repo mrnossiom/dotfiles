@@ -1,16 +1,10 @@
-{ self
-, lib
-, config
+{ lib
 , pkgs
-, upkgs
 , ...
 }:
 
 with lib;
 
-let
-  inherit (self.outputs) nixosModules;
-in
 {
   # Hardware is imported in the flake to be machine specific
   imports = map (modPath: ../modules/${modPath}) [
@@ -30,4 +24,13 @@ in
     enableKeyMapping = true;
     remapCapsLockToEscape = true;
   };
+
+  fonts.packages = with pkgs; [
+    (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
+    inter
+    noto-fonts
+    noto-fonts-cjk-sans
+    noto-fonts-color-emoji
+    font-awesome
+  ];
 }

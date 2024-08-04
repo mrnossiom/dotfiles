@@ -1,7 +1,7 @@
 { ... }:
 
 let
-  gap = 5;
+  gap = 0;
 in
 {
   config = {
@@ -9,24 +9,17 @@ in
       enable = true;
 
       config = {
-        external_bar = "off:40:0";
         menubar_opacity = 0.5;
+
         mouse_follows_focus = "off";
         focus_follows_mouse = "off";
 
         display_arrangement_order = "default";
-        window_origin_display = "default";
 
+        window_origin_display = "default";
         window_placement = "second_child";
         window_zoom_persist = "on";
-        window_shadow = "on";
-        window_animation_duration = 0.0;
-        window_animation_easing = "ease_out_circ";
-        window_opacity_duration = 0.0;
 
-        active_window_opacity = 1.0;
-        normal_window_opacity = 0.9;
-        window_opacity = "off";
         insert_feedback_color = "0xffd75f5f";
 
         split_ratio = 0.5;
