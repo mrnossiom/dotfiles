@@ -43,6 +43,7 @@ in
     "imv.nix"
     "shell.nix"
     "thunderbird.nix"
+    "tools.nix"
     "vm"
     "vscodium.nix"
   ];
@@ -124,40 +125,8 @@ in
 
         # TUIs
         asak
-        btop
-        glow
-        gping
-        mc
-        otree
-        thokr
 
         # CLIs
-        calc
-        daemon
-        delta
-        devenv
-        du-dust
-        encfs
-        fastfetch
-        fd
-        ffmpeg
-        file
-        fzf
-        jq
-        just
-        killall
-        lsof
-        mediainfo
-        pv
-        ripgrep
-        speedtest-go
-        upkgs.srgn
-        sshfs
-        sweep
-        tealdeer
-        termimage
-        tokei
-        trash-cli
         wf-recorder
         wl-clipboard
         xdg-utils

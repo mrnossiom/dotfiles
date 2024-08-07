@@ -1,7 +1,9 @@
 { lib
 
+, stdenv
 , rustPlatform
 , fetchFromGitHub
+, darwin
 }:
 
 rustPlatform.buildRustPackage rec {
@@ -22,6 +24,9 @@ rustPlatform.buildRustPackage rec {
       "tui-tree-widget-0.20.0" = "sha256-/uLp63J4FoMT1rMC9cv49JAX3SuPvFWPtvdS8pspsck=";
     };
   };
+
+  buildInputs = [ ]
+    ++ lib.optionals stdenv.isDarwin [ darwin.apple_sdk.frameworks.IOKit ];
 
   meta = with lib; {
     description = "A command line tool to view objects (JSON/YAML/TOML) in TUI tree widget";
