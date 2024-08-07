@@ -43,6 +43,7 @@ in
     # "imv.nix"
     "shell.nix"
     # "thunderbird.nix"
+    "tools.nix"
     # "vm"
     # "vscodium.nix"
   ];
