@@ -36,17 +36,23 @@ in
           };
           bufferline = "multiple";
           file-picker.hidden = false;
-          lsp.display-inlay-hints = true;
+          lsp.display-inlay-hints = false;
           soft-wrap.wrap-at-text-width = true;
           rulers = [ 80 ];
         };
         keys =
           let
-            no_op_arrow_keys = { up = "no_op"; down = "no_op"; left = "no_op"; right = "no_op"; };
+            disable-arrow-keys = false;
+            noop-arrow-keys = optionalAttrs disable-arrow-keys { up = "no_op"; down = "no_op"; left = "no_op"; right = "no_op"; };
           in
           {
-            normal = no_op_arrow_keys;
-            insert = no_op_arrow_keys;
+            normal = {
+              "space" = {
+                f = "file_picker_in_current_directory";
+                F = "file_picker";
+              };
+            } // noop-arrow-keys;
+            insert = noop-arrow-keys;
           };
       };
 
