@@ -3,7 +3,7 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.05";
   };
 
-  outputs = { self, nixpkgs, rust-overlay, gitignore }:
+  outputs = { self, nixpkgs }:
     let
       inherit (nixpkgs.lib) genAttrs;
 
@@ -14,7 +14,7 @@
 
       pkgs = forAllSystems (system: (import nixpkgs {
         inherit system;
-        overlays = [ (import rust-overlay) ];
+        overlays = [ ];
       }));
     in
     {
@@ -42,6 +42,8 @@
             buildInputs = with pkgs; [
               # openssl
             ];
+
+            LD_LIBRARY_PATH = makeLibraryPath buildInputs;
 
             # ENV_VAR = "true";
           };
