@@ -109,7 +109,10 @@ with lib;
         pretty.custom = "format:%C(red)%h%C(reset) -%C(yellow)%d%C(reset) %s %C(green)(%cd) %C(bold blue)<%an>";
         log.date = "human";
 
-        advice.addEmptyPathspec = false;
+        advice = {
+          addEmptyPathspec = false;
+          forceDeleteBranch = false;
+        };
 
         # TODO: connect to a SSOT
         github.user = "mrnossiom";

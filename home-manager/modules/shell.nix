@@ -96,16 +96,16 @@ with lib;
         ur = " unlink result";
 
         # Use newer tools
-        cat = "# Nah"; # bat
-        grep = "# Nah"; # rg
-        tr = "# Nah"; # srgn
+        cat = "# nah"; # bat
+        grep = "# nah"; # rg
+        tr = "# nah"; # srgn
 
         # Do not keep these commands in history
-        shutdown = " shutdown";
-        clr = " clear";
-        reboot = " reboot";
-        history = " history";
+        clear = " clear";
         exit = " exit";
+        history = " history";
+        reboot = " reboot";
+        shutdown = " shutdown";
       };
 
       functions = {
