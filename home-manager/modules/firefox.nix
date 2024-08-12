@@ -5,10 +5,6 @@
 
 with lib;
 
-let
-  lock = value: { Value = value; Status = "locked"; };
-in
-
 {
   config = {
     home.sessionVariables.BROWSER = getExe pkgs.firefox;

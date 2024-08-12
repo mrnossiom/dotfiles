@@ -35,6 +35,7 @@
       termimage
       tokei
       trash-cli
+      upkgs.wcurl
     ];
   };
 }
