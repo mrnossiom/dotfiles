@@ -25,6 +25,7 @@
       killall
       lsof
       mediainfo
+      ouch
       pv
       ripgrep
       speedtest-go

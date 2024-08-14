@@ -24,21 +24,25 @@ in
       settings = {
         theme = "onedark";
         editor = {
-          auto-save = true;
           auto-format = true;
           auto-pairs = false;
+          auto-save = true;
+          bufferline = "multiple";
           line-number = "relative";
           mouse = false;
+          rulers = [ 80 ];
           text-width = 80;
+
           indent-guides = {
             render = true;
             characters = "╎";
           };
-          bufferline = "multiple";
+
           file-picker.hidden = false;
+
           lsp.display-inlay-hints = false;
+
           soft-wrap.wrap-at-text-width = true;
-          rulers = [ 80 ];
         };
         keys =
           let
@@ -48,9 +52,14 @@ in
           {
             normal = {
               "space" = {
+                # Swap original keybinds, default (lowercase) searches in `pwd`
                 f = "file_picker_in_current_directory";
                 F = "file_picker";
               };
+
+              "A-t" = ":toggle lsp.display-inlay-hints";
+
+              # TODO: try to have `d`,`c` noyank versions by default
             } // noop-arrow-keys;
             insert = noop-arrow-keys;
           };
