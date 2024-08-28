@@ -112,6 +112,7 @@ with lib;
         advice = {
           addEmptyPathspec = false;
           forceDeleteBranch = false;
+          skippedCherryPicks = false;
         };
 
         # TODO: connect to a SSOT

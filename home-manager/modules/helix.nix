@@ -25,7 +25,6 @@ in
         theme = "onedark";
         editor = {
           auto-format = true;
-          auto-pairs = false;
           auto-save = true;
           bufferline = "multiple";
           line-number = "relative";
@@ -57,7 +56,11 @@ in
                 F = "file_picker";
               };
 
-              "A-t" = ":toggle lsp.display-inlay-hints";
+              # Toggle inlay hints
+              "A-u" = ":toggle lsp.display-inlay-hints";
+              # Toogle wrapping
+              # TODO: change to `soft-wrap.enable` when supported by `:toggle`
+              "A-w" = ":toggle soft-wrap.wrap-at-text-width";
 
               # TODO: try to have `d`,`c` noyank versions by default
             } // noop-arrow-keys;
