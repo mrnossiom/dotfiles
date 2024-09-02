@@ -54,10 +54,13 @@ in
         "--keep-yearly 10"
       ];
 
-      timerConfig = {
-        OnCalendar = "00:05";
-        RandomizedDelaySec = "5h";
-      };
+
+      # TODO: fix config
+      timerConfig = null;
+      # timerConfig = {
+      #   OnCalendar = "00:05";
+      #   RandomizedDelaySec = "5h";
+      # };
     };
 
     # Backup documents and large files
