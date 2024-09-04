@@ -136,7 +136,10 @@ with lib;
       };
     };
 
-    home.packages = with pkgs; [ git-leave git-along radicle-node ];
+    home.packages = with pkgs; [
+      lpkgs.git-leave
+      radicle-node
+    ];
 
     programs.gh.enable = true;
 

@@ -8,13 +8,10 @@ let
 in
 rec {
   # Bundles all overlays, order matters here
-  all = composeManyExtensions [ bringSpecialArgs additions patches ];
+  all = composeManyExtensions [ bringSpecialArgs patches ];
 
   # Bring `self`, `llib` and `upkgs`
   bringSpecialArgs = final: prev: self.flake-lib.specialModuleArgs final;
-
-  # Bring our custom packages from the `pkgs` directory
-  additions = final: prev: import ../pkgs prev;
 
   # Custom derivation patches that temporarily fix a package
   patches = import ./patches.nix;

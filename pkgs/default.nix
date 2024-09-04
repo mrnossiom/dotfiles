@@ -4,10 +4,8 @@ let
   inherit (self.inputs) agenix git-leave helix radicle wakatime-lsp;
 in
 {
-  arduino-udev-rules = pkgs.callPackage ./arduino-udev-rules.nix { };
   asak = pkgs.callPackage ./asak.nix { };
   find-unicode = pkgs.callPackage ./find-unicode.nix { };
-  git-along = pkgs.callPackage ./git-along.nix { };
   # lazyjj = pkgs.callPackage ./lazyjj.nix { };
   names = pkgs.callPackage ./names.nix { };
   otree = pkgs.callPackage ./otree.nix { };

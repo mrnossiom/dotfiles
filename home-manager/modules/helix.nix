@@ -1,6 +1,7 @@
 { self
 , config
 , pkgs
+, lpkgs
 , upkgs
 , lib
 , ...
@@ -18,7 +19,7 @@ in
   config = {
     programs.helix = {
       enable = true;
-      package = pkgs.helix;
+      package = lpkgs.helix;
       defaultEditor = true;
 
       settings = {
@@ -85,7 +86,7 @@ in
         vscode-langservers-extracted
         upkgs.vue-language-server
         yaml-language-server
-        wakatime-lsp
+        lpkgs.wakatime-lsp
       ];
 
       languages = {

@@ -3,7 +3,6 @@
 , llib
 , config
 , pkgs
-, upkgs
 , isDarwin
   # Provides the NixOS configuration if HM was loaded through the NixOS module
 , osConfig ? null
@@ -124,7 +123,7 @@ in
         hunspellDicts.en_GB-large
 
         # TUIs
-        asak
+        lpkgs.asak
 
         # CLIs
         wf-recorder

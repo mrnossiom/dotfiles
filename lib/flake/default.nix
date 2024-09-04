@@ -7,7 +7,6 @@ with lib;
 
 let
   inherit (self.inputs) nixpkgs-unstable nix-darwin;
-  inherit (self.flake-lib) specialModuleArgs;
 
   inherit (nix-darwin.lib) darwinSystem;
 in
@@ -16,11 +15,13 @@ rec {
 
   # - `self`: flake
   # - `llib`: local flake library
+  # - `lpkgs`: local packages set
   # - `upkgs`: unstable nixpkgs set
   # - `isDarwin`: indicates if system is darwin
   specialModuleArgs = pkgs: {
     inherit self;
     llib = import ../. pkgs;
+    lpkgs = import ../../pkgs pkgs;
     upkgs = import nixpkgs-unstable { inherit (pkgs) system config; };
     isDarwin = pkgs.stdenv.isDarwin;
   };

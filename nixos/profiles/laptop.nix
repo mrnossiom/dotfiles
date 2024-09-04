@@ -128,9 +128,8 @@ in
   programs.fish.enable = true;
 
   services.udev.packages = with pkgs; [
-    arduino-udev-rules
     numworks-udev-rules
-    probe-rs-udev-rules
+    lpkgs.probe-rs-udev-rules
   ];
 
   users.groups.plugdev.name = "plugdev";

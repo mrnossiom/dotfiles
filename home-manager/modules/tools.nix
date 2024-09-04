@@ -1,4 +1,7 @@
-{ pkgs, ... }:
+{ pkgs
+, lpkgs
+, ...
+}:
 
 {
   config = {
@@ -7,7 +10,7 @@
       btop
       glow
       gping
-      otree
+      lpkgs.otree
       thokr
 
       # CLIs
@@ -31,7 +34,7 @@
       speedtest-go
       upkgs.srgn
       sshfs
-      sweep
+      lpkgs.sweep
       tealdeer
       termimage
       tokei

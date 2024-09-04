@@ -1,5 +1,6 @@
 { lib
 , pkgs
+, lpkgs
 , isDarwin
 , ...
 }:
@@ -117,7 +118,7 @@ with lib;
 
         # Quickly get outta here to test something
         cdtmp = ''
-          set -l name $argv[1] (${getExe pkgs.names})
+          set -l name $argv[1] (${getExe lpkgs.names})
           set -l dir /tmp/$name[1]
 
           mkdir $dir

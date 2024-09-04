@@ -11,7 +11,11 @@
 #
 # I spent way too much time getting this to work with a submodule.
 
-{ config, lib, pkgs, ... }:
+{ config
+, lib
+, pkgs
+, ...
+}:
 
 with lib;
 
