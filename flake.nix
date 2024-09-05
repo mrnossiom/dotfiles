@@ -93,12 +93,11 @@
 
       # I bundle my Home Manager config via the NixOS modules which create system generations and give free rollbacks.
       # However, in non-NixOS contexts, you can still use Home Manager to manage dotfiles using this template.
-      homeConfigurations = {
-        # "<username>@<hostname>" = homeManagerConfiguration {
-        #   pkgs = pkgs."<system>";
-        #   extraSpecialArgs = { inherit self; osConfig = null; };
-        #   modules = [ ./home-manager/profiles/desktop.nix ];
-        # };
+      homeConfigurations = with flake-lib; {
+        # TODO: should not be system specific
+        "lightweight" = createHomeManager pkgs."x86_64-linux" [
+          ./home-manager/profiles/lightweight.nix
+        ];
       };
 
       darwinConfigurations = with flake-lib.darwin; {

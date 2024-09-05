@@ -11,7 +11,7 @@ with lib;
 
 let
   inherit (self) homeManagerModules;
-  inherit (config.age) secrets;
+  # inherit (config.age) secrets;
 in
 {
   imports = [ homeManagerModules.wakatime ];
@@ -19,7 +19,7 @@ in
   config = {
     programs.helix = {
       enable = true;
-      package = lpkgs.helix;
+      # package = lpkgs.helix;
       defaultEditor = true;
 
       settings = {
@@ -110,12 +110,12 @@ in
       };
     };
 
-    programs.wakatime = {
-      enable = true;
-      apiKeyFile = secrets.api-wakatime.path;
-      settings = {
-        exclude_unknown_project = true;
-      };
-    };
+    # programs.wakatime = {
+    #   enable = true;
+    #   apiKeyFile = secrets.api-wakatime.path;
+    #   settings = {
+    #     exclude_unknown_project = true;
+    #   };
+    # };
   };
 }

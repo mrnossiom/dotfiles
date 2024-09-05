@@ -1,5 +1,6 @@
 { self
 , lib
+, lpkgs
 , system
 , ...
 }@pkgs:
@@ -18,7 +19,7 @@ with pkgs;
 
 {
   # Import packages of this flake along with useful tools for managing dotfiles
-  default = mkPackageShell (with pkgs; [ just agenix ]);
+  default = mkPackageShell (with pkgs; [ just lpkgs.agenix ]);
 
   # Add presets that I can quickly use
 

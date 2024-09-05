@@ -6,9 +6,10 @@
 with lib;
 
 let
-  inherit (self.inputs) nixpkgs-unstable nix-darwin;
+  inherit (self.inputs) home-manager nixpkgs-unstable nix-darwin;
 
   inherit (nix-darwin.lib) darwinSystem;
+  inherit (home-manager.lib) homeManagerConfiguration;
 in
 rec {
   forAllSystems = genAttrs [ "x86_64-linux" "aarch64-linux" "aarch64-darwin" ];
@@ -31,7 +32,7 @@ rec {
     specialArgs = specialModuleArgs pkgs;
   };
 
-
+  # `createSystem` modules
   system = hostName: profile: {
     imports = [
       ../../nixos/hardware/${hostName}.nix
@@ -41,6 +42,11 @@ rec {
   };
   user = import ./user.nix;
   managedDiskLayout = import ./managedDiskLayout.nix;
+
+  createHomeManager = pkgs: modules: homeManagerConfiguration {
+    inherit pkgs modules;
+    extraSpecialArgs = (specialModuleArgs pkgs) // { osConfig = null; };
+  };
 
   # Darwin related
   darwin = {

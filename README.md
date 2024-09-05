@@ -1,6 +1,12 @@
 # mrnossiom's NixOS and Home Manager configuration
 
-## Structure
+# Bootstrap lightweight HM config
+
+```
+nix run nixpkgs#home-manager -- switch --flake .#lightweight
+```
+
+# Structure
 
 - `apps`: Scripts serving dotfiles purposes
 - `home-manager`: Home Manager specific
@@ -19,7 +25,7 @@
 - `secrets`: `agenix` encrypted secrets
 - `templates`: Quickstart files for different languages
 
-## Add a new device
+# Add a new device
 
 - Rekey secrets with device root ssh key, and create a session age key.
 
