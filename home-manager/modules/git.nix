@@ -118,7 +118,6 @@ with lib;
         # TODO: connect to a SSOT
         github.user = "mrnossiom";
 
-        credential.helper = "${getExe' (pkgs.git.override { withLibsecret = true; }) "git-credential-libsecret"}";
         "credentials \"https://github.com\"".helper = "!${getExe pkgs.gh} auth git-credential";
 
         # TODO: change to $PROJECTS env var?
