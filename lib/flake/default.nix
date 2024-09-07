@@ -14,21 +14,24 @@ in
 rec {
   forAllSystems = genAttrs [ "x86_64-linux" "aarch64-linux" "aarch64-darwin" ];
 
-  # - `self`: flake
-  # - `llib`: local flake library
-  # - `lpkgs`: local packages set
-  # - `upkgs`: unstable nixpkgs set
-  # - `isDarwin`: indicates if system is darwin
   specialModuleArgs = pkgs: {
+    # this flake
     inherit self;
+    # local flake library
     llib = import ../. pkgs;
+    # local packages set
     lpkgs = import ../../pkgs pkgs;
+    # unstable nixpkgs set
     upkgs = import nixpkgs-unstable { inherit (pkgs) system config; };
+    # indicates if system is darwin
     isDarwin = pkgs.stdenv.isDarwin;
   };
 
   createSystem = pkgs: modules: nixosSystem {
-    inherit pkgs modules;
+    inherit pkgs;
+    modules = modules ++ [
+      ../../nixos/fragments/default.nix
+    ];
     specialArgs = specialModuleArgs pkgs;
   };
 
@@ -44,14 +47,21 @@ rec {
   managedDiskLayout = import ./managedDiskLayout.nix;
 
   createHomeManager = pkgs: modules: homeManagerConfiguration {
-    inherit pkgs modules;
+    inherit pkgs;
+    modules = modules ++ [
+      ../../home-manager/fragments/default.nix
+      ../../home-manager/options.nix
+    ];
     extraSpecialArgs = (specialModuleArgs pkgs) // { osConfig = null; };
   };
 
   # Darwin related
   darwin = {
     createSystem = pkgs: modules: darwinSystem {
-      inherit pkgs modules;
+      inherit pkgs;
+      modules = modules ++ [
+        ../../nixos/fragments/default.nix
+      ];
       specialArgs = specialModuleArgs pkgs;
     };
 

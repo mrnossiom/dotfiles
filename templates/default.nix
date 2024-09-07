@@ -11,19 +11,13 @@ rec {
 
   blank = {
     path = ./blank;
-    description = "Blank flake setup";
-    welcomeText = ''
-      You may want to run
-      $ direnv allow
-    '';
+    description = "Flake for default/blank setup";
+    welcomeText = "`direnv allow`";
   };
 
   rust = {
     path = ./rust;
-    description = "Rust flake setup";
-    welcomeText = ''
-      You may want to run
-      $ direnv allow
-    '';
+    description = "Flake for Rust setup";
+    welcomeText = "`direnv allow`";
   };
 }

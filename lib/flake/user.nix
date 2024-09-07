@@ -47,7 +47,13 @@ in
       useUserPackages = false;
       useGlobalPkgs = true;
 
-      users.${name} = import ../../home-manager/profiles/${profile}.nix;
+      users.${name} = { ... }: {
+        imports = [
+          ../../home-manager/profiles/${profile}.nix
+          ../../home-manager/fragments/default.nix
+          ../../home-manager/options.nix
+        ];
+      };
     };
   };
 }

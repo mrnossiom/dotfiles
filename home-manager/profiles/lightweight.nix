@@ -15,7 +15,7 @@ with lib;
 let
   _check = if (isDarwin) then throw "this is a HM non-darwin config" else null;
 
-  inherit (self.inputs) agenix nix-colors;
+  inherit (self.inputs) nix-colors;
 
   toml-format = pkgs.formats.toml { };
 in
@@ -24,7 +24,7 @@ in
     # Nix colors
     nix-colors.homeManagerModules.default
     { config.colorScheme = llib.colorSchemes.oneDark; }
-  ] ++ map (modPath: ../modules/${modPath}) [
+  ] ++ map (modPath: ../fragments/${modPath}) [
     # "firefox.nix"
     "git.nix"
     "shell.nix"
@@ -34,7 +34,7 @@ in
   ];
 
   config = {
-    # programs.home-manager.enable = osConfig == null;
+    programs.home-manager.enable = osConfig == null;
 
     home = {
       username = "milo.moisson";
@@ -94,9 +94,6 @@ in
         hunspellDicts.fr-moderne
         hunspellDicts.en_US-large
         hunspellDicts.en_GB-large
-
-        # TUIs
-        # lpkgs.asak
 
         # CLIs
         wf-recorder

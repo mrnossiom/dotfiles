@@ -7,7 +7,7 @@ with lib;
 
 {
   # Hardware is imported in the flake to be machine specific
-  imports = map (modPath: ../modules/${modPath}) [
+  imports = map (modPath: ../fragments/${modPath}) [
     "agenix.nix"
     # "logiops.nix"
     "nix.nix"

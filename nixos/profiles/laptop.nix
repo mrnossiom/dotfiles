@@ -16,7 +16,7 @@ in
   imports = [
     # Replaces nixpkgs module with a custom one that support fallback static location
     nixosModules.geoclue2
-  ] ++ map (modPath: ../modules/${modPath}) [
+  ] ++ map (modPath: ../fragments/${modPath}) [
     "agenix.nix"
     "backup.nix"
     "gaming.nix"
@@ -28,7 +28,7 @@ in
   ];
 
   networking.hosts = {
-    "127.0.0.1" = [ "www.youtube.com" ];
+    # "127.0.0.1" = [ "www.youtube.com" ];
   };
 
   hardware.opengl = {

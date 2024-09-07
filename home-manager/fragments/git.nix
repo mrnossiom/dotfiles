@@ -1,5 +1,4 @@
-{ config
-, lib
+{ lib
 , pkgs
 , ...
 }:
@@ -8,6 +7,10 @@ with lib;
 
 {
   config = {
+    home.sessionVariables = {
+      GIT_DISCOVERY_ACROSS_FILESYSTEM = 0;
+    };
+
     programs.git = {
       enable = true;
       lfs.enable = true;

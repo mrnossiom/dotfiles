@@ -3,7 +3,6 @@
 , llib
 , config
 , pkgs
-, upkgs
 , isDarwin
   # Provides the NixOS configuration if HM was loaded through the NixOS module
 , osConfig ? null
@@ -35,7 +34,7 @@ in
     # Nix colors
     nix-colors.homeManagerModules.default
     { config.colorScheme = llib.colorSchemes.oneDark; }
-  ] ++ map (modPath: ../modules/${modPath}) [
+  ] ++ map (modPath: ../fragments/${modPath}) [
     "aws.nix"
     # "chromium.nix"
     # "firefox.nix"
