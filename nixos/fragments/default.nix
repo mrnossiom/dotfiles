@@ -7,6 +7,7 @@
   imports = [
     ./agenix.nix
     ./backup.nix
+    ./fonts.nix
     ./gaming.nix
     ./logiops.nix
     ./nix.nix

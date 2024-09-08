@@ -15,13 +15,16 @@ in
   ];
 
   config = {
-    local.fragment.agenix.enable = true;
-    local.fragment.gaming.enable = true;
-    local.fragment.logiops.enable = true;
-    local.fragment.nix.enable = true;
-    local.fragment.security.enable = true;
-    local.fragment.virtualisation.enable = true;
-    local.fragment.wireless.enable = true;
+    local.fragment = {
+      agenix.enable = true;
+      gaming.enable = true;
+      logiops.enable = true;
+      nix.enable = true;
+      security.enable = true;
+      virtualisation.enable = true;
+      wireless.enable = true;
+      fonts.enable = true;
+    };
 
     # TODO: fix module first
     # local.fragment.backup.enable = true;
@@ -93,26 +96,6 @@ in
       # (Mozilla Location Services). See related module in repo.
       # INFO:   lat vvvv  vvv long → Paris rough location
       staticFile = "48.8\n2.3\n0\n0\n";
-    };
-
-    fonts = {
-      packages = with pkgs; [
-        (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
-        inter
-        noto-fonts
-        noto-fonts-cjk-sans
-        noto-fonts-color-emoji
-        font-awesome
-      ];
-      fontconfig = {
-        defaultFonts = rec {
-          monospace = [ "JetBrainsMono Nerd Font" "Noto Sans Mono" ];
-          sansSerif = [ "Inter" "Noto Sans" "Noto Sans Japanese" "Noto Sans Korean" "Noto Sans Chinese" ];
-          # Serif is ugly
-          serif = sansSerif;
-          emoji = [ "Noto Color Emoji" ];
-        };
-      };
     };
 
     programs.wireshark = {
