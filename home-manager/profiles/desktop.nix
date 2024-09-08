@@ -84,6 +84,7 @@ in
         cloudflare-warp
         geogebra6
         spotify
+        unityhub
         ## JetBrains
         jetbrains.datagrip
 

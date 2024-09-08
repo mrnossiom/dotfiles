@@ -12,6 +12,7 @@ package: builtins.elem (lib.getName package) [
   "cloudflare-warp"
   "geogebra"
   "spotify"
+  "unityhub"
   ## JetBrains
   "datagrip"
 ]
