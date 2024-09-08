@@ -11,7 +11,7 @@ let
 
   cfg = config.local.fragment.vm;
 
-  theme = config.colorScheme.palette;
+  theme = config.local.colorScheme.palette;
   swayCfg = config.wayland.windowManager.sway.config;
 
   workspacesRange = lib.zipListsWith (key-idx: workspace-idx: { inherit key-idx workspace-idx; }) [ 1 2 3 4 5 6 7 8 9 0 ] (lib.range 1 10);

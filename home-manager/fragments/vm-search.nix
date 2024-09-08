@@ -7,7 +7,7 @@
 let
   cfg = config.local.fragment.vm;
 
-  theme = config.colorScheme.palette;
+  theme = config.local.colorScheme.palette;
   keyValueFormat = lib.generators.toKeyValue { };
 in
 {

@@ -12,6 +12,7 @@
 if (isDarwin) then throw "this is a HM non-darwin config" else
 
 let
+  inherit (self.outputs) homeManagerModules;
   inherit (self.inputs) agenix nix-colors;
 
   all-secrets = import ../../secrets;
@@ -28,9 +29,8 @@ in
       age.identityPaths = [ "${config.home.homeDirectory}/.ssh/id_home_manager" ];
     }
 
-    # Nix colors
-    nix-colors.homeManagerModules.default
-    { config.colorScheme = llib.colorSchemes.oneDark; }
+    homeManagerModules.color-scheme
+    { config.local.colorScheme = llib.colorSchemes.oneDark; }
   ];
 
   config = {

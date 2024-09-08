@@ -18,9 +18,6 @@
     disko.url = "github:nix-community/disko";
     disko.inputs.nixpkgs.follows = "nixpkgs";
 
-    # TODO: replace with a custom module, this just acts as a module definition
-    nix-colors.url = "github:misterio77/nix-colors";
-
     nixos-hardware.url = "github:nixos/nixos-hardware";
 
     # ——— Packages
