@@ -36,7 +36,7 @@ in
         ignore-empty-password = true;
         show-failed-attempts = true;
 
-        image = toString ../../assets/BinaryCloud.png;
+        image = toString ../../assets/wallpaper-binary-cloud.png;
 
         indicator-y-position = -100;
         indicator-x-position = 100;
