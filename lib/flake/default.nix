@@ -25,24 +25,28 @@ rec {
     isDarwin = pkgs.stdenv.isDarwin;
   };
 
-  createSystem = pkgs: modules: lib.nixosSystem {
-    inherit pkgs;
-    modules = modules ++ [
-      ../../nixos/fragments/default.nix
-    ];
-    specialArgs = specialModuleArgs pkgs;
-  };
+  # NixOS related
+  nixos = {
+    createSystem = pkgs: modules: lib.nixosSystem {
+      inherit pkgs;
+      modules = modules ++ [
+        ../../nixos/fragments/default.nix
+      ];
+      specialArgs = specialModuleArgs pkgs;
+    };
 
-  # `createSystem` modules
-  system = hostName: profile: {
-    imports = [
-      ../../nixos/hardware/${hostName}.nix
-      ../../nixos/profiles/${profile}.nix
-    ];
-    networking.hostName = hostName;
+    # `createSystem` modules
+    system = hostName: profile: {
+      imports = [
+        ../../nixos/hardware/${hostName}.nix
+        ../../nixos/profiles/${profile}.nix
+      ];
+      networking.hostName = hostName;
+    };
+    user = import ./user.nix;
+    managedDiskLayout = import ./managedDiskLayout.nix;
+
   };
-  user = import ./user.nix;
-  managedDiskLayout = import ./managedDiskLayout.nix;
 
   # Darwin related
   darwin = {

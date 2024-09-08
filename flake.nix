@@ -43,7 +43,6 @@
       inherit (flake-lib) forAllSystems;
 
       flake-lib = import ./lib/flake (nixpkgs // { inherit self; });
-      keys = import ./secrets/keys.nix;
 
       forAllPkgs = func: forAllSystems (system: func pkgs.${system});
 
@@ -57,52 +56,21 @@
     {
       formatter = forAllPkgs (pkgs: pkgs.nixpkgs-fmt);
 
-      packages = forAllPkgs (import ./pkgs);
-      apps = forAllPkgs (import ./apps { inherit forAllPkgs; });
-      devShells = forAllPkgs (import ./shells.nix);
-
-      overlays = import ./overlays (nixpkgs // { inherit self; });
-      nixosModules = import ./modules/nixos;
-      homeManagerModules = import ./modules/home-manager;
+      inherit flake-lib; # Nonstandard
+      lib = forAllPkgs (import ./lib);
       templates = import ./templates;
 
-      # Custom exports
-      inherit flake-lib;
-      lib = forAllPkgs (import ./lib);
+      apps = forAllPkgs (import ./apps { inherit forAllPkgs; });
+      devShells = forAllPkgs (import ./shells.nix);
+      overlays = import ./overlays (nixpkgs // { inherit self; });
+      packages = forAllPkgs (import ./pkgs);
 
-      nixosConfigurations = with flake-lib; {
-        # Desktops
-        "neo-wiro-laptop" = createSystem pkgs."x86_64-linux" [
-          (system "neo-wiro-laptop" "laptop")
-          (managedDiskLayout "luks-btrfs" { device = "nvme0n1"; swapSize = 12; })
-          (user "milomoisson" { description = "Milo Moisson"; profile = "desktop"; keys = keys.users; })
-        ];
 
-        "archaic-wiro-laptop" = createSystem pkgs."x86_64-linux" [
-          (system "archaic-wiro-laptop" "laptop")
-          (user "milomoisson" { description = "Milo Moisson"; profile = "desktop"; keys = keys.users; })
-        ];
+      homeManagerModules = import ./modules/home-manager;
+      nixosModules = import ./modules/nixos;
 
-        # # Servers
-        # "weird-row-server" = createSystem pkgs."x86_64-linux" [
-        #   (system "weird-row-server" "server")
-        #   (user "milomoisson" { description = "Milo Moisson"; profile = "minimal"; keys = keys.users; })
-        # ];
-      };
-
-      # I bundle my Home Manager config via the NixOS modules which create system generations and give free rollbacks.
-      # However, in non-NixOS contexts, you can still use Home Manager to manage dotfiles using this template.
-      homeConfigurations = with flake-lib.home-manager; {
-        "lightweight" = createHomeManager pkgs."x86_64-linux" [
-          (home "milo.moisson" "/home/milo.moisson" "lightweight")
-        ];
-      };
-
-      darwinConfigurations = with flake-lib.darwin; {
-        "apple-wiro-laptop" = createSystem pkgs."aarch64-darwin" [
-          (system "apple-wiro-laptop" "macintosh")
-          (user "milomoisson" { description = "Milo Moisson"; profile = "macintosh"; keys = keys.users; })
-        ];
-      };
+      # `nixos`, `home-manager` and `nix-darwin` configs are generic over `pkgs` and placed in `configurations.nix`
+      # `legacyPackages` tree structure is not checked by `nix flake check` but picked up by all rebuild tools
+      legacyPackages = forAllPkgs (import ./configurations.nix flake-lib);
     };
 }

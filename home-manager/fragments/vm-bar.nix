@@ -6,7 +6,7 @@
 
 let
   cfg = config.local.fragment.vm;
-  
+
   theme = config.colorScheme.palette;
 in
 {
