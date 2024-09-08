@@ -1,30 +1,33 @@
 { self
 , lib
-, pkgs
 , config
 , isDarwin
 , ...
 }:
 
-with lib;
-
 let
   clear-nix-env = true;
+
+  cfg = config.local.fragment.nix;
 in
 
 {
-  config = {
+  options.local.fragment.nix.enable = lib.mkEnableOption ''
+    Nix related
+  '';
+
+  config = lib.mkIf cfg.enable {
     nix = {
       # Make system registry consistent with flake inputs
       # Add `self` registry input that refers to flake
-      registry = mapAttrs (_: value: { flake = value; }) (self.inputs // { inherit self; });
+      registry = lib.mapAttrs (_: value: { flake = value; }) (self.inputs // { inherit self; });
 
       nixPath =
         if clear-nix-env
         # Actually make it empty to disable nix-* legacy commands
         then [ ]
         # Make NixOS system's legacy channels consistent with registry and flake inputs
-        else mapAttrsToList (key: value: "${key}=${value.to.path}") config.nix.registry;
+        else lib.mapAttrsToList (key: value: "${key}=${value.to.path}") config.nix.registry;
 
 
       gc = {

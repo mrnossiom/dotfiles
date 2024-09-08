@@ -4,8 +4,6 @@
 , ...
 }:
 
-with lib;
-
 let
   cfg = config.services.logiops;
 
@@ -13,7 +11,7 @@ let
   rendered-config = libconfig-format.generate "logid.cfg" cfg.settings;
 in
 {
-  options.services.logiops = {
+  options.services.logiops = with lib; {
     enable = mkEnableOption (mdDoc "Logiops HID++ configuration");
 
     package = mkPackageOption pkgs "logiops" { };
@@ -64,7 +62,7 @@ in
     };
   };
 
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
     services.udev.packages = [ pkgs.logitech-udev-rules ];
     environment.etc."logid.cfg".source = rendered-config;
 
@@ -75,5 +73,5 @@ in
     };
   };
 
-  meta.maintainers = with maintainers; [ ckie ];
+  meta.maintainers = with lib.maintainers; [ ckie ];
 }

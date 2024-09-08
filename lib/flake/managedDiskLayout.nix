@@ -2,8 +2,6 @@ layout: { device, swapSize }:
 
 { self, pkgs, lib, ... }:
 
-with lib;
-
 let
   inherit (self.inputs) disko;
 in
@@ -14,14 +12,14 @@ in
   ];
 
   options.local.disk = {
-    device = mkOption {
-      type = types.str;
+    device = lib.mkOption {
+      type = with lib.types; str;
       default = "/dev/${device}";
       description = "Identifier of the disk (/dev/<device>)";
     };
 
-    swapSize = mkOption {
-      type = types.int;
+    swapSize = lib.mkOption {
+      type = with lib.types; int;
       default = swapSize;
       description = ''
         Size (in GB) of the swap file

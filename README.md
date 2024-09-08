@@ -4,11 +4,11 @@
 
 ```nix
 {
-	local.fragment."name".enable = true; # bool; dictate whether to enable a fragment
-
-	local.option = {
+	local.flags = {
 		onlyCached = true; # bool; dictate if you are to compile pkgs or use cache
 	};
+
+	local.fragment."<name>".enable = true; # bool; dictate whether to enable a fragment
 }
 ```
 

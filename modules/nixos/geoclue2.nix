@@ -17,17 +17,14 @@
 , ...
 }:
 
-with lib;
-
 let
-
   package = pkgs.geoclue2.override { withDemoAgent = config.services.geoclue2.enableDemoAgent; };
 
   cfg = config.services.geoclue2;
 
   defaultWhitelist = [ "gnome-shell" "io.elementary.desktop.agent-geoclue2" ];
 
-  appConfigModule = types.submodule ({ name, ... }: {
+  appConfigModule = lib.types.submodule ({ name, ... }: with lib; {
     options = {
       desktopID = mkOption {
         type = types.str;
@@ -92,7 +89,7 @@ let
     value = {
       allowed = isAllowed;
       system = isSystem;
-      users = concatStringsSep ";" users;
+      users = lib.concatStringsSep ";" users;
     };
   };
 
@@ -100,7 +97,7 @@ in
 {
   disabledModules = [ "services/desktops/geoclue2.nix" ];
 
-  options.services.geoclue2 = {
+  options.services.geoclue2 = with lib; {
     enable = mkOption {
       type = types.bool;
       default = false;
@@ -226,7 +223,7 @@ in
     };
   };
 
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
     environment.systemPackages = [ package ];
 
     services.dbus.packages = [ package ];
@@ -258,7 +255,7 @@ in
 
     # this needs to run as a user service, since it's associated with the
     # user who is making the requests
-    systemd.user.services = mkIf cfg.enableDemoAgent {
+    systemd.user.services = lib.mkIf cfg.enableDemoAgent {
       geoclue-agent = {
         description = "Geoclue agent";
         # this should really be `partOf = [ "geoclue.service" ]`, but
@@ -283,10 +280,10 @@ in
     };
 
     environment.etc."geoclue/geoclue.conf".text =
-      generators.toINI { } ({
+      lib.generators.toINI { } ({
         agent = {
-          whitelist = concatStringsSep ";"
-            (optional cfg.enableDemoAgent "geoclue-demo-agent" ++ defaultWhitelist);
+          whitelist = lib.concatStringsSep ";"
+            (lib.optional cfg.enableDemoAgent "geoclue-demo-agent" ++ defaultWhitelist);
         };
         network-nmea = {
           enable = cfg.enableNmea;
@@ -303,11 +300,11 @@ in
         wifi = {
           enable = cfg.enableWifi;
           url = cfg.geoProviderUrl;
-          submit-data = boolToString cfg.submitData;
+          submit-data = lib.boolToString cfg.submitData;
           submission-url = cfg.submissionUrl;
           submission-nick = cfg.submissionNick;
         };
-      } // mapAttrs' appConfigToINICompatible cfg.appConfig);
+      } // lib.mapAttrs' appConfigToINICompatible cfg.appConfig);
 
     # environment.etc."geolocation" = mkIf (cfg.static != null) {
     #   text = ''
@@ -318,7 +315,7 @@ in
     #   '';
     # };
 
-    environment.etc."geolocation" = mkIf (cfg.staticFile != null) { text = cfg.staticFile; };
+    environment.etc."geolocation" = lib.mkIf (cfg.staticFile != null) { text = cfg.staticFile; };
   };
 
   meta = with lib; {

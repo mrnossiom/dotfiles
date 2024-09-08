@@ -1,7 +1,17 @@
-{ ... }:
+{ lib
+, config
+, ...
+}:
 
+let
+  cfg = config.local.fragment.thunderbird;
+in
 {
-  config = {
+  options.local.fragment.thunderbird.enable = lib.mkEnableOption ''
+    `imv` related
+  '';
+
+  config = lib.mkIf cfg.enable {
     programs.thunderbird = {
       enable = true;
 

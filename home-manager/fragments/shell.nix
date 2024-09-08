@@ -1,19 +1,23 @@
 { lib
+, config
 , pkgs
 , lpkgs
 , isDarwin
 , ...
 }:
 
-with lib;
-
+let
+  cfg = config.local.fragment.shell;
+in
 {
-  imports = [
-    ./helix.nix
-    ./zellij
-  ];
+  options.local.fragment.shell.enable = lib.mkEnableOption ''
+    Shell related
+  '';
 
-  config = {
+  config = lib.mkIf cfg.enable {
+    local.fragment.helix.enable = true;
+    # local.fragment.zellij.enable = true;
+
     programs.starship = {
       enable = true;
       settings.nix_shell = {
@@ -49,7 +53,7 @@ with lib;
       enable = true;
 
       # TODO: move to vm module
-      loginShellInit = optionalString (!isDarwin) ''
+      loginShellInit = lib.optionalString (!isDarwin) ''
         if test (id --user $USER) -ge 1000 && test (tty) = "/dev/tty1"
           exec sway
         end
@@ -65,7 +69,7 @@ with lib;
         # This is also a more pure version than using `__fish_ls_*` variables
         # that depends on fish internal ls wrappers and can be overridden by
         # bad configuration. (e.g. NixOS `environment.shellAliases` default)
-        ls = "${getExe pkgs.eza} --color=auto --icons=auto --hyperlink";
+        ls = "${lib.getExe pkgs.eza} --color=auto --icons=auto --hyperlink";
 
         tb = "nc termbin.com 9999";
       };
@@ -111,14 +115,14 @@ with lib;
 
       functions = {
         # Executed on interactive shell start, greet with a short quote
-        fish_greeting = "${getExe pkgs.fortune} -s";
+        fish_greeting = "${lib.getExe pkgs.fortune} -s";
 
         # Used in interactiveShellInit
         last_history_item = "echo $history[1]";
 
         # Quickly get outta here to test something
         cdtmp = ''
-          set -l name $argv[1] (${getExe lpkgs.names})
+          set -l name $argv[1] (${lib.getExe lpkgs.names})
           set -l dir /tmp/$name[1]
 
           mkdir $dir
@@ -144,16 +148,16 @@ with lib;
 
         # Quickly explore a derivation (using registry syntax)
         # e.g. `cdd nixpkgs#fontforge` or `cdd nixpkgs-unstable#fontforge` 
-        cdd = "cd (nix build --no-link --print-out-paths $argv | ${getExe pkgs.fzf})";
-      } // optionalAttrs (!isDarwin) {
+        cdd = "cd (nix build --no-link --print-out-paths $argv | ${lib.getExe pkgs.fzf})";
+      } // lib.optionalAttrs (!isDarwin) {
         change-mac = ''
           set dev (nmcli --get-values GENERAL.DEVICE,GENERAL.TYPE device show | sed '/^wifi/!{h;d;};x;q')
           sudo ip link set $dev down
     
           if test "$argv[1]" = "reset";
-              sudo ${getExe pkgs.macchanger} --permanent $dev
+              sudo ${lib.getExe pkgs.macchanger} --permanent $dev
           else;
-              sudo ${getExe pkgs.macchanger} --ending --another $dev
+              sudo ${lib.getExe pkgs.macchanger} --ending --another $dev
           end
 
           sudo ip link set $dev up

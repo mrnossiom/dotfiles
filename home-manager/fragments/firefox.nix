@@ -1,13 +1,19 @@
 { lib
 , pkgs
+, config
 , ...
 }:
 
-with lib;
-
+let
+  cfg = config.local.fragment.firefox;
+in
 {
-  config = {
-    home.sessionVariables.BROWSER = getExe pkgs.firefox;
+  options.local.fragment.firefox.enable = lib.mkEnableOption ''
+    Firefox related
+  '';
+
+  config = lib.mkIf cfg.enable {
+    home.sessionVariables.BROWSER = lib.getExe pkgs.firefox;
 
     programs.firefox = {
       enable = true;

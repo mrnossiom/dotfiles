@@ -1,15 +1,19 @@
 { self
+, config
+, lib
 , ...
 }:
 
 
 let
   inherit (self.outputs) homeManagerModules;
+
+  cfg = config.local.fragment.vm;
 in
 {
   imports = [ homeManagerModules.xcompose ];
 
-  config.programs.xcompose = {
+  config.programs.xcompose = lib.mkIf cfg.enable {
     enable = true;
     includeLocaleCompose = true;
     loadConfigInEnv = false;

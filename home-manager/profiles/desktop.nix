@@ -9,12 +9,9 @@
 , ...
 }:
 
-
-with lib;
+if (isDarwin) then throw "this is a HM non-darwin config" else
 
 let
-  _check = if (isDarwin) then throw "this is a HM non-darwin config" else null;
-
   inherit (self.inputs) agenix nix-colors;
 
   all-secrets = import ../../secrets;
@@ -34,20 +31,21 @@ in
     # Nix colors
     nix-colors.homeManagerModules.default
     { config.colorScheme = llib.colorSchemes.oneDark; }
-  ] ++ map (modPath: ../fragments/${modPath}) [
-    "aws.nix"
-    "chromium.nix"
-    "firefox.nix"
-    "git.nix"
-    "imv.nix"
-    "shell.nix"
-    "thunderbird.nix"
-    "tools.nix"
-    "vm"
-    "vscodium.nix"
   ];
 
   config = {
+    local.fragment.aws.enable = true;
+    local.fragment.chromium.enable = true;
+    local.fragment.firefox.enable = true;
+    local.fragment.git.enable = true;
+    local.fragment.imv.enable = true;
+    local.fragment.shell.enable = true;
+    local.fragment.thunderbird.enable = true;
+    local.fragment.tools.enable = true;
+    local.fragment.vm.enable = true;
+    local.fragment.vscodium.enable = true;
+    local.fragment.xdg-mime.enable = true;
+
     programs.home-manager.enable = osConfig == null;
 
     home = {
@@ -57,7 +55,7 @@ in
         else "23.11";
 
       sessionVariables = {
-        TERMINAL = getExe pkgs.kitty;
+        TERMINAL = lib.getExe pkgs.kitty;
 
         # Quick access to `~/Development` folder
         DEV = "${config.home.homeDirectory}/Development";
@@ -153,88 +151,40 @@ in
       };
     };
 
-    # Force override file which is not symlinked for whatever reason and causes errors on rebuilds
-    xdg.configFile."mimeapps.list".force = true;
-
     programs.go = {
       enable = true;
       goPath = ".local/share/go";
     };
 
     home.sessionPath = [ "${config.home.sessionVariables.CARGO_HOME}/bin" ];
-    home.file."${config.home.sessionVariables.CARGO_HOME}/config.toml".source = toml-format.generate "cargo-config" {
-      build.rustc-wrapper = getExe' pkgs.sccache "sccache";
+    home.file."${config.home.sessionVariables.CARGO_HOME}/config.toml".source =
+      let
+        sccache = lib.getExe' pkgs.sccache "sccache";
+        clang = lib.getExe pkgs.llvmPackages.clang;
+        mold = lib.getExe pkgs.mold;
+        lld = lib.getExe' pkgs.llvmPackages.lld "lld";
+      in
+      toml-format.generate "cargo-config" {
+        build.rustc-wrapper = sccache;
 
-      registry.global-credential-providers = [ "cargo:token-from-stdout ${pkgs.writeShellScript "get-crates-io-token" "cat ${config.age.secrets.api-crates-io.path}"}" ];
+        registry.global-credential-providers = [ "cargo:token-from-stdout ${pkgs.writeShellScript "get-crates-io-token" "cat ${config.age.secrets.api-crates-io.path}"}" ];
 
-      source = {
-        local-mirror.registry = "sparse+http://local.crates.io:8080/index/";
-        # crates-io.replace-with = "local-mirror";
-      };
-
-      target = {
-        x86_64-unknown-linux-gnu = {
-          linker = getExe pkgs.llvmPackages.clang;
-          rustflags = [ "-Clink-arg=--ld-path=${getExe pkgs.mold}" "-Ctarget-cpu=native" ];
-        };
-        x86_64-apple-darwin.rustflags = [ "-Clink-arg=-fuse-ld=${getExe' pkgs.llvmPackages.lld "lld"}" "-Ctarget-cpu=native" ];
-        aarch64-apple-darwin.rustflags = [ "-Clink-arg=-fuse-ld=${getExe' pkgs.llvmPackages.lld "lld"}" "-Ctarget-cpu=native" ];
-      };
-
-      unstable.gc = true;
-    };
-
-    # TODO: move out
-    xdg.mimeApps = {
-      enable = true;
-
-      defaultApplications =
-        let
-          files = [ "org.gnome.Nautilus.desktop" ];
-          browser = [ "firefox.desktop" ];
-          images = [ "imv.desktop" ];
-          terminal = [ "kitty-open.desktop" ];
-        in
-        {
-          "inode/directory" = files;
-
-          "application/pdf" = browser;
-          "text/html" = browser;
-          "x-scheme-handler/http" = browser;
-          "x-scheme-handler/https" = browser;
-          "x-scheme-handler/about" = browser;
-          "x-scheme-handler/unknown" = browser;
-
-          # Associate images to `imv`
-          "image/bmp" = images;
-          "image/gif" = images;
-          "image/jpeg" = images;
-          "image/jpg" = images;
-          "image/pjpeg" = images;
-          "image/png" = images;
-          "image/tiff" = images;
-          "image/heif" = images;
-
-          "text/plain" = terminal;
-          "text/markdown" = terminal;
-          "text/javascript" = terminal;
-          # this is how `.ts` files are matched
-          "text/vnd.trolltech.linguist" = terminal;
-          "text/x-java" = terminal;
+        source = {
+          local-mirror.registry = "sparse+http://local.crates.io:8080/index/";
+          # crates-io.replace-with = "local-mirror";
         };
 
-      associations.added = {
-        "application/pdf" = [ "firefox.desktop" ];
-        "x-scheme-handler/about" = [ "firefox.desktop" ];
-        "x-scheme-handler/unknown" = [ "firefox.desktop" ];
+        target = {
+          x86_64-unknown-linux-gnu = {
+            linker = clang;
+            rustflags = [ "-Clink-arg=--ld-path=${mold}" "-Ctarget-cpu=native" ];
+          };
+          x86_64-apple-darwin.rustflags = [ "-Clink-arg=-fuse-ld=${lld}" "-Ctarget-cpu=native" ];
+          aarch64-apple-darwin.rustflags = [ "-Clink-arg=-fuse-ld=${lld}" "-Ctarget-cpu=native" ];
+        };
 
-        ## Correct LibreOffice applications
-        "application/vnd.oasis.opendocument.text" = [ "writer.desktop" ];
-        # Word : `.docx`
-        "application/vnd.openxmlformats-officedocument.wordprocessingml.document" = [ "writer.desktop" ];
+        unstable.gc = true;
       };
-      associations.removed = { };
-    };
 
     # Nicely reload system units when changing configs
     systemd.user.startServices = "sd-switch";

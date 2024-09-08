@@ -4,15 +4,13 @@
 , ...
 }:
 
-with lib;
-
 let
+  cfg = config.local.fragment.vm;
+  
   theme = config.colorScheme.palette;
 in
 {
-  options = { };
-
-  config = {
+  config = lib.mkIf cfg.enable {
     programs.i3status-rust = {
       enable = true;
       bars.default = {
@@ -21,11 +19,11 @@ in
         blocks = [
           {
             block = "custom";
-            command = "echo  $(${getExe' pkgs.mako "makoctl"} mode)";
+            command = "echo  $(${lib.getExe' pkgs.mako "makoctl"} mode)";
             click = [
               {
                 button = "left";
-                cmd = "${getExe' pkgs.mako "makoctl"} mode -t dnd";
+                cmd = "${lib.getExe' pkgs.mako "makoctl"} mode -t dnd";
                 update = true;
               }
             ];
@@ -64,7 +62,7 @@ in
     };
 
     wayland.windowManager.sway.config.bars = [{
-      statusCommand = "${getExe pkgs.i3status-rust} ${config.home.homeDirectory}/${config.xdg.configFile."i3status-rust/config-default.toml".target}";
+      statusCommand = "${lib.getExe pkgs.i3status-rust} ${config.home.homeDirectory}/${config.xdg.configFile."i3status-rust/config-default.toml".target}";
       hiddenState = "hide";
       mode = "hide";
       fonts.size = 11.0;

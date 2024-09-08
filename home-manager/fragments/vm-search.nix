@@ -4,15 +4,23 @@
 , ...
 }:
 
-with lib;
-
 let
+  cfg = config.local.fragment.vm;
+
   theme = config.colorScheme.palette;
   keyValueFormat = lib.generators.toKeyValue { };
 in
 {
-  config = {
-    wayland.windowManager.sway.config.menu = "${getExe' pkgs.tofi "tofi-drun"} --font ${pkgs.nerdfonts.override { fonts = [ "JetBrainsMono" ]; }}/share/fonts/truetype/JetBrainsMonoNerdFont-Regular.ttf | xargs ${getExe' pkgs.sway "swaymsg"} exec --";
+  config = lib.mkIf cfg.enable {
+    wayland.windowManager.sway.config.menu =
+      let
+        tofi-drun = lib.getExe' pkgs.tofi "tofi-drun";
+        swaymsg = lib.getExe' pkgs.sway "swaymsg";
+
+        jetbrains-nerd-font = pkgs.nerdfonts.override { fonts = [ "JetBrainsMono" ]; };
+        jetbrains-nerd-font-regular = "${jetbrains-nerd-font}/share/fonts/truetype/JetBrainsMonoNerdFont-Regular.ttf";
+      in
+      "${tofi-drun} --font ${jetbrains-nerd-font-regular} | xargs ${swaymsg} exec --";
 
     xdg.configFile."tofi/config".text = keyValueFormat {
       font-size = 14;

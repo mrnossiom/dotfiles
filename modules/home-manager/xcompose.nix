@@ -4,13 +4,11 @@
 , ...
 }:
 
-with lib;
-
 let
   cfg = config.programs.xcompose;
 in
 {
-  options.programs.xcompose = {
+  options.programs.xcompose = with lib; {
     enable = mkEnableOption "XCompose keyboard configuration";
 
     loadConfigInEnv = mkOption {
@@ -50,6 +48,7 @@ in
   };
 
   config =
+    with lib;
     let
       comboListToString = foldl (acc: val: acc + "<${val}> ") "";
       sanitizeComboResult = escape [ ''"'' ];

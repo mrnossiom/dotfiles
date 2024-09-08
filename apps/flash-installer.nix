@@ -7,8 +7,6 @@ targetSystemPkgs:
 , ...
 }@pkgs:
 
-with lib;
-
 let
   inherit (self.outputs) flake-lib;
 
@@ -17,7 +15,7 @@ let
   isoPath = "${iso.config.system.build.isoImage}/iso/${iso.config.isoImage.isoName}";
 
 in
-getExe (writeShellApplication {
+lib.getExe (writeShellApplication {
   name = "flash-installer";
   runtimeInputs = with pkgs; [ pv fzf ];
 

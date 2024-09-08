@@ -5,8 +5,6 @@
 , ...
 }:
 
-with lib;
-
 let
   inherit (pkgs) writeShellScriptBin pastebinit;
 
@@ -45,7 +43,7 @@ let
   # Generates hardware related config and uploads it to pastebin
   # link-hardware-config [root]
   link-hardware-config = writeShellScriptBin "link-hardware-config" ''
-    nixos-generate-config --root ''${1:-/mnt} --show-hardware-config | ${getExe pastebinit}
+    nixos-generate-config --root ''${1:-/mnt} --show-hardware-config | ${lib.getExe pastebinit}
   '';
 
   # Install specified flake system to /mnt
@@ -66,9 +64,9 @@ in
     isoImage.squashfsCompression = "zstd -Xcompression-level 10";
 
     # Disable annoying warning
-    boot.swraid.enable = mkForce false;
+    boot.swraid.enable = lib.mkForce false;
 
-    boot.kernelPackages = mkForce pkgs.linuxKernel.packages.linux_6_6;
+    boot.kernelPackages = lib.mkForce pkgs.linuxKernel.packages.linux_6_6;
 
     nix.settings = {
       experimental-features = [ "nix-command" "flakes" ];
@@ -86,7 +84,7 @@ in
     users.users.nixos.openssh.authorizedKeys.keys = keys.users;
 
     # Start wpa_supplicant right away
-    systemd.services.wpa_supplicant.wantedBy = mkForce [ "multi-user.target" ];
+    systemd.services.wpa_supplicant.wantedBy = lib.mkForce [ "multi-user.target" ];
 
     services.getty.helpLine = ''
       Available custom tools:

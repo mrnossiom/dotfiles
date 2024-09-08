@@ -1,15 +1,23 @@
 { self
+, config
+, lib
 , pkgs
 , ...
 }:
 
 let
   inherit (self.outputs) nixosModules;
+
+  cfg = config.local.fragment.logiops;
 in
 {
   imports = [ nixosModules.logiops ];
 
-  config.services.logiops = {
+  options.local.fragment.logiops.enable = lib.mkEnableOption ''
+    LogiOps related
+  '';
+
+  config.services.logiops = lib.mkIf cfg.enable {
     enable = true;
     package = pkgs.logiops_0_2_3;
 

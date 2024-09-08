@@ -1,7 +1,18 @@
-{ ... }:
+{ lib
+, config
+, ...
+}:
 
+let
+  cfg = config.local.fragment.security;
+in
 {
-  config = {
+  options.local.fragment.virtualisation.enable = lib.mkEnableOption ''
+    Virtualisation related
+    - Docker
+  '';
+
+  config = lib.mkIf cfg.enable {
     virtualisation.docker = {
       enable = true;
 

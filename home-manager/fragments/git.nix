@@ -1,13 +1,22 @@
 { lib
 , pkgs
+, lpkgs
+, config
 , ...
 }:
 
-with lib;
-
+let
+  flags = config.local.flags;
+  cfg = config.local.fragment.git;
+in
 {
-  config = {
+  options.local.fragment.git.enable = lib.mkEnableOption ''
+    Git related
+  '';
+
+  config = lib.mkIf cfg.enable {
     home.sessionVariables = {
+      # Disable annoying warning message
       GIT_DISCOVERY_ACROSS_FILESYSTEM = 0;
     };
 
@@ -47,7 +56,7 @@ with lib;
         cm = "commit --message";
         oups = "commit --amend";
 
-        ui = "!${getExe pkgs.lazygit}";
+        ui = "!${lib.getExe pkgs.lazygit}";
 
         rv = "remote --verbose";
 
@@ -66,6 +75,7 @@ with lib;
         ap = "add --patch";
 
         pu = "push";
+        put = "push --tags";
         puf = "push --force-with-lease";
         pl = "pull";
 
@@ -94,10 +104,10 @@ with lib;
       };
 
       hooks = {
-        # git-guardian = pkgs.writeShellScript "git-guardian" ''
-        #   export GITGUARDIAN_API_KEY="$(cat ${config.age.secrets.api-gitguardian.path})"
-        #   ${getExe' pkgs.ggshield "ggshield"} secret scan pre-commit "$@"
-        # '';
+        git-guardian = pkgs.writeShellScript "git-guardian" ''
+          export GITGUARDIAN_API_KEY="$(cat ${config.age.secrets.api-gitguardian.path})"
+          ${lib.getExe' pkgs.ggshield "ggshield"} secret scan pre-commit "$@"
+        '';
       };
 
       extraConfig = {
@@ -121,7 +131,7 @@ with lib;
         # TODO: connect to a SSOT
         github.user = "mrnossiom";
 
-        "credentials \"https://github.com\"".helper = "!${getExe pkgs.gh} auth git-credential";
+        "credentials \"https://github.com\"".helper = "!${lib.getExe pkgs.gh} auth git-credential";
 
         # TODO: change to $PROJECTS env var?
         leaveTool.defaultFolder = "~/Development";
@@ -138,9 +148,10 @@ with lib;
       };
     };
 
-    home.packages = with pkgs; [
-      # lpkgs.git-leave
+    home.packages = (with pkgs; [
       radicle-node
+    ]) ++ lib.optionals (!flags.onlyCached) [
+      lpkgs.git-leave
     ];
 
     programs.gh.enable = true;

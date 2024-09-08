@@ -1,9 +1,19 @@
 { pkgs
+, lib
+, config
 , ...
 }:
 
+let
+  cfg = config.local.fragment.wireless;
+in
 {
-  config = {
+  options.local.fragment.wireless.enable = lib.mkEnableOption ''
+    Virtualisation related
+    - Docker
+  '';
+
+  config = lib.mkIf cfg.enable {
     # Wifi
     networking.nameservers = [ "1.1.1.1" "8.8.8.8" "9.9.9.9" ];
     networking.networkmanager.enable = true;

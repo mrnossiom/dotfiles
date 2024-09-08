@@ -1,7 +1,17 @@
-{ ... }:
+{ lib
+, config
+, ...
+}:
 
+let
+  cfg = config.local.fragment.aws;
+in
 {
-  config = {
+  options.local.fragment.aws.enable = lib.mkEnableOption ''
+    AWS authentification related
+  '';
+
+  config = lib.mkIf cfg.enable {
     # TODO: comply to the fk*** XDG config directory specification, include updating hm aws module
     # home.sessionVariables = {
     #   AWS_SHARED_CREDENTIALS_FILE = "${config.xdg.configHome}/aws/credentials";

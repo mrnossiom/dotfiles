@@ -1,9 +1,18 @@
 { pkgs
+, lib
+, config
 , ...
 }:
 
+let
+  cfg = config.local.fragment.chromium;
+in
 {
-  config = {
+  options.local.fragment.chromium.enable = lib.mkEnableOption ''
+    Chromium and extensions
+  '';
+
+  config = lib.mkIf cfg.enable {
     programs.chromium = {
       enable = true;
 

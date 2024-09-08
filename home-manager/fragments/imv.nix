@@ -1,7 +1,17 @@
-{ ... }:
+{ lib
+, config
+, ...
+}:
 
+let
+  cfg = config.local.fragment.imv;
+in
 {
-  config = {
+  options.local.fragment.imv.enable = lib.mkEnableOption ''
+    `imv` related
+  '';
+
+  config = lib.mkIf cfg.enable {
     programs.imv = {
       enable = true;
       settings = {

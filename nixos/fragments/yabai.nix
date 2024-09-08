@@ -1,10 +1,19 @@
-{ ... }:
+{ lib
+, config
+, ...
+}:
 
 let
+  cfg = config.local.fragment.yabai;
+
   gap = 0;
 in
 {
-  config = {
+  options.local.fragment.yabai.enable = lib.mkEnableOption ''
+    Yabai tiling manager for macOS (Darwin-only)
+  '';
+
+  config = lib.mkIf cfg.enable {
     services.yabai = {
       enable = true;
 

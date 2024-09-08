@@ -4,13 +4,11 @@
 , ...
 }:
 
-with lib;
-
 let
   cfg = config.services.wl-clip-persist;
 in
 {
-  options.services.wl-clip-persist = {
+  options.services.wl-clip-persist = with lib; {
     enable = mkEnableOption "";
 
     package = mkPackageOption pkgs "wl-clip-persist" { };
@@ -70,7 +68,7 @@ in
     };
   };
 
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
     systemd.user.services.wl-clip-persist = {
       Unit = {
         Description = "wl-clip-persist system service";
@@ -80,7 +78,7 @@ in
 
       Service = {
         Type = "simple";
-        ExecStart = "${getExe cfg.package} ${cli.toGNUCommandLineShell {} {
+        ExecStart = "${lib.getExe cfg.package} ${lib.cli.toGNUCommandLineShell {} {
           clipboard = cfg.clipboard;
           display = cfg.display;
           ignore-event-on-error = cfg.ignoreEventOnError;
@@ -95,7 +93,7 @@ in
         TimeoutStopSec = 15;
       };
 
-      Install.WantedBy = mkDefault [ "graphical-session.target" ];
+      Install.WantedBy = lib.mkDefault [ "graphical-session.target" ];
     };
   };
 }

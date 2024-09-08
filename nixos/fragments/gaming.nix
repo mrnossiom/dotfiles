@@ -1,7 +1,17 @@
-{ ... }:
+{ lib
+, config
+, ...
+}:
 
+let
+  cfg = config.local.fragment.gaming;
+in
 {
-  config = {
+  options.local.fragment.gaming.enable = lib.mkEnableOption ''
+    Gaming related
+  '';
+
+  config = lib.mkIf cfg.enable {
     programs.steam = {
       enable = true;
 

@@ -2,13 +2,15 @@
 , ...
 }:
 
-with lib;
-
 {
-  options.local.onlyCached = mkOption {
-    description = "Whether to limit the number of pkgs to compile on device";
-    type = types.bool;
+  options.local = {
+    flags = {
+      onlyCached = lib.mkOption {
+        description = "Whether to limit the number of pkgs to compile on device";
+        type = with lib.types; bool;
 
-    default = false;
+        default = false;
+      };
+    };
   };
 }

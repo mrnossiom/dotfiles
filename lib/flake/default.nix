@@ -3,8 +3,6 @@
 , ...
 }:
 
-with lib;
-
 let
   inherit (self.inputs) home-manager nixpkgs-unstable nix-darwin;
 
@@ -12,7 +10,7 @@ let
   inherit (home-manager.lib) homeManagerConfiguration;
 in
 rec {
-  forAllSystems = genAttrs [ "x86_64-linux" "aarch64-linux" "aarch64-darwin" ];
+  forAllSystems = lib.genAttrs [ "x86_64-linux" "aarch64-linux" "aarch64-darwin" ];
 
   specialModuleArgs = pkgs: {
     # this flake
@@ -27,7 +25,7 @@ rec {
     isDarwin = pkgs.stdenv.isDarwin;
   };
 
-  createSystem = pkgs: modules: nixosSystem {
+  createSystem = pkgs: modules: lib.nixosSystem {
     inherit pkgs;
     modules = modules ++ [
       ../../nixos/fragments/default.nix
@@ -46,15 +44,6 @@ rec {
   user = import ./user.nix;
   managedDiskLayout = import ./managedDiskLayout.nix;
 
-  createHomeManager = pkgs: modules: homeManagerConfiguration {
-    inherit pkgs;
-    modules = modules ++ [
-      ../../home-manager/fragments/default.nix
-      ../../home-manager/options.nix
-    ];
-    extraSpecialArgs = (specialModuleArgs pkgs) // { osConfig = null; };
-  };
-
   # Darwin related
   darwin = {
     createSystem = pkgs: modules: darwinSystem {
@@ -65,7 +54,29 @@ rec {
       specialArgs = specialModuleArgs pkgs;
     };
 
-    inherit system;
+    # `darwin.createSystem` modules
     user = import ./user.nix;
+  };
+
+  # Home Manager related
+  home-manager = {
+    createHome = pkgs: modules: homeManagerConfiguration {
+      inherit pkgs;
+      modules = modules ++ [
+        ../../home-manager/fragments/default.nix
+        ../../home-manager/options.nix
+      ];
+      extraSpecialArgs = (specialModuleArgs pkgs) // { osConfig = null; };
+    };
+
+    # `home-manager.createHome` modules
+    home = username: home-dir: profile: {
+      imports = [ ./home-manager/profiles/${profile}.nix ];
+
+      config = {
+        home.username = username;
+        home.homeDirectory = home-dir;
+      };
+    };
   };
 }

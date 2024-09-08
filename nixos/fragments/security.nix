@@ -1,9 +1,17 @@
 { lib
+, config
 , ...
 }:
 
+let
+  cfg = config.local.fragment.security;
+in
 {
-  config = {
+  options.local.fragment.security.enable = lib.mkEnableOption ''
+    Security related
+  '';
+
+  config = lib.mkIf cfg.enable {
     # Sudo
     security.sudo.enable = false;
     security.sudo-rs.enable = true;

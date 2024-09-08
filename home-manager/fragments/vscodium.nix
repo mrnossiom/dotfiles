@@ -1,12 +1,18 @@
 { lib
+, config
 , pkgs
 , ...
 }:
 
-with lib;
-
+let
+  cfg = config.local.fragment.vscodium;
+in
 {
-  config = {
+  options.local.fragment.vscodium.enable = lib.mkEnableOption ''
+    VSCodium related
+  '';
+
+  config = lib.mkIf cfg.enable {
     programs.vscode = {
       enable = true;
       package = pkgs.vscodium;

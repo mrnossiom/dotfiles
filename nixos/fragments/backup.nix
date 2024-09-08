@@ -4,16 +4,20 @@
 , ...
 }:
 
-with lib;
-
 let
   inherit (config.age) secrets;
+
+  cfg = config.local.fragment.backup;
 
   hostname = config.networking.hostName;
   mainUsername = config.local.user.username;
 in
 {
-  config.services.restic.backups = {
+  options.local.fragment.backup.enable = lib.mkEnableOption ''
+    Backup related
+  '';
+
+  config.services.restic.backups = lib.mkIf cfg.enable {
     # Backup documents and repos code
     google-drive = {
       repository = "rclone:googledrive:/Backups/${hostname}";
@@ -34,9 +38,9 @@ in
       # Since `--link-dest` is used, file contents won't be duplicated on disk.
       backupPrepareCommand = ''
         # Remove stale Restic locks
-        ${getExe pkgs.restic} unlock || true
+        ${lib.getExe pkgs.restic} unlock || true
 
-        ${getExe pkgs.rsync} \
+        ${lib.getExe pkgs.rsync} \
           ${"\\" /* Archive mode and delete files that are not in the source directory. `--mkpath` is like `mkdir`'s `-p` option */}
           --archive --delete --mkpath \
           ${"\\" /* `:-` operator uses .gitignore files as exclude patterns */}

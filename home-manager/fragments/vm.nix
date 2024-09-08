@@ -6,27 +6,26 @@
 , ...
 }:
 
-with lib;
-with builtins;
-
 let
   inherit (self.outputs) homeManagerModules;
+
+  cfg = config.local.fragment.vm;
 
   theme = config.colorScheme.palette;
   swayCfg = config.wayland.windowManager.sway.config;
 
-  workspacesRange = zipListsWith (num: ws: { inherit ws num; }) [ 1 2 3 4 5 6 7 8 9 0 ] (range 1 10);
+  workspacesRange = lib.zipListsWith (key-idx: workspace-idx: { inherit key-idx workspace-idx; }) [ 1 2 3 4 5 6 7 8 9 0 ] (lib.range 1 10);
 in
 {
   imports = [
     homeManagerModules.wl-clip-persist
-
-    ./swaybar.nix
-    ./xcompose.nix
-    ./search.nix
   ];
 
-  config = {
+  options.local.fragment.vm.enable = lib.mkEnableOption ''
+    Sway related
+  '';
+
+  config = lib.mkIf cfg.enable {
     # TODO: seems to have troubles with encoding
     # services.wl-clip-persist.enable = true;
 
@@ -92,32 +91,39 @@ in
       };
     };
 
-    services.swayidle = {
-      enable = true;
-      timeouts = [
-        # TODO: this doesn't work find a way to quickly cut output when locked and idle
-        {
-          timeout = 10;
-          command = "if ${getExe' pkgs.busybox "pgrep"} -x swaylock; then ${getExe' pkgs.sway "swaymsg"} \"output * power off\"; fi";
-          resumeCommand = "${getExe' pkgs.sway "swaymsg"} \"output * power on\"";
-        }
+    services.swayidle =
+      let
+        pgrep = lib.getExe' pkgs.busybox "pgrep";
+        swaymsg = lib.getExe' pkgs.sway "swaymsg";
+        loginctl = lib.getExe' pkgs.systemd "loginctl";
+        systemctl = lib.getExe' pkgs.systemd "systemctl";
+      in
+      {
+        enable = true;
+        timeouts = [
+          # TODO: this doesn't work find a way to quickly cut output when locked and idle
+          {
+            timeout = 10;
+            command = "if ${pgrep} -x swaylock; then ${swaymsg} \"output * power off\"; fi";
+            resumeCommand = "${swaymsg} \"output * power on\"";
+          }
 
-        {
-          timeout = 60 * 5;
-          # ——————————————— Dims the screen for n seconds ↓↓ and then switch it off
-          command = ''${getExe pkgs.chayang} -d${toString 10} && ${getExe' pkgs.sway "swaymsg"} "output * power off"'';
-          resumeCommand = ''${getExe' pkgs.sway "swaymsg"} "output * power on"'';
-        }
-        { timeout = 60 * 10; command = "${getExe' pkgs.systemd "loginctl"} lock-session"; }
-        { timeout = 60 * 15; command = "${getExe' pkgs.systemd "systemctl"} suspend"; }
-      ];
-      events = [
-        { event = "before-sleep"; command = "${getExe pkgs.playerctl} pause"; }
-        { event = "before-sleep"; command = "${getExe' pkgs.systemd "loginctl"} lock-session"; }
-        # Can be triggered with `loginctl lock-session`
-        { event = "lock"; command = getExe pkgs.swaylock; }
-      ];
-    };
+          {
+            timeout = 60 * 5;
+            # ——————————————— Dims the screen for n seconds ↓↓ and then switch it off
+            command = ''${lib.getExe pkgs.chayang} -d${toString 10} && ${swaymsg} "output * power off"'';
+            resumeCommand = ''${swaymsg} "output * power on"'';
+          }
+          { timeout = 60 * 10; command = "${loginctl} lock-session"; }
+          { timeout = 60 * 15; command = "${systemctl} suspend"; }
+        ];
+        events = [
+          { event = "before-sleep"; command = "${lib.getExe pkgs.playerctl} pause"; }
+          { event = "before-sleep"; command = "${loginctl} lock-session"; }
+          # Can be triggered with `loginctl lock-session`
+          { event = "lock"; command = lib.getExe pkgs.swaylock; }
+        ];
+      };
 
     wayland.windowManager.sway = {
       enable = true;
@@ -222,34 +228,34 @@ in
         bindkeysToCode = true;
         keybindings =
           let
-            pamixer = getExe pkgs.pamixer;
-            playerctl = getExe pkgs.playerctl;
-            brightnessctl = getExe pkgs.brightnessctl;
-            makoctl = getExe' pkgs.mako "makoctl";
+            pamixer = lib.getExe pkgs.pamixer;
+            playerctl = lib.getExe pkgs.playerctl;
+            brightnessctl = lib.getExe pkgs.brightnessctl;
+            makoctl = lib.getExe' pkgs.mako "makoctl";
 
-            grim = getExe pkgs.grim;
-            slurp = getExe pkgs.slurp;
-            wl-copy = getExe' pkgs.wl-clipboard "wl-copy";
-            wl-paste = getExe' pkgs.wl-clipboard "wl-paste";
+            grim = lib.getExe pkgs.grim;
+            slurp = lib.getExe pkgs.slurp;
+            wl-copy = lib.getExe' pkgs.wl-clipboard "wl-copy";
+            wl-paste = lib.getExe' pkgs.wl-clipboard "wl-paste";
           in
-          foldl (acc: val: acc // val) { }
+          lib.foldl (acc: val: acc // val) { }
             (map
               (modifier: {
                 "${modifier}+Return" = "exec ${swayCfg.terminal}";
-                "${modifier}+Shift+Return" = "exec ${getExe' pkgs.gnome.nautilus "nautilus"}";
+                "${modifier}+Shift+Return" = "exec ${lib.getExe' pkgs.gnome.nautilus "nautilus"}";
                 "${modifier}+Shift+q" = "kill";
                 "${modifier}+d" = "exec ${swayCfg.menu}";
                 "${modifier}+Space" = "exec ${makoctl} dismiss";
 
-                "${modifier}+Escape" = "exec ${getExe' pkgs.systemd "loginctl"} lock-session";
+                "${modifier}+Escape" = "exec ${lib.getExe' pkgs.systemd "loginctl"} lock-session";
                 "${modifier}+Alt+Escape" = "exec ${pkgs.writeShellScript "lock-screenshot.sh" ''
-                  tmpimg=$(${getExe' pkgs.coreutils "mktemp"} /tmp/lock-bg.XXX)
+                  tmpimg=$(${lib.getExe' pkgs.coreutils "mktemp"} /tmp/lock-bg.XXX)
 
                   # Give some time to hide the bar
                   sleep 1
 
                   ${grim} $tmpimg
-                  ${getExe pkgs.swaylock} --image $tmpimg
+                  ${lib.getExe pkgs.swaylock} --image $tmpimg
 
                   rm $tmpimg
                 ''}";
@@ -279,7 +285,7 @@ in
 
                 # Screenshotting
                 "${modifier}+s" = ''exec ${grim} -g "$(${slurp})" - | ${wl-copy}'';
-                "${modifier}+Shift+s" = "exec ${wl-paste} | ${getExe pkgs.swappy} --file - --output-file - | ${wl-copy}";
+                "${modifier}+Shift+s" = "exec ${wl-paste} | ${lib.getExe pkgs.swappy} --file - --output-file - | ${wl-copy}";
 
                 # Soundcontrol Keys
                 "--locked XF86AudioPrev" = "exec ${playerctl} previous";
@@ -294,11 +300,11 @@ in
                 "--locked XF86MonBrightnessDown" = "exec ${brightnessctl} set 5%- --min-value=5";
                 "--locked XF86TouchpadToggle" = ''input "type:touchpad" events toggle enabled disabled_on_external_mouse'';
               }
-              // listToAttrs (flatten (map
-                (num: [
-                  { name = "${modifier}+${toString num.num}"; value = "workspace number ${toString num.ws}"; }
-                  { name = "${modifier}+Alt+${toString num.num}"; value = "move container to workspace number ${toString num.ws}"; }
-                  { name = "${modifier}+Shift+${toString num.num}"; value = "move container to workspace number ${toString num.ws}; workspace number ${toString num.ws}"; }
+              // lib.listToAttrs (lib.flatten (map
+                ({ key-idx, workspace-idx }: [
+                  { name = "${modifier}+${toString key-idx}"; value = "workspace number ${toString workspace-idx}"; }
+                  { name = "${modifier}+Alt+${toString key-idx}"; value = "move container to workspace number ${toString workspace-idx}"; }
+                  { name = "${modifier}+Shift+${toString key-idx}"; value = "move container to workspace number ${toString workspace-idx}; workspace number ${toString workspace-idx}"; }
                 ])
                 workspacesRange))
               ) [ swayCfg.modifier ]);
@@ -315,8 +321,8 @@ in
       package = upkgs.darkman;
       settings.usegeoclue = true;
 
-      darkModeScripts.gtk-theme = ''${getExe pkgs.dconf} write /org/gnome/desktop/interface/color-scheme "'prefer-dark'"'';
-      lightModeScripts.gtk-theme = ''${getExe pkgs.dconf} write /org/gnome/desktop/interface/color-scheme "'prefer-light'"'';
+      darkModeScripts.gtk-theme = ''${lib.getExe pkgs.dconf} write /org/gnome/desktop/interface/color-scheme "'prefer-dark'"'';
+      lightModeScripts.gtk-theme = ''${lib.getExe pkgs.dconf} write /org/gnome/desktop/interface/color-scheme "'prefer-light'"'';
     };
 
     services.gammastep = {

@@ -4,15 +4,13 @@
 , ...
 }:
 
-with lib;
-
 let
   cfg = config.programs.wakatime;
 
   ini-format = pkgs.formats.ini { };
 in
 {
-  options.programs.wakatime = {
+  options.programs.wakatime = with lib; {
     enable = mkEnableOption "Wakatime code time tracker";
 
     apiKeyFile = mkOption {
@@ -62,7 +60,7 @@ in
       merged-settings = cfg.settings // { api_key_vault_cmd = "${wakatime-key}"; };
       final-config = cfg.extraConfig // { settings = merged-settings; };
     in
-    mkIf cfg.enable {
+    lib.mkIf cfg.enable {
       home.sessionVariables.WAKATIME_HOME = "${config.xdg.configHome}/wakatime";
 
       xdg.configFile = {

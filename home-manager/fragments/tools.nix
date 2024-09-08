@@ -1,16 +1,25 @@
-{ pkgs
+{ lib
+, config
+, pkgs
 , lpkgs
 , ...
 }:
 
+let
+  flags = config.local.flags;
+  cfg = config.local.fragment.tools;
+in
 {
-  config = {
-    home.packages = with pkgs; [
+  options.local.fragment.tools.enable = lib.mkEnableOption ''
+    All sorts of CLIs, TUIs
+  '';
+
+  config = lib.mkIf cfg.enable {
+    home.packages = (with pkgs; [
       # TUIs
       btop
       glow
       gping
-      lpkgs.otree
       thokr
 
       # CLIs
@@ -34,12 +43,14 @@
       speedtest-go
       upkgs.srgn
       sshfs
-      lpkgs.sweep
       tealdeer
       termimage
       tokei
       trash-cli
       upkgs.wcurl
+    ]) ++ lib.optionals (!flags.onlyCached) [
+      lpkgs.otree
+      lpkgs.sweep
     ];
   };
 }

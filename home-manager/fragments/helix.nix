@@ -7,19 +7,24 @@
 , ...
 }:
 
-with lib;
-
 let
   inherit (self) homeManagerModules;
   # inherit (config.age) secrets;
+
+  flags = config.local.flags;
+  cfg = config.local.fragment.helix;
 in
 {
   imports = [ homeManagerModules.wakatime ];
 
-  config = {
+  options.local.fragment.helix.enable = lib.mkEnableOption ''
+    Helix editor related
+  '';
+
+  config = lib.mkIf cfg.enable {
     programs.helix = {
       enable = true;
-      # package = lpkgs.helix;
+      package = if flags.onlyCached then pkgs.helix else lpkgs.helix;
       defaultEditor = true;
 
       settings = {
@@ -47,7 +52,7 @@ in
         keys =
           let
             disable-arrow-keys = false;
-            noop-arrow-keys = optionalAttrs disable-arrow-keys { up = "no_op"; down = "no_op"; left = "no_op"; right = "no_op"; };
+            noop-arrow-keys = lib.optionalAttrs disable-arrow-keys { up = "no_op"; down = "no_op"; left = "no_op"; right = "no_op"; };
           in
           {
             normal = {
@@ -98,7 +103,7 @@ in
         };
 
         language = [
-          { name = "c"; auto-format = true; formatter = { command = getExe' pkgs.clang-tools "clang-format"; args = [ ]; }; }
+          { name = "c"; auto-format = true; formatter = { command = lib.getExe' pkgs.clang-tools "clang-format"; args = [ ]; }; }
           { name = "html"; language-servers = [ "vscode-html-language-server" "wakatime" ]; }
           { name = "markdown"; language-servers = [ "marksman" "wakatime" ]; }
           { name = "nix"; language-servers = [ "nil" "wakatime" ]; auto-format = true; }

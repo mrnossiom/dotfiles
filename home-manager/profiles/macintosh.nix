@@ -9,17 +9,12 @@
 , ...
 }:
 
-
-with lib;
+if (!isDarwin) then throw "this is a HM darwin-only config" else
 
 let
-  _check = if (!isDarwin) then throw "this is a HM darwin-only config" else null;
-
   inherit (self.inputs) agenix nix-colors;
 
   all-secrets = import ../../secrets;
-
-  toml-format = pkgs.formats.toml { };
 in
 {
   imports = [
@@ -34,20 +29,15 @@ in
     # Nix colors
     nix-colors.homeManagerModules.default
     { config.colorScheme = llib.colorSchemes.oneDark; }
-  ] ++ map (modPath: ../fragments/${modPath}) [
-    "aws.nix"
-    # "chromium.nix"
-    # "firefox.nix"
-    "git.nix"
-    # "imv.nix"
-    "shell.nix"
-    # "thunderbird.nix"
-    "tools.nix"
-    # "vm"
-    # "vscodium.nix"
   ];
 
   config = {
+    local.fragment.aws.enable = true;
+    local.fragment.git.enable = true;
+    local.fragment.shell.enable = true;
+    # local.fragment.tools.enable = true;
+    # # local.fragment.vscodium.enable = true;
+
     programs.home-manager.enable = osConfig == null;
 
     home = {
@@ -73,7 +63,7 @@ in
         confirm_os_window_close = 0;
         enable_audio_bell = "no";
         macos_option_as_alt = "left";
-      } // optionalAttrs isDarwin {
+      } // lib.optionalAttrs isDarwin {
         # Workaround to avoid launching fish as a login shell
         shell = "zsh -c fish";
       };

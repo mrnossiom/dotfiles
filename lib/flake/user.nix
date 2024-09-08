@@ -7,8 +7,6 @@ name: { description, profile, keys ? [ ], user ? { } }:
 , ...
 }:
 
-with lib;
-
 let
   inherit (self.inputs) home-manager;
   inherit (self.flake-lib) specialModuleArgs;
@@ -19,8 +17,8 @@ in
   ];
 
   options = {
-    local.user.username = mkOption {
-      type = types.str;
+    local.user.username = lib.mkOption {
+      type = with lib.types; str;
       description = "The name of the main user account";
     };
   };
