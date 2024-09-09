@@ -12,7 +12,8 @@
 if (!isDarwin) then throw "this is a HM darwin-only config" else
 
 let
-  inherit (self.inputs) agenix nix-colors;
+  inherit (self.outputs) homeManagerModules;
+  inherit (self.inputs) agenix;
 
   all-secrets = import ../../secrets;
 in
@@ -26,9 +27,8 @@ in
       age.identityPaths = [ "${config.home.homeDirectory}/.ssh/id_home_manager" ];
     }
 
-    # Nix colors
-    nix-colors.homeManagerModules.default
-    { config.colorScheme = llib.colorSchemes.oneDark; }
+    homeManagerModules.color-scheme
+    { config.local.colorScheme = llib.colorSchemes.oneDark; }
   ];
 
   config = {

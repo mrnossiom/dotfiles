@@ -13,7 +13,7 @@ if (isDarwin) then throw "this is a HM non-darwin config" else
 
 let
   inherit (self.outputs) homeManagerModules;
-  inherit (self.inputs) agenix nix-colors;
+  inherit (self.inputs) agenix;
 
   all-secrets = import ../../secrets;
 

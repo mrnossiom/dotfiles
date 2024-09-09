@@ -75,7 +75,7 @@ rec {
 
     # `home-manager.createHome` modules
     home = username: home-dir: profile: {
-      imports = [ ./home-manager/profiles/${profile}.nix ];
+      imports = [ ../../home-manager/profiles/${profile}.nix ];
 
       config = {
         home.username = username;

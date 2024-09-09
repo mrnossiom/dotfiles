@@ -12,15 +12,14 @@
 if (isDarwin) then throw "this is a HM non-darwin config" else
 
 let
-  inherit (self.inputs) nix-colors;
+  inherit (self.outputs) homeManagerModules;
 
   toml-format = pkgs.formats.toml { };
 in
 {
   imports = [
-    # Nix colors
-    nix-colors.homeManagerModules.default
-    { config.colorScheme = llib.colorSchemes.oneDark; }
+    homeManagerModules.color-scheme
+    { config.local.colorScheme = llib.colorSchemes.oneDark; }
   ];
 
   config = {
