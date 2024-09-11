@@ -90,7 +90,6 @@ in
         cura
         element-desktop
         evince
-        figma-linux
         gnome.file-roller
         gnome.gnome-disk-utility
         gnome.nautilus
