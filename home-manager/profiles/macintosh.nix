@@ -32,40 +32,22 @@ in
   ];
 
   config = {
-    local.fragment.aws.enable = true;
-    local.fragment.git.enable = true;
-    local.fragment.shell.enable = true;
-    # local.fragment.tools.enable = true;
-    # # local.fragment.vscodium.enable = true;
-
-    programs.home-manager.enable = osConfig == null;
-
-    home = {
-      stateVersion = "24.05";
-
-      homeDirectory = "/Users/milomoisson";
-
-      packages = with pkgs; [
-        just
-      ];
+    local.fragment = {
+      aws.enable = true;
+      git.enable = true;
+      shell.enable = true;
+      tools.enable = true;
+      # vscodium.enable = true;
     };
+
+    home.packages = with pkgs; [
+      just
+    ];
 
     programs.bat = {
       enable = true;
       config = {
         style = "plain";
-      };
-    };
-
-    programs.kitty = {
-      enable = true;
-      settings = {
-        confirm_os_window_close = 0;
-        enable_audio_bell = "no";
-        macos_option_as_alt = "left";
-      } // lib.optionalAttrs isDarwin {
-        # Workaround to avoid launching fish as a login shell
-        shell = "zsh -c fish";
       };
     };
 

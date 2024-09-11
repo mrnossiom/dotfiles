@@ -1,12 +1,21 @@
-{ ... }:
+{ lib
+, config
+, ...
+}:
 
-# Don't use settings, nix and KDL is much unfit: https://github.com/NixOS/nixpkgs/issues/198655#issuecomment-1453525659
+let
+  cfg = config.local.fragment.zellij;
+in
 {
-  config = {
+  options.local.fragment.zellij.enable = lib.mkEnableOption ''
+    Zellij related
+  '';
+
+  config = lib.mkIf cfg.enable {
+    # Don't use settings, nix and KDL is much unfit
+    # See https://github.com/NixOS/nixpkgs/issues/198655#issuecomment-1453525659
     programs.zellij = {
       enable = true;
-
-      # TODO: modify HM module to define layouts in here directly
     };
 
     xdg.configFile."zellij/config.kdl".source = ./config.kdl;

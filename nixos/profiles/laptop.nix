@@ -24,10 +24,10 @@ in
       virtualisation.enable = true;
       wireless.enable = true;
       fonts.enable = true;
-    };
 
-    # TODO: fix module first
-    # local.fragment.backup.enable = true;
+      # TODO: fix module first
+      # backup.enable = true;
+    };
 
     networking.hosts = {
       # "127.0.0.1" = [ "www.youtube.com" ];

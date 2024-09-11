@@ -18,7 +18,7 @@ in
     ];
 
     # # Servers
-    # "weird-row-server" = createSystem pkgs."x86_64-linux" [
+    # "weird-row-server" = createSystem pkgs [
     #   (system "weird-row-server" "server")
     #   (user "milomoisson" { description = "Milo Moisson"; profile = "minimal"; keys = keys.users; })
     # ];
@@ -27,7 +27,7 @@ in
   # I bundle my Home Manager config via the NixOS modules which create system generations and give free rollbacks.
   # However, in non-NixOS contexts, you can still use Home Manager to manage dotfiles using this template.
   homeConfigurations = with flake-lib.home-manager; {
-    "lightweight" = createHome pkgs [
+    "epita" = createHome pkgs [
       (home "milo.moisson" "/home/milo.moisson" "lightweight")
     ];
   };
