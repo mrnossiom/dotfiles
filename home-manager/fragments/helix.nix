@@ -111,6 +111,7 @@ in
           { name = "rust"; language-servers = [ "rust-analyzer" "wakatime" ]; }
           { name = "typescript"; language-servers = [ "typescript-language-server" "wakatime" ]; }
           { name = "vue"; language-servers = [ "vuels" "typescript-language-server" "wakatime" ]; }
+          { name = "ocaml"; language-servers = [ "ocamllsp" "wakatime" ]; }
         ];
       };
     };
