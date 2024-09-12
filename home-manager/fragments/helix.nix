@@ -9,7 +9,7 @@
 
 let
   inherit (self) homeManagerModules;
-  # inherit (config.age) secrets;
+  inherit (config.age) secrets;
 
   flags = config.local.flags;
   cfg = config.local.fragment.helix;
@@ -115,12 +115,12 @@ in
       };
     };
 
-    # programs.wakatime = {
-    #   enable = true;
-    #   apiKeyFile = secrets.api-wakatime.path;
-    #   settings = {
-    #     exclude_unknown_project = true;
-    #   };
-    # };
+    programs.wakatime = {
+      enable = true;
+      apiKeyFile = secrets.api-wakatime.path;
+      settings = {
+        exclude_unknown_project = true;
+      };
+    };
   };
 }
