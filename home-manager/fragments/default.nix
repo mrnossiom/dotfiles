@@ -8,6 +8,7 @@
   imports = [
     ./aws.nix
     ./chromium.nix
+    ./epita.nix
     ./firefox.nix
     ./git.nix
     ./helix.nix

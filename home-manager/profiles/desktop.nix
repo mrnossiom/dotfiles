@@ -35,6 +35,7 @@ in
     local.fragment = {
       aws.enable = true;
       chromium.enable = true;
+      epita.enable = true;
       firefox.enable = true;
       git.enable = true;
       imv.enable = true;
@@ -81,6 +82,7 @@ in
         unityhub
         ## JetBrains
         jetbrains.datagrip
+        jetbrains.rider
 
         # GUIs
         audacity

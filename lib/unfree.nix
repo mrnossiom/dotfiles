@@ -15,4 +15,5 @@ package: builtins.elem (lib.getName package) [
   "unityhub"
   ## JetBrains
   "datagrip"
+  "rider"
 ]
