@@ -1,6 +1,7 @@
 { self
-, lib
 , config
+, lib
+
 , isDarwin
 , ...
 }:

@@ -1,8 +1,9 @@
 { self
+, config
 , lib
 , llib
-, config
 , pkgs
+
 , isDarwin
   # Provides the NixOS configuration if HM was loaded through the NixOS module
 , osConfig ? null

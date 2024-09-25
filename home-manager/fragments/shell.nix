@@ -1,7 +1,8 @@
-{ lib
-, config
+{ config
+, lib
 , pkgs
 , lpkgs
+
 , isDarwin
 , ...
 }:
