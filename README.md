@@ -12,12 +12,6 @@
 }
 ```
 
-# Bootstrap lightweight HM config
-
-```
-nix run nixpkgs#home-manager -- switch --flake .#lightweight
-```
-
 # Structure
 
 - `apps`: Scripts serving dotfiles purposes
@@ -38,7 +32,43 @@ nix run nixpkgs#home-manager -- switch --flake .#lightweight
 - `secrets`: `agenix` encrypted secrets
 - `templates`: Quickstart files for different languages
 
-# Add a new device
+# Quick snippets and guide for myself
+
+## Add a new module
+
+- Copy template and replace `<name>` with module name
+	```nix
+	{ config
+	, lib
+	, ... }:
+
+	let
+		cfg = config.local.fragment.<name>;
+	in
+	{
+	  options.local.fragment.<name>.enable = lib.mkEnableOption ''
+	    <name> related
+
+	    Depends on: <list of dependencies to enforce later>
+	  '';
+
+	  config = lib.mkIf cfg.enable { };
+	}
+	```
+
+- Add the newly created file to Git.
+
+- Add the new module to the import list in `<type>/fragments/default.nix`.
+
+- Activate the module in the wanted profile.
+
+## Bootstrap lightweight HM config
+
+```
+nix run nixpkgs#home-manager -- switch --flake .#lightweight
+```
+
+## Add a new device
 
 - Rekey secrets with device root ssh key, and create a session age key.
 
