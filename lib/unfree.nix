@@ -9,11 +9,10 @@ package: builtins.elem (lib.getName package) [
   "steam-run"
 
   # Home Manager
-  "cloudflare-warp"
-  "geogebra"
+  "aseprite"
   "spotify"
   "unityhub"
   ## JetBrains
+  "jetbrains-toolbox"
   "datagrip"
-  "rider"
 ]

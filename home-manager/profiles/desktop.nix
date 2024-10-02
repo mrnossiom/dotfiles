@@ -67,15 +67,14 @@ in
 
       packages = with pkgs; [
         # Unfree
-        cloudflare-warp
-        geogebra6
         spotify
         unityhub
         ## JetBrains
+        jetbrains-toolbox
         jetbrains.datagrip
-        jetbrains.rider
 
         # GUIs
+        aseprite
         audacity
         blender
         bottles
