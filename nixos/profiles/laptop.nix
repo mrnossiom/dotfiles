@@ -31,6 +31,7 @@ in
 
     networking.hosts = {
       # "127.0.0.1" = [ "www.youtube.com" ];
+      "10.2.3.154" = [ "printer.epita" ];
     };
 
     hardware.opengl = {
