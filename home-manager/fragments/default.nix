@@ -6,6 +6,7 @@
 
 {
   imports = [
+    ./agenix.nix
     ./aws.nix
     ./chromium.nix
     ./epita.nix

@@ -8,6 +8,7 @@
 }:
 
 let
+  flags = config.local.flags;
   cfg = config.local.fragment.shell;
 in
 {
@@ -121,15 +122,6 @@ in
         # Used in interactiveShellInit
         last_history_item = "echo $history[1]";
 
-        # Quickly get outta here to test something
-        cdtmp = ''
-          set -l name $argv[1] (${lib.getExe lpkgs.names})
-          set -l dir /tmp/$name[1]
-
-          mkdir $dir
-          cd $dir
-        '';
-
         repeat = ''
           set -l command (string join ' ' -- $argv)
 
@@ -150,6 +142,15 @@ in
         # Quickly explore a derivation (using registry syntax)
         # e.g. `cdd nixpkgs#fontforge` or `cdd nixpkgs-unstable#fontforge` 
         cdd = "cd (nix build --no-link --print-out-paths $argv | ${lib.getExe pkgs.fzf})";
+      } // lib.optionalAttrs (!flags.onlyCached) {
+        # Quickly get outta here to test something
+        cdtmp = ''
+          set -l name $argv[1] (${lib.getExe lpkgs.names})
+          set -l dir /tmp/$name[1]
+
+          mkdir $dir
+          cd $dir
+        '';
       } // lib.optionalAttrs (!isDarwin) {
         change-mac = ''
           set dev (nmcli --get-values GENERAL.DEVICE,GENERAL.TYPE device show | sed '/^wifi/!{h;d;};x;q')

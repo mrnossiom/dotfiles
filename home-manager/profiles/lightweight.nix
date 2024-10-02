@@ -25,6 +25,7 @@ in
     local.flags.onlyCached = true;
 
     local.fragment = {
+      agenix.enable = true;
       # firefox.enable = true;
       git.enable = true;
       shell.enable = true;

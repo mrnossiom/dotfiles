@@ -12,6 +12,8 @@ in
 {
   options.local.fragment.git.enable = lib.mkEnableOption ''
     Git related
+
+    Depends on: Agenix
   '';
 
   config = lib.mkIf cfg.enable {

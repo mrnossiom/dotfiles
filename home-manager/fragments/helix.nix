@@ -19,6 +19,8 @@ in
 
   options.local.fragment.helix.enable = lib.mkEnableOption ''
     Helix editor related
+
+    Depends on: Agenix
   '';
 
   config = lib.mkIf cfg.enable {
@@ -91,6 +93,7 @@ in
         vscode-langservers-extracted
         upkgs.vue-language-server
         yaml-language-server
+      ] ++ lib.optionals (!flags.onlyCached) [
         lpkgs.wakatime-lsp
       ];
 

@@ -19,3 +19,9 @@ build:
 
 check: build
 	@unlink result
+
+home-build PROFILE:
+	home-manager build --show-trace --flake .#{{PROFILE}}
+
+home-switch PROFILE:
+	home-manager switch --show-trace --flake .#{{PROFILE}}
