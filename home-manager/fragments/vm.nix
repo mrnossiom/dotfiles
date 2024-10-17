@@ -142,11 +142,30 @@ in
 
         window = {
           titlebar = false;
-          commands = [{
+          commands = [
             # Tag of shame
-            command = ''title_format "%title <small>[%shell]</small>"'';
-            criteria.shell = "^((?!xdg_shell).)*$";
-          }];
+            {
+              # Equivalent to `[shell="xwayland"] title_format "%title [XWayland]"` but for all other shells
+              criteria.shell = "^((?!xdg_shell).)*$";
+              command = ''title_format "%title <small>[%shell]</small>"'';
+            }
+
+            # Toggle floating mode for some specific windows
+            {
+              # TODO: Bitwarden window glitches on opening
+              criteria = { app_id = "^firefox$"; title = "Bitwarden Password Manager"; };
+              command = ''floating enable'';
+            }
+            {
+              # Toggles floating for every Unity window but the main one
+              criteria = { title = "^((?!^Unity).)*$"; class = "^Unity$"; instance = "^Unity$"; };
+              command = ''floating enable'';
+            }
+
+            # Inhibit IDLE when these are fullscreen
+            { criteria.app_id = "firefox"; command = "inhibit_idle fullscreen"; }
+            { criteria.app_id = "mpv"; command = "inhibit_idle fullscreen"; }
+          ];
         };
 
         focus.followMouse = false;

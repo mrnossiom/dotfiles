@@ -178,6 +178,12 @@ scroll_buffer_size 10000
 
 session_serialization true
 
+env {
+    // Overrides `TERM` values for all windows.
+    // Prevent `xterm-kitty` to interfere with programs output.
+    TERM "xterm-256color"
+}
+
 // Toggle between having Zellij lay out panes according to a predefined set of layouts whenever possible
 // auto_layout true
 

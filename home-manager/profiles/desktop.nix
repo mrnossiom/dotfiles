@@ -68,7 +68,7 @@ in
       packages = with pkgs; [
         # Unfree
         spotify
-        unityhub
+        upkgs.unityhub
         ## JetBrains
         jetbrains-toolbox
         jetbrains.datagrip
@@ -145,6 +145,13 @@ in
     programs.gpg = {
       enable = true;
       homedir = "${config.xdg.dataHome}/gnupg";
+    };
+
+    programs.nix-index = {
+      enable = true;
+      enableBashIntegration = false;
+      enableFishIntegration = false;
+      enableZshIntegration = false;
     };
   };
 }

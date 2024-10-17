@@ -33,6 +33,7 @@ in
         theme = "onedark";
         editor = {
           auto-format = true;
+          auto-info = false;
           auto-save = true;
           bufferline = "multiple";
           line-number = "relative";
