@@ -316,8 +316,9 @@ in
                 "--locked XF86AudioLowerVolume" = "exec ${pamixer} --unmute --decrease 5";
                 "--locked XF86AudioMute" = "exec ${pamixer} --toggle-mute";
                 "--locked XF86AudioMicMute" = "exec ${pamixer} --default-source --toggle-mute";
-                "--locked XF86MonBrightnessUp" = "exec ${brightnessctl} set 5%+";
-                "--locked XF86MonBrightnessDown" = "exec ${brightnessctl} set 5%- --min-value=5";
+                "--locked XF86MonBrightnessUp" = "exec ${brightnessctl} --exponent set 5%+";
+                # TODO: expertiment with min-value
+                "--locked XF86MonBrightnessDown" = "exec ${brightnessctl} --exponent  set 5%- --min-value=1";
                 "--locked XF86TouchpadToggle" = ''input "type:touchpad" events toggle enabled disabled_on_external_mouse'';
               }
               // lib.listToAttrs (lib.flatten (map
@@ -341,8 +342,21 @@ in
       package = upkgs.darkman;
       settings.usegeoclue = true;
 
-      darkModeScripts.gtk-theme = ''${lib.getExe pkgs.dconf} write /org/gnome/desktop/interface/color-scheme "'prefer-dark'"'';
-      lightModeScripts.gtk-theme = ''${lib.getExe pkgs.dconf} write /org/gnome/desktop/interface/color-scheme "'prefer-light'"'';
+      darkModeScripts.gtk-theme = ''
+        # Change system theme scheme to dark
+        ${lib.getExe pkgs.dconf} write /org/gnome/desktop/interface/color-scheme "'prefer-dark'"
+
+        # Do not change brightness as I'm usually on my computer as this time
+      '';
+
+      lightModeScripts.gtk-theme = ''
+        # Change system theme scheme to light
+        ${lib.getExe pkgs.dconf} write /org/gnome/desktop/interface/color-scheme "'prefer-light'"
+
+        # Prepare laptop for wake: set full brightness and disable kbd backlight
+        ${lib.getExe pkgs.brightnessctl} --class backlight set 100%
+        ${lib.getExe pkgs.brightnessctl} --class leds --device "*::kbd_backlight" set 0%
+      '';
     };
 
     services.gammastep = {
