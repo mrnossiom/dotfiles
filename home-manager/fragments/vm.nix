@@ -221,6 +221,8 @@ in
           "type:keyboard" = {
             xkb_layout = "us,fr";
             # xkb_variant = "ergol";
+
+            # List of all options: https://www.mankier.com/7/xkeyboard-config#Options
             xkb_options = "grp:menu_toggle,compose:caps";
 
             repeat_delay = toString 300;

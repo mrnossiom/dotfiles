@@ -32,7 +32,7 @@ in
       description = ''
         Shapeless tree of macros
         - Keys name can be easily found with wev (or xev)
-        - https://www.compart.com — Lists all Unicode characters
+        - https://www.compart.com/en/unicode — Lists all Unicode characters
       '';
       default = { };
       example = {
@@ -44,6 +44,17 @@ in
         };
       };
       type = types.anything;
+    };
+
+    extraConfig = mkOption {
+      description = ''
+        Unmanaged xcompose sequences and directives
+      '';
+      default = "";
+      example = ''
+        <Multi_key> <Multi_key> <a> <5> : "٥"
+      '';
+      type = types.lines;
     };
   };
 
@@ -73,6 +84,7 @@ in
       composeFile = pkgs.writeText "XCompose" ''
         ${optionalString cfg.includeLocaleCompose "include \"%L\""}
         ${processComposeSet cfg.sequences}
+        ${cfg.extraConfig}
       '';
     in
     mkIf cfg.enable {
