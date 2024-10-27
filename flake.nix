@@ -62,7 +62,6 @@
       overlays = import ./overlays (nixpkgs // { inherit self; });
       packages = forAllPkgs (import ./pkgs);
 
-
       homeManagerModules = import ./modules/home-manager;
       nixosModules = import ./modules/nixos;
 

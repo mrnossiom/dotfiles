@@ -34,6 +34,7 @@ in
           "x-scheme-handler/https" = browser;
           "x-scheme-handler/about" = browser;
           "x-scheme-handler/unknown" = browser;
+          "image/svg+xml" = browser;
 
           # Associate images to `imv`
           "image/bmp" = images;

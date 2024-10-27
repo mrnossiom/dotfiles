@@ -158,7 +158,8 @@ in
             }
             {
               # Toggles floating for every Unity window but the main one
-              criteria = { title = "^((?!^Unity).)*$"; class = "^Unity$"; instance = "^Unity$"; };
+              # Only the main window begins with `Unity - `
+              criteria = { title = "^((?!^Unity - ).)*$"; class = "^Unity$"; instance = "^Unity$"; };
               command = ''floating enable'';
             }
 

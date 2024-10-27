@@ -17,6 +17,7 @@ in
   config = lib.mkIf cfg.enable {
     home.packages = (with pkgs; [
       # TUIs
+      upkgs.binsider
       btop
       glow
       gping
