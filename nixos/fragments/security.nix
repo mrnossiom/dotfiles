@@ -22,7 +22,6 @@ in
 
     # Systemd Login
     services.logind = {
-      # TODO: fix issues on neo laptop
       lidSwitch = "suspend";
       extraConfig = lib.generators.toKeyValue { } {
         IdleAction = "lock";
@@ -32,14 +31,15 @@ in
       };
     };
 
-    # Required when using swaylock
+    # `swaylock` pam service must be at least declared to work properly
     security.pam.services."swaylock" = { };
+
+    # reduce sudo fail delay to half a second
+    security.pam.services."sudo" = { nodelay = true; failDelay = { enable = true; delay = 500000; }; };
 
     # Signing
     programs.gnupg.agent.enable = true;
     services.gnome.gnome-keyring.enable = true;
-
-    programs.ssh.startAgent = true;
 
     # SSH
     services.openssh = {
@@ -49,5 +49,7 @@ in
         PasswordAuthentication = false;
       };
     };
+
+    programs.ssh.startAgent = true;
   };
 }
