@@ -1,21 +1,18 @@
-{ self
-, lib
-, lpkgs
-, system
+{ lpkgs
 , ...
 }@pkgs:
 
 let
-  inherit (self.outputs) packages;
-
-  allSelfPackages = lib.mapAttrsToList (_: value: value) packages.${system};
-
   mkPackageShell = packages: pkgs.mkShell { inherit packages; };
 in
 
 {
   # Import packages of this flake along with useful tools for managing dotfiles
-  default = mkPackageShell (with pkgs; [ just lpkgs.agenix ]);
+  default = mkPackageShell (with pkgs; [
+    lpkgs.agenix
+    home-manager
+    just
+  ]);
 
   # Add presets that I can quickly use
 

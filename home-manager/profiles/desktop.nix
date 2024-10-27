@@ -8,8 +8,6 @@
 , ...
 }:
 
-if (isDarwin) then throw "this is a HM non-darwin config" else
-
 let
   inherit (self.outputs) homeManagerModules;
 
@@ -22,6 +20,10 @@ in
   ];
 
   config = {
+    assertions = [
+      { assertion = !isDarwin; message = "this is a HM non-darwin config"; }
+    ];
+
     local.fragment = {
       agenix.enable = true;
       aws.enable = true;
@@ -129,6 +131,8 @@ in
     };
 
     programs.broot.enable = true;
+
+    programs.ssh.enable = true;
 
     programs.bat = {
       enable = true;

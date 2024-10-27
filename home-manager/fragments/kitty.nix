@@ -12,10 +12,17 @@ in
   options.local.fragment.kitty.enable = lib.mkEnableOption ''
     Kitty related
 
-    Depends on: `fish`
+    Depends on:
+    - (Darwin) `fish` program: lauches fish on startup
+
+      Has weird behavior if set as login shell
   '';
 
   config = lib.mkIf cfg.enable {
+    assertions = [
+      { assertion = (!isDarwin) || config.programs.fish.enable; message = "`kitty` fragment depends on `fish` program on darwin platforms"; }
+    ];
+
     programs.kitty = {
       enable = true;
       settings = {

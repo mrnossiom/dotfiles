@@ -37,6 +37,7 @@
 ## Add a new module
 
 - Copy template and replace `<name>` with module name
+
 	```nix
 	{ config
 	, lib
@@ -46,13 +47,21 @@
 		cfg = config.local.fragment.<name>;
 	in
 	{
-	  options.local.fragment.<name>.enable = lib.mkEnableOption ''
+	  options.local.fragment."<name>".enable = lib.mkEnableOption ''
 	    <name> related
 
-	    Depends on: <list of dependencies to enforce later>
+	    Depends on:
+			- [<Condition>] <dependency>: <reason>
+			- ...
 	  '';
 
-	  config = lib.mkIf cfg.enable { };
+	  config = lib.mkIf cfg.enable {
+			assertions = [
+				{ assertion = config."<dependency>"; message = "<name> module depends on <dependency>"; }
+			];
+
+			# put the rest of the config down below
+		};
 	}
 	```
 

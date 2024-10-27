@@ -17,6 +17,9 @@ in
     Backup related
   '';
 
+  # TODO: fix module
+  config.assertions = lib.optional cfg.enable { assertion = false; message = "module is broken"; };
+
   config.services.restic.backups = lib.mkIf cfg.enable {
     # Backup documents and repos code
     google-drive = {

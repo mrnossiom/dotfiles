@@ -1,6 +1,5 @@
 { self
 , config
-, lib
 , llib
 , pkgs
 
@@ -9,8 +8,6 @@
 , osConfig ? null
 , ...
 }:
-
-if (!isDarwin) then throw "this is a HM darwin-only config" else
 
 let
   inherit (self.outputs) homeManagerModules;
@@ -33,6 +30,10 @@ in
   ];
 
   config = {
+    assertions = [
+      { assertion = isDarwin; message = "this is a HM darwin-only config"; }
+    ];
+
     local.fragment = {
       aws.enable = true;
       git.enable = true;

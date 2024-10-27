@@ -1,5 +1,6 @@
 { config
 , lib
+, pkgs
 , ...
 }:
 
@@ -7,14 +8,24 @@ let
   cfg = config.local.fragment.xdg-mime;
 in
 {
-  # TODO: enforce dependence
   options.local.fragment.xdg-mime.enable = lib.mkEnableOption ''
     Sets default applications based on mime type.
 
-    Depends on: `nautilus`, `firefox`, `imv`, `kitty`.
+    Depends on:
+    - `firefox` program: default browser
+    - `imv` program: default image viewer
+    - `kitty` program: default terminal
+    - `nautilus` program: default file explorer
   '';
 
   config = lib.mkIf cfg.enable {
+    assertions = [
+      { assertion = config.programs.firefox.enable; message = "`xdg-mime` fragment depends on `firefox` program"; }
+      { assertion = config.programs.imv.enable; message = "`xdg-mime` fragment depends on `imv` program"; }
+      { assertion = config.programs.kitty.enable; message = "`xdg-mime` fragment depends on `kitty` program"; }
+      { assertion = lib.lists.count (drv: (drv.pname or "") == pkgs.gnome.nautilus.pname) config.home.packages > 0; message = "`xdg-mime` fragment depends on `nautilus` program"; }
+    ];
+
     xdg.mimeApps = {
       enable = true;
 

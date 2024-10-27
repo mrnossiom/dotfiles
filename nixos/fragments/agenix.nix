@@ -17,20 +17,26 @@ in
     (if isDarwin then agenix.darwinModules.default else agenix.nixosModules.default)
   ];
 
-  # TODO: enforce dependance
   options.local.fragment.agenix.enable = lib.mkEnableOption ''
     Agenix secrets manager
 
-    Depends on: OpenSSH (`security`)
+    Depends on:
+    - `openssh` services: needs host machine keys
   '';
 
   config = lib.mkIf cfg.enable {
-    # By default, agenix uses host machine keys (aka `openssh.hostKeys`).
-    # These are always available at boot in opposition to user one that might
-    # be located on luks protected partitions.
-    # age.identityPaths = [ ];
+    assertions = [
+      { assertion = config.services.openssh.enable; message = "`agenix` fragement depends on `openssh` program"; }
+    ];
 
-    age.secrets = all-secrets.nixos;
+    age = {
+      # By default, agenix uses host machine keys (aka `openssh.hostKeys`).
+      # These are always available at boot in opposition to user one that might
+      # be located on luks protected partitions.
+      # identityPaths = [ ];
+
+      secrets = all-secrets.nixos;
+    };
   };
 }
 

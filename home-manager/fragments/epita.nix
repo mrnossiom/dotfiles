@@ -19,7 +19,7 @@ let
       MOUNT_DIR="$XDG_RUNTIME_DIR/afs-epita"
 
       klist || kinit -f "$USERNAME@CRI.EPITA.FR"
-      ls "$MOUNT_DIR" || mkdir "$MOUNT_DIR"
+      ls "$MOUNT_DIR" >/dev/null || mkdir -v "$MOUNT_DIR"
       sshfs -o reconnect "$USERNAME@ssh.cri.epita.fr:$REMOTE_DIR" "$MOUNT_DIR"
     '';
   };
@@ -28,20 +28,20 @@ in
   options.local.fragment.epita.enable = lib.mkEnableOption ''
     EPITA related
 
-    Depends on: SSH
+    Depends on:
+    - `ssh` program: Mount AFS script needs SSH
   '';
 
   config = lib.mkIf cfg.enable {
-    # Needed for sshfs
-    programs.ssh = {
-      # TODO: should depends on ssh module, may conflict later
-      enable = true;
+    assertions = [
+      { assertion = config.programs.ssh.enable; message = "`epita` fragment depends on `ssh` program"; }
+    ];
 
-      matchBlocks."ssh.cri.epita.fr" = {
-        extraOptions = {
-          GSSAPIAuthentication = "yes";
-          GSSAPIDelegateCredentials = "yes";
-        };
+    # Needed for sshfs
+    programs.ssh.matchBlocks."ssh.cri.epita.fr" = {
+      extraOptions = {
+        GSSAPIAuthentication = "yes";
+        GSSAPIDelegateCredentials = "yes";
       };
     };
 

@@ -13,10 +13,15 @@ in
   options.local.fragment.git.enable = lib.mkEnableOption ''
     Git related
 
-    Depends on: Agenix
+    Depends on:
+    - `agenix` fragment: Need for GPG key and GitGuardian API key
   '';
 
   config = lib.mkIf cfg.enable {
+    assertions = [
+      { assertion = config.local.fragment.agenix.enable; message = "`git` fragment depends on `agenix` fragment"; }
+    ];
+
     home.sessionVariables = {
       # Disable annoying warning message
       GIT_DISCOVERY_ACROSS_FILESYSTEM = 0;
@@ -27,7 +32,7 @@ in
       lfs.enable = true;
 
       userName = "Milo Moisson";
-      # TODO: this email should be behind a secret
+      # TODO: this email should be behind a secret or at least a config
       userEmail = "milomoisson@gmail.com";
 
       signing = {

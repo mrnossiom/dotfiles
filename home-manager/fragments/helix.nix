@@ -20,10 +20,15 @@ in
   options.local.fragment.helix.enable = lib.mkEnableOption ''
     Helix editor related
 
-    Depends on: Agenix
+    Depends on:
+    - `agenix` fragment: WakaTime key
   '';
 
   config = lib.mkIf cfg.enable {
+    assertions = [
+      { assertion = config.local.fragment.agenix.enable; message = "`helix` fragment depends on `agenix` fragment"; }
+    ];
+
     programs.helix = {
       enable = true;
       package = if flags.onlyCached then pkgs.helix else lpkgs.helix;

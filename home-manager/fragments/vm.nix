@@ -317,7 +317,6 @@ in
                 "--locked XF86AudioMute" = "exec ${pamixer} --toggle-mute";
                 "--locked XF86AudioMicMute" = "exec ${pamixer} --default-source --toggle-mute";
                 "--locked XF86MonBrightnessUp" = "exec ${brightnessctl} --exponent set 5%+";
-                # TODO: expertiment with min-value
                 "--locked XF86MonBrightnessDown" = "exec ${brightnessctl} --exponent  set 5%- --min-value=1";
                 "--locked XF86TouchpadToggle" = ''input "type:touchpad" events toggle enabled disabled_on_external_mouse'';
               }

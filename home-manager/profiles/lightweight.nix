@@ -8,8 +8,6 @@
 , ...
 }:
 
-if (isDarwin) then throw "this is a HM non-darwin config" else
-
 let
   inherit (self.outputs) homeManagerModules;
 
@@ -22,6 +20,10 @@ in
   ];
 
   config = {
+    assertions = [
+      { assertion = !isDarwin; message = "this is a HM non-darwin config"; }
+    ];
+
     local.flags.onlyCached = true;
 
     local.fragment = {

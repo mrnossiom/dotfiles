@@ -24,9 +24,6 @@ in
       virtualisation.enable = true;
       wireless.enable = true;
       fonts.enable = true;
-
-      # TODO: fix module first
-      # backup.enable = true;
     };
 
     networking.hosts = {
