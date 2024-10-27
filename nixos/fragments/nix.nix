@@ -33,6 +33,9 @@ in
 
       gc = {
         automatic = true;
+        # absolute disk space saver, if you forget to run GC
+        # once had it over 170gb and brought it back to 50gb
+        options = "--delete-older-than 30d";
       }
       # Same option to say that GC is ran weekly at 3h15
       // (if isDarwin then {
