@@ -15,7 +15,7 @@ in
     wayland.windowManager.sway.config.menu =
       let
         tofi-drun = lib.getExe' pkgs.tofi "tofi-drun";
-        swaymsg = lib.getExe' pkgs.sway "swaymsg";
+        swaymsg = lib.getExe' config.wayland.windowManager.sway.package "swaymsg";
 
         jetbrains-nerd-font = pkgs.nerdfonts.override { fonts = [ "JetBrainsMono" ]; };
         jetbrains-nerd-font-regular = "${jetbrains-nerd-font}/share/fonts/truetype/JetBrainsMonoNerdFont-Regular.ttf";

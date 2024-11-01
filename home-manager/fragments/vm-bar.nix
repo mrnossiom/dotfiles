@@ -36,11 +36,7 @@ in
             format = " $icon $mem_used_percents.eng(w:2) ";
           }
           {
-            block = "cpu";
-            interval = 5;
-          }
-          {
-            format = " 󰌌 $layout ";
+            format = " 󰌌 $variant";
             block = "keyboard_layout";
             driver = "sway";
           }

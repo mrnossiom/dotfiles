@@ -35,7 +35,10 @@ in
       home = "/Users/${name}";
     } else {
       home = "/home/${name}";
-      extraGroups = [ "wheel" "networkmanager" ];
+      extraGroups = [
+        "wheel" # sudo access
+        "networkmanager" # needed for nm
+      ];
       isNormalUser = true;
     }) // user;
 

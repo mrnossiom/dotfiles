@@ -17,13 +17,14 @@ in
   config = {
     local.fragment = {
       agenix.enable = true;
+      fonts.enable = true;
       gaming.enable = true;
+      kanata.enable = true;
       logiops.enable = true;
       nix.enable = true;
       security.enable = true;
       virtualisation.enable = true;
       wireless.enable = true;
-      fonts.enable = true;
     };
 
     networking.hosts = {

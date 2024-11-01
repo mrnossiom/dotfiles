@@ -12,7 +12,7 @@ let
   cfg = config.local.fragment.vm;
 
   theme = config.local.colorScheme.palette;
-  swayCfg = config.wayland.windowManager.sway.config;
+  cfg-sway = config.wayland.windowManager.sway.config;
 
   workspacesRange = lib.zipListsWith (key-idx: workspace-idx: { inherit key-idx workspace-idx; }) [ 1 2 3 4 5 6 7 8 9 0 ] (lib.range 1 10);
 in
@@ -94,7 +94,7 @@ in
     services.swayidle =
       let
         pgrep = lib.getExe' pkgs.busybox "pgrep";
-        swaymsg = lib.getExe' pkgs.sway "swaymsg";
+        swaymsg = lib.getExe' config.wayland.windowManager.sway.package "swaymsg";
         loginctl = lib.getExe' pkgs.systemd "loginctl";
         systemctl = lib.getExe' pkgs.systemd "systemctl";
       in
@@ -127,6 +127,9 @@ in
 
     wayland.windowManager.sway = {
       enable = true;
+
+      package = upkgs.sway;
+
       config = {
         modifier = "Mod4"; # Super key
         terminal = config.home.sessionVariables.TERMINAL;
@@ -219,8 +222,7 @@ in
 
         input = {
           "type:keyboard" = {
-            xkb_layout = "us,fr";
-            # xkb_variant = "ergol";
+            xkb_layout = "us,fr(ergol),fr";
 
             # List of all options: https://www.mankier.com/7/xkeyboard-config#Options
             xkb_options = "grp:menu_toggle,compose:caps";
@@ -263,10 +265,10 @@ in
           lib.foldl (acc: val: acc // val) { }
             (map
               (modifier: {
-                "${modifier}+Return" = "exec ${swayCfg.terminal}";
+                "${modifier}+Return" = "exec ${cfg-sway.terminal}";
                 "${modifier}+Shift+Return" = "exec ${lib.getExe' pkgs.gnome.nautilus "nautilus"}";
                 "${modifier}+Shift+q" = "kill";
-                "${modifier}+d" = "exec ${swayCfg.menu}";
+                "${modifier}+d" = "exec ${cfg-sway.menu}";
                 "${modifier}+Space" = "exec ${makoctl} dismiss";
 
                 "${modifier}+Escape" = "exec ${lib.getExe' pkgs.systemd "loginctl"} lock-session";
@@ -282,22 +284,22 @@ in
                   rm $tmpimg
                 ''}";
 
-                "${modifier}+${swayCfg.left}" = "focus left";
-                "${modifier}+${swayCfg.down}" = "focus down";
-                "${modifier}+${swayCfg.up}" = "focus up";
-                "${modifier}+${swayCfg.right}" = "focus right";
+                "${modifier}+${cfg-sway.left}" = "focus left";
+                "${modifier}+${cfg-sway.down}" = "focus down";
+                "${modifier}+${cfg-sway.up}" = "focus up";
+                "${modifier}+${cfg-sway.right}" = "focus right";
 
-                "${modifier}+Shift+${swayCfg.left}" = "move left";
-                "${modifier}+Shift+${swayCfg.down}" = "move down";
-                "${modifier}+Shift+${swayCfg.up}" = "move up";
-                "${modifier}+Shift+${swayCfg.right}" = "move right";
+                "${modifier}+Shift+${cfg-sway.left}" = "move left";
+                "${modifier}+Shift+${cfg-sway.down}" = "move down";
+                "${modifier}+Shift+${cfg-sway.up}" = "move up";
+                "${modifier}+Shift+${cfg-sway.right}" = "move right";
                 "${modifier}+b" = "split vertical";
                 "${modifier}+n" = "split horizontal";
 
-                "${modifier}+Alt+${swayCfg.left}" = "resize shrink width 10 px";
-                "${modifier}+Alt+${swayCfg.down}" = "resize grow height 10 px";
-                "${modifier}+Alt+${swayCfg.up}" = "resize shrink height 10 px";
-                "${modifier}+Alt+${swayCfg.right}" = "resize grow width 10 px";
+                "${modifier}+Alt+${cfg-sway.left}" = "resize shrink width 10 px";
+                "${modifier}+Alt+${cfg-sway.down}" = "resize grow height 10 px";
+                "${modifier}+Alt+${cfg-sway.up}" = "resize shrink height 10 px";
+                "${modifier}+Alt+${cfg-sway.right}" = "resize grow width 10 px";
                 "${modifier}+f" = "fullscreen toggle";
                 "${modifier}+Shift+space" = "floating toggle";
                 # Change between tiling and floating focus
@@ -329,8 +331,7 @@ in
                   { name = "${modifier}+Shift+${toString key-idx}"; value = "move container to workspace number ${toString workspace-idx}; workspace number ${toString workspace-idx}"; }
                 ])
                 workspacesRange))
-              ) [ swayCfg.modifier ]);
-        #   ↑ Maybe have a second key as a modifier (like "Right Alt")
+              ) [ cfg-sway.modifier ]);
       };
     };
 
