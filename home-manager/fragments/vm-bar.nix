@@ -13,6 +13,7 @@ in
   config = lib.mkIf cfg.enable {
     programs.i3status-rust = {
       enable = true;
+
       bars.default = {
         theme = "modern";
         icons = "awesome6";
@@ -49,11 +50,6 @@ in
             format = " $timestamp.datetime(f:'%a %d/%m %R') ";
           }
         ];
-
-        # settings.theme = {
-        #   inherit theme;
-        #   overrides = { };
-        # };
       };
     };
 

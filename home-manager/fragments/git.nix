@@ -2,6 +2,7 @@
 , lib
 , pkgs
 , lpkgs
+, upkgs
 , ...
 }:
 
@@ -63,7 +64,7 @@ in
         cm = "commit --message";
         oups = "commit --amend";
 
-        ui = "!${lib.getExe pkgs.lazygit}";
+        ui = "!lazygit";
 
         rv = "remote --verbose";
 
@@ -147,6 +148,7 @@ in
 
     programs.jujutsu = {
       enable = true;
+      package = upkgs.jujutsu;
       settings = {
         user = {
           name = "Milo Moisson";
@@ -156,7 +158,6 @@ in
     };
 
     home.packages = (with pkgs; [
-      radicle-node
     ]) ++ lib.optionals (!flags.onlyCached) [
       lpkgs.git-leave
     ];
@@ -165,6 +166,13 @@ in
 
     programs.gh-dash.enable = true;
 
-    programs.lazygit.enable = true;
+    programs.lazygit = {
+      enable = true;
+      settings = {
+        git = {
+          paging.externalDiffCommand = "difft --color=always";
+        };
+      };
+    };
   };
 }

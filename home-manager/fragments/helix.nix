@@ -93,7 +93,6 @@ in
         nil
         nodePackages.bash-language-server
         nodePackages.typescript-language-server
-        python311Packages.python-lsp-server
         taplo
         typst-lsp
         vscode-langservers-extracted
@@ -108,20 +107,22 @@ in
           rust-analyzer.config = { check.command = "clippy"; };
 
           ltex-ls.command = "ltex-ls";
-          wakatime.command = "wakatime-lsp";
+          wakatime-lsp.command = "wakatime-lsp";
         };
 
-        language = [
-          { name = "c"; auto-format = true; formatter = { command = lib.getExe' pkgs.clang-tools "clang-format"; args = [ ]; }; }
-          { name = "html"; language-servers = [ "vscode-html-language-server" "wakatime" ]; }
-          { name = "markdown"; language-servers = [ "marksman" "wakatime" ]; }
-          { name = "nix"; language-servers = [ "nil" "wakatime" ]; auto-format = true; }
-          { name = "python"; language-servers = [ "pylsp" "wakatime" ]; }
-          { name = "rust"; language-servers = [ "rust-analyzer" "wakatime" ]; }
-          { name = "typescript"; language-servers = [ "typescript-language-server" "wakatime" ]; }
-          { name = "vue"; language-servers = [ "vuels" "typescript-language-server" "wakatime" ]; }
-          { name = "ocaml"; language-servers = [ "ocamllsp" "wakatime" ]; }
-        ];
+        language =
+          let global-lsps = [ "wakatime-lsp" ]; in
+          [
+            { name = "c"; language-servers = [ "clangd" ] ++ global-lsps; auto-format = true; formatter = { command = lib.getExe' pkgs.clang-tools "clang-format"; args = [ ]; }; }
+            { name = "html"; language-servers = [ "vscode-html-language-server" ] ++ global-lsps; }
+            { name = "markdown"; language-servers = [ "marksman" ] ++ global-lsps; }
+            { name = "nix"; language-servers = [ "nil" ] ++ global-lsps; auto-format = true; }
+            { name = "python"; language-servers = [ "ruff" "jedi" "pylsp" ] ++ global-lsps; }
+            { name = "rust"; language-servers = [ "rust-analyzer" ] ++ global-lsps; }
+            { name = "typescript"; language-servers = [ "typescript-language-server" ] ++ global-lsps; }
+            { name = "vue"; language-servers = [ "vuels" "typescript-language-server" ] ++ global-lsps; }
+            { name = "ocaml"; language-servers = [ "ocamllsp" ] ++ global-lsps; }
+          ];
       };
     };
 

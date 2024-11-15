@@ -1,6 +1,7 @@
 { self
 , config
 , lib
+, pkgs
 
 , isDarwin
 , ...
@@ -19,6 +20,8 @@ in
 
   config = lib.mkIf cfg.enable {
     nix = {
+      package = pkgs.nixVersions.latest;
+
       # Make system registry consistent with flake inputs
       # Add `self` registry input that refers to flake
       registry = lib.mapAttrs (_: value: { flake = value; }) (self.inputs // { inherit self; });

@@ -102,11 +102,11 @@ in
         enable = true;
         timeouts = [
           # TODO: this doesn't work find a way to quickly cut output when locked and idle
-          {
-            timeout = 10;
-            command = "if ${pgrep} -x swaylock; then ${swaymsg} \"output * power off\"; fi";
-            resumeCommand = "${swaymsg} \"output * power on\"";
-          }
+          # {
+          #   timeout = 10;
+          #   command = "if ${pgrep} -x swaylock; then ${swaymsg} \"output * power off\"; fi";
+          #   resumeCommand = "${swaymsg} \"output * power on\"";
+          # }
 
           {
             timeout = 60 * 5;
@@ -129,6 +129,8 @@ in
       enable = true;
 
       package = upkgs.sway;
+
+      xwayland = true; # explicit, op is true by default
 
       config = {
         modifier = "Mod4"; # Super key

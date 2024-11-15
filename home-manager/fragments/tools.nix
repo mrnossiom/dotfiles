@@ -16,12 +16,14 @@ in
 
   config = lib.mkIf cfg.enable {
     home.packages = (with pkgs; [
+      # Man
+      ascii
+      man-pages
+
       # TUIs
       upkgs.binsider
       btop
       glow
-      gping
-      thokr
 
       # CLIs
       calc

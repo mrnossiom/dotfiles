@@ -7,6 +7,7 @@ package: builtins.elem (lib.getName package) [
   "steam"
   "steam-original"
   "steam-run"
+  "steam-unwrapped"
 
   # Home Manager
   "aseprite"

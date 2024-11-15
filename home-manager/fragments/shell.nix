@@ -57,7 +57,7 @@ in
       # TODO: move to vm module
       loginShellInit = lib.optionalString (!isDarwin) ''
         if test (id --user $USER) -ge 1000 && test (tty) = "/dev/tty1"
-          exec sway
+          exec sway 2> /tmp/sway.(date -u +%Y-%m-%dT%H:%M:%S).log
         end
       '';
 
@@ -96,15 +96,12 @@ in
         # Listing utilities
         l = "ls -aF";
         ll = "ls -lhaF";
-        ld = "ls -DF";
         tree = "ls -T";
 
         # Nix-related
         ur = " unlink result";
 
         # Use newer tools
-        cat = "# nah"; # bat
-        grep = "# nah"; # rg
         tr = "# nah"; # srgn
 
         # Do not keep these commands in history
