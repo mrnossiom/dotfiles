@@ -1,7 +1,7 @@
 { self, system, ... }@pkgs:
 
 let
-  inherit (self.inputs) agenix git-leave helix radicle wakatime-lsp;
+  inherit (self.inputs) agenix git-leave helix radicle wakatime-ls;
 in
 {
   asak = pkgs.callPackage ./asak.nix { };
@@ -17,5 +17,5 @@ in
   inherit (git-leave.packages.${system}) git-leave;
   inherit (helix.packages.${system}) helix;
   inherit (radicle.packages.${system}) radicle;
-  inherit (wakatime-lsp.packages.${system}) wakatime-lsp;
+  inherit (wakatime-ls.packages.${system}) wakatime-ls;
 }

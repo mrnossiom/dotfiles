@@ -225,7 +225,7 @@
     "gitignore_2": {
       "inputs": {
         "nixpkgs": [
-          "wakatime-lsp",
+          "wakatime-ls",
           "nixpkgs"
         ]
       },
@@ -390,7 +390,7 @@
         "nixpkgs": "nixpkgs",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "radicle": "radicle",
-        "wakatime-lsp": "wakatime-lsp"
+        "wakatime-ls": "wakatime-ls"
       }
     },
     "rust-overlay": {
@@ -464,7 +464,7 @@
     "rust-overlay_4": {
       "inputs": {
         "nixpkgs": [
-          "wakatime-lsp",
+          "wakatime-ls",
           "nixpkgs"
         ]
       },
@@ -542,7 +542,7 @@
         "type": "github"
       }
     },
-    "wakatime-lsp": {
+    "wakatime-ls": {
       "inputs": {
         "gitignore": "gitignore_2",
         "nixpkgs": [
@@ -551,16 +551,16 @@
         "rust-overlay": "rust-overlay_4"
       },
       "locked": {
-        "lastModified": 1723800963,
-        "narHash": "sha256-bvkig0TLiorNp7Lxer8ZRJQGB3C8lVJ96H2+SwYIT6s=",
+        "lastModified": 1732207882,
+        "narHash": "sha256-EEih86XBfJwZiBepdukjdVf2S4aixq1rFHfAgHPUsGA=",
         "owner": "mrnossiom",
-        "repo": "wakatime-lsp",
-        "rev": "552fbbcc5fc0f8cf3122daad63bb4eb1497bbc76",
+        "repo": "wakatime-ls",
+        "rev": "bce27b7daab158ea7b62b53e4d99106e5f34502c",
         "type": "github"
       },
       "original": {
         "owner": "mrnossiom",
-        "repo": "wakatime-lsp",
+        "repo": "wakatime-ls",
         "type": "github"
       }
     }

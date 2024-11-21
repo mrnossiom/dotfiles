@@ -30,8 +30,8 @@
     radicle.url = "git+https://seed.radicle.xyz/z3gqcJUoA1n9HaHKufZs5FCSGazv5";
     radicle.inputs.nixpkgs.follows = "nixpkgs";
 
-    wakatime-lsp.url = "github:mrnossiom/wakatime-lsp";
-    wakatime-lsp.inputs.nixpkgs.follows = "nixpkgs";
+    wakatime-ls.url = "github:mrnossiom/wakatime-ls";
+    wakatime-ls.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs = { self, nixpkgs, ... }:

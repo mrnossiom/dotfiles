@@ -99,7 +99,7 @@ in
         upkgs.vue-language-server
         yaml-language-server
       ] ++ lib.optionals (!flags.onlyCached) [
-        lpkgs.wakatime-lsp
+        lpkgs.wakatime-ls
       ];
 
       languages = {
@@ -107,11 +107,11 @@ in
           rust-analyzer.config = { check.command = "clippy"; };
 
           ltex-ls.command = "ltex-ls";
-          wakatime-lsp.command = "wakatime-lsp";
+          wakatime-ls.command = "wakatime-ls";
         };
 
         language =
-          let global-lsps = [ "wakatime-lsp" ]; in
+          let global-lsps = [ "wakatime-ls" ]; in
           [
             { name = "c"; language-servers = [ "clangd" ] ++ global-lsps; auto-format = true; formatter = { command = lib.getExe' pkgs.clang-tools "clang-format"; args = [ ]; }; }
             { name = "html"; language-servers = [ "vscode-html-language-server" ] ++ global-lsps; }
