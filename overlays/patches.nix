@@ -8,8 +8,8 @@ with final.lib;
     src = prev.fetchFromGitHub {
       owner = "mrnossiom";
       repo = "swaylock";
-      rev = "0e09892e93b82f6de2fcf10a773d5fbf9de61d73";
-      hash = "sha256-IzgrQv/oJEyvlVlZCm/2LOhpxR4KfSz7llSq3s9t/qM=";
+      rev = "5aebb558663bebb09b86d6c4ca9b760791507b88";
+      hash = "sha256-1XotT0XKoDyg7ytzoqgxdHHA64oce4b8CZU53luI5j0=";
     };
   });
 }

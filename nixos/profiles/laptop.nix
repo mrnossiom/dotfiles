@@ -32,10 +32,7 @@ in
       "10.2.3.154" = [ "printer.epita" ];
     };
 
-    hardware.opengl = {
-      enable = true;
-      driSupport = true;
-    };
+    hardware.graphics.enable = true;
 
     boot = {
       kernelParams = [ "quiet" ];

@@ -2,7 +2,6 @@
 , config
 , pkgs
 , lpkgs
-, upkgs
 , lib
 , ...
 }:
@@ -96,7 +95,6 @@ in
         taplo
         typst-lsp
         vscode-langservers-extracted
-        upkgs.vue-language-server
         yaml-language-server
       ] ++ lib.optionals (!flags.onlyCached) [
         lpkgs.wakatime-ls

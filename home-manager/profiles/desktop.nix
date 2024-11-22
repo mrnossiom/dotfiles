@@ -70,7 +70,7 @@ in
       packages = with pkgs; [
         # Unfree
         spotify
-        upkgs.unityhub
+        unityhub
         ## JetBrains
         jetbrains-toolbox
         jetbrains.datagrip
@@ -80,24 +80,25 @@ in
         audacity
         blender
         bottles
-        calibre
-        cura
+        # TODO: wait for fix in stable
+        # calibre
+        # cura
         element-desktop
         evince
-        gnome.file-roller
-        gnome.gnome-disk-utility
-        gnome.nautilus
-        gnome.simple-scan
+        file-roller
+        gnome-disk-utility
         heroic
         insomnia
         libreoffice-qt
         localsend
         lutris
         mpv
+        nautilus
         obs-studio
         pavucontrol
         prismlauncher
         rawtherapee
+        simple-scan
         transmission_4-gtk
         vesktop
         wdisplays

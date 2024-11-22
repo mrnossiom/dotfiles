@@ -21,7 +21,6 @@ in
       man-pages
 
       # TUIs
-      upkgs.binsider
       btop
       glow
 
@@ -44,13 +43,13 @@ in
       pv
       ripgrep
       speedtest-go
-      upkgs.srgn
+      srgn
       sshfs
       tealdeer
       termimage
       tokei
       trash-cli
-      upkgs.wcurl
+      wcurl
     ]) ++ lib.optionals (!flags.onlyCached) [
       lpkgs.otree
       lpkgs.sweep

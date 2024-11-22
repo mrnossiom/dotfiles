@@ -12,6 +12,7 @@ in
     lpkgs.agenix
     home-manager
     just
+    nix-tree
   ]);
 
   # Add presets that I can quickly use

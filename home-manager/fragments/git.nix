@@ -2,7 +2,6 @@
 , lib
 , pkgs
 , lpkgs
-, upkgs
 , ...
 }:
 
@@ -148,7 +147,6 @@ in
 
     programs.jujutsu = {
       enable = true;
-      package = upkgs.jujutsu;
       settings = {
         user = {
           name = "Milo Moisson";

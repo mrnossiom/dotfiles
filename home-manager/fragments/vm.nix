@@ -2,7 +2,6 @@
 , config
 , lib
 , pkgs
-, upkgs
 , ...
 }:
 
@@ -268,7 +267,7 @@ in
             (map
               (modifier: {
                 "${modifier}+Return" = "exec ${cfg-sway.terminal}";
-                "${modifier}+Shift+Return" = "exec ${lib.getExe' pkgs.gnome.nautilus "nautilus"}";
+                "${modifier}+Shift+Return" = "exec ${lib.getExe' pkgs.nautilus "nautilus"}";
                 "${modifier}+Shift+q" = "kill";
                 "${modifier}+d" = "exec ${cfg-sway.menu}";
                 "${modifier}+Space" = "exec ${makoctl} dismiss";
@@ -343,7 +342,6 @@ in
 
     services.darkman = {
       enable = true;
-      package = upkgs.darkman;
       settings.usegeoclue = true;
 
       darkModeScripts.gtk-theme = ''
