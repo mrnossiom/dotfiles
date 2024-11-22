@@ -82,7 +82,7 @@ in
         ap = "add --patch";
 
         pu = "push";
-        put = "push --tags";
+        put = "push --follow-tags";
         puf = "push --force-with-lease";
         pl = "pull";
 
@@ -167,9 +167,18 @@ in
     programs.lazygit = {
       enable = true;
       settings = {
+        gui = {
+          showFileTree = false;
+          showRandomTip = false;
+          showCommandLog = false;
+          border = "single";
+        };
         git = {
           paging.externalDiffCommand = "difft --color=always";
         };
+
+        # to be declarative or not to be declarative?
+        update.method = "never";
       };
     };
   };
