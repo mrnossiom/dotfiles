@@ -25,9 +25,6 @@ in
   '';
 
   config = lib.mkIf cfg.enable {
-    # TODO: seems to have troubles with encoding
-    # services.wl-clip-persist.enable = true;
-
     programs.swaylock = {
       enable = true;
       settings = {
@@ -220,10 +217,7 @@ in
 
         input = {
           "type:keyboard" = {
-            xkb_layout = "us,fr";
-
-            # TODO: wait for sway to reach main
-            # xkb_layout = "us,fr(ergol),fr";
+            xkb_layout = "us,fr(ergol),fr";
 
             # List of all options: https://www.mankier.com/7/xkeyboard-config#Options
             xkb_options = "grp:menu_toggle,compose:caps";

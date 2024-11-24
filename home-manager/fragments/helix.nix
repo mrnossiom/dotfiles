@@ -81,7 +81,6 @@ in
           };
       };
 
-      # TODO: should change module definition to put these as suffix and avoid shadowing
       extraPackages = with pkgs; [
         ansible-language-server
         clang-tools

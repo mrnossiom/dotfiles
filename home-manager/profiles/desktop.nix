@@ -133,7 +133,12 @@ in
 
     programs.broot.enable = true;
 
-    programs.ssh.enable = true;
+    # TODO: move out
+    programs.ssh = {
+      enable = true;
+      # needed for epita fragment
+      package = pkgs.openssh_gssapi;
+    };
 
     programs.bat = {
       enable = true;
