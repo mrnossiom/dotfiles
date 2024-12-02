@@ -52,6 +52,8 @@ in
       maxVisible = 3;
       sort = "-priority";
 
+      defaultTimeout = 5000;
+
       layer = "overlay";
 
       borderSize = 0;
