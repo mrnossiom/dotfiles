@@ -80,8 +80,8 @@ in
         audacity
         blender
         bottles
-        # TODO: wait for fix in stable
-        # calibre
+        calibre
+        # TODO: wait for fix
         # cura
         element-desktop
         evince
