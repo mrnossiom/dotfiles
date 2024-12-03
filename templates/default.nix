@@ -20,4 +20,10 @@ rec {
     description = "Flake for Rust setup";
     welcomeText = "`direnv allow`";
   };
+
+  rust-pkg = {
+    path = ./rust-pkg;
+    description = "Flake for Rust setup with intent to package";
+    welcomeText = "`direnv allow`";
+  };
 }
