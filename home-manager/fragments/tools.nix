@@ -37,10 +37,13 @@ in
       jq
       just
       killall
+      libnotify
       lsof
       mediainfo
       ouch
+      parallel
       pv
+      restic
       ripgrep
       speedtest-go
       srgn
@@ -48,7 +51,7 @@ in
       tealdeer
       termimage
       tokei
-      trash-cli
+      trashy
       wcurl
     ]) ++ lib.optionals (!flags.onlyCached) [
       lpkgs.otree
