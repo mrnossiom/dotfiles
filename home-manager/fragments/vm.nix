@@ -293,10 +293,10 @@ in
                 "${modifier}+b" = "split vertical";
                 "${modifier}+n" = "split horizontal";
 
-                "${modifier}+Alt+${cfg-sway.left}" = "resize shrink width 10 px";
-                "${modifier}+Alt+${cfg-sway.down}" = "resize grow height 10 px";
-                "${modifier}+Alt+${cfg-sway.up}" = "resize shrink height 10 px";
-                "${modifier}+Alt+${cfg-sway.right}" = "resize grow width 10 px";
+                "${modifier}+Alt+${cfg-sway.left}" = "resize shrink width 60 px";
+                "${modifier}+Alt+${cfg-sway.down}" = "resize grow height 60 px";
+                "${modifier}+Alt+${cfg-sway.up}" = "resize shrink height 60 px";
+                "${modifier}+Alt+${cfg-sway.right}" = "resize grow width 60 px";
                 "${modifier}+f" = "fullscreen toggle";
                 "${modifier}+Shift+space" = "floating toggle";
                 # Change between tiling and floating focus
