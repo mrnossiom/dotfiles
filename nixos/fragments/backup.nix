@@ -19,14 +19,13 @@ in
 
   # TODO: fix module
   config.assertions = lib.optional cfg.enable { assertion = false; message = "module is broken"; };
-
   config.services.restic.backups = lib.mkIf cfg.enable {
     # Backup documents and repos code
     google-drive = {
       repository = "rclone:googledrive:/Backups/${hostname}";
-      initialize = true;
       passwordFile = secrets.backup-restic-key.path;
       rcloneConfigFile = secrets.backup-rclone-googledrive.path;
+      initialize = true;
 
       paths = [
         "/home/${mainUsername}/Documents"
@@ -72,10 +71,15 @@ in
 
     # Backup documents and large files
     archaic-bak = {
-      initialize = true;
-      passwordFile = secrets.backup-restic-key.path;
-      paths = [ "/home/${mainUsername}/Documents" ];
       repository = "/run/media/${mainUsername}/ArchaicBak/Backups/${hostname}";
+      passwordFile = secrets.backup-restic-key.path;
+      initialize = true;
+
+      # this would fix issue that folder is created as root
+      # but we cannot access the backup key
+      user = config.local.user.username;
+
+      paths = [ "/home/${mainUsername}/Documents" ];
 
       # Should only be ran manually when the backup Disk is attached
       timerConfig = null;
