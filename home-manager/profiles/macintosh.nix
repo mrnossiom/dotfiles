@@ -37,6 +37,7 @@ in
     local.fragment = {
       aws.enable = true;
       git.enable = true;
+      jujutsu.enable = true;
       shell.enable = true;
       tools.enable = true;
       # vscodium.enable = true;

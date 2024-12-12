@@ -40,8 +40,6 @@ in
         key = "3C01CA5E";
       };
 
-      difftastic.enable = true;
-
       # Ignore very specific stuff that is not common to much repos
       ignores = [
         # Direnv cache
@@ -126,6 +124,8 @@ in
         push.autoSetupRemote = true;
         pull.rebase = true;
 
+        diff.external = "difft --color=always --display=inline";
+
         pretty.custom = "format:%C(red)%h%C(reset) -%C(yellow)%d%C(reset) %s %C(green)(%cd) %C(bold blue)<%an>";
         log.date = "human";
 
@@ -145,17 +145,8 @@ in
       };
     };
 
-    programs.jujutsu = {
-      enable = true;
-      settings = {
-        user = {
-          name = "Milo Moisson";
-          email = "milomoisson@gmail.com";
-        };
-      };
-    };
-
     home.packages = (with pkgs; [
+      difftastic
     ]) ++ lib.optionals (!flags.onlyCached) [
       lpkgs.git-leave
     ];

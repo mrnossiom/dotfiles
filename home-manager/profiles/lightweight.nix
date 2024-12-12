@@ -30,6 +30,7 @@ in
       agenix.enable = true;
       # firefox.enable = true;
       git.enable = true;
+      jujutsu.enable = true;
       shell.enable = true;
       # thunderbird.enable = true;
       # tools.enable = true;

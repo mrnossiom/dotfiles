@@ -14,6 +14,7 @@
     ./git.nix
     ./helix.nix
     ./imv.nix
+    ./jujutsu.nix
     ./kitty.nix
     ./rust.nix
     ./shell.nix

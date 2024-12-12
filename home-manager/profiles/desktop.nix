@@ -32,6 +32,7 @@ in
       firefox.enable = true;
       git.enable = true;
       imv.enable = true;
+      jujutsu.enable = true;
       kitty.enable = true;
       rust.enable = true;
       shell.enable = true;

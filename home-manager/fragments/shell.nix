@@ -22,9 +22,18 @@ in
 
     programs.starship = {
       enable = true;
-      settings.nix_shell = {
-        format = "via [$symbol$state]($style) "; # Remove nix shell name
-        symbol = " ";
+
+      settings = {
+        git_branch.disabled = true;
+        git_commit.disabled = true;
+        git_metrics.disabled = false;
+        git_state.disabled = true;
+        git_status.disabled = true;
+
+        nix_shell = {
+          format = "via [$symbol$state]($style) "; # Remove nix shell name
+          symbol = " ";
+        };
       };
     };
 
@@ -102,6 +111,7 @@ in
 
         # Use newer tools
         clear = "#"; # <ctrl-l>
+        git = "#"; # jujutsu
         rm = "#"; # trash-put
         tr = "#"; # srgn
 
