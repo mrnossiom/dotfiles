@@ -32,7 +32,7 @@
 - `secrets`: `agenix` encrypted secrets
 - `templates`: Quickstart files for different languages
 
-# Quick snippets and guide for myself
+# Quick snippets and guides for myself
 
 ## Add a new module
 
@@ -71,7 +71,7 @@
 
 - Activate the module in the wanted profile.
 
-## Bootstrap lightweight HM config
+## Bootstrap lightweight home-manager config
 
 ```
 nix run nixpkgs#home-manager -- switch --flake .#lightweight
@@ -80,6 +80,21 @@ nix run nixpkgs#home-manager -- switch --flake .#lightweight
 ## Add a new device
 
 - Rekey secrets with device root ssh key, and create a session age key.
+
+## Make a backup
+
+Pull up your favorite ArchaicBakup disc
+
+- Set environnement variables
+
+	`RESTIC_REPOSITORY`: `/run/media/user/discname/`
+	`RESTIC_PASSWORD_FILE`: ?
+
+- Initialize repository
+
+	```bash
+	restic init --repo /srv/restic-repo
+	```
 
 ---
 
