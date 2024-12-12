@@ -1,6 +1,7 @@
 { config
 , lib
 , pkgs
+, upkgs
 , ...
 }:
 
@@ -15,6 +16,8 @@ in
   config = lib.mkIf cfg.enable {
     programs.jujutsu = {
       enable = true;
+      package = upkgs.jujutsu;
+      
       settings = {
         user = {
           name = "Milo Moisson";
