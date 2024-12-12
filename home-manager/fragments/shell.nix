@@ -86,12 +86,11 @@ in
         n = "nix";
 
         # Edit utilities
-        rm = "rm -i";
-        rmd = "rm -rd";
         cp = "cp -iv";
         ln = "ln -v";
         mv = "mv -iv";
         mkdir = "mkdir -v";
+        tp = "trash-put";
 
         # Listing utilities
         l = "ls -aF";
@@ -102,10 +101,11 @@ in
         ur = " unlink result";
 
         # Use newer tools
-        tr = "# nah"; # srgn
+        clear = "#"; # <ctrl-l>
+        rm = "#"; # trash-put
+        tr = "#"; # srgn
 
         # Do not keep these commands in history
-        clear = " clear";
         exit = " exit";
         history = " history";
         reboot = " reboot";

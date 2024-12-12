@@ -51,7 +51,7 @@ in
       tealdeer
       termimage
       tokei
-      trashy
+      trash-cli
       wcurl
     ]) ++ lib.optionals (!flags.onlyCached) [
       lpkgs.otree
