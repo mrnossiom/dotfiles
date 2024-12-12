@@ -11,9 +11,8 @@ package: builtins.elem (lib.getName package) [
 
   # Home Manager
   "aseprite"
+  "ida-free"
+  "jetbrains-toolbox"
   "spotify"
   "unityhub"
-  ## JetBrains
-  "jetbrains-toolbox"
-  "datagrip"
 ]

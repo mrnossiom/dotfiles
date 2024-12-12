@@ -70,14 +70,13 @@ in
 
       packages = with pkgs; [
         # Unfree
+        aseprite
+        ida-free
+        jetbrains-toolbox
         spotify
         unityhub
-        ## JetBrains
-        jetbrains-toolbox
-        jetbrains.datagrip
 
         # GUIs
-        aseprite
         audacity
         blender
         bottles
@@ -103,6 +102,7 @@ in
         transmission_4-gtk
         vesktop
         wdisplays
+        wireshark
 
         # Needed for libreoffice spellchecking
         hunspell
