@@ -25,7 +25,10 @@
     git-leave.inputs.nixpkgs.follows = "nixpkgs";
 
     helix.url = "github:helix-editor/helix";
-    helix.inputs.nixpkgs.follows = "nixpkgs";
+    helix.inputs.nixpkgs.follows = "nixpkgs-unstable";
+
+    jujutsu.url = "github:jj-vcs/jj";
+    jujutsu.inputs.nixpkgs.follows = "nixpkgs-unstable";
 
     radicle.url = "git+https://seed.radicle.xyz/z3gqcJUoA1n9HaHKufZs5FCSGazv5";
     radicle.inputs.nixpkgs.follows = "nixpkgs";
