@@ -81,8 +81,7 @@ in
         blender
         bottles
         calibre
-        # TODO: wait for fix
-        # cura
+        lpkgs.cura
         element-desktop
         evince
         file-roller
