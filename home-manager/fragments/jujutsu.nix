@@ -19,7 +19,7 @@ in
     programs.jujutsu = {
       enable = true;
       package = if flags.onlyCached then pkgs.jujutsu else lpkgs.jujutsu;
-      
+
       settings = {
         user = {
           name = "Milo Moisson";
@@ -43,7 +43,7 @@ in
         };
 
         aliases = {
-          ui = ["util" "exec" "--" "lazyjj"];
+          ui = [ "util" "exec" "--" "lazyjj" ];
         };
       };
     };

@@ -6,6 +6,7 @@ in
 {
   asak = pkgs.callPackage ./asak.nix { };
   cura = pkgs.callPackage ./cura.nix { };
+  ebnfer = pkgs.callPackage ./ebnfer.nix { };
   find-unicode = pkgs.callPackage ./find-unicode.nix { };
   # lazyjj = pkgs.callPackage ./lazyjj.nix { };
   names = pkgs.callPackage ./names.nix { };
