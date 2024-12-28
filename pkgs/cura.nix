@@ -1,6 +1,6 @@
 { appimageTools
 , fetchurl
- }:
+}:
 
 let
   pname = "cura";
@@ -11,7 +11,7 @@ let
     url = "https://github.com/Ultimaker/Cura/releases/download/${version}/UltiMaker-Cura-${version}-linux-X64.AppImage";
     hash = "sha256-STtVeM4Zs+PVSRO3cI0LxnjRDhOxSlttZF+2RIXnAp4=";
   };
-  
+
   contents = appimageTools.extractType2 { inherit name src; };
 in
 
