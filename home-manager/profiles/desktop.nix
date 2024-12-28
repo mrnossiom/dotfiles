@@ -85,6 +85,7 @@ in
         element-desktop
         evince
         file-roller
+        lpkgs.ghostty
         gnome-disk-utility
         heroic
         insomnia

@@ -21,6 +21,9 @@
     nixos-hardware.url = "github:nixos/nixos-hardware";
 
     # ——— Packages
+    ghostty.url = "github:ghostty-org/ghostty";
+    ghostty.inputs.nixpkgs-stable.follows = "nixpkgs";
+
     git-leave.url = "github:mrnossiom/git-leave";
     git-leave.inputs.nixpkgs.follows = "nixpkgs";
 
