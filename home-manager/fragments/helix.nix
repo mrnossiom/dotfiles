@@ -108,17 +108,28 @@ in
         };
 
         language =
-          let global-lsps = [ "wakatime-ls" ]; in
+          let
+            global-lsps = [ "wakatime-ls" ];
+            mk-lang = name: language-servers: extra: { inherit name; language-servers = language-servers ++ global-lsps; } // extra;
+          in
           [
-            { name = "c"; language-servers = [ "clangd" ] ++ global-lsps; auto-format = true; formatter = { command = lib.getExe' pkgs.clang-tools "clang-format"; args = [ ]; }; }
-            { name = "html"; language-servers = [ "vscode-html-language-server" ] ++ global-lsps; }
-            { name = "markdown"; language-servers = [ "marksman" ] ++ global-lsps; }
-            { name = "nix"; language-servers = [ "nil" ] ++ global-lsps; auto-format = true; }
-            { name = "python"; language-servers = [ "ruff" "jedi" "pylsp" ] ++ global-lsps; }
-            { name = "rust"; language-servers = [ "rust-analyzer" ] ++ global-lsps; }
-            { name = "typescript"; language-servers = [ "typescript-language-server" ] ++ global-lsps; }
-            { name = "vue"; language-servers = [ "vuels" "typescript-language-server" ] ++ global-lsps; }
-            { name = "ocaml"; language-servers = [ "ocamllsp" ] ++ global-lsps; }
+            (mk-lang "c" [ "clangd" ] {
+              auto-format = true;
+              formatter = { command = lib.getExe' pkgs.clang-tools "clang-format"; args = [ ]; };
+            })
+            (mk-lang "markdown" [ "marksman" ] {
+              soft-wrap.enable = true;
+            })
+            (mk-lang "nix" [ "nil" ] {
+              auto-format = true;
+            })
+
+            (mk-lang "html" [ "vscode-html-language-server" ] { })
+            (mk-lang "ocaml" [ "ocamllsp" ] { })
+            (mk-lang "python" [ "ruff" "jedi" "pylsp" ] { })
+            (mk-lang "rust" [ "rust-analyzer" ] { })
+            (mk-lang "typescript" [ "typescript-language-server" ] { })
+            (mk-lang "vue" [ "vuels" "typescript-language-server" ] { })
           ];
       };
     };
