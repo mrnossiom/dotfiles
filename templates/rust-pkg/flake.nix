@@ -11,7 +11,7 @@
 
   outputs = { self, nixpkgs, rust-overlay, gitignore }:
     let
-      inherit (nixpkgs.lib) genAttrs;
+      inherit (nixpkgs.lib) genAttrs getExe;
 
       forAllSystems = genAttrs [ "x86_64-linux" "aarch64-linux" "aarch64-darwin" ];
       forAllPkgs = function: forAllSystems (system: function pkgs.${system});
@@ -32,7 +32,7 @@
       });
       apps = forAllSystems (system: rec {
         default = app;
-        app = mkApp (pkgs.getExe self.packages.${system}.app);
+        app = mkApp (getExe self.packages.${system}.app);
       });
 
       devShells = forAllPkgs (pkgs:
