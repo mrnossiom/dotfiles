@@ -38,6 +38,7 @@ in
           default-command = "log";
 
           diff-editor = ":builtin";
+          merge-editor = ":builtin";
 
           diff.tool = [ "difft" "--color=always" "--display=inline" "$left" "$right" ];
         };
