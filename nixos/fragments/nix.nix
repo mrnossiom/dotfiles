@@ -60,13 +60,9 @@ in
         trusted-users = [ config.local.user.username ];
         extra-substituters = [
           "https://nix-community.cachix.org"
-          "https://mrnossiom.cachix.org"
-          "https://helix.cachix.org"
         ];
         extra-trusted-public-keys = [
           "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
-          "mrnossiom.cachix.org-1:WKo+xfDFaT6pRP4YiIFsEXvyBzI/Pm9uGhURgF1wlQg="
-          "helix.cachix.org-1:ejp9KQpR1FBI2onstMQ34yogDm4OgU2ru6lIwPvuCVs="
         ];
       };
     };
