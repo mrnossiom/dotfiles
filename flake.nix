@@ -33,9 +33,6 @@
     jujutsu.url = "github:jj-vcs/jj";
     jujutsu.inputs.nixpkgs.follows = "nixpkgs-unstable";
 
-    radicle.url = "git+https://seed.radicle.xyz/z3gqcJUoA1n9HaHKufZs5FCSGazv5";
-    radicle.inputs.nixpkgs.follows = "nixpkgs";
-
     wakatime-ls.url = "github:mrnossiom/wakatime-ls";
     wakatime-ls.inputs.nixpkgs.follows = "nixpkgs";
   };
