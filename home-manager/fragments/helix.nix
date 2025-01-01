@@ -114,17 +114,14 @@ in
           in
           [
             (mk-lang "c" [ "clangd" ] {
-              auto-format = true;
               formatter = { command = lib.getExe' pkgs.clang-tools "clang-format"; args = [ ]; };
             })
             (mk-lang "markdown" [ "marksman" ] {
               soft-wrap.enable = true;
             })
-            (mk-lang "nix" [ "nil" ] {
-              auto-format = true;
-            })
 
             (mk-lang "html" [ "vscode-html-language-server" ] { })
+            (mk-lang "nix" [ "nil" ] { })
             (mk-lang "ocaml" [ "ocamllsp" ] { })
             (mk-lang "python" [ "ruff" "jedi" "pylsp" ] { })
             (mk-lang "rust" [ "rust-analyzer" ] { })
