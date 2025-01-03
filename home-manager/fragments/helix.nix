@@ -35,15 +35,22 @@ in
 
       settings = {
         theme = "onedark";
+
         editor = {
           auto-format = true;
           auto-info = false;
           auto-save = true;
-          bufferline = "multiple";
+
+          bufferline = "multiple"; # Show open buffers as tabs
           line-number = "relative";
+
           mouse = false;
-          rulers = [ 80 ];
-          text-width = 80;
+
+          end-of-line-diagnostics = "hint";
+          inline-diagnostics = {
+            cursor-line = "error";
+            other-lines = "error";
+          };
 
           indent-guides = {
             render = true;
@@ -54,12 +61,16 @@ in
 
           lsp.display-inlay-hints = false;
 
+          rulers = [ 80 ];
+          text-width = 80;
           soft-wrap.wrap-at-text-width = true;
         };
+
         keys =
           let
             disable-arrow-keys = false;
-            noop-arrow-keys = lib.optionalAttrs disable-arrow-keys { up = "no_op"; down = "no_op"; left = "no_op"; right = "no_op"; };
+            noop-arrow-keys = lib.optionalAttrs disable-arrow-keys
+              { up = "no_op"; down = "no_op"; left = "no_op"; right = "no_op"; };
           in
           {
             normal = {
@@ -75,7 +86,11 @@ in
               # TODO: change to `soft-wrap.enable` when supported by `:toggle`
               "A-w" = ":toggle soft-wrap.wrap-at-text-width";
 
-              # TODO: try to have `d`,`c` noyank versions by default
+              # `d`,`c` noyank versions by default
+              "d" = "delete_selection_noyank";
+              "c" = "change_selection_noyank";
+              "A-d" = "delete_selection";
+              "A-c" = "change_selection";
             } // noop-arrow-keys;
             insert = noop-arrow-keys;
           };
