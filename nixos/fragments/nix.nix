@@ -8,7 +8,7 @@
 }:
 
 let
-  clear-nix-env = true;
+  clear-nix-env = false;
 
   cfg = config.local.fragment.nix;
 in
