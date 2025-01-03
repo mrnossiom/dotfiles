@@ -30,8 +30,6 @@ in
           sign-all = true;
           backend = "gpg";
           key = "3C01CA5E";
-
-          backends.gpg.allow-expired-keys = false;
         };
 
         ui = {
