@@ -85,12 +85,6 @@ in
               # Toogle wrapping
               # TODO: change to `soft-wrap.enable` when supported by `:toggle`
               "A-w" = ":toggle soft-wrap.wrap-at-text-width";
-
-              # `d`,`c` noyank versions by default
-              "d" = "delete_selection_noyank";
-              "c" = "change_selection_noyank";
-              "A-d" = "delete_selection";
-              "A-c" = "change_selection";
             } // noop-arrow-keys;
             insert = noop-arrow-keys;
           };
