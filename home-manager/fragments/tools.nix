@@ -25,6 +25,7 @@ in
       glow
 
       # CLIs
+      asciinema
       calc
       delta
       du-dust
