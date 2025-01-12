@@ -27,9 +27,10 @@ in
         };
 
         signing = {
-          sign-all = true;
           backend = "gpg";
           key = "3C01CA5E";
+
+          git.sign-on-push = true;
         };
 
         ui = {
