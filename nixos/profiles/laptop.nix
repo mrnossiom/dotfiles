@@ -29,7 +29,7 @@ in
 
     networking.hosts = {
       # "127.0.0.1" = [ "www.youtube.com" ];
-      "10.2.3.154" = [ "printer.epita" ];
+      "10.45.3.4" = [ "printer.epita" ];
     };
 
     hardware.graphics.enable = true;
