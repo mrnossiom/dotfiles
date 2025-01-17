@@ -144,7 +144,7 @@ in
           end
         '';
 
-        launch = ''$argv & disown'';
+        launch = ''nohup $argv &> /dev/null &'';
 
         # Quickly explore a derivation (using registry syntax)
         # e.g. `cdd nixpkgs#fontforge` or `cdd nixpkgs-unstable#fontforge` 
