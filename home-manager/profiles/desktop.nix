@@ -76,6 +76,9 @@ in
         spotify
         unityhub
 
+        # Game
+        superTuxKart
+
         # GUIs
         audacity
         blender
