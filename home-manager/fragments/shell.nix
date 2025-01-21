@@ -111,7 +111,7 @@ in
 
         # Use newer tools
         clear = "#"; # <ctrl-l>
-        git = "#"; # jujutsu
+        cat = "#"; # bat
         rm = "#"; # trash-put
         tr = "#"; # srgn
 
