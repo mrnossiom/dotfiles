@@ -126,8 +126,8 @@ in
       };
 
       functions = {
-        # Executed on interactive shell start, greet with a short quote
-        fish_greeting = "${lib.getExe pkgs.fortune} -s";
+        # Executed on interactive shell start
+        fish_greeting = ""; # do nothing
 
         # Used in interactiveShellInit
         last_history_item = "echo $history[1]";
