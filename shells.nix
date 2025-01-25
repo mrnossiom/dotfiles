@@ -17,7 +17,7 @@ in
 
   # Add presets that I can quickly use
 
-  rust = mkPackageShell (with pkgs; [ rustup ]);
+  rust = mkPackageShell (with pkgs; [ rustup cargo-show-asm ]);
 
   go = mkPackageShell (with pkgs; [ go ]);
 
