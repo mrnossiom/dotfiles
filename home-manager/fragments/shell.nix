@@ -17,9 +17,6 @@ in
   '';
 
   config = lib.mkIf cfg.enable {
-    local.fragment.helix.enable = true;
-    # local.fragment.zellij.enable = true;
-
     programs.starship = {
       enable = true;
 

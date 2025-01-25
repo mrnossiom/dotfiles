@@ -1,6 +1,5 @@
 { self
 , config
-, lib
 , llib
 , pkgs
 
@@ -30,6 +29,7 @@ in
       agenix.enable = true;
       # firefox.enable = true;
       git.enable = true;
+      helix.enable = true;
       jujutsu.enable = true;
       shell.enable = true;
       # thunderbird.enable = true;

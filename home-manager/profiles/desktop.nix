@@ -31,6 +31,7 @@ in
       epita.enable = true;
       firefox.enable = true;
       git.enable = true;
+      helix.enable = true;
       imv.enable = true;
       jujutsu.enable = true;
       kitty.enable = true;
