@@ -69,12 +69,6 @@ in
 
       interactiveShellInit = ''
         abbr -a !! --position anywhere --function last_history_item
-
-        if type -q zellij
-          if not test -n "$ZELLIJ"
-            exec zellij attach default; or exec zellij --session default
-          end
-        end
       '';
 
       shellAliases = {
