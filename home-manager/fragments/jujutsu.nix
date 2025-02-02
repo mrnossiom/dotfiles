@@ -45,6 +45,10 @@ in
         aliases = {
           ui = [ "util" "exec" "--" "lazyjj" ];
         };
+
+        git = {
+          private-commits = ''description(glob:"private:*")'';
+        };
       };
     };
 
