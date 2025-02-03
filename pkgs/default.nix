@@ -1,7 +1,7 @@
 { self, system, ... }@pkgs:
 
 let
-  inherit (self.inputs) agenix ghostty git-leave helix jujutsu wakatime-ls;
+  inherit (self.inputs) agenix git-leave helix jujutsu wakatime-ls;
 in
 {
   asak = pkgs.callPackage ./asak.nix { };
@@ -15,7 +15,6 @@ in
 
   # Import packages defined in foreign repositories
   inherit (agenix.packages.${system}) agenix;
-  inherit (ghostty.packages.${system}) ghostty;
   inherit (git-leave.packages.${system}) git-leave;
   inherit (helix.packages.${system}) helix;
   inherit (jujutsu.packages.${system}) jujutsu;
