@@ -34,7 +34,7 @@ in
       defaultEditor = true;
 
       settings = {
-        theme = "onedark";
+        theme = "monokai_pro_octagon";
 
         editor = {
           auto-format = true;
