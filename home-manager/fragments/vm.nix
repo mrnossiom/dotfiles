@@ -238,11 +238,8 @@ in
         seat = {
           "seat0" = {
             xcursor_theme = "Bibata-Modern-Ice";
-            # Clears cursor after 5s
-            hide_cursor = toString (5 * 1000);
-            # Workaround, because key cannot be included twice
-            # disable cursor when typing
-            "" = "hide_cursor when-typing enable";
+            # disable cursor when typing or on purpose
+            hide_cursor = "when-typing enable";
           };
         };
 
