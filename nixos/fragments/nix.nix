@@ -52,7 +52,7 @@ in
         auto-optimise-store = true;
 
         # Disable flake registry to keep system pure and
-        # avoid network calls each nix invoation.
+        # avoid network calls at each nix invoation.
         flake-registry = "";
 
         keep-going = true;
