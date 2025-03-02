@@ -92,6 +92,7 @@ in
         gnome-disk-utility
         heroic
         insomnia
+        ldtk
         libreoffice-qt
         localsend
         lutris
