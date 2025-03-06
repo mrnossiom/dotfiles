@@ -90,6 +90,8 @@ in
         evince
         file-roller
         gnome-disk-utility
+        # TODO: move and embed config in nix
+        halloy
         heroic
         insomnia
         ldtk
