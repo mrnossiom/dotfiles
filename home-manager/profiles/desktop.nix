@@ -85,7 +85,7 @@ in
         blender
         bottles
         calibre
-        lpkgs.cura
+        upkgs.cura-appimage
         element-desktop
         evince
         file-roller
