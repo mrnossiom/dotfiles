@@ -33,7 +33,7 @@ in
 
       userName = "Milo Moisson";
       # TODO: this email should be behind a secret or at least a config
-      userEmail = "milomoisson@gmail.com";
+      userEmail = "milo@wiro.world";
 
       signing = {
         signByDefault = true;

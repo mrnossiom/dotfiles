@@ -23,7 +23,7 @@ in
       settings = {
         user = {
           name = "Milo Moisson";
-          email = "milomoisson@gmail.com";
+          email = "milo@wiro.world";
         };
 
         signing = {
