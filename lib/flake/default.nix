@@ -45,7 +45,6 @@ rec {
     };
     user = import ./user.nix;
     managedDiskLayout = import ./managedDiskLayout.nix;
-
   };
 
   # Darwin related

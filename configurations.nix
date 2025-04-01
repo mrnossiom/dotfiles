@@ -17,11 +17,12 @@ in
       (user "milomoisson" { description = "Milo Moisson"; profile = "desktop"; keys = keys.users; })
     ];
 
-    # # Servers
-    # "weird-row-server" = createSystem pkgs [
-    #   (system "weird-row-server" "server")
-    #   (user "milomoisson" { description = "Milo Moisson"; profile = "minimal"; keys = keys.users; })
-    # ];
+    # Servers
+    "weird-row-server" = createSystem pkgs [
+      (system "weird-row-server" "server")
+      (managedDiskLayout "ext4-hetzner" { device = "sda"; swapSize = 2; })
+      (user "milomoisson" { description = "Milo Moisson"; profile = "server"; keys = keys.users; })
+    ];
   };
 
   # I bundle my Home Manager config via the NixOS modules which create system generations and give free rollbacks.

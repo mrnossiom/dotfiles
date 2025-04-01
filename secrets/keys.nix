@@ -4,6 +4,11 @@ rec {
   neo = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINR1/9o1HLnSRkXt3xxAM5So1YCCNdJpBN1leSu7giuR";
   systems = [ archaic neo ];
 
+  # weird-row = "...";
+  servers = [
+    # weird-row
+  ];
+
   # Sessions specific age key (~/.ssh/id_home_manager.pub)
   neo-milomoisson = "age1vz2zmduaqhaw5jrqh277pmp36plyth8rz5k9ccxeftfcl2nlhalqwvx5xz";
   sessions = [ neo-milomoisson ];

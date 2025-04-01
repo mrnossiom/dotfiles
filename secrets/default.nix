@@ -11,6 +11,10 @@
     api-wakatime.file = ./api-wakatime.age;
   };
 
+  deploy = {
+    pds-config.file = ./pds-env.age;
+  };
+
   none = {
     pgp-ca5e.file = ./pgp-ca5e.age;
     ssh-uxgi.file = ./ssh-uxgi.age;

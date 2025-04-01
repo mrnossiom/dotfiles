@@ -1,8 +1,9 @@
 let
-  inherit (import ./keys.nix) users systems sessions;
+  inherit (import ./keys.nix) servers sessions systems users;
 
   nixos = systems ++ users;
   home-manager = sessions ++ users;
+  deploy = servers ++ users;
 in
 {
   # Used in NixOS config
@@ -14,6 +15,8 @@ in
   "api-digital-ocean.age".publicKeys = home-manager;
   "api-gitguardian.age".publicKeys = home-manager;
   "api-wakatime.age".publicKeys = home-manager;
+
+  "pds-env.age".publicKeys = deploy;
 
   # Not used in config but useful
   "pgp-ca5e.age".publicKeys = users;
