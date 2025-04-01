@@ -41,6 +41,7 @@ in
       libnotify
       lsof
       mediainfo
+      openssl
       ouch
       parallel
       pv
