@@ -28,6 +28,7 @@ in
       asciinema
       calc
       delta
+      dogdns
       du-dust
       encfs
       fastfetch
