@@ -30,6 +30,9 @@
     jujutsu.url = "github:jj-vcs/jj";
     jujutsu.inputs.nixpkgs.follows = "nixpkgs-unstable";
 
+    nixocaine.url = "https://git.madhouse-project.org/iocaine/nixocaine/archive/main.tar.gz";
+    nixocaine.inputs.nixpkgs.follows = "nixpkgs";
+
     wakatime-ls.url = "github:mrnossiom/wakatime-ls";
     wakatime-ls.inputs.nixpkgs.follows = "nixpkgs";
   };

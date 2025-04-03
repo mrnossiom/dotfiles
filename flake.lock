@@ -82,6 +82,22 @@
         "type": "github"
       }
     },
+    "flake-compat": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1696426674,
+        "narHash": "sha256-kvjfFW7WAETZlt09AgDn1MrtKzP7t90Vf7vypd3OL1U=",
+        "owner": "edolstra",
+        "repo": "flake-compat",
+        "rev": "0f9255e01c2351cc7d116c072cb317785dd33b33",
+        "type": "github"
+      },
+      "original": {
+        "owner": "edolstra",
+        "repo": "flake-compat",
+        "type": "github"
+      }
+    },
     "flake-utils": {
       "inputs": {
         "systems": "systems_2"
@@ -164,6 +180,28 @@
     "gitignore_2": {
       "inputs": {
         "nixpkgs": [
+          "nixocaine",
+          "pre-commit-hooks",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1709087332,
+        "narHash": "sha256-HG2cCnktfHsKV0s4XW83gU3F57gaTljL9KNSuG6bnQs=",
+        "owner": "hercules-ci",
+        "repo": "gitignore.nix",
+        "rev": "637db329424fd7e46cf4185293b9cc8c88c95394",
+        "type": "github"
+      },
+      "original": {
+        "owner": "hercules-ci",
+        "repo": "gitignore.nix",
+        "type": "github"
+      }
+    },
+    "gitignore_3": {
+      "inputs": {
+        "nixpkgs": [
           "wakatime-ls",
           "nixpkgs"
         ]
@@ -226,6 +264,62 @@
         "type": "github"
       }
     },
+    "iocaine-stable": {
+      "inputs": {
+        "nixpkgs": [
+          "nixocaine",
+          "nixpkgs"
+        ],
+        "pre-commit-hooks": [
+          "nixocaine",
+          "pre-commit-hooks"
+        ],
+        "systems": "systems_4",
+        "treefmt-nix": [
+          "nixocaine",
+          "treefmt-nix"
+        ]
+      },
+      "locked": {
+        "lastModified": 1742144602,
+        "narHash": "sha256-1gFFUpm7yrPNd7V4BFMud4Su0RKTV6v/J71qWtdoNuI=",
+        "rev": "7d794ec9525895a911b0d36acc4879d109e1d5fb",
+        "type": "tarball",
+        "url": "https://git.madhouse-project.org/api/v1/repos/iocaine/iocaine/archive/7d794ec9525895a911b0d36acc4879d109e1d5fb.tar.gz?rev=7d794ec9525895a911b0d36acc4879d109e1d5fb"
+      },
+      "original": {
+        "type": "tarball",
+        "url": "https://git.madhouse-project.org/iocaine/iocaine/archive/iocaine-1.1.0.tar.gz"
+      }
+    },
+    "iocaine-unstable": {
+      "inputs": {
+        "nixpkgs": [
+          "nixocaine",
+          "nixpkgs"
+        ],
+        "pre-commit-hooks": [
+          "nixocaine",
+          "pre-commit-hooks"
+        ],
+        "systems": "systems_5",
+        "treefmt-nix": [
+          "nixocaine",
+          "treefmt-nix"
+        ]
+      },
+      "locked": {
+        "lastModified": 1743505151,
+        "narHash": "sha256-61v8QJCF/EANwt+Q0b10TDNkVsPcZceGVG375QTBTDk=",
+        "rev": "07e661e406084e8cc83ca6140e44149f50217687",
+        "type": "tarball",
+        "url": "https://git.madhouse-project.org/api/v1/repos/iocaine/iocaine/archive/07e661e406084e8cc83ca6140e44149f50217687.tar.gz?rev=07e661e406084e8cc83ca6140e44149f50217687"
+      },
+      "original": {
+        "type": "tarball",
+        "url": "https://git.madhouse-project.org/iocaine/iocaine/archive/main.tar.gz"
+      }
+    },
     "jujutsu": {
       "inputs": {
         "flake-utils": "flake-utils_2",
@@ -266,6 +360,29 @@
         "owner": "LnL7",
         "repo": "nix-darwin",
         "type": "github"
+      }
+    },
+    "nixocaine": {
+      "inputs": {
+        "iocaine-stable": "iocaine-stable",
+        "iocaine-unstable": "iocaine-unstable",
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "pre-commit-hooks": "pre-commit-hooks",
+        "systems": "systems_6",
+        "treefmt-nix": "treefmt-nix"
+      },
+      "locked": {
+        "lastModified": 1743507419,
+        "narHash": "sha256-n00nu5bXKMP7J0GtSIWOvBENIRY/3KJLJStqVat2OCE=",
+        "rev": "b04a3c0ed59a15db7b21793196cc98b994628f93",
+        "type": "tarball",
+        "url": "https://git.madhouse-project.org/api/v1/repos/iocaine/nixocaine/archive/b04a3c0ed59a15db7b21793196cc98b994628f93.tar.gz"
+      },
+      "original": {
+        "type": "tarball",
+        "url": "https://git.madhouse-project.org/iocaine/nixocaine/archive/main.tar.gz"
       }
     },
     "nixos-hardware": {
@@ -315,6 +432,29 @@
         "type": "github"
       }
     },
+    "pre-commit-hooks": {
+      "inputs": {
+        "flake-compat": "flake-compat",
+        "gitignore": "gitignore_2",
+        "nixpkgs": [
+          "nixocaine",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1737465171,
+        "narHash": "sha256-R10v2hoJRLq8jcL4syVFag7nIGE7m13qO48wRIukWNg=",
+        "owner": "cachix",
+        "repo": "pre-commit-hooks.nix",
+        "rev": "9364dc02281ce2d37a1f55b6e51f7c0f65a75f17",
+        "type": "github"
+      },
+      "original": {
+        "owner": "cachix",
+        "repo": "pre-commit-hooks.nix",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "agenix": "agenix",
@@ -324,6 +464,7 @@
         "home-manager": "home-manager",
         "jujutsu": "jujutsu",
         "nix-darwin": "nix-darwin",
+        "nixocaine": "nixocaine",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs",
         "nixpkgs-unstable": "nixpkgs-unstable",
@@ -459,9 +600,72 @@
         "type": "github"
       }
     },
+    "systems_4": {
+      "locked": {
+        "lastModified": 1681028828,
+        "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
+        "owner": "nix-systems",
+        "repo": "default",
+        "rev": "da67096a3b9bf56a91d16901293e51ba5b49a27e",
+        "type": "github"
+      },
+      "original": {
+        "id": "systems",
+        "type": "indirect"
+      }
+    },
+    "systems_5": {
+      "locked": {
+        "lastModified": 1681028828,
+        "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
+        "owner": "nix-systems",
+        "repo": "default",
+        "rev": "da67096a3b9bf56a91d16901293e51ba5b49a27e",
+        "type": "github"
+      },
+      "original": {
+        "id": "systems",
+        "type": "indirect"
+      }
+    },
+    "systems_6": {
+      "locked": {
+        "lastModified": 1681028828,
+        "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
+        "owner": "nix-systems",
+        "repo": "default",
+        "rev": "da67096a3b9bf56a91d16901293e51ba5b49a27e",
+        "type": "github"
+      },
+      "original": {
+        "id": "systems",
+        "type": "indirect"
+      }
+    },
+    "treefmt-nix": {
+      "inputs": {
+        "nixpkgs": [
+          "nixocaine",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1738953846,
+        "narHash": "sha256-yrK3Hjcr8F7qS/j2F+r7C7o010eVWWlm4T1PrbKBOxQ=",
+        "owner": "numtide",
+        "repo": "treefmt-nix",
+        "rev": "4f09b473c936d41582dd744e19f34ec27592c5fd",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "treefmt-nix",
+        "type": "github"
+      }
+    },
     "wakatime-ls": {
       "inputs": {
-        "gitignore": "gitignore_2",
+        "gitignore": "gitignore_3",
         "nixpkgs": [
           "nixpkgs"
         ],
