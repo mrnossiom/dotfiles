@@ -6,8 +6,6 @@ let
   cfg = config.local.disk;
 in
 {
-  options = { };
-
   config.disko.devices.disk.primary = {
     device = cfg.device;
     content = {

@@ -96,6 +96,10 @@ Pull up your favorite ArchaicBakup disc
 	restic init --repo /srv/restic-repo
 	```
 
+## Deploy server
+
+nixos-anywhere --flake .#weird-row-server <user>@<ip>
+
 ---
 
 Milo Moisson © 2023-2025

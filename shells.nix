@@ -12,6 +12,7 @@ in
     lpkgs.agenix
     home-manager
     just
+    nixos-anywhere
     nix-tree
   ]);
 

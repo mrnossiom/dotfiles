@@ -6,13 +6,17 @@ let
   cfg = config.local.disk;
 in
 {
-  options = { };
-
   config.disko.devices.disk.primary = {
+    type = "disk";
     device = cfg.device;
     content = {
       type = "gpt";
       partitions = {
+        boot = {
+          size = "1M";
+          type = "EF02";
+          priority = 1;
+        };
         ESP = {
           size = "512M";
           type = "EF00";
@@ -22,42 +26,15 @@ in
             mountpoint = "/boot";
           };
         };
-        luks = {
+        root = {
           size = "100%";
           content = {
-            type = "luks";
-            # TODO: change to encrypted
-            name = "crypted";
-            settings = {
-              allowDiscards = true;
-              # yubiKey = I want a YubiKey
-            };
-            content = {
-              type = "btrfs";
-              extraArgs = [ "-f" ];
-              subvolumes = {
-                "/root" = {
-                  mountpoint = "/";
-                  mountOptions = [ "compress=zstd" "noatime" ];
-                };
-                "/home" = {
-                  mountpoint = "/home";
-                  mountOptions = [ "compress=zstd" "noatime" ];
-                };
-                "/nix" = {
-                  mountpoint = "/nix";
-                  mountOptions = [ "compress=zstd" "noatime" ];
-                };
-                "/swap" = {
-                  mountpoint = "/.swapvol";
-                  swap.swapfile.size = "${toString cfg.swapSize}G";
-                };
-              };
-            };
+            type = "filesystem";
+            format = "ext4";
+            mountpoint = "/";
           };
         };
       };
     };
   };
 }
-

@@ -1,13 +1,10 @@
-{ config
-, pkgs
-, upkgs
-, ...
+{ ...
 }:
 
 let
-  ext-if = "en0";
+  ext-if = "eth0";
 
-  external-ip6 = "2a01:4f8:c2c:76d2::/64";
+  external-ip6 = "2a01:4f8:c2c:76d2::1";
   external-netmask6 = 64;
   external-gw6 = "fe80::1";
 in
@@ -15,7 +12,8 @@ in
   imports = [ ];
 
   config = {
-    boot.loader.grub.device = "/dev/nvme0n1";
+    boot.loader.grub.enable = true;
+    boot.initrd.availableKernelModules = [ "ahci" "xhci_pci" "virtio_pci" "virtio_scsi" "sd_mod" "sr_mod" "ext4" ];
 
     # Single network card is `eth0`
     networking.usePredictableInterfaceNames = false;
@@ -31,7 +29,13 @@ in
         interface = ext-if;
         address = external-gw6;
       };
+
+      # # Rely on Hetzner firewall instead?
+      # firewall.enable = false;
+      firewall.allowedTCPPorts = [ 22 80 443 ];
     };
+
+    services.openssh.enable = true;
 
     services.qemuGuest.enable = true;
 
@@ -56,19 +60,26 @@ in
     # services.pds = {
     #   enable = true;
     #   pdsadmin.enable = true;
-
-
     # };
 
     services.caddy = {
       enable = true;
 
-      virtualHosts."localhost".extraConfig = ''
-        reverse_proxy https://wirolibre.xyz/
+      virtualHosts."ping.wiro.world".extraConfig = ''
+      	header Content-Type text/html
+      	respond <<HTML
+      		<html>
+      			<head><title>Foo</title></head>
+      			<body>Foo</body>
+      		</html>
+      		HTML 200
       '';
     };
+
+    security.sudo.wheelNeedsPassword = false;
+
+    local.fragment.nix.enable = true;
 
     programs.fish.enable = true;
   };
 }
-

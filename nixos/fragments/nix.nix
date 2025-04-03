@@ -57,6 +57,8 @@ in
 
         keep-going = true;
 
+        extra-platforms = config.boot.binfmt.emulatedSystems;
+
         trusted-users = [ config.local.user.username ];
         extra-substituters = [
           "https://nix-community.cachix.org"
