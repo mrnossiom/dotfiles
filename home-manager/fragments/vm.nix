@@ -2,6 +2,8 @@
 , config
 , lib
 , pkgs
+
+, isDarwin
 , ...
 }:
 
@@ -25,6 +27,10 @@ in
   '';
 
   config = lib.mkIf cfg.enable {
+    assertions = [
+      { assertion = (!isDarwin) || config.programs.fish.enable; message = "`kitty` fragment depends on `fish` program on darwin platforms"; }
+    ];
+
     programs.swaylock = {
       enable = true;
       settings = {
@@ -38,6 +44,12 @@ in
         indicator-x-position = 100;
       };
     };
+
+    programs.fish.loginShellInit = ''
+      if test (id --user $USER) -ge 1000 && test (tty) = "/dev/tty1"
+        exec sway 2> /tmp/sway.(date -u +%Y-%m-%dT%H:%M:%S).log
+      end
+    '';
 
     services.mako = {
       enable = true;

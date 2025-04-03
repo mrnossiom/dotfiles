@@ -60,13 +60,6 @@ in
     programs.fish = {
       enable = true;
 
-      # TODO: move to vm module
-      loginShellInit = lib.optionalString (!isDarwin) ''
-        if test (id --user $USER) -ge 1000 && test (tty) = "/dev/tty1"
-          exec sway 2> /tmp/sway.(date -u +%Y-%m-%dT%H:%M:%S).log
-        end
-      '';
-
       interactiveShellInit = ''
         abbr -a !! --position anywhere --function last_history_item
       '';
