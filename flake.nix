@@ -37,6 +37,9 @@
     nixocaine.url = "https://git.madhouse-project.org/iocaine/nixocaine/archive/main.tar.gz";
     nixocaine.inputs.nixpkgs.follows = "nixpkgs";
 
+    tangled.url = "git+https://tangled.sh/@tangled.sh/core";
+    tangled.inputs.nixpkgs.follows = "nixpkgs";
+
     wakatime-ls.url = "github:mrnossiom/wakatime-ls";
     wakatime-ls.inputs.nixpkgs.follows = "nixpkgs";
   };

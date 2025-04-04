@@ -202,6 +202,27 @@
     "gitignore_3": {
       "inputs": {
         "nixpkgs": [
+          "tangled",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1709087332,
+        "narHash": "sha256-HG2cCnktfHsKV0s4XW83gU3F57gaTljL9KNSuG6bnQs=",
+        "owner": "hercules-ci",
+        "repo": "gitignore.nix",
+        "rev": "637db329424fd7e46cf4185293b9cc8c88c95394",
+        "type": "github"
+      },
+      "original": {
+        "owner": "hercules-ci",
+        "repo": "gitignore.nix",
+        "type": "github"
+      }
+    },
+    "gitignore_4": {
+      "inputs": {
+        "nixpkgs": [
           "wakatime-ls",
           "nixpkgs"
         ]
@@ -261,6 +282,50 @@
         "owner": "nix-community",
         "ref": "release-24.11",
         "repo": "home-manager",
+        "type": "github"
+      }
+    },
+    "htmx-src": {
+      "flake": false,
+      "locked": {
+        "narHash": "sha256-nm6avZuEBg67SSyyZUhjpXVNstHHgUxrtBHqJgowU08=",
+        "type": "file",
+        "url": "https://unpkg.com/htmx.org@2.0.4/dist/htmx.min.js"
+      },
+      "original": {
+        "type": "file",
+        "url": "https://unpkg.com/htmx.org@2.0.4/dist/htmx.min.js"
+      }
+    },
+    "ia-fonts-src": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1686932517,
+        "narHash": "sha256-2T165nFfCzO65/PIHauJA//S+zug5nUwPcg8NUEydfc=",
+        "owner": "iaolo",
+        "repo": "iA-Fonts",
+        "rev": "f32c04c3058a75d7ce28919ce70fe8800817491b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "iaolo",
+        "repo": "iA-Fonts",
+        "type": "github"
+      }
+    },
+    "indigo": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1738491661,
+        "narHash": "sha256-+njDigkvjH4XmXZMog5Mp0K4x9mamHX6gSGJCZB9mE4=",
+        "owner": "oppiliappan",
+        "repo": "indigo",
+        "rev": "feb802f02a462ac0a6392ffc3e40b0529f0cdf71",
+        "type": "github"
+      },
+      "original": {
+        "owner": "oppiliappan",
+        "repo": "indigo",
         "type": "github"
       }
     },
@@ -340,6 +405,19 @@
         "owner": "jj-vcs",
         "repo": "jj",
         "type": "github"
+      }
+    },
+    "lucide-src": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1742302029,
+        "narHash": "sha256-OyPVtpnC4/AAmPq84Wt1r1Gcs48d9KG+UBCtZK87e9k=",
+        "type": "tarball",
+        "url": "https://github.com/lucide-icons/lucide/releases/download/0.483.0/lucide-icons-0.483.0.zip"
+      },
+      "original": {
+        "type": "tarball",
+        "url": "https://github.com/lucide-icons/lucide/releases/download/0.483.0/lucide-icons-0.483.0.zip"
       }
     },
     "nix-darwin": {
@@ -469,6 +547,7 @@
         "nixpkgs": "nixpkgs",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "srvos": "srvos",
+        "tangled": "tangled",
         "wakatime-ls": "wakatime-ls"
       }
     },
@@ -663,6 +742,31 @@
         "type": "indirect"
       }
     },
+    "tangled": {
+      "inputs": {
+        "gitignore": "gitignore_3",
+        "htmx-src": "htmx-src",
+        "ia-fonts-src": "ia-fonts-src",
+        "indigo": "indigo",
+        "lucide-src": "lucide-src",
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1743620557,
+        "narHash": "sha256-w7a9Qn/IUdCe+gk5cMvSUS+YKItK2iTiu2Qcq49a+zU=",
+        "ref": "refs/heads/master",
+        "rev": "19ee94f42ab259c218762e6f0ed87952f80b5162",
+        "revCount": 420,
+        "type": "git",
+        "url": "https://tangled.sh/@tangled.sh/core"
+      },
+      "original": {
+        "type": "git",
+        "url": "https://tangled.sh/@tangled.sh/core"
+      }
+    },
     "treefmt-nix": {
       "inputs": {
         "nixpkgs": [
@@ -686,7 +790,7 @@
     },
     "wakatime-ls": {
       "inputs": {
-        "gitignore": "gitignore_3",
+        "gitignore": "gitignore_4",
         "nixpkgs": [
           "nixpkgs"
         ],
