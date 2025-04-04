@@ -122,7 +122,7 @@ in
       };
 
       virtualHosts.${tangled-hostname}.extraConfig = ''
-          reverse_proxy http://localhost:${toString tangled-port}
+        reverse_proxy http://localhost:${toString tangled-port}
       '';
     };
 
