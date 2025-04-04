@@ -20,6 +20,10 @@
 
     nixos-hardware.url = "github:nixos/nixos-hardware";
 
+    srvos.url = "github:nix-community/srvos";
+    # srvos.inputs.nixpkgs.follows = "srvos/nixpkgs";
+    srvos.inputs.nixpkgs.follows = "nixpkgs";
+
     # ——— Packages
     git-leave.url = "github:mrnossiom/git-leave";
     git-leave.inputs.nixpkgs.follows = "nixpkgs";

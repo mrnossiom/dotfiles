@@ -1,7 +1,10 @@
-{ ...
+{ self
+, ...
 }:
 
 let
+  inherit (self.inputs) srvos;
+
   ext-if = "eth0";
 
   external-ip6 = "2a01:4f8:c2c:76d2::1";
@@ -9,7 +12,11 @@ let
   external-gw6 = "fe80::1";
 in
 {
-  imports = [ ];
+  imports = [
+    srvos.nixosModules.server
+    srvos.nixosModules.hardware-hetzner-cloud
+    srvos.nixosModules.mixins-terminfo
+  ];
 
   config = {
     boot.loader.grub.enable = true;
@@ -17,6 +24,8 @@ in
 
     # Single network card is `eth0`
     networking.usePredictableInterfaceNames = false;
+
+    networking.nameservers = [ "2001:4860:4860::8888" "2001:4860:4860::8844" ];
 
     networking = {
       interfaces.${ext-if} = {
