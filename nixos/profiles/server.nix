@@ -9,6 +9,9 @@ let
 
   all-secrets = import ../../secrets;
 
+  pds-unstable-module = import "${nixpkgs-unstable}/nixos/modules/services/web-apps/pds.nix";
+  pds-patched-module = args: pds-unstable-module (args // { pkgs = upkgs; });
+
   ext-if = "eth0";
   external-ip = "91.99.55.74";
   external-netmask = 27;
@@ -28,7 +31,7 @@ in
 
     agenix.nixosModules.default
 
-    "${nixpkgs-unstable}/nixos/modules/services/web-apps/pds.nix"
+    pds-patched-module
   ];
 
   config = {
@@ -79,14 +82,12 @@ in
     # TODO: switch to nightly channel
     services.pds = {
       enable = true;
-      # TODO: not possible with current unstable module import
-      pdsadmin.enable = false;
-      package = upkgs.pds;
 
       settings = {
         PDS_HOSTNAME = "pds.wiro.world";
         PDS_PORT = pds-port;
-        LOG_DESTINATION = "/etc/pds.log";
+        # is in systemd /tmp subfolder
+        LOG_DESTINATION = "/tmp/pds.log";
       };
 
       environmentFiles = [

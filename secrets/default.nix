@@ -12,6 +12,9 @@
   };
 
   deploy = {
+    # Defines `PDS_JWT_SECRET`, `PDS_ADMIN_PASSWORD`,
+    # `PDS_PLC_ROTATION_KEY_K256_PRIVATE_KEY_HEX`, `PDS_EMAIL_SMTP_URL` and
+    # `PDS_EMAIL_FROM_ADDRESS`
     pds-config.file = ./pds-env.age;
   };
 
