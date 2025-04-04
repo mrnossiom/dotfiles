@@ -5,7 +5,7 @@
 }:
 
 let
-  inherit (self.inputs) srvos nixpkgs-unstable agenix;
+  inherit (self.inputs) srvos nixpkgs-unstable agenix tangled;
 
   all-secrets = import ../../secrets;
 
@@ -22,6 +22,9 @@ let
 
   pds-port = 3001;
   pds-hostname = "pds.wiro.world";
+
+  tangled-port = 3002;
+  tangled-hostname = "knot.wiro.world";
 in
 {
   imports = [
@@ -30,6 +33,8 @@ in
     srvos.nixosModules.mixins-terminfo
 
     agenix.nixosModules.default
+
+    tangled.nixosModules.knotserver
 
     pds-patched-module
   ];
@@ -108,13 +113,17 @@ in
         	respond "Hello, World! (from `weird-row-server`)"
       '';
 
-      virtualHosts."${pds-hostname}" = {
+      virtualHosts.${pds-hostname} = {
         serverAliases = [ "*.${pds-hostname}" ];
         extraConfig = ''
           	tls { on_demand }
             reverse_proxy http://localhost:${toString pds-port}
         '';
       };
+
+      virtualHosts.${tangled-hostname}.extraConfig = ''
+          reverse_proxy http://localhost:${toString tangled-port}
+      '';
     };
 
     security.sudo.wheelNeedsPassword = false;
@@ -122,5 +131,15 @@ in
     local.fragment.nix.enable = true;
 
     programs.fish.enable = true;
+
+    services.tangled-knotserver = {
+      enable = true;
+
+      server = {
+        listenAddr = "0.0.0.0:${toString tangled-port}";
+        secretFile = config.age.secrets.tangled-config.path;
+        hostname = tangled-hostname;
+      };
+    };
   };
 }

@@ -17,6 +17,7 @@ in
   "api-wakatime.age".publicKeys = home-manager;
 
   "pds-env.age".publicKeys = deploy;
+  "tangled-env.age".publicKeys = deploy;
 
   # Not used in config but useful
   "pgp-ca5e.age".publicKeys = users;
