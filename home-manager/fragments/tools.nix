@@ -36,6 +36,7 @@ in
       ffmpeg
       file
       fzf
+      inetutils
       jq
       just
       killall
