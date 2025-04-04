@@ -98,7 +98,14 @@ Pull up your favorite ArchaicBakup disc
 
 ## Deploy server
 
-nixos-anywhere --flake .#weird-row-server <user>@<ip>
+```bash
+nixos-anywhere --flake .#weird-row-server user@ip
+
+nixos-rebuild switch \
+	--flake .#weird-row-server \
+	--target-host 2a01:4f8:c2c:76d2::1 \
+	--use-remote-sudo
+```
 
 ---
 
