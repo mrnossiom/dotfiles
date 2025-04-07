@@ -67,7 +67,7 @@
       lib = forAllPkgs (import ./lib);
       templates = import ./templates;
 
-      apps = forAllPkgs (import ./apps { inherit forAllPkgs; });
+      apps = forAllPkgs (import ./apps { pkgs-per-system = pkgs; });
       devShells = forAllPkgs (import ./shells.nix);
       overlays = import ./overlays (nixpkgs // { inherit self; });
       packages = forAllPkgs (import ./pkgs);

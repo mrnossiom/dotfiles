@@ -10,7 +10,7 @@ targetSystemPkgs:
 let
   inherit (self.outputs) flake-lib;
 
-  iso = flake-lib.createSystem targetSystemPkgs [ ../nixos/profiles/installer.nix ];
+  iso = flake-lib.nixos.createSystem targetSystemPkgs [ ../nixos/profiles/installer.nix ];
   # Build installer ISO
   isoPath = "${iso.config.system.build.isoImage}/iso/${iso.config.isoImage.isoName}";
 
