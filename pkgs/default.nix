@@ -10,7 +10,6 @@ in
   names = pkgs.callPackage ./names.nix { };
   otree = pkgs.callPackage ./otree.nix { };
   probe-rs-udev-rules = pkgs.callPackage ./probe-rs-udev-rules.nix { };
-  sweep = pkgs.callPackage ./sweep.nix { };
 
   # Import packages defined in foreign repositories
   inherit (agenix.packages.${system}) agenix;

@@ -59,7 +59,6 @@ in
       wcurl
     ]) ++ lib.optionals (!flags.onlyCached) [
       lpkgs.otree
-      lpkgs.sweep
     ];
   };
 }
