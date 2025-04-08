@@ -74,7 +74,7 @@ in
         # bad configuration. (e.g. NixOS `environment.shellAliases` default)
         ls = "${lib.getExe pkgs.eza} --color=auto --icons=auto --hyperlink";
 
-        tb = "nc termbin.com 9999";
+        pasters = "${lib.getExe pkgs.curl} --data-binary @- https://paste.rs/";
       };
 
       shellAbbrs = {
