@@ -56,6 +56,7 @@ in
       termimage
       tokei
       trash-cli
+      unzip
       wcurl
     ]) ++ lib.optionals (!flags.onlyCached) [
       lpkgs.otree
