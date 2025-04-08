@@ -11,6 +11,7 @@
     ./chromium.nix
     ./epita.nix
     ./firefox.nix
+    ./foot.nix
     ./git.nix
     ./helix.nix
     ./imv.nix

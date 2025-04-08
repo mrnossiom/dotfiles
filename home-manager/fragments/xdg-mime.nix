@@ -14,7 +14,6 @@ in
     Depends on:
     - `firefox` program: default browser
     - `imv` program: default image viewer
-    - `kitty` program: default terminal
     - `nautilus` program: default file explorer
   '';
 
@@ -22,7 +21,6 @@ in
     assertions = [
       { assertion = config.programs.firefox.enable; message = "`xdg-mime` fragment depends on `firefox` program"; }
       { assertion = config.programs.imv.enable; message = "`xdg-mime` fragment depends on `imv` program"; }
-      { assertion = config.programs.kitty.enable; message = "`xdg-mime` fragment depends on `kitty` program"; }
       { assertion = lib.lists.count (drv: (drv.pname or "") == pkgs.nautilus.pname) config.home.packages > 0; message = "`xdg-mime` fragment depends on `nautilus` program"; }
     ];
 
@@ -34,7 +32,6 @@ in
           files = [ "org.gnome.Nautilus.desktop" ];
           browser = [ "firefox.desktop" ];
           images = [ "imv.desktop" ];
-          terminal = [ "kitty-open.desktop" ];
         in
         {
           "inode/directory" = files;
@@ -56,13 +53,6 @@ in
           "image/png" = images;
           "image/tiff" = images;
           "image/heif" = images;
-
-          "text/plain" = terminal;
-          "text/markdown" = terminal;
-          "text/javascript" = terminal;
-          # this is how `.ts` files are matched
-          "text/vnd.trolltech.linguist" = terminal;
-          "text/x-java" = terminal;
         };
 
       associations.added = {

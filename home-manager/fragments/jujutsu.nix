@@ -54,7 +54,6 @@ in
 
     home.packages = with pkgs; [
       difftastic
-      lazyjj
     ];
   };
 }

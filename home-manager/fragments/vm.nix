@@ -28,7 +28,7 @@ in
 
   config = lib.mkIf cfg.enable {
     assertions = [
-      { assertion = (!isDarwin) || config.programs.fish.enable; message = "`kitty` fragment depends on `fish` program on darwin platforms"; }
+      { assertion = !isDarwin; message = "this is a non-darwin fragment"; }
     ];
 
     programs.swaylock = {

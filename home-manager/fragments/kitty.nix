@@ -23,6 +23,8 @@ in
       { assertion = (!isDarwin) || config.programs.fish.enable; message = "`kitty` fragment depends on `fish` program on darwin platforms"; }
     ];
 
+    home.sessionVariables.TERMINAL = lib.getExe config.programs.kitty.package;
+
     programs.kitty = {
       enable = true;
       settings = {

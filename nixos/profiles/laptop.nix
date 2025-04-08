@@ -28,7 +28,8 @@ in
     };
 
     networking.hosts = {
-      # "127.0.0.1" = [ "www.youtube.com" ];
+      "127.0.0.1" = [ "www.youtube.com" ];
+
       "10.45.3.4" = [ "printer.epita" ];
     };
 
@@ -38,7 +39,7 @@ in
       kernelParams = [ "quiet" ];
 
       kernelPackages = upkgs.linuxKernel.packages.linux_zen;
-      extraModulePackages = with config.boot.kernelPackages; [ apfs perf xone ];
+      extraModulePackages = with config.boot.kernelPackages; [ perf xone ];
 
       loader = {
         systemd-boot.enable = true;
