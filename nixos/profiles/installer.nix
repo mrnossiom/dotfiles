@@ -43,7 +43,7 @@ let
   # Generates hardware related config and uploads it to pastebin
   # link-hardware-config [root]
   link-hardware-config = writeShellScriptBin "link-hardware-config" ''
-    nixos-generate-config --root ''${1:-/mnt} --show-hardware-config | ${lib.getExe pastebinit}
+    nixos-generate-config --root ''${1:-/mnt} --show-hardware-config | ${lib.getExe' pastebinit "pastebinit"}
   '';
 
   # Install specified flake system to /mnt

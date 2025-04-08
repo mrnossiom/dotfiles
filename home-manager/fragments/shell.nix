@@ -2,6 +2,7 @@
 , lib
 , pkgs
 , lpkgs
+, upkgs
 
 , isDarwin
 , ...
@@ -59,6 +60,7 @@ in
 
     programs.fish = {
       enable = true;
+      package = upkgs.fish;
 
       interactiveShellInit = ''
         abbr -a !! --position anywhere --function last_history_item

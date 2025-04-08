@@ -30,11 +30,11 @@ in
       chromium.enable = true;
       epita.enable = true;
       firefox.enable = true;
+      foot.enable = true;
       git.enable = true;
       helix.enable = true;
       imv.enable = true;
       jujutsu.enable = true;
-      kitty.enable = true;
       rust.enable = true;
       shell.enable = true;
       thunderbird.enable = true;
@@ -47,8 +47,6 @@ in
 
     home = {
       sessionVariables = {
-        TERMINAL = lib.getExe pkgs.kitty;
-
         # Quick access to `~/Development` folder
         DEV = "${config.home.homeDirectory}/Development";
 
