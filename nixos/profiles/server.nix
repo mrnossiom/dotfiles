@@ -25,6 +25,11 @@ let
 
   tangled-port = 3002;
   tangled-hostname = "knot.wiro.world";
+
+  grafana-port = 9000;
+  grafana-hostname = "console.wiro.world";
+  prometheus-port = 9001;
+  prometheus-node-exporter-port = 9002;
 in
 {
   imports = [
@@ -102,15 +107,19 @@ in
 
     services.caddy = {
       enable = true;
+      package = upkgs.caddy;
 
       globalConfig = ''
+        metrics { per_host }
+
         on_demand_tls {
           ask http://localhost:${toString pds-port}/tls-check
         }
       '';
 
-      virtualHosts."ping.wiro.world".extraConfig = ''
-        	respond "Hello, World! (from `weird-row-server`)"
+      # Grafana has its own auth
+      virtualHosts.${grafana-hostname}.extraConfig = ''
+        reverse_proxy http://localhost:${toString grafana-port}
       '';
 
       virtualHosts.${pds-hostname} = {
@@ -139,6 +148,33 @@ in
         listenAddr = "0.0.0.0:${toString tangled-port}";
         secretFile = config.age.secrets.tangled-config.path;
         hostname = tangled-hostname;
+      };
+    };
+
+    services.grafana = {
+      enable = true;
+
+      settings.server.http_port = grafana-port;
+    };
+
+    services.prometheus = {
+      enable = true;
+      port = prometheus-port;
+
+      scrapeConfigs = [
+        {
+          job_name = "caddy";
+          static_configs = [{ targets = [ "localhost:${toString 2019}" ]; }];
+        }
+        {
+          job_name = "node";
+          static_configs = [{ targets = [ "localhost:${toString config.services.prometheus.exporters.node.port}" ]; }];
+        }
+      ];
+
+      exporters.node = {
+        enable = true;
+        port = prometheus-node-exporter-port;
       };
     };
   };
