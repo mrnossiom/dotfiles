@@ -37,6 +37,8 @@ in
       { assertion = config.programs.ssh.enable; message = "`epita` fragment depends on `ssh` program"; }
     ];
 
+    programs.ssh.package = pkgs.openssh_gssapi;
+
     # Needed for sshfs
     programs.ssh.matchBlocks."ssh.cri.epita.fr" = {
       extraOptions = {

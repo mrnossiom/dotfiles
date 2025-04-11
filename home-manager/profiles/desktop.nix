@@ -1,6 +1,5 @@
 { self
 , config
-, lib
 , llib
 , pkgs
 
@@ -141,14 +140,11 @@ in
     # TODO: move out
     programs.ssh = {
       enable = true;
-      # needed for epita fragment
-      package = pkgs.openssh_gssapi;
-    };
 
-    programs.bat = {
-      enable = true;
-      config = {
-        style = "plain";
+      matchBlocks."weird-row-server" = {
+        hostname = "weird-row.portal.wiro.world";
+        # TODO: reduce automated load on ssh port by changing to a random port
+        # port = ""
       };
     };
 

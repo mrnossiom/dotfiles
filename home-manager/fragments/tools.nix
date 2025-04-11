@@ -61,5 +61,12 @@ in
     ]) ++ lib.optionals (!flags.onlyCached) [
       lpkgs.otree
     ];
+
+    programs.bat = {
+      enable = true;
+      config = {
+        style = "plain";
+      };
+    };
   };
 }
