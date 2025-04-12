@@ -15,4 +15,5 @@ package: builtins.elem (lib.getName package) [
   "jetbrains-toolbox"
   "spotify"
   "unityhub"
+  "vscode-extension-ms-vsliveshare-vsliveshare"
 ]

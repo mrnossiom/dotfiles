@@ -21,6 +21,7 @@ in
         dbaeumer.vscode-eslint
         eamodio.gitlens
         esbenp.prettier-vscode
+        ms-vsliveshare.vsliveshare
         usernamehw.errorlens
         vue.volar
         wakatime.vscode-wakatime
