@@ -154,7 +154,10 @@ in
     services.grafana = {
       enable = true;
 
-      settings.server.http_port = grafana-port;
+      settings.server = {
+        http_port = grafana-port;
+        domain = grafana-hostname;
+      };
     };
 
     services.prometheus = {
