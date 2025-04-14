@@ -91,6 +91,7 @@ in
         halloy
         heroic
         insomnia
+        kicad
         ldtk
         libreoffice-qt
         localsend
