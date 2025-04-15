@@ -12,6 +12,7 @@
     ./kanata
     ./logiops.nix
     ./nix.nix
+    ./sddm.nix
     ./security.nix
     ./virtualisation.nix
     ./wireless.nix
