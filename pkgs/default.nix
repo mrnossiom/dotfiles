@@ -25,6 +25,7 @@ in
   names = callPackage ./names.nix { };
   probe-rs-udev-rules = callPackage ./probe-rs-udev-rules.nix { };
   swaylock = callPackage ./swaylock.nix { };
+  where-is-my-sddm-theme = callPackage ./where-is-my-sddm-theme.nix { };
 
   # Import packages defined in foreign repositories
   inherit (agenix.packages.${system}) agenix;

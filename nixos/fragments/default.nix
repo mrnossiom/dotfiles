@@ -14,6 +14,7 @@
     ./logiops.nix
     ./nix.nix
     ./secure-boot.nix
+    ./sddm.nix
     ./security.nix
     ./virtualisation.nix
     ./wireless.nix
