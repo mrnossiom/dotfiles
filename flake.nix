@@ -50,8 +50,15 @@
     hypixel-bank-tracker.url = "github:pixilie/hypixel-bank-tracker";
     hypixel-bank-tracker.inputs.nixpkgs.follows = "nixpkgs";
 
+    niri.url = "github:sodiboo/niri-flake";
+    niri.inputs.nixpkgs.follows = "unixpkgs";
+    niri.inputs.nixpkgs-stable.follows = "nixpkgs";
+
     nix-alien.url = "github:thiagokokada/nix-alien";
     nix-alien.inputs.nixpkgs.follows = "nixpkgs";
+
+    noctalia.url = "github:noctalia-dev/noctalia-shell";
+    noctalia.inputs.nixpkgs.follows = "nixpkgs";
 
     tangled.url = "git+https://tangled.org/tangled.org/core";
     tangled.inputs.nixpkgs.follows = "unixpkgs";

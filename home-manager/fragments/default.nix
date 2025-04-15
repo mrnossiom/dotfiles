@@ -20,6 +20,8 @@
     ./kanshi.nix
     ./kitty.nix
     ./launcher.nix
+    ./niri.nix
+    ./noctalia.nix
     ./rust.nix
     ./screen.nix
     ./shell.nix

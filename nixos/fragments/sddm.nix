@@ -2,6 +2,7 @@
   config,
   lib,
   pkgs,
+  upkgs,
   ...
 }:
 
@@ -15,6 +16,12 @@ in
   '';
 
   config = lib.mkIf cfg.enable {
+    # TODO: move
+    programs.niri = {
+      enable = true;
+      package = upkgs.niri;
+    };
+
     services.displayManager.defaultSession = "niri";
 
     services.displayManager.sddm = {

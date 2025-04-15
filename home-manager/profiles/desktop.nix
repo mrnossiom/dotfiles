@@ -23,6 +23,8 @@
       firefox.enable = true;
       imv.enable = true;
       kanshi.enable = true;
+      niri.enable = true;
+      noctalia.enable = true;
       stylix.enable = true;
       sway.enable = true;
       thunderbird.enable = true;
@@ -66,59 +68,57 @@
         WAKATIME_HOME = "${config.xdg.configHome}/wakatime";
       };
 
-      packages =
-        with pkgs;
-        [
-          # Unfree
-          aseprite
-          # ida-free
-          jetbrains-toolbox
-          spotify
+      packages = with pkgs; [
+        # Unfree
+        aseprite
+        # ida-free
+        jetbrains-toolbox
+        spotify
 
-          # GUIs
-          audacity
-          baobab
-          blender
-          (bottles.override { removeWarningPopup = true; })
-          calibre
-          cura-appimage
-          element-desktop
-          evince
-          figma-linux
-          file-roller
-          gnome-disk-utility
-          insomnia
-          upkgs.jellyfin-desktop
-          kicad
-          legcord
-          libreoffice-qt
-          localsend
-          mpv
-          nautilus
-          nicotine-plus
-          pavucontrol
-          prismlauncher
-          rawtherapee
-          simple-scan
-          songrec
-          transmission_4-gtk
-          wdisplays
-          wireshark
-          zulip
-          (warp-terminal.override { waylandSupport = true; })
-          wev
+        # GUIs
+        audacity
+        baobab
+        blender
+        (bottles.override { removeWarningPopup = true; })
+        calibre
+        cura-appimage
+        element-desktop
+        evince
+        figma-linux
+        file-roller
+        gnome-disk-utility
+        insomnia
+        upkgs.jellyfin-desktop
+        kicad
+        legcord
+        libreoffice-qt
+        localsend
+        mpv
+        nautilus
+        nicotine-plus
+        pavucontrol
+        prismlauncher
+        rawtherapee
+        simple-scan
+        songrec
+        transmission_4-gtk
+        wdisplays
+        wireshark
+        zulip
+        (warp-terminal.override { waylandSupport = true; })
+        wev
 
-          # Needed for libreoffice spellchecking
-          hunspell
-          hunspellDicts.fr-moderne
-          hunspellDicts.en_US-large
-          hunspellDicts.en_GB-large
+        # Needed for libreoffice spellchecking
+        hunspell
+        hunspellDicts.fr-moderne
+        hunspellDicts.en_US-large
+        hunspellDicts.en_GB-large
 
-          # CLIs
-          wf-recorder
-          wl-clipboard
-          xdg-utils
-        ];
+        # CLIs
+        wf-recorder
+        wl-clipboard
+        xdg-utils
+      ];
     };
 
     # Make NPM respect XDG spec
@@ -159,6 +159,8 @@
     programs.ssh = {
       enable = true;
       enableDefaultConfig = false;
+
+      matchBlocks."*".addKeysToAgent = "yes";
     };
 
     services.tailscale-systray.enable = true;
