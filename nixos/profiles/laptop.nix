@@ -12,6 +12,7 @@
       gaming.enable = true;
       logiops.enable = true;
       nix.enable = true;
+      sddm.enable = true;
       security.enable = true;
       virtualisation.enable = true;
       wireless.enable = true;

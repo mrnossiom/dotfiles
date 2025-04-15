@@ -13,6 +13,7 @@
     ./kanata
     ./logiops.nix
     ./nix.nix
+    ./sddm.nix
     ./secure-boot.nix
     ./security.nix
     ./virtualisation.nix
