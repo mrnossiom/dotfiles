@@ -22,6 +22,13 @@ in
           # Enable meta devtools to inspect Thunderbird Chrome UI
           "devtools.chrome.enabled" = true;
           "devtools.debugger.remote-enabled" = true;
+
+          # https://superuser.com/questions/13518/change-the-default-sorting-order-in-thunderbird
+          # order descending is 2, type id is 22
+          "mailnews.default_news_sort_order" = 2;
+          "mailnews.default_news_sort_type" = 22;
+          "mailnews.default_sort_order" = 2;
+          "mailnews.default_sort_type" = 22;
         };
 
         # <https://www.userchrome.org/how-create-userchrome-css.html>
