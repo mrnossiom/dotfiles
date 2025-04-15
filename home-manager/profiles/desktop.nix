@@ -23,6 +23,8 @@
       firefox.enable = true;
       imv.enable = true;
       kanshi.enable = true;
+      niri.enable = true;
+      noctalia.enable = true;
       stylix.enable = true;
       sway.enable = true;
       thunderbird.enable = true;
@@ -160,6 +162,8 @@
     programs.ssh = {
       enable = true;
       enableDefaultConfig = false;
+
+      matchBlocks."*".addKeysToAgent = "yes";
     };
 
     services.tailscale-systray.enable = true;

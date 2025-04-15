@@ -8,6 +8,11 @@ switch profile="" *args:
 switch profile="" *args:
 	darwin-rebuild switch --show-trace --flake .#{{profile}} {{args}}
 
+run-vm profile="" *args:
+	nixos-rebuild build-vm --show-trace --flake .#{{profile}} {{args}}
+	result/bin/run-*-vm
+	rm *.qcow2
+
 [linux]
 build profile="" *args:
 	nixos-rebuild build --show-trace --flake .#{{profile}} {{args}}

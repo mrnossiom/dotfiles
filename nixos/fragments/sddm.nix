@@ -2,6 +2,7 @@
   config,
   lib,
   pkgs,
+  upkgs,
   ...
 }:
 
@@ -16,6 +17,12 @@ in
 
   config = lib.mkIf cfg.enable {
     # available sessions need to be installed by the system, doesn't work with user-side software
+    # TODO: move
+    programs.niri = {
+      enable = true;
+      package = upkgs.niri;
+    };
+
     services.displayManager.defaultSession = "niri";
 
     services.displayManager.sddm = {
