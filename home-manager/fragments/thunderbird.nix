@@ -1,9 +1,12 @@
-{ config
+{ self
+, config
 , lib
 , ...
 }:
 
 let
+  inherit (self) homeManagerModules;
+
   cfg = config.local.fragment.thunderbird;
 in
 {
@@ -11,7 +14,12 @@ in
     `imv` related
   '';
 
+  imports = [ homeManagerModules.protonmail-bridge ];
+
   config = lib.mkIf cfg.enable {
+    # TODO: add proton-mail-bridge-gui as a service here
+    services.protonmail-bridge.enable = true;
+
     programs.thunderbird = {
       enable = true;
 
