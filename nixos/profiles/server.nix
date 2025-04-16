@@ -196,5 +196,12 @@ in
         port = prometheus-node-exporter-port;
       };
     };
+
+    services.opentelemetry-collector = {
+      enable = true;
+      settings = {
+        # TODO
+      };
+    };
   };
 }
