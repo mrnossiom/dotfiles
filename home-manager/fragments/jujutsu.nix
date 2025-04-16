@@ -33,6 +33,37 @@ in
           git.sign-on-push = true;
         };
 
+        template-aliases = {
+          custom_log_compact = ''
+            if(root,
+              format_root_commit(self),
+              label(if(current_working_copy, "working_copy"),
+                concat(
+                  separate(" ",
+                    format_short_change_id_with_hidden_and_divergent_info(self),
+                    format_short_signature_oneline(author),
+                    bookmarks,
+                    tags,
+                    working_copies,
+                    if(conflict, label("conflict", "conflict")),
+                    if(config("ui.show-cryptographic-signatures").as_boolean(),
+                      format_short_cryptographic_signature(signature)),
+                    if(empty, label("empty", "(empty)")),
+                    if(description,
+                      description.first_line(),
+                      label(if(empty, "empty"), description_placeholder),
+                    ),
+                  ) ++ "\n",
+                ),
+              )
+            )
+          '';
+        };
+
+        templates = {
+          log = "custom_log_compact";
+        };
+
         ui = {
           default-command = "log";
 
