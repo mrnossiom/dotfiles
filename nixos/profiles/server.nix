@@ -216,5 +216,12 @@ in
         reverseProxy = true;
       };
     };
+
+    services.opentelemetry-collector = {
+      enable = true;
+      settings = {
+        # TODO
+      };
+    };
   };
 }
