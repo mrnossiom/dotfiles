@@ -1,5 +1,6 @@
 { config
 , lib
+, upkgs
 
 , ...
 }:
@@ -14,18 +15,19 @@ in
   '';
 
   config = lib.mkIf cfg.enable {
-    hardware.uinput.enable = true;
-
     services.kanata = {
       enable = true;
+      package = upkgs.kanata;
 
       keyboards.neo-integrated = {
         devices = [
-          # TODO: should be `by-id`, : in name cause issues
           # "/dev/input/by-path/pci-0000:00:15.0-platform-i2c_designware.0-event-kbd"
+          "/dev/input/by-path/platform-i8042-serio-0-event-kbd"
         ];
 
-        # Ergo-L Arsenik layout
+        extraDefCfg = "process-unmapped-keys yes";
+
+        # Qwerty Arsenik layout
         # See <https://ergol.org/claviers/arsenik> for mentionned reference files
         config = builtins.readFile ./arsenik.kbd.lisp;
       };
