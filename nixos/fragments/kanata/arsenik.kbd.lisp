@@ -8,17 +8,13 @@
   long_hold_timeout 200
 )
 
-;; angle-mod: the ISO key (a.k.a. LSGT or 102 key) becomes Z
 (defsrc
   1    2    3    4    5  bspc   6    7    8    9    0
   q    w    e    r    t         y    u    i    o    p
   a    s    d    f    g         h    j    k    l    ;
-  <    z    x    c    v    b    n    m    ,    .    /
+  z    x    c    v    b    <    n    m    ,    .    /
             lalt          spc             ralt
 )
-
-;; `Base` layer: standard or dual keys? (layer-taps, homerow mods?)
-;; If you just want angle mod, you still have to enable the standard base.
 
 ;; Base layer: layer-taps under the thumbs + home-row mods on SDF and JKL
 
@@ -50,7 +46,6 @@
   ll (tap-hold $tap_timeout $long_hold_timeout l rmet)
 )
 
-;; `Symbols` layer
 ;; Symbol layer: same as AltGr but enables a NumRow.
 ;; Concretely this does nothing, just let AltGr as-is for keyboard layouts
 ;; depending heavily on AltGr, like Bépo or simply Lafayette layouts like
@@ -79,7 +74,6 @@
   num (layer-toggle numrow)
 )
 
-;; `Navigation` layer: ESDF or HJKL?
 ;; Vim-Navigation layer:
 ;;  - right: Vim-like arrows on HJKL, home/end page up/down, mouse scroll
 ;;  - left: one-hand shortcuts (Cmd/Ctrl-WASZXCV), Tab/Shift-Tab, prev/next
@@ -131,17 +125,18 @@
 (defalias run M-d)
 
 ;; Aliases for `Symbols` and `Navigation` layers
-;; Ergo‑L Windows/Linux aliases
+;; Qwerty/Colemak Windows/Linux aliases
+;; Works with QWERTY-US, Colemak and others.
 
 ;; Navigation layer
 (defalias
 
   all C-a
   sav C-s
-  cls C-t
+  cls C-w
   ndo C-z
   cut C-x
-  cpy C-w
+  cpy C-c
   pst C-v
 
   0 0
@@ -154,45 +149,45 @@
   7 7
   8 8
   9 9
-  , .
-  . n
+  , ,
+  . .
 )
 
 ;; Symbols layer
 (defalias
 
-  ^  AG-q
-  <  AG-w
-  >  AG-e
-  $  AG-r
-  %  AG-t
-  @  AG-y
-  &  AG-u
-  *  AG-i
-  '  AG-o
-  `  AG-p
+  ^  S-6
+  <  S-,
+  >  S-.
+  $  S-4
+  %  S-5
+  @  S-2
+  &  S-7
+  *  S-8
+  '  '
+  `  `
 
-  {  AG-a
-  pl AG-s
-  pr AG-d
-  }  AG-f
-  =  AG-g
-  \  AG-h
-  +  AG-j
-  -  AG-k
-  /  AG-l
-  '' AG-;
+  {  S-[
+  pl S-9
+  pr S-0
+  }  S-]
+  =  =
+  \  \
+  +  S-=
+  -  -
+  /  /
+  '' S-'
 
-  ~  AG-z
-  [  AG-x
-  ]  AG-c
-  _  AG-v
-  #  AG-b
-  |  AG-n
-  !  AG-m
-  ;  AG-,
-  :  AG-.
-  ?  AG-/
+  ~  S-`
+  [  [
+  ]  ]
+  _  S--
+  #  S-3
+  |  S-\
+  !  S-1
+  ;  ;
+  :  S-;
+  ?  S-/
 )
 
 ;; NumRow layer
@@ -208,21 +203,11 @@
   s7 S-7
   s8 S-8
   s9 S-9
-  nbs S-spc ;; narrow no-break space
+  nbs spc ;; no narrow no-break space in Qwerty
 
-  1dk o
-  ;; digits must be escaped, otherwise they’re interpreted as delays in ms
-  dk1 (macro @1dk @1)
-  dk2 (macro @1dk @2)
-  dk3 (macro @1dk @3)
-  dk4 (macro @1dk @4)
-  dk5 (macro @1dk @5)
+  dk1 XX
+  dk2 XX
+  dk3 XX
+  dk4 XX
+  dk5 XX
 )
-
-;; Extra configuration
-;; (defcfg
-;;   ;; Enabled makes kanata process keys that are not defined in defsrc
-;;   ;; Fixes altgr for Windows (see Arsenik issue #22)
-;;   process-unmapped-keys yes
-;;   windows-altgr cancel-lctl-press
-;; )
