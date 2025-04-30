@@ -7,6 +7,8 @@
 let
   cfg = config.local.fragment.vm;
 
+  integrated-keyboard-id = "1:1:AT_Translated_Set_2_keyboard";
+
   theme = config.local.colorScheme.palette;
 in
 {
@@ -20,14 +22,29 @@ in
         blocks = [
           {
             block = "custom";
+            command = ''
+              echo 󰌌 $(swaymsg --raw --type get_inputs \
+                | jq --raw-output '
+                  .[]
+                  | select(.identifier=="${integrated-keyboard-id}")
+                  | .libinput.send_events')
+            '';
+            click = [{
+              button = "left";
+              cmd = "${lib.getExe' pkgs.sway "swaymsg"} input ${integrated-keyboard-id} events toggle";
+              update = true;
+            }];
+            interval = "once";
+          }
+
+          {
+            block = "custom";
             command = "echo  $(${lib.getExe' pkgs.mako "makoctl"} mode)";
-            click = [
-              {
-                button = "left";
-                cmd = "${lib.getExe' pkgs.mako "makoctl"} mode -t dnd";
-                update = true;
-              }
-            ];
+            click = [{
+              button = "left";
+              cmd = "${lib.getExe' pkgs.mako "makoctl"} mode -t dnd";
+              update = true;
+            }];
             interval = "once";
           }
 
