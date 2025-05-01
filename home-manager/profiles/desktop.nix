@@ -139,10 +139,18 @@ in
     programs.ssh = {
       enable = true;
 
-      matchBlocks."weird-row-server" = {
-        hostname = "weird-row.portal.wiro.world";
-        # TODO: reduce automated load on ssh port by changing to a random port
-        # port = ""
+      matchBlocks = {
+        "weird-row-server" = {
+          hostname = "weird-row.portal.wiro.world";
+          # TODO: reduce automated load on ssh port by changing to a random port
+          # port = ""
+        };
+
+        "wiroprint" = {
+          hostname = "wiroprint.portal.wiro.world";
+          # this machine is not accessible on the public network via SSH
+          # port = "";
+        };
       };
     };
 

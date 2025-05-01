@@ -1,5 +1,3 @@
-targetSystemPkgs:
-
 { self
 , lib
 
@@ -7,14 +5,8 @@ targetSystemPkgs:
 , ...
 }@pkgs:
 
-let
-  inherit (self.outputs) flake-lib;
+image-path:
 
-  iso = flake-lib.nixos.createSystem targetSystemPkgs [ ../nixos/profiles/installer.nix ];
-  # Build installer ISO
-  isoPath = "${iso.config.system.build.isoImage}/iso/${iso.config.isoImage.isoName}";
-
-in
 lib.getExe (writeShellApplication {
   name = "flash-installer";
   runtimeInputs = with pkgs; [ pv fzf ];
@@ -31,6 +23,6 @@ lib.getExe (writeShellApplication {
     echo "Flashing to $dev"
     
     # Format selected disk
-    pv -tpreb "${isoPath}" | sudo dd bs=4M of="$dev" iflag=fullblock conv=notrunc,noerror oflag=sync
+    pv -tpreb "${image-path}" | sudo dd bs=4M of="$dev" iflag=fullblock conv=notrunc,noerror oflag=sync
   '';
 })

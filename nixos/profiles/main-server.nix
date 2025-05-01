@@ -1,14 +1,16 @@
 { self
 , config
-, pkgs
 , upkgs
 , ...
 }:
 
 let
-  inherit (self.inputs) srvos agenix tangled;
+  inherit (self.inputs) srvos nixpkgs-unstable agenix tangled;
 
   all-secrets = import ../../secrets;
+
+  pds-unstable-module = import "${nixpkgs-unstable}/nixos/modules/services/web-apps/pds.nix";
+  pds-patched-module = args: pds-unstable-module (args // { pkgs = upkgs; });
 
   ext-if = "eth0";
   external-ip = "91.99.55.74";
@@ -21,19 +23,13 @@ let
   pds-port = 3001;
   pds-hostname = "pds.wiro.world";
 
-  tangled-owner = "did:plc:xhgrjm4mcx3p5h3y6eino6ti";
-  tangled-knot-port = 3002;
-  tangled-knot-hostname = "knot.wiro.world";
-  tangled-spindle-port = 3003;
-  tangled-spindle-hostname = "spindle.wiro.world";
+  tangled-port = 3002;
+  tangled-hostname = "knot.wiro.world";
 
   grafana-port = 9000;
   grafana-hostname = "console.wiro.world";
   prometheus-port = 9001;
   prometheus-node-exporter-port = 9002;
-
-  thelounge-port = 3004;
-  thelounge-hostname = "lounge.wiro.world";
 in
 {
   imports = [
@@ -43,8 +39,9 @@ in
 
     agenix.nixosModules.default
 
-    tangled.nixosModules.knot
-    tangled.nixosModules.spindle
+    tangled.nixosModules.knotserver
+
+    pds-patched-module
   ];
 
   config = {
@@ -92,11 +89,9 @@ in
       jails = { };
     };
 
-    services.tailscale.enable = true;
-
+    # TODO: switch to nightly channel
     services.pds = {
       enable = true;
-      package = upkgs.bluesky-pds;
 
       settings = {
         PDS_HOSTNAME = "pds.wiro.world";
@@ -112,7 +107,7 @@ in
 
     services.caddy = {
       enable = true;
-      package = pkgs.caddy;
+      package = upkgs.caddy;
 
       globalConfig = ''
         metrics { per_host }
@@ -135,16 +130,8 @@ in
         '';
       };
 
-      virtualHosts.${tangled-knot-hostname}.extraConfig = ''
-        reverse_proxy http://localhost:${toString tangled-knot-port}
-      '';
-
-      virtualHosts.${tangled-spindle-hostname}.extraConfig = ''
-        reverse_proxy http://localhost:${toString tangled-spindle-port}
-      '';
-
-      virtualHosts.${thelounge-hostname}.extraConfig = ''
-        reverse_proxy http://localhost:${toString thelounge-port}
+      virtualHosts.${tangled-hostname}.extraConfig = ''
+        reverse_proxy http://localhost:${toString tangled-port}
       '';
     };
 
@@ -154,26 +141,13 @@ in
 
     programs.fish.enable = true;
 
-    services.tangled-knot = {
-      enable = true;
-      openFirewall = true;
-
-      motd = "Welcome to @wiro.world's knot!\n";
-      server = {
-        listenAddr = "localhost:${toString tangled-knot-port}";
-        hostname = tangled-knot-hostname;
-        owner = tangled-owner;
-      };
-    };
-
-
-    services.tangled-spindle = {
+    services.tangled-knotserver = {
       enable = true;
 
       server = {
-        listenAddr = "localhost:${toString tangled-spindle-port}";
-        hostname = tangled-spindle-hostname;
-        owner = tangled-owner;
+        listenAddr = "0.0.0.0:${toString tangled-port}";
+        secretFile = config.age.secrets.tangled-config.path;
+        hostname = tangled-hostname;
       };
     };
 
@@ -204,16 +178,6 @@ in
       exporters.node = {
         enable = true;
         port = prometheus-node-exporter-port;
-      };
-    };
-
-    services.thelounge = {
-      enable = true;
-      port = thelounge-port;
-      public = false;
-      extraConfig = {
-        host = "127.0.0.1";
-        reverseProxy = true;
       };
     };
   };

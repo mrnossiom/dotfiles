@@ -71,8 +71,6 @@ in
         # that depends on fish internal ls wrappers and can be overridden by
         # bad configuration. (e.g. NixOS `environment.shellAliases` default)
         ls = "${lib.getExe pkgs.eza} --color=auto --icons=auto --hyperlink";
-
-        pasters = "${lib.getExe pkgs.curl} --data-binary @- https://paste.rs/";
       };
 
       shellAbbrs = {

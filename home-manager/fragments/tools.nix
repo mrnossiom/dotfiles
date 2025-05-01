@@ -46,6 +46,7 @@ in
       openssl
       ouch
       parallel
+      lpkgs.paste-rs
       pv
       restic
       ripgrep

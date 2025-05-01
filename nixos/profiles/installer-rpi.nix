@@ -1,4 +1,5 @@
-{ lib
+{ self
+, lib
 , pkgs
 , lpkgs
 
@@ -7,23 +8,13 @@
 }:
 
 let
+  inherit (self.inputs) nixos-hardware;
+
   keys = import ../../secrets/keys.nix;
 
   binName = drv: drv.meta.mainProgram;
 
   flakeUri = "github:mrnossiom/dotfiles";
-
-  ## Wireless related
-
-  # connect-wifi <interface> <BSSID>
-  connect-wifi = pkgs.writeShellScriptBin "connect-wifi" ''
-    if [ -z "$1" ]; then echo "Interface unset"; exit; fi
-    if [ -z "$2" ]; then echo "SSID unset"; exit; fi
-    
-    CONFIG=$(mktemp)
-    wpa_passphrase $2 > $CONFIG 
-    sudo wpa_supplicant -B -i$1 -c$CONFIG
-  '';
 
   ## Formatting related
 
@@ -47,7 +38,7 @@ let
 
   # Install specified flake system to /mnt
   # install-system <hostname>
-  install-system = writeShellScriptBin "install-system" ''
+  install-system = pkgs.writeShellScriptBin "install-system" ''
     if [ -z "$1" ]; then echo "Hostname unset"; exit; fi
 
     echo "Installing $1"
@@ -55,32 +46,40 @@ let
   '';
 in
 {
-  imports = [ "${modulesPath}/installer/cd-dvd/installation-cd-minimal-new-kernel.nix" ];
+  imports = [
+    nixos-hardware.nixosModules.raspberry-pi-4
+    "${modulesPath}/installer/sd-card/sd-image-aarch64.nix"
+  ];
 
   config = {
-    # Default compression is never-ending, this gets done in a minute with better results
-    isoImage.squashfsCompression = "zstd -Xcompression-level 10";
+    sdImage.compressImage = false;
 
-    # Disable annoying warning
-    boot.swraid.enable = lib.mkForce false;
-
-    boot.kernelPackages = lib.mkForce pkgs.linuxKernel.packages.linux_6_6;
+    boot.kernelPackages = lib.mkForce pkgs.linuxKernel.packages.linux_rpi4;
 
     nix.settings = {
       experimental-features = [ "nix-command" "flakes" ];
-      extra-substituters = [ "https://nix-community.cachix.org" ];
-      extra-trusted-public-keys = [ "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs=" ];
+      extra-substituters = [
+        "https://nix-community.cachix.org"
+        "https://mrnossiom.cachix.org"
+      ];
+      extra-trusted-public-keys = [
+        "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+        "mrnossiom.cachix.org-1:WKo+xfDFaT6pRP4YiIFsEXvyBzI/Pm9uGhURgF1wlQg="
+      ];
     };
 
-    # Add our keys to default users for better remote experience
-    users.users.nixos.openssh.authorizedKeys.keys = keys.users;
+    users.users.nixos = {
+      isNormalUser = true;
+      extraGroups = [ "wheel" ];
+      # Add our keys to default users for better remote experience
+      openssh.authorizedKeys.keys = keys.users;
+    };
 
     # Start wpa_supplicant right away
     systemd.services.wpa_supplicant.wantedBy = lib.mkForce [ "multi-user.target" ];
 
     services.getty.helpLine = ''
       Available custom tools:
-      - Networking: ${binName connect-wifi}
       - File System: ${binName disko-cycle}
       - Installation: ${binName link-hardware-config}, ${binName install-system}
 
@@ -90,10 +89,13 @@ in
     '';
 
     environment.systemPackages = [
-      connect-wifi
       disko-cycle
       link-hardware-config
       install-system
     ];
+
+    services.openssh.enable = true;
+
+    security.sudo.wheelNeedsPassword = false;
   };
 }

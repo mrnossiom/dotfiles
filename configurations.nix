@@ -19,8 +19,14 @@ in
 
     # Servers
     "weird-row-server" = createSystem pkgs [
-      (system "weird-row-server" "server")
+      (system "weird-row-server" "main-server")
       (managedDiskLayout "ext4-hetzner" { device = "sda"; swapSize = 2; })
+      (user "milomoisson" { description = "Milo Moisson"; profile = "server"; keys = keys.users; })
+    ];
+
+    "wiroprint-server" = createSystem pkgs [
+      (system "wiroprint-server" "print-server")
+      # (managedDiskLayout "ext4-hetzner" { device = "sda"; swapSize = 2; })
       (user "milomoisson" { description = "Milo Moisson"; profile = "server"; keys = keys.users; })
     ];
   };

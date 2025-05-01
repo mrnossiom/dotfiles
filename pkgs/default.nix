@@ -9,6 +9,7 @@ in
   find-unicode = pkgs.callPackage ./find-unicode.nix { };
   names = pkgs.callPackage ./names.nix { };
   otree = pkgs.callPackage ./otree.nix { };
+  paste-rs = pkgs.callPackage ./paste-rs.nix { };
   probe-rs-udev-rules = pkgs.callPackage ./probe-rs-udev-rules.nix { };
 
   # Import packages defined in foreign repositories
