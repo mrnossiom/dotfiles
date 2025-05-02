@@ -102,6 +102,7 @@ in
         pavucontrol
         prismlauncher
         rawtherapee
+        showmethekey
         simple-scan
         transmission_4-gtk
         vesktop
