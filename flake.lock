@@ -297,11 +297,11 @@
     "indigo": {
       "flake": false,
       "locked": {
-        "lastModified": 1738491661,
-        "narHash": "sha256-+njDigkvjH4XmXZMog5Mp0K4x9mamHX6gSGJCZB9mE4=",
+        "lastModified": 1745333930,
+        "narHash": "sha256-83fIHqDE+dfnZ88HaNuwfKFO+R0RKAM1WxMfNh/Matk=",
         "owner": "oppiliappan",
         "repo": "indigo",
-        "rev": "feb802f02a462ac0a6392ffc3e40b0529f0cdf71",
+        "rev": "e4e59280737b8676611fc077a228d47b3e8e9491",
         "type": "github"
       },
       "original": {
@@ -313,7 +313,7 @@
     "inter-fonts-src": {
       "flake": false,
       "locked": {
-        "lastModified": 1731687360,
+        "lastModified": 1731680160,
         "narHash": "sha256-5vdKKvHAeZi6igrfpbOdhZlDX2/5+UvzlnCQV6DdqoQ=",
         "type": "tarball",
         "url": "https://github.com/rsms/inter/releases/download/v4.1/Inter-4.1.zip"
@@ -749,11 +749,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1744106716,
-        "narHash": "sha256-90j62Jp7PivPR0hSpL7uE5uTFYi3NO1AiAEpHH0miJQ=",
+        "lastModified": 1746353170,
+        "narHash": "sha256-jr7ry6fJK1Z2ULWjNwtMKcc9rqHMRq51CdCBFmmNWqg=",
         "ref": "refs/heads/master",
-        "rev": "1150567d3f28ffd600cc759afee8ec226baa0c5f",
-        "revCount": 451,
+        "rev": "7f1717e01a9bd50651ec8f1ffc6f09721aa5841b",
+        "revCount": 558,
         "type": "git",
         "url": "https://tangled.sh/@tangled.sh/core"
       },
