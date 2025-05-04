@@ -66,28 +66,27 @@ in
           soft-wrap.wrap-at-text-width = true;
         };
 
-        keys =
-          let
-            disable-arrow-keys = false;
-            noop-arrow-keys = lib.optionalAttrs disable-arrow-keys
-              { up = "no_op"; down = "no_op"; left = "no_op"; right = "no_op"; };
-          in
-          {
-            normal = {
-              "space" = {
-                # Swap original keybinds, default (lowercase) searches in `pwd`
-                f = "file_picker_in_current_directory";
-                F = "file_picker";
-              };
+        keys = {
+          normal = {
+            "space" = {
+              # Swap original keybinds, default (lowercase) searches in `pwd`
+              f = "file_picker_in_current_directory";
+              F = "file_picker";
+            };
 
-              # Toggle inlay hints
-              "A-u" = ":toggle lsp.display-inlay-hints";
-              # Toogle wrapping
-              # TODO: change to `soft-wrap.enable` when supported by `:toggle`
-              "A-w" = ":toggle soft-wrap.wrap-at-text-width";
-            } // noop-arrow-keys;
-            insert = noop-arrow-keys;
+            # Toggle inlay hints
+            "A-u" = ":toggle lsp.display-inlay-hints";
+            # Toogle wrapping
+            # TODO: change to `soft-wrap.enable` when supported by `:toggle`
+            "A-w" = ":toggle soft-wrap.wrap-at-text-width";
           };
+          insert = {
+            up = "no_op";
+            down = "no_op";
+            left = "no_op";
+            right = "no_op";
+          };
+        };
       };
 
       extraPackages = with pkgs; [
