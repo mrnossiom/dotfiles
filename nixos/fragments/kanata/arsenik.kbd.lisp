@@ -36,30 +36,27 @@
 (deflayer base
   _    _    _    _    _   _    _    _    _    _    _
   q    w    e    r    t        y    u    i    o    p
-  a    @ss  @dd  @ff  g        h    @jj  @kk  @ll  ;
+  @aa  @ss  @dd  @ff  g        h    @jj  @kk  @ll  @semisft
   z    x    c    v    b   <    n    m    ,    .    /
-       @num @sft          @nav           @sym _
+       ∅    @num          @nav           @sym ∅
 )
 
 ;; Timing variables are defined in `kanata.kbd` file.
 
 (defalias
-  ;; Main mod-tap: Nav layer when held, Space when tapped.
   nav (tap-hold $tap_timeout $long_hold_timeout spc (layer-while-held navigation))
-
-  ;; Space-cadet thumb keys: Shift/BackSpace, AltGr/Enter.
-  ;; Acts as a modifier by default, or as BackSpace/Enter when tapped separately.
-  num (layer-while-held numrow)
-  sft (tap-hold-press $tap_timeout $hold_timeout bspc lsft)
+  num (tap-hold-press $tap_timeout $hold_timeout bspc (layer-while-held numrow))
   sym (tap-hold-press $tap_timeout $hold_timeout ret (layer-while-held symbols))
 
   ;; Home-row mods
+  aa (tap-hold $tap_timeout $long_hold_timeout a lsft)
   ss (tap-hold $tap_timeout $long_hold_timeout s lalt)
   dd (tap-hold $tap_timeout $long_hold_timeout d lmet)
   ff (tap-hold $tap_timeout $long_hold_timeout f lctl)
   jj (tap-hold $tap_timeout $long_hold_timeout j rctl)
   kk (tap-hold $tap_timeout $long_hold_timeout k rmet)
   ll (tap-hold $tap_timeout $long_hold_timeout l ralt)
+  semisft (tap-hold $tap_timeout $long_hold_timeout ; rsft)
 )
 
 ;; Symbol layer: same as AltGr but enables a NumRow.
