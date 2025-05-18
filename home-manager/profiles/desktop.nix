@@ -104,6 +104,7 @@ in
         rawtherapee
         showmethekey
         simple-scan
+        sonic-pi
         transmission_4-gtk
         vesktop
         wdisplays
