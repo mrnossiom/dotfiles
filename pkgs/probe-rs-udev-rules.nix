@@ -9,7 +9,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "https://probe.rs/files/69-probe-rs.rules";
-    hash = "sha256-SdwESnOuvOKMsTvxyA5c4UwtcS3kU33SlNttepMm7HY=";
+    hash = "sha256-yjxld5ebm2jpfyzkw+vngBfHu5Nfh2ioLUKQQDY4KYo=";
   };
 
   dontUnpack = true;

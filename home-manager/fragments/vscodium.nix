@@ -16,7 +16,8 @@ in
     programs.vscode = {
       enable = true;
       package = pkgs.vscodium;
-      extensions = with pkgs.vscode-extensions; [
+
+      profiles.default.extensions = with pkgs.vscode-extensions; [
         bradlc.vscode-tailwindcss
         dbaeumer.vscode-eslint
         eamodio.gitlens

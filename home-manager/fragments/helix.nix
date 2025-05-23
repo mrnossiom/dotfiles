@@ -100,7 +100,6 @@ in
         nodePackages.bash-language-server
         nodePackages.typescript-language-server
         taplo
-        typst-lsp
         vscode-langservers-extracted
         yaml-language-server
       ] ++ lib.optionals (!flags.onlyCached) [
@@ -134,7 +133,6 @@ in
             (mk-lang "python" [ "ruff" "jedi" "pylsp" ] { })
             (mk-lang "rust" [ "rust-analyzer" ] { })
             (mk-lang "typescript" [ "typescript-language-server" ] { })
-            (mk-lang "vue" [ "vuels" "typescript-language-server" ] { })
           ];
       };
     };

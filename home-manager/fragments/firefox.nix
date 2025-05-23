@@ -70,8 +70,8 @@ in
 
         search = {
           force = true;
-          default = "DuckDuckGo";
-          order = [ "DuckDuckGo" "Wikipedia" "Google" ];
+          default = "ddg";
+          order = [ "ddg" "wikipedia" "google" ];
         };
       };
     };

@@ -82,7 +82,7 @@ in
         blender
         bottles
         calibre
-        upkgs.cura-appimage
+        cura-appimage
         element-desktop
         evince
         file-roller

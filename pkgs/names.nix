@@ -15,7 +15,7 @@ rustPlatform.buildRustPackage rec {
     hash = "sha256-C0JEVTOgxtgvCgSSdYxMCMtAVRU1A7DEczNj4zY8q20=";
   };
 
-  cargoHash = "sha256-qaYiyfANQNJSpRhNJ9XQONC32KdEGx7QFqAxZ5E8uHk=";
+  cargoHash = "sha256-+zNlzo/+CCGzxreDdCj/bjF28euFGuXJspJoBPaG+8E=";
 
   meta = with lib; {
     description = "Random name generator";

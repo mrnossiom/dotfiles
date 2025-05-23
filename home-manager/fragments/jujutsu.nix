@@ -70,7 +70,7 @@ in
           diff-editor = ":builtin";
           merge-editor = ":builtin";
 
-          diff.tool = [ "difft" "--color=always" "--display=inline" "$left" "$right" ];
+          diff-formatter = [ "difft" "--color=always" "--display=inline" "$left" "$right" ];
         };
 
         aliases = {

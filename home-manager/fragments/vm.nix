@@ -53,33 +53,35 @@ in
 
     services.mako = {
       enable = true;
+      settings = {
+        font = "sans-serif 10";
+        background-color = "#${theme.base0D}";
+        text-color = "#ffffff";
 
-      font = "sans-serif 10";
-      backgroundColor = "#${theme.base0D}";
-      textColor = "#ffffff";
+        icons = true;
 
-      icons = true;
+        width = 500;
+        max-visible = 3;
+        sort = "-priority";
 
-      width = 500;
-      maxVisible = 3;
-      sort = "-priority";
+        default-timeout = 5000;
 
-      defaultTimeout = 5000;
+        layer = "overlay";
 
-      layer = "overlay";
+        border-size = 0;
+        border-radius = 5;
 
-      borderSize = 0;
-      borderRadius = 5;
+        "urgency=low" = {
+          background-color = "#${theme.base0A}";
+        };
+        "urgency=critical" = {
+          background-color = "#${theme.base0F}";
+        };
 
-      extraConfig = ''
-        [urgency="low"]
-        background-color=#${theme.base0A}
-        [urgency="critical"]
-        background-color=#${theme.base0F}
-
-        [mode="dnd"]
-        invisible=1
-      '';
+        "mode=dnd" = {
+          invisible = 1;
+        };
+      };
     };
 
     gtk = {

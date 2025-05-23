@@ -1,6 +1,6 @@
 { config
 , lib
-, upkgs
+, pkgs
 
 , ...
 }:
@@ -17,7 +17,7 @@ in
   config = lib.mkIf cfg.enable {
     services.kanata = {
       enable = true;
-      package = upkgs.kanata;
+      package = pkgs.kanata;
 
       keyboards.neo-integrated = {
         devices = [

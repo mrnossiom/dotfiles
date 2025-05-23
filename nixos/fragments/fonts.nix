@@ -8,8 +8,6 @@
 
 let
   cfg = config.local.fragment.fonts;
-
-  jetbrains-mono-nerd = (pkgs.nerdfonts.override { fonts = [ "JetBrainsMono" ]; });
 in
 {
   options.local.fragment.fonts.enable = lib.mkEnableOption ''
@@ -21,7 +19,7 @@ in
       packages = with pkgs; [
         font-awesome
         inter
-        jetbrains-mono-nerd
+        nerd-fonts.jetbrains-mono
         merriweather
         noto-fonts
         noto-fonts-cjk-sans
