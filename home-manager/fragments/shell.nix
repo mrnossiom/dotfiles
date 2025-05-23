@@ -36,10 +36,9 @@ in
 
     programs.direnv = {
       enable = true;
+      silent = true;
       nix-direnv.enable = true;
     };
-    # Entering in shells is indicated by starship
-    home.sessionVariables.DIRENV_LOG_FORMAT = "";
 
     programs.nushell = {
       enable = true;
