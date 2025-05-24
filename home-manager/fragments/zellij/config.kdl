@@ -165,6 +165,8 @@ keybinds clear-defaults=true {
     }
 }
 
+show_startup_tips false
+
 default_layout "compact"
 mouse_mode true
 on_force_close "detach"
