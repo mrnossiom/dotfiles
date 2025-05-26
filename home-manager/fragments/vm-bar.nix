@@ -8,6 +8,8 @@ let
   cfg = config.local.fragment.vm;
 
   integrated-keyboard-id = "1:1:AT_Translated_Set_2_keyboard";
+  integrated-keyboard-id-bis = "1:1:kanata";
+  swaymsg = lib.getExe' pkgs.sway "swaymsg";
 
   theme = config.local.colorScheme.palette;
 in
@@ -31,7 +33,10 @@ in
             '';
             click = [{
               button = "left";
-              cmd = "${lib.getExe' pkgs.sway "swaymsg"} input ${integrated-keyboard-id} events toggle";
+              cmd = ''
+                ${swaymsg} input ${integrated-keyboard-id} events toggle;
+                ${swaymsg} input ${integrated-keyboard-id-bis} events toggle
+              '';
               update = true;
             }];
             interval = "once";

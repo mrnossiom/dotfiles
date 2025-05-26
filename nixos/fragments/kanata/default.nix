@@ -21,7 +21,7 @@ in
 
       keyboards.neo-integrated = {
         devices = [
-          # "/dev/input/by-path/pci-0000:00:15.0-platform-i2c_designware.0-event-kbd"
+          # archaic-wiro-laptop integrated keyboard
           "/dev/input/by-path/platform-i8042-serio-0-event-kbd"
         ];
 
