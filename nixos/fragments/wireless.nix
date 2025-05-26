@@ -22,12 +22,16 @@ in
     networking.firewall = {
       enable = true;
 
-      # TIP: Locally redirect ports with socat
+      # TIP: locally redirect ports with socat
       # socat tcp-listen:4242,reuseaddr,fork tcp:localhost:8000
 
       # Open arbitrary ports to share things on local networks
       allowedTCPPorts = [ 4242 ];
       allowedTCPPortRanges = [
+        { from = 42420; to = 42429; }
+      ];
+      allowedUDPPorts = [ 4242 ];
+      allowedUDPPortRanges = [
         { from = 42420; to = 42429; }
       ];
 
