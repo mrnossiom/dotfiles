@@ -27,7 +27,6 @@ in
     # cargo config
     home.file."${config.home.sessionVariables.CARGO_HOME}/config.toml".source =
       let
-        sccache = lib.getExe' pkgs.sccache "sccache";
         clang = lib.getExe pkgs.llvmPackages.clang;
         mold = lib.getExe pkgs.mold;
         lld = lib.getExe' pkgs.llvmPackages.lld "lld";
@@ -35,8 +34,6 @@ in
         get-crates-io-token = pkgs.writeShellScript "get-crates-io-token" "cat ${config.age.secrets.api-crates-io.path}";
       in
       toml-format.generate "cargo-config" {
-        build.rustc-wrapper = sccache;
-
         registry.global-credential-providers = [ "cargo:token-from-stdout ${get-crates-io-token}" ];
 
         source = {
