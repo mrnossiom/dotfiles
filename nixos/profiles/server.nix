@@ -36,7 +36,7 @@ in
 
     agenix.nixosModules.default
 
-    tangled.nixosModules.knotserver
+    tangled.nixosModules.knot
   ];
 
   config = {
@@ -135,8 +135,9 @@ in
 
     programs.fish.enable = true;
 
-    services.tangled-knotserver = {
+    services.tangled-knot = {
       enable = true;
+      openFirewall = true;
 
       server = {
         listenAddr = "0.0.0.0:${toString tangled-port}";
