@@ -8,6 +8,8 @@
 let
   flags = config.local.flags;
 
+  keys = import ../../secrets/keys.nix;
+
   cfg = config.local.fragment.jujutsu;
 in
 {
@@ -27,8 +29,9 @@ in
         };
 
         signing = {
-          backend = "gpg";
-          key = "3C01CA5E";
+          behavior = "own";
+          backend = "ssh";
+          key = keys.milomoisson;
 
           git.sign-on-push = true;
         };

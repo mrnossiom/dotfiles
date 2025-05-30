@@ -37,7 +37,7 @@ in
 
       signing = {
         signByDefault = true;
-        key = "3C01CA5E";
+        key = "~/.ssh/id_ed25519.pub";
       };
 
       # Ignore very specific stuff that is not common to much repos
