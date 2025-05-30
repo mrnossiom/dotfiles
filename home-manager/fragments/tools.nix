@@ -58,6 +58,7 @@ in
       trash-cli
       unzip
       wcurl
+      wormhole-rs
     ]) ++ lib.optionals (!flags.onlyCached) [
       lpkgs.otree
     ];
