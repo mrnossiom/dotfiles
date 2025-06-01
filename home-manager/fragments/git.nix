@@ -35,10 +35,8 @@ in
       # TODO: this email should be behind a secret or at least a config
       userEmail = "milo@wiro.world";
 
-      signing = {
-        signByDefault = true;
-        key = "~/.ssh/id_ed25519.pub";
-      };
+      signing.signByDefault = true;
+      signing.key = "~/.ssh/id_ed25519.pub";
 
       # Ignore very specific stuff that is not common to much repos
       ignores = [
@@ -128,6 +126,8 @@ in
 
         pretty.custom = "format:%C(red)%h%C(reset) -%C(yellow)%d%C(reset) %s %C(green)(%cd) %C(bold blue)<%an>";
         log.date = "human";
+
+        gpg.format = "ssh";
 
         advice = {
           addEmptyPathspec = false;
