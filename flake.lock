@@ -597,11 +597,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1746153335,
-        "narHash": "sha256-vwKelhJJS8haCdH3t8uf96VFao7/YzJahPG5JLTO1PU=",
+        "lastModified": 1748746145,
+        "narHash": "sha256-bwkCAK9pOyI2Ww4Q4oO1Ynv7O9aZPrsIAMMASmhVGp4=",
         "owner": "oxalica",
         "repo": "rust-overlay",
-        "rev": "ebc7823c3ffde594c7733113042b72694d996de9",
+        "rev": "12a0d94a2f2b06714f747ab97b2fa546f46b460c",
         "type": "github"
       },
       "original": {
@@ -758,15 +758,16 @@
         "rust-overlay": "rust-overlay_4"
       },
       "locked": {
-        "lastModified": 1746970766,
-        "narHash": "sha256-C0D1xqUV4kwuzgRGKbzZ7RZLdgoYv/1TK0D09AsD/lE=",
+        "lastModified": 1749325565,
+        "narHash": "sha256-AFoz3z8WIqh/Sl6zE8y9iGUAt0KoWY4JjM9VXG0NSto=",
         "owner": "mrnossiom",
         "repo": "wakatime-ls",
-        "rev": "bbcf77b2e9d1338780426097be573fb195ba20a9",
+        "rev": "4a1af1568ee8f0c7e92577554dd0423d4db333da",
         "type": "github"
       },
       "original": {
         "owner": "mrnossiom",
+        "ref": "ditch-tower-lsp",
         "repo": "wakatime-ls",
         "type": "github"
       }

@@ -40,7 +40,7 @@
     tangled.url = "git+https://tangled.sh/@tangled.sh/core";
     tangled.inputs.nixpkgs.follows = "nixpkgs";
 
-    wakatime-ls.url = "github:mrnossiom/wakatime-ls";
+    wakatime-ls.url = "github:mrnossiom/wakatime-ls/ditch-tower-lsp";
     wakatime-ls.inputs.nixpkgs.follows = "nixpkgs";
   };
 
