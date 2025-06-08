@@ -758,16 +758,15 @@
         "rust-overlay": "rust-overlay_4"
       },
       "locked": {
-        "lastModified": 1749325565,
-        "narHash": "sha256-AFoz3z8WIqh/Sl6zE8y9iGUAt0KoWY4JjM9VXG0NSto=",
+        "lastModified": 1749344834,
+        "narHash": "sha256-rNmHn8SgJJ/MLOwN/PoSFeVf4jfL5Qj2yJ+HcfjMZIk=",
         "owner": "mrnossiom",
         "repo": "wakatime-ls",
-        "rev": "4a1af1568ee8f0c7e92577554dd0423d4db333da",
+        "rev": "b7ffbab1e7a045d1c9c26ad6421b4c06fb583f37",
         "type": "github"
       },
       "original": {
         "owner": "mrnossiom",
-        "ref": "ditch-tower-lsp",
         "repo": "wakatime-ls",
         "type": "github"
       }
