@@ -29,7 +29,6 @@ in
       let
         clang = lib.getExe pkgs.llvmPackages.clang;
         mold = lib.getExe pkgs.mold;
-        lld = lib.getExe' pkgs.llvmPackages.lld "lld";
 
         get-crates-io-token = pkgs.writeShellScript "get-crates-io-token" "cat ${config.age.secrets.api-crates-io.path}";
       in
@@ -46,8 +45,8 @@ in
             linker = clang;
             rustflags = [ "-Clink-arg=--ld-path=${mold}" "-Ctarget-cpu=native" ];
           };
-          x86_64-apple-darwin.rustflags = [ "-Clink-arg=-fuse-ld=${lld}" "-Ctarget-cpu=native" ];
-          aarch64-apple-darwin.rustflags = [ "-Clink-arg=-fuse-ld=${lld}" "-Ctarget-cpu=native" ];
+          x86_64-apple-darwin.rustflags = [ "-Ctarget-cpu=native" ];
+          aarch64-apple-darwin.rustflags = [ "-Ctarget-cpu=native" ];
         };
 
         unstable.gc = true;
