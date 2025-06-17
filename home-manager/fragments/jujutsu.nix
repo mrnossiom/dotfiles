@@ -72,6 +72,7 @@ in
 
           diff-editor = ":builtin";
           merge-editor = ":builtin";
+          pager = ":builtin";
 
           diff-formatter = [ "difft" "--color=always" "--display=inline" "$left" "$right" ];
         };
