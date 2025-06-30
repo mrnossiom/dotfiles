@@ -28,6 +28,7 @@ in
       asciinema
       calc
       delta
+      devbox
       dogdns
       du-dust
       encfs

@@ -28,7 +28,7 @@ in
     };
 
     networking.hosts = {
-      "127.0.0.1" = [ "www.youtube.com" ];
+      "127.0.0.1" = [ "www.youtube.com" "oidc-mock" ];
 
       "10.45.3.4" = [ "printer.epita" ];
     };
