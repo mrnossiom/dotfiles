@@ -127,6 +127,8 @@ in
 
     services.upower.enable = true;
 
+    services.tailscale.enable = true;
+
     xdg.portal = {
       enable = true;
       wlr.enable = true;
