@@ -129,6 +129,8 @@ in
 
     services.tailscale.enable = true;
 
+    services.flatpak.enable = true;
+
     xdg.portal = {
       enable = true;
       wlr.enable = true;
