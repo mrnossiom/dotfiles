@@ -84,6 +84,8 @@ in
       jails = { };
     };
 
+    services.tailscale.enable = true;
+
     services.pds = {
       enable = true;
 
