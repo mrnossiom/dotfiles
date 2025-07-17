@@ -38,6 +38,9 @@ in
     boot = {
       kernelParams = [ "quiet" ];
 
+      # allow perf as user
+      kernel.sysctl."kernel.perf_event_paranoid" = -1;
+
       kernelPackages = upkgs.linuxKernel.packages.linux_zen;
       extraModulePackages = with config.boot.kernelPackages; [ perf xone ];
 
