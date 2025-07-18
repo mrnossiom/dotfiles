@@ -101,6 +101,24 @@
         "type": "github"
       }
     },
+    "flake-utils_2": {
+      "inputs": {
+        "systems": "systems_6"
+      },
+      "locked": {
+        "lastModified": 1694529238,
+        "narHash": "sha256-zsNZZGTGnMOf9YpHKJqMSsa0dXbfmxeoJ7xHlrt+xmY=",
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "rev": "ff7b65b44d01cf9ba6a71320833626af21126384",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "type": "github"
+      }
+    },
     "git-leave": {
       "inputs": {
         "gitignore": "gitignore",
@@ -208,6 +226,28 @@
         "type": "github"
       }
     },
+    "gomod2nix": {
+      "inputs": {
+        "flake-utils": "flake-utils_2",
+        "nixpkgs": [
+          "tangled",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1751702058,
+        "narHash": "sha256-/GTdqFzFw/Y9DSNAfzvzyCMlKjUyRKMPO+apIuaTU4A=",
+        "owner": "nix-community",
+        "repo": "gomod2nix",
+        "rev": "664ad7a2df4623037e315e4094346bff5c44e9ee",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "gomod2nix",
+        "type": "github"
+      }
+    },
     "helix": {
       "inputs": {
         "nixpkgs": [
@@ -260,6 +300,18 @@
       "original": {
         "type": "file",
         "url": "https://unpkg.com/htmx.org@2.0.4/dist/htmx.min.js"
+      }
+    },
+    "htmx-ws-src": {
+      "flake": false,
+      "locked": {
+        "narHash": "sha256-2fg6KyEJoO24q0fQqbz9RMaYNPQrMwpZh29tkSqdqGY=",
+        "type": "file",
+        "url": "https://cdn.jsdelivr.net/npm/htmx-ext-ws@2.0.2"
+      },
+      "original": {
+        "type": "file",
+        "url": "https://cdn.jsdelivr.net/npm/htmx-ext-ws@2.0.2"
       }
     },
     "ibm-plex-mono-src": {
@@ -610,6 +662,19 @@
         "type": "github"
       }
     },
+    "sqlite-lib-src": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1706631843,
+        "narHash": "sha256-bJoMjirsBjm2Qk9KPiy3yV3+8b/POlYe76/FQbciHro=",
+        "type": "tarball",
+        "url": "https://sqlite.org/2024/sqlite-amalgamation-3450100.zip"
+      },
+      "original": {
+        "type": "tarball",
+        "url": "https://sqlite.org/2024/sqlite-amalgamation-3450100.zip"
+      }
+    },
     "srvos": {
       "inputs": {
         "nixpkgs": [
@@ -702,24 +767,42 @@
         "type": "indirect"
       }
     },
+    "systems_6": {
+      "locked": {
+        "lastModified": 1681028828,
+        "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
+        "owner": "nix-systems",
+        "repo": "default",
+        "rev": "da67096a3b9bf56a91d16901293e51ba5b49a27e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-systems",
+        "repo": "default",
+        "type": "github"
+      }
+    },
     "tangled": {
       "inputs": {
         "gitignore": "gitignore_3",
+        "gomod2nix": "gomod2nix",
         "htmx-src": "htmx-src",
+        "htmx-ws-src": "htmx-ws-src",
         "ibm-plex-mono-src": "ibm-plex-mono-src",
         "indigo": "indigo",
         "inter-fonts-src": "inter-fonts-src",
         "lucide-src": "lucide-src",
         "nixpkgs": [
           "nixpkgs"
-        ]
+        ],
+        "sqlite-lib-src": "sqlite-lib-src"
       },
       "locked": {
-        "lastModified": 1748616214,
-        "narHash": "sha256-KFxhCA8F+2ttXXwRioOJf1djRyb7fp6HHdlMDCjw6nA=",
+        "lastModified": 1752686341,
+        "narHash": "sha256-qDX/8AMd+nAumzngF45xRtdH8u+KTbFtdCSdwtpHG9I=",
         "ref": "refs/heads/master",
-        "rev": "b08135c89e1782665b4cb669d4725a33b82a8ab2",
-        "revCount": 723,
+        "rev": "f4ec8829cab63008d39b413150034564f27db26f",
+        "revCount": 945,
         "type": "git",
         "url": "https://tangled.sh/@tangled.sh/core"
       },
