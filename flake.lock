@@ -103,7 +103,7 @@
     },
     "flake-utils_2": {
       "inputs": {
-        "systems": "systems_6"
+        "systems": "systems_7"
       },
       "locked": {
         "lastModified": 1694529238,
@@ -366,7 +366,7 @@
           "nixocaine",
           "pre-commit-hooks"
         ],
-        "systems": "systems_3",
+        "systems": "systems_4",
         "treefmt-nix": [
           "nixocaine",
           "treefmt-nix"
@@ -394,7 +394,7 @@
           "nixocaine",
           "pre-commit-hooks"
         ],
-        "systems": "systems_4",
+        "systems": "systems_5",
         "treefmt-nix": [
           "nixocaine",
           "treefmt-nix"
@@ -432,6 +432,27 @@
         "owner": "jj-vcs",
         "repo": "jj",
         "type": "github"
+      }
+    },
+    "lsr": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "utils": "utils"
+      },
+      "locked": {
+        "lastModified": 1752850100,
+        "narHash": "sha256-mgmGxPfTMxxslKrskyOdwy2TW4A8i7o2c3zCDUrNyzc=",
+        "ref": "refs/heads/main",
+        "rev": "429eaeff0d583c854be05f4802659b500ce1df30",
+        "revCount": 70,
+        "type": "git",
+        "url": "https://tangled.sh/@rockorager.dev/lsr"
+      },
+      "original": {
+        "type": "git",
+        "url": "https://tangled.sh/@rockorager.dev/lsr"
       }
     },
     "lucide-src": {
@@ -475,7 +496,7 @@
           "nixpkgs"
         ],
         "pre-commit-hooks": "pre-commit-hooks",
-        "systems": "systems_5",
+        "systems": "systems_6",
         "treefmt-nix": "treefmt-nix"
       },
       "locked": {
@@ -568,6 +589,7 @@
         "helix": "helix",
         "home-manager": "home-manager",
         "jujutsu": "jujutsu",
+        "lsr": "lsr",
         "nix-darwin": "nix-darwin",
         "nixocaine": "nixocaine",
         "nixos-hardware": "nixos-hardware",
@@ -735,8 +757,9 @@
         "type": "github"
       },
       "original": {
-        "id": "systems",
-        "type": "indirect"
+        "owner": "nix-systems",
+        "repo": "default",
+        "type": "github"
       }
     },
     "systems_4": {
@@ -768,6 +791,20 @@
       }
     },
     "systems_6": {
+      "locked": {
+        "lastModified": 1681028828,
+        "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
+        "owner": "nix-systems",
+        "repo": "default",
+        "rev": "da67096a3b9bf56a91d16901293e51ba5b49a27e",
+        "type": "github"
+      },
+      "original": {
+        "id": "systems",
+        "type": "indirect"
+      }
+    },
+    "systems_7": {
       "locked": {
         "lastModified": 1681028828,
         "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
@@ -829,6 +866,25 @@
       "original": {
         "owner": "numtide",
         "repo": "treefmt-nix",
+        "type": "github"
+      }
+    },
+    "utils": {
+      "inputs": {
+        "systems": "systems_3"
+      },
+      "locked": {
+        "lastModified": 1731533236,
+        "narHash": "sha256-l0KFg5HjrsfsO/JpG+r7fRrqm12kzFHyUHqHCVpMMbI=",
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "rev": "11707dc2f618dd54ca8739b309ec4fc024de578b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "ref": "main",
+        "repo": "flake-utils",
         "type": "github"
       }
     },
