@@ -28,7 +28,7 @@ in
 
       settings = {
         main = {
-          font = "monospace:size=12";
+          font = "monospace:size=10";
         };
         colors = {
           background = "000000";
