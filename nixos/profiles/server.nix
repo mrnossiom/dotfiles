@@ -20,8 +20,11 @@ let
   pds-port = 3001;
   pds-hostname = "pds.wiro.world";
 
-  tangled-port = 3002;
-  tangled-hostname = "knot.wiro.world";
+  tangled-knot-port = 3002;
+  tangled-knot-hostname = "knot.wiro.world";
+
+  tangled-spindle-port = 3003;
+  tangled-spindle-hostname = "spindle.wiro.world";
 
   grafana-port = 9000;
   grafana-hostname = "console.wiro.world";
@@ -37,6 +40,7 @@ in
     agenix.nixosModules.default
 
     tangled.nixosModules.knot
+    tangled.nixosModules.spindle
   ];
 
   config = {
@@ -126,8 +130,12 @@ in
         '';
       };
 
-      virtualHosts.${tangled-hostname}.extraConfig = ''
-        reverse_proxy http://localhost:${toString tangled-port}
+      virtualHosts.${tangled-knot-hostname}.extraConfig = ''
+        reverse_proxy http://localhost:${toString tangled-knot-port}
+      '';
+
+      virtualHosts.${tangled-spindle-hostname}.extraConfig = ''
+        reverse_proxy http://localhost:${toString tangled-spindle-port}
       '';
     };
 
@@ -142,9 +150,20 @@ in
       openFirewall = true;
 
       server = {
-        listenAddr = "0.0.0.0:${toString tangled-port}";
+        listenAddr = "localhost:${toString tangled-knot-port}";
         secretFile = config.age.secrets.tangled-config.path;
-        hostname = tangled-hostname;
+        hostname = tangled-knot-hostname;
+      };
+    };
+
+
+    services.tangled-spindle = {
+      enable = true;
+
+      server = {
+        listenAddr = "localhost:${toString tangled-spindle-port}";
+        hostname = tangled-spindle-hostname;
+        owner = "did:plc:xhgrjm4mcx3p5h3y6eino6ti";
       };
     };
 
