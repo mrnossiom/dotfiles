@@ -135,6 +135,19 @@ in
 
         launch = ''nohup $argv &> /dev/null &'';
 
+        # Transform a store link file to a real one
+        # Useful when playing with config files
+        unnix = ''
+          set -l path $argv[1]
+          set -l realpath (readlink $path)
+          set -l nstore "/nix/store"
+          test (echo $realpath | head -c(string length $nstore)) = "$nstore"
+
+          unlink $path
+          cp "$realpath" "$path"
+          chmod 644 "$path"
+        '';
+
         # Quickly explore a derivation (using registry syntax)
         # e.g. `cdd nixpkgs#fontforge` or `cdd nixpkgs-unstable#fontforge` 
         cdd = "cd (nix build --no-link --print-out-paths $argv | ${lib.getExe pkgs.fzf})";
