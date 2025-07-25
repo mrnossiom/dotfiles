@@ -38,6 +38,10 @@ in
           "browser.newtabpage.activity-stream.system.showSponsored" = false;
           "browser.newtabpage.activity-stream.showSponsoredTopSites" = false;
 
+          # Use vertical tabs
+          "sidebar.revamp" = true;
+          "sidebar.verticalTabs" = true;
+
           # Disable swipe gesture
           "browser.gesture.swipe.left" = "";
           "browser.gesture.swipe.right" = "";
