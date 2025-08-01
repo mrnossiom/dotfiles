@@ -72,6 +72,16 @@ in
           .titlebar-close { display: none !important; }
         '';
 
+        userContent = ''
+          /* Darken PDFs in viewer to match system color scheme */
+          @media (prefers-color-scheme: dark) {
+            #viewerContainer > #viewer > .page > .canvasWrapper > canvas,
+            #viewerContainer > #viewer > div.spread > .page > .canvasWrapper > canvas {
+                filter: grayscale(1) invert(1) sepia(1);
+            }
+          }
+        '';
+
         search = {
           force = true;
           default = "ddg";
