@@ -14,6 +14,5 @@ package: builtins.elem (lib.getName package) [
   "ida-free"
   "jetbrains-toolbox"
   "spotify"
-  "unityhub"
   "vscode-extension-ms-vsliveshare-vsliveshare"
 ]

@@ -72,7 +72,6 @@ in
         ida-free
         jetbrains-toolbox
         spotify
-        unityhub
 
         # Game
         superTuxKart
