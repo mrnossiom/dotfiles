@@ -78,6 +78,7 @@ in
 
         # GUIs
         audacity
+        baobab
         blender
         bottles
         calibre
