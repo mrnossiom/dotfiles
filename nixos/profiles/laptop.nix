@@ -148,6 +148,12 @@ in
       };
     };
 
+    services.plex = {
+      enable = true;
+      user = config.local.user.username;
+      group = "users";
+    };
+
     xdg.portal = {
       enable = true;
       wlr.enable = true;

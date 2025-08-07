@@ -1,6 +1,11 @@
 _default:
 	@just --list --unsorted --list-heading '' --list-prefix '—— '
 
+fmt:
+	#!/usr/bin/env fish
+	# fish needed for glob expansion
+	nix fmt **/*.nix
+
 [linux]
 switch PROFILE="" *ARGS:
 	sudo nixos-rebuild switch --show-trace --flake .#{{PROFILE}} {{ARGS}}
