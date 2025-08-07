@@ -4,6 +4,7 @@
 package: builtins.elem (lib.getName package) [
   # NixOS
   "hplip"
+  "plexmediaserver"
   "steam"
   "steam-original"
   "steam-run"
