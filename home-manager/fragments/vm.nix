@@ -180,6 +180,7 @@ in
             # Inhibit IDLE when these are fullscreen
             { criteria.app_id = "firefox"; command = "inhibit_idle fullscreen"; }
             { criteria.app_id = "mpv"; command = "inhibit_idle fullscreen"; }
+            { criteria.app_id = "spotify"; command = "inhibit_idle fullscreen"; }
           ];
         };
 
