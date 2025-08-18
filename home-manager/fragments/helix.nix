@@ -100,6 +100,7 @@ in
         nodePackages.bash-language-server
         nodePackages.typescript-language-server
         taplo
+        typos-lsp
         vscode-langservers-extracted
         yaml-language-server
       ] ++ lib.optionals (!flags.onlyCached) [
@@ -111,12 +112,13 @@ in
           rust-analyzer.config = { check.command = "clippy"; };
 
           ltex-ls.command = "ltex-ls";
+          typos-ls.command = "typos-lsp";
           wakatime-ls.command = "wakatime-ls";
         };
 
         language =
           let
-            global-lsps = [ "wakatime-ls" ];
+            global-lsps = [ "wakatime-ls" "typos-ls" ];
             mk-lang = name: language-servers: extra: { inherit name; language-servers = language-servers ++ global-lsps; } // extra;
           in
           [
@@ -133,6 +135,7 @@ in
             (mk-lang "python" [ "ruff" "jedi" "pylsp" ] { })
             (mk-lang "rust" [ "rust-analyzer" ] { })
             (mk-lang "typescript" [ "typescript-language-server" ] { })
+            (mk-lang "zig" [ "zls" ] { })
           ];
       };
     };
