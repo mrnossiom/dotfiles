@@ -2,21 +2,21 @@ _default:
 	@just --list --unsorted --list-heading '' --list-prefix '—— '
 
 [linux]
-switch PROFILE="":
-	sudo nixos-rebuild switch --show-trace --flake .#{{PROFILE}}
+switch PROFILE="" *ARGS:
+	sudo nixos-rebuild switch --show-trace --flake .#{{PROFILE}} {{ARGS}}
 [macos]
-switch PROFILE="":
-	darwin-rebuild switch --show-trace --flake .#{{PROFILE}}
+switch PROFILE="" *ARGS:
+	darwin-rebuild switch --show-trace --flake .#{{PROFILE}} {{ARGS}}
 
 [linux]
-build PROFILE="":
-	nixos-rebuild build --show-trace --flake .#{{PROFILE}}
+build PROFILE="" *ARGS:
+	nixos-rebuild build --show-trace --flake .#{{PROFILE}} {{ARGS}}
 [macos]
-build PROFILE="":
-	darwin-rebuild build --show-trace --flake .#{{PROFILE}}
+build PROFILE="" *ARGS:
+	darwin-rebuild build --show-trace --flake .#{{PROFILE}} {{ARGS}}
 
-home-build PROFILE:
-	home-manager build --show-trace --flake .#{{PROFILE}}
+home-build PROFILE *ARGS:
+	home-manager build --show-trace --flake .#{{PROFILE}} {{ARGS}}
 
-home-switch PROFILE:
-	home-manager switch --show-trace --flake .#{{PROFILE}}
+home-switch PROFILE *ARGS:
+	home-manager switch --show-trace --flake .#{{PROFILE}} {{ARGS}}
