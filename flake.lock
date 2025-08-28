@@ -187,27 +187,6 @@
     "gitignore_3": {
       "inputs": {
         "nixpkgs": [
-          "tangled",
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1709087332,
-        "narHash": "sha256-HG2cCnktfHsKV0s4XW83gU3F57gaTljL9KNSuG6bnQs=",
-        "owner": "hercules-ci",
-        "repo": "gitignore.nix",
-        "rev": "637db329424fd7e46cf4185293b9cc8c88c95394",
-        "type": "github"
-      },
-      "original": {
-        "owner": "hercules-ci",
-        "repo": "gitignore.nix",
-        "type": "github"
-      }
-    },
-    "gitignore_4": {
-      "inputs": {
-        "nixpkgs": [
           "wakatime-ls",
           "nixpkgs"
         ]
@@ -235,11 +214,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1751702058,
-        "narHash": "sha256-/GTdqFzFw/Y9DSNAfzvzyCMlKjUyRKMPO+apIuaTU4A=",
+        "lastModified": 1754078208,
+        "narHash": "sha256-YVoIFDCDpYuU3riaDEJ3xiGdPOtsx4sR5eTzHTytPV8=",
         "owner": "nix-community",
         "repo": "gomod2nix",
-        "rev": "664ad7a2df4623037e315e4094346bff5c44e9ee",
+        "rev": "7f963246a71626c7fc70b431a315c4388a0c95cf",
         "type": "github"
       },
       "original": {
@@ -330,11 +309,11 @@
     "indigo": {
       "flake": false,
       "locked": {
-        "lastModified": 1745333930,
-        "narHash": "sha256-83fIHqDE+dfnZ88HaNuwfKFO+R0RKAM1WxMfNh/Matk=",
+        "lastModified": 1753693716,
+        "narHash": "sha256-DMIKnCJRODQXEHUxA+7mLzRALmnZhkkbHlFT2rCQYrE=",
         "owner": "oppiliappan",
         "repo": "indigo",
-        "rev": "e4e59280737b8676611fc077a228d47b3e8e9491",
+        "rev": "5f170569da9360f57add450a278d73538092d8ca",
         "type": "github"
       },
       "original": {
@@ -458,14 +437,14 @@
     "lucide-src": {
       "flake": false,
       "locked": {
-        "lastModified": 1742302029,
-        "narHash": "sha256-OyPVtpnC4/AAmPq84Wt1r1Gcs48d9KG+UBCtZK87e9k=",
+        "lastModified": 1754044466,
+        "narHash": "sha256-+exBR2OToB1iv7ZQI2S4B0lXA/QRvC9n6U99UxGpJGs=",
         "type": "tarball",
-        "url": "https://github.com/lucide-icons/lucide/releases/download/0.483.0/lucide-icons-0.483.0.zip"
+        "url": "https://github.com/lucide-icons/lucide/releases/download/0.536.0/lucide-icons-0.536.0.zip"
       },
       "original": {
         "type": "tarball",
-        "url": "https://github.com/lucide-icons/lucide/releases/download/0.483.0/lucide-icons-0.483.0.zip"
+        "url": "https://github.com/lucide-icons/lucide/releases/download/0.536.0/lucide-icons-0.536.0.zip"
       }
     },
     "nix-darwin": {
@@ -821,7 +800,6 @@
     },
     "tangled": {
       "inputs": {
-        "gitignore": "gitignore_3",
         "gomod2nix": "gomod2nix",
         "htmx-src": "htmx-src",
         "htmx-ws-src": "htmx-ws-src",
@@ -835,11 +813,11 @@
         "sqlite-lib-src": "sqlite-lib-src"
       },
       "locked": {
-        "lastModified": 1753205145,
-        "narHash": "sha256-DU2FR/kX/xA9fKDjgezujQG65oJy7ANCp3w3OVtCH3A=",
+        "lastModified": 1756308595,
+        "narHash": "sha256-XBTvHxAdfckP/n68IzVvGod3k+MvvaUVGkcTn4mVsQY=",
         "ref": "refs/heads/master",
-        "rev": "096eb308fe40e72c29eaa4e597bd3b716951708c",
-        "revCount": 979,
+        "rev": "12edeeaabb4c7dc9086d0ec935947d4349eead66",
+        "revCount": 1249,
         "type": "git",
         "url": "https://tangled.sh/@tangled.sh/core"
       },
@@ -890,7 +868,7 @@
     },
     "wakatime-ls": {
       "inputs": {
-        "gitignore": "gitignore_4",
+        "gitignore": "gitignore_3",
         "nixpkgs": [
           "nixpkgs"
         ],

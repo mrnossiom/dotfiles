@@ -20,9 +20,9 @@ let
   pds-port = 3001;
   pds-hostname = "pds.wiro.world";
 
+  tangled-owner = "did:plc:xhgrjm4mcx3p5h3y6eino6ti";
   tangled-knot-port = 3002;
   tangled-knot-hostname = "knot.wiro.world";
-
   tangled-spindle-port = 3003;
   tangled-spindle-hostname = "spindle.wiro.world";
 
@@ -151,8 +151,8 @@ in
 
       server = {
         listenAddr = "localhost:${toString tangled-knot-port}";
-        secretFile = config.age.secrets.tangled-config.path;
         hostname = tangled-knot-hostname;
+        owner = tangled-owner;
       };
     };
 
@@ -163,7 +163,7 @@ in
       server = {
         listenAddr = "localhost:${toString tangled-spindle-port}";
         hostname = tangled-spindle-hostname;
-        owner = "did:plc:xhgrjm4mcx3p5h3y6eino6ti";
+        owner = tangled-owner;
       };
     };
 
