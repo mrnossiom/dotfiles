@@ -20,7 +20,7 @@ in
 
   config = lib.mkIf cfg.enable {
     nix = {
-      package = pkgs.nixVersions.latest;
+      package = pkgs.lixPackageSets.stable.lix;
 
       # Make system registry consistent with flake inputs
       # Add `self` registry input that refers to flake
