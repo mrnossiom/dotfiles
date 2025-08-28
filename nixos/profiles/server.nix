@@ -149,6 +149,7 @@ in
       enable = true;
       openFirewall = true;
 
+      motd = "Welcome to @wiro.world's knot!\n";
       server = {
         listenAddr = "localhost:${toString tangled-knot-port}";
         hostname = tangled-knot-hostname;
