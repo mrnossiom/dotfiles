@@ -85,6 +85,7 @@ in
         cura-appimage
         element-desktop
         evince
+        figma-linux
         file-roller
         gnome-disk-utility
         # TODO: move and embed config in nix
