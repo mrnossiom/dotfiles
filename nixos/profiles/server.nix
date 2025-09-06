@@ -30,6 +30,9 @@ let
   grafana-hostname = "console.wiro.world";
   prometheus-port = 9001;
   prometheus-node-exporter-port = 9002;
+
+  thelounge-port = 3004;
+  thelounge-hostname = "lounge.wiro.world";
 in
 {
   imports = [
@@ -137,6 +140,10 @@ in
       virtualHosts.${tangled-spindle-hostname}.extraConfig = ''
         reverse_proxy http://localhost:${toString tangled-spindle-port}
       '';
+
+      virtualHosts.${thelounge-hostname}.extraConfig = ''
+        reverse_proxy http://localhost:${toString thelounge-port}
+      '';
     };
 
     security.sudo.wheelNeedsPassword = false;
@@ -195,6 +202,16 @@ in
       exporters.node = {
         enable = true;
         port = prometheus-node-exporter-port;
+      };
+    };
+
+    services.thelounge = {
+      enable = true;
+      port = thelounge-port;
+      public = false;
+      extraConfig = {
+        host = "127.0.0.1";
+        reverseProxy = true;
       };
     };
   };
