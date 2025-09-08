@@ -15,6 +15,12 @@ rec {
     welcomeText = "`direnv allow`";
   };
 
+  c = {
+    path = ./c;
+    description = "Flake for C setup";
+    welcomeText = "`direnv allow`";
+  };
+
   rust = {
     path = ./rust;
     description = "Flake for Rust setup";
