@@ -63,7 +63,7 @@ in
 
     home.packages = with pkgs; [
       # GUIs
-      cura
+      cura-appimage
       element-desktop
       insomnia
       mpv
