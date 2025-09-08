@@ -47,6 +47,14 @@ in
       };
     };
 
+    # The forge uses master as its default branch
+    programs.git.includes = [{
+      condition = "gitdir:~/Development/forge.epita.fr/";
+      contents = {
+        init.defaultBranch = "master";
+      };
+    }];
+
     home.packages = [
       # Useful to connect to EPITA related services
       pkgs.krb5
