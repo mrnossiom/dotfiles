@@ -146,6 +146,8 @@ in
     };
 
     home.packages = (with pkgs; [
+      glab
+
       difftastic
     ]) ++ lib.optionals (!flags.onlyCached) [
       lpkgs.git-leave
