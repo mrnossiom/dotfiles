@@ -148,6 +148,8 @@ in
     home.packages = (with pkgs; [
       glab
 
+      lazyjj
+
       difftastic
     ]) ++ lib.optionals (!flags.onlyCached) [
       lpkgs.git-leave
