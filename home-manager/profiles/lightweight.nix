@@ -27,20 +27,15 @@ in
 
     local.fragment = {
       agenix.enable = true;
-      # firefox.enable = true;
       git.enable = true;
       helix.enable = true;
       jujutsu.enable = true;
       shell.enable = true;
-      # thunderbird.enable = true;
       # tools.enable = true;
-      # vm.enable = true;
       zellij.enable = true;
     };
 
     home.sessionVariables = {
-      # TERMINAL = lib.getExe pkgs.kitty;
-
       # Quick access to `~/Development` folder
       DEV = "${config.home.homeDirectory}/Development";
 
@@ -85,18 +80,11 @@ in
       updates.auto_update = true;
     };
 
-    # programs.broot.enable = true;
-
     programs.bat = {
       enable = true;
       config = {
         style = "plain";
       };
-    };
-
-    programs.go = {
-      enable = true;
-      goPath = ".local/share/go";
     };
 
     programs.gpg = {
