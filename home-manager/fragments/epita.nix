@@ -1,6 +1,7 @@
 { config
 , lib
 , pkgs
+, lpkgs
 , ...
 }:
 
@@ -59,6 +60,8 @@ in
       # Useful to connect to EPITA related services
       pkgs.krb5
       mount-epita-afs
+
+      lpkgs.m68k
     ];
   };
 }
