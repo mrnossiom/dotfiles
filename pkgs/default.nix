@@ -1,7 +1,7 @@
 { self, system, ... }@pkgs:
 
 let
-  inherit (self.inputs) agenix git-leave helix jujutsu lsr wakatime-ls;
+  inherit (self.inputs) agenix git-leave helix jujutsu wakatime-ls;
 in
 {
   asak = pkgs.callPackage ./asak.nix { };
@@ -16,6 +16,5 @@ in
   inherit (git-leave.packages.${system}) git-leave;
   inherit (helix.packages.${system}) helix;
   inherit (jujutsu.packages.${system}) jujutsu;
-  lsr = lsr.packages.${system}.default;
   inherit (wakatime-ls.packages.${system}) wakatime-ls;
 }

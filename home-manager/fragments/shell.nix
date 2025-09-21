@@ -70,7 +70,7 @@ in
         # This is also a more pure version than using `__fish_ls_*` variables
         # that depends on fish internal ls wrappers and can be overridden by
         # bad configuration. (e.g. NixOS `environment.shellAliases` default)
-        ls = "${lib.getExe pkgs.lsr}";
+        ls = "${lib.getExe pkgs.eza} --color=auto --icons=auto --hyperlink";
 
         pasters = "${lib.getExe pkgs.curl} --data-binary @- https://paste.rs/";
       };
@@ -93,8 +93,9 @@ in
         tp = "trash-put";
 
         # Listing utilities
-        l = "ls -A1";
-        ll = "ls -Al";
+        l = "ls -aF";
+        ll = "ls -lhaF";
+        tree = "ls -T";
 
         # Nix-related
         ur = " unlink result";

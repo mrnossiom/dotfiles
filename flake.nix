@@ -37,9 +37,6 @@
     tangled.url = "git+https://tangled.org/@tangled.org/core";
     tangled.inputs.nixpkgs.follows = "nixpkgs";
 
-    lsr.url = "git+https://tangled.sh/@rockorager.dev/lsr";
-    lsr.inputs.nixpkgs.follows = "nixpkgs";
-
     wakatime-ls.url = "github:mrnossiom/wakatime-ls";
     wakatime-ls.inputs.nixpkgs.follows = "nixpkgs";
   };
