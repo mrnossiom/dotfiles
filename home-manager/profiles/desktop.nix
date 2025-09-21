@@ -96,7 +96,6 @@ in
         ldtk
         libreoffice-qt
         localsend
-        lutris
         mpv
         nautilus
         obs-studio
