@@ -67,6 +67,20 @@
         "type": "github"
       }
     },
+    "flake-compat": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1751685974,
+        "narHash": "sha256-NKw96t+BgHIYzHUjkTK95FqYRVKB8DHpVhefWSz/kTw=",
+        "rev": "549f2762aebeff29a2e5ece7a7dc0f955281a1d1",
+        "type": "tarball",
+        "url": "https://git.lix.systems/api/v1/repos/lix-project/flake-compat/archive/549f2762aebeff29a2e5ece7a7dc0f955281a1d1.tar.gz?rev=549f2762aebeff29a2e5ece7a7dc0f955281a1d1"
+      },
+      "original": {
+        "type": "tarball",
+        "url": "https://git.lix.systems/lix-project/flake-compat/archive/main.tar.gz"
+      }
+    },
     "flake-utils": {
       "inputs": {
         "systems": "systems_2"
@@ -617,6 +631,7 @@
     },
     "tangled": {
       "inputs": {
+        "flake-compat": "flake-compat",
         "gomod2nix": "gomod2nix",
         "htmx-src": "htmx-src",
         "htmx-ws-src": "htmx-ws-src",
@@ -630,17 +645,17 @@
         "sqlite-lib-src": "sqlite-lib-src"
       },
       "locked": {
-        "lastModified": 1756308595,
-        "narHash": "sha256-XBTvHxAdfckP/n68IzVvGod3k+MvvaUVGkcTn4mVsQY=",
+        "lastModified": 1758343819,
+        "narHash": "sha256-lXoRA/zM7V8f5SvSZMdPSMpZiFkFnx3RV0RfovQbqzg=",
         "ref": "refs/heads/master",
-        "rev": "12edeeaabb4c7dc9086d0ec935947d4349eead66",
-        "revCount": 1249,
+        "rev": "796f739caf7df25436e0ac3a8880dca54d6238db",
+        "revCount": 1366,
         "type": "git",
-        "url": "https://tangled.sh/@tangled.sh/core"
+        "url": "https://tangled.org/@tangled.org/core"
       },
       "original": {
         "type": "git",
-        "url": "https://tangled.sh/@tangled.sh/core"
+        "url": "https://tangled.org/@tangled.org/core"
       }
     },
     "utils": {

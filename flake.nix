@@ -34,7 +34,7 @@
     jujutsu.url = "github:jj-vcs/jj";
     jujutsu.inputs.nixpkgs.follows = "nixpkgs-unstable";
 
-    tangled.url = "git+https://tangled.sh/@tangled.sh/core";
+    tangled.url = "git+https://tangled.org/@tangled.org/core";
     tangled.inputs.nixpkgs.follows = "nixpkgs";
 
     lsr.url = "git+https://tangled.sh/@rockorager.dev/lsr";
