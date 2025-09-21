@@ -32,7 +32,7 @@ in
     };
 
     # `swaylock` pam service must be at least declared to work properly
-    security.pam.services."swaylock" = { };
+    security.pam.services."swaylock" = { nodelay = true; failDelay = { enable = true; delay = 500000; }; };
 
     # reduce sudo fail delay to half a second
     security.pam.services."sudo" = { nodelay = true; failDelay = { enable = true; delay = 500000; }; };
