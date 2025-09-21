@@ -3,11 +3,11 @@
 ;; Timing variables for tap-hold effects.
 (defvar
   ;; The key must be pressed twice in 200ms to enable repetitions.
-  tap_timeout 200
+  tap_timeout 150
   ;; The key must be held 200ms to become a layer shift.
-  hold_timeout 200
+  hold_timeout 150
   ;; Slightly higher value for typing keys, to prevent unexpected hold effect.
-  long_hold_timeout 200
+  long_hold_timeout 150
 )
 
 ;; angle-mod: the ISO key (a.k.a. LSGT or 102 key) becomes Z
