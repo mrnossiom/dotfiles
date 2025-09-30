@@ -1,6 +1,7 @@
 { self
 , config
 , pkgs
+, upkgs
 , ...
 }:
 
@@ -95,6 +96,7 @@ in
 
     services.pds = {
       enable = true;
+      package = upkgs.bluesky-pds;
 
       settings = {
         PDS_HOSTNAME = "pds.wiro.world";
