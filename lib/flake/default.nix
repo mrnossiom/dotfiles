@@ -4,7 +4,7 @@
 }:
 
 let
-  inherit (self.inputs) home-manager nixpkgs-unstable nix-darwin;
+  inherit (self.inputs) home-manager unixpkgs nix-darwin;
 
   inherit (nix-darwin.lib) darwinSystem;
   inherit (home-manager.lib) homeManagerConfiguration;
@@ -20,7 +20,7 @@ rec {
     # local packages set
     lpkgs = import ../../pkgs pkgs;
     # unstable nixpkgs set
-    upkgs = import nixpkgs-unstable { inherit (pkgs) system config; };
+    upkgs = import unixpkgs { inherit (pkgs) system config; };
     # indicates if system is darwin
     isDarwin = pkgs.stdenv.isDarwin;
   };

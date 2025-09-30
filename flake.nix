@@ -3,7 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
-    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
+    unixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
     home-manager.url = "github:nix-community/home-manager/release-25.05";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
@@ -29,13 +29,13 @@
     git-leave.inputs.nixpkgs.follows = "nixpkgs";
 
     helix.url = "github:helix-editor/helix";
-    helix.inputs.nixpkgs.follows = "nixpkgs-unstable";
+    helix.inputs.nixpkgs.follows = "unixpkgs";
 
     jujutsu.url = "github:jj-vcs/jj";
-    jujutsu.inputs.nixpkgs.follows = "nixpkgs-unstable";
+    jujutsu.inputs.nixpkgs.follows = "unixpkgs";
 
     tangled.url = "git+https://tangled.org/@tangled.org/core";
-    tangled.inputs.nixpkgs.follows = "nixpkgs";
+    tangled.inputs.nixpkgs.follows = "unixpkgs";
 
     wakatime-ls.url = "github:mrnossiom/wakatime-ls";
     wakatime-ls.inputs.nixpkgs.follows = "nixpkgs";
