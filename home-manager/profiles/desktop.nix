@@ -98,7 +98,6 @@ in
         localsend
         mpv
         nautilus
-        obs-studio
         pavucontrol
         prismlauncher
         rawtherapee
