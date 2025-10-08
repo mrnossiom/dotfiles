@@ -57,6 +57,7 @@ in
       tokei
       trash-cli
       unzip
+      vlock
       wcurl
       wormhole-rs
     ]) ++ lib.optionals (!flags.onlyCached) [
