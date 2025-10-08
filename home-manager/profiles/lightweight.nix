@@ -76,10 +76,6 @@ in
       xdg-utils
     ];
 
-    xdg.configFile."tealdeer/config.toml".source = toml-format.generate "tealdeer-config" {
-      updates.auto_update = true;
-    };
-
     programs.bat = {
       enable = true;
       config = {

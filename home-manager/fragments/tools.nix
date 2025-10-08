@@ -52,8 +52,8 @@ in
       speedtest-go
       srgn
       sshfs
-      tealdeer
       termimage
+      tlrc
       tokei
       trash-cli
       unzip

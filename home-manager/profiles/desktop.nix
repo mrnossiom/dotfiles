@@ -133,10 +133,6 @@ in
       logs-dir=${config.xdg.stateHome}/npm/logs
     '';
 
-    xdg.configFile."tealdeer/config.toml".source = toml-format.generate "tealdeer-config" {
-      updates.auto_update = true;
-    };
-
     programs.broot.enable = true;
 
     # TODO: move out
