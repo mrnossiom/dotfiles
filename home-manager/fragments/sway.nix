@@ -38,8 +38,7 @@ in
         ignore-empty-password = true;
         show-failed-attempts = true;
 
-        image = toString ../../assets/wallpaper-binary-cloud.png;
-
+        # relies on custom swaylock version in `overlays/patches.nix`
         indicator-y-position = -100;
         indicator-x-position = 100;
       };
@@ -54,35 +53,29 @@ in
     services.mako = {
       enable = true;
       settings = {
-        icons = true;
-
         width = 500;
-        max-visible = 3;
+        max-visible = 5;
         sort = "-priority";
 
-        default-timeout = 5000;
+        default-timeout = 3 * 1000;
 
         layer = "overlay";
 
-        border-size = 0;
+        border-size = 2;
         border-radius = 5;
 
-        "urgency=critical" = {
-          background-color = theme.withHashtag.base0F;
-        };
+        "mode=dnd".invisible = 1;
 
-        "mode=dnd" = {
-          invisible = 1;
+        "urgency=critical" = {
+          invisible = 0;
+          default-timeout = 0;
         };
       };
     };
 
     gtk = {
       enable = true;
-
       gtk2.configLocation = "${config.xdg.configHome}/gtk-2.0/gtkrc";
-
-      iconTheme = { name = "Papirus"; package = pkgs.papirus-icon-theme; };
     };
 
     services.swayidle =
@@ -186,14 +179,9 @@ in
           "type:touch" = { events = "disabled"; };
         };
 
-        output."*".bg = "#000000 solid_color";
-
-        seat = {
-          "seat0" = {
-            xcursor_theme = "Bibata-Modern-Ice";
-            # disable cursor when typing or on purpose
-            hide_cursor = "when-typing enable";
-          };
+        seat."*" = {
+          # disable cursor when typing or on purpose
+          hide_cursor = "when-typing enable";
         };
 
         bindkeysToCode = true;

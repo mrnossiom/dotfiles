@@ -9,6 +9,7 @@ let
 
   integrated-keyboard-id = "1:1:AT_Translated_Set_2_keyboard";
   integrated-keyboard-id-bis = "1:1:kanata";
+
   swaymsg = lib.getExe' pkgs.sway "swaymsg";
 in
 {
@@ -19,11 +20,14 @@ in
       bars.default = {
         theme = "modern";
         icons = "awesome6";
+
+        settings.icon_format = " <span font_family='FontAwesome6'>{icon}</span> ";
+        
         blocks = [
           {
             block = "custom";
             command = ''
-              echo 󰌌 $(swaymsg --raw --type get_inputs \
+              echo 󰌌  $(swaymsg --raw --type get_inputs \
                 | jq --raw-output '
                   .[]
                   | select(.identifier=="${integrated-keyboard-id}")
@@ -45,6 +49,7 @@ in
             command = "echo  $(${lib.getExe' pkgs.mako "makoctl"} mode)";
             click = [{
               button = "left";
+              # Toggle DND mode
               cmd = "${lib.getExe' pkgs.mako "makoctl"} mode -t dnd";
               update = true;
             }];
@@ -53,11 +58,7 @@ in
 
           { block = "music"; }
           {
-            block = "memory";
-            format = " $icon $mem_used_percents.eng(w:2) ";
-          }
-          {
-            format = " 󰌌 $variant";
+            format = " 󰌌  $variant";
             block = "keyboard_layout";
             driver = "sway";
           }
@@ -73,15 +74,18 @@ in
       };
     };
 
-    wayland.windowManager.sway.config.bars = [{
-      statusCommand = "${lib.getExe pkgs.i3status-rust} ${config.home.homeDirectory}/${config.xdg.configFile."i3status-rust/config-default.toml".target}";
-      hiddenState = "hide";
-      mode = "hide";
-      fonts.size = 11.0;
+    wayland.windowManager.sway.config.bars = [
+      ({
+        statusCommand = "${lib.getExe pkgs.i3status-rust} ${config.home.homeDirectory}/${config.xdg.configFile."i3status-rust/config-default.toml".target}";
 
-      # Would be nice to have rounded corners and padding when appearing
+        hiddenState = "hide";
+        mode = "hide";
 
-      extraConfig = "icon_theme Papirus";
-    }];
+        # TODO: fix color theme on the bar
+        # TODO: would be nice to have rounded corners and padding when appearing
+
+        extraConfig = "icon_theme Papirus";
+      } // config.stylix.targets.sway.exportedBarConfig)
+    ];
   };
 }

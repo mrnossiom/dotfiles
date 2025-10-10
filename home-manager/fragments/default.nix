@@ -21,6 +21,7 @@
     ./launcher.nix
     ./rust.nix
     ./shell.nix
+    ./stylix.nix
     ./swaybar.nix
     ./sway.nix
     ./thunderbird.nix

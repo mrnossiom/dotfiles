@@ -25,13 +25,6 @@ in
 
       # TODO: promising but too buggy
       # server.enable = true;
-
-      settings = {
-        colors = {
-          background = "000000";
-          foreground = "ffffff";
-        };
-      };
     };
   };
 }

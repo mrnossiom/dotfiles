@@ -13,7 +13,7 @@ in
     Kitty related
 
     Depends on:
-    - (Darwin) `fish` program: lauches fish on startup
+    - (Darwin) `fish` program: launches fish on startup
 
       Has weird behavior if set as login shell
   '';

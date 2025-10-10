@@ -1,33 +1,11 @@
-{ self
-, config
+{ config
 , pkgs
 
 , isDarwin
 , ...
 }:
 
-let
-  inherit (self.inputs) stylix;
-in
 {
-  imports = [
-    stylix.homeModules.stylix
-    {
-      stylix.enable = true;
-      stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/onedark.yaml";
-      stylix.fonts = {
-        sansSerif = { package = pkgs.inter; name = "Inter"; };
-        serif = { package = pkgs.merriweather; name = "Merriweather"; };
-        monospace = { package = pkgs.nerd-fonts.jetbrains-mono; name = "JetBrainsMono Nerd Font"; };
-      };
-      stylix.cursor = {
-        name = "Bibata-Modern-Ice";
-        package = pkgs.bibata-cursors;
-        size = 10;
-      };
-    }
-  ];
-
   config = {
     assertions = [
       { assertion = !isDarwin; message = "this is a HM non-darwin config"; }
@@ -40,13 +18,14 @@ in
       compose-key.enable = true;
       epita.enable = true;
       firefox.enable = true;
-      foot.enable = true;
       git.enable = true;
       helix.enable = true;
       imv.enable = true;
       jujutsu.enable = true;
+      kitty.enable = true;
       rust.enable = true;
       shell.enable = true;
+      stylix.enable = true;
       sway.enable = true;
       thunderbird.enable = true;
       tools.enable = true;
@@ -58,9 +37,9 @@ in
     home = {
       sessionVariables = {
         # Quick access to `~/Development` folder
-        DEV = "${config.home.homeDirectory}/Development";
+        dev = "${config.home.homeDirectory}/Development";
 
-        # Would love to get rid of the Desktop folder
+        # Would love to get rid of the Desktop folder ☹
         XDG_DESKTOP_DIR = "$HOME";
 
         # Makes electron apps use ozone and not crash because xwayland is not there
