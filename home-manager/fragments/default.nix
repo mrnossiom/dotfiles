@@ -9,6 +9,7 @@
     ./agenix.nix
     ./aws.nix
     ./chromium.nix
+    ./compose-key.nix
     ./epita.nix
     ./firefox.nix
     ./foot.nix
@@ -17,14 +18,13 @@
     ./imv.nix
     ./jujutsu.nix
     ./kitty.nix
+    ./launcher.nix
     ./rust.nix
     ./shell.nix
+    ./swaybar.nix
+    ./sway.nix
     ./thunderbird.nix
     ./tools.nix
-    ./vm-bar.nix
-    ./vm-compose.nix
-    ./vm.nix
-    ./vm-search.nix
     ./vscodium.nix
     ./xdg-mime.nix
     ./zellij

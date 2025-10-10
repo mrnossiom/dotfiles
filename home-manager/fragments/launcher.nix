@@ -5,7 +5,7 @@
 }:
 
 let
-  cfg = config.local.fragment.vm;
+  cfg = config.local.fragment.sway;
 in
 {
   config = lib.mkIf cfg.enable {

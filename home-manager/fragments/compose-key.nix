@@ -8,10 +8,14 @@
 let
   inherit (self.outputs) homeManagerModules;
 
-  cfg = config.local.fragment.vm;
+  cfg = config.local.fragment.compose-key;
 in
 {
   imports = [ homeManagerModules.xcompose ];
+
+  options.local.fragment.compose-key.enable = lib.mkEnableOption ''
+    Compose key related
+  '';
 
   config.programs.xcompose = lib.mkIf cfg.enable {
     enable = true;

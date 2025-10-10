@@ -10,7 +10,7 @@
 let
   inherit (self.outputs) homeManagerModules;
 
-  cfg = config.local.fragment.vm;
+  cfg = config.local.fragment.sway;
 
   theme = config.lib.stylix.colors;
   cfg-sway = config.wayland.windowManager.sway.config;
@@ -22,7 +22,7 @@ in
     homeManagerModules.wl-clip-persist
   ];
 
-  options.local.fragment.vm.enable = lib.mkEnableOption ''
+  options.local.fragment.sway.enable = lib.mkEnableOption ''
     Sway related
   '';
 

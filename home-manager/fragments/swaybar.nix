@@ -5,7 +5,7 @@
 }:
 
 let
-  cfg = config.local.fragment.vm;
+  cfg = config.local.fragment.sway;
 
   integrated-keyboard-id = "1:1:AT_Translated_Set_2_keyboard";
   integrated-keyboard-id-bis = "1:1:kanata";

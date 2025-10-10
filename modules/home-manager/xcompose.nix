@@ -16,7 +16,7 @@ in
         Load the XCompose file by passing the `XCOMPOSEFILE` environment variable instead of linking to ~/.XCompose.
         
         That is nice to avoid cluttering the HOME directory, it's preferable to disable it when experimenting
-        with your compose config to reload faster than having to reload your VM
+        with your compose config to reload faster than having to reload your VM.
       '';
       default = true;
       type = types.bool;

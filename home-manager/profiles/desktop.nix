@@ -37,6 +37,7 @@ in
       agenix.enable = true;
       aws.enable = true;
       chromium.enable = true;
+      compose-key.enable = true;
       epita.enable = true;
       firefox.enable = true;
       foot.enable = true;
@@ -46,9 +47,9 @@ in
       jujutsu.enable = true;
       rust.enable = true;
       shell.enable = true;
+      sway.enable = true;
       thunderbird.enable = true;
       tools.enable = true;
-      vm.enable = true;
       vscodium.enable = true;
       xdg-mime.enable = true;
       zellij.enable = true;
