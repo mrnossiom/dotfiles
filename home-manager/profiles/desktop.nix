@@ -1,6 +1,5 @@
 { self
 , config
-, llib
 , pkgs
 
 , isDarwin
@@ -8,14 +7,25 @@
 }:
 
 let
-  inherit (self.outputs) homeManagerModules;
-
-  toml-format = pkgs.formats.toml { };
+  inherit (self.inputs) stylix;
 in
 {
   imports = [
-    homeManagerModules.color-scheme
-    { config.local.colorScheme = llib.colorSchemes.oneDark; }
+    stylix.homeModules.stylix
+    {
+      stylix.enable = true;
+      stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/onedark.yaml";
+      stylix.fonts = {
+        sansSerif = { package = pkgs.inter; name = "Inter"; };
+        serif = { package = pkgs.merriweather; name = "Merriweather"; };
+        monospace = { package = pkgs.nerd-fonts.jetbrains-mono; name = "JetBrainsMono Nerd Font"; };
+      };
+      stylix.cursor = {
+        name = "Bibata-Modern-Ice";
+        package = pkgs.bibata-cursors;
+        size = 10;
+      };
+    }
   ];
 
   config = {

@@ -1,6 +1,5 @@
 { self
 , config
-, llib
 , pkgs
 
 , isDarwin
@@ -10,7 +9,6 @@
 }:
 
 let
-  inherit (self.outputs) homeManagerModules;
   inherit (self.inputs) agenix;
 
   all-secrets = import ../../secrets;
@@ -24,9 +22,6 @@ in
       # passwordless ssh key as you cannot interact with age in the service.
       age.identityPaths = [ "${config.home.homeDirectory}/.ssh/id_home_manager" ];
     }
-
-    homeManagerModules.color-scheme
-    { config.local.colorScheme = llib.colorSchemes.oneDark; }
   ];
 
   config = {

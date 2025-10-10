@@ -12,7 +12,7 @@ let
 
   cfg = config.local.fragment.vm;
 
-  theme = config.local.colorScheme.palette;
+  theme = config.lib.stylix.colors;
   cfg-sway = config.wayland.windowManager.sway.config;
 
   workspacesRange = lib.zipListsWith (key-idx: workspace-idx: { inherit key-idx workspace-idx; }) [ 1 2 3 4 5 6 7 8 9 0 ] (lib.range 1 10);
@@ -54,10 +54,6 @@ in
     services.mako = {
       enable = true;
       settings = {
-        font = "sans-serif 10";
-        background-color = "#${theme.base0D}";
-        text-color = "#ffffff";
-
         icons = true;
 
         width = 500;
@@ -71,11 +67,8 @@ in
         border-size = 0;
         border-radius = 5;
 
-        "urgency=low" = {
-          background-color = "#${theme.base0A}";
-        };
         "urgency=critical" = {
-          background-color = "#${theme.base0F}";
+          background-color = theme.withHashtag.base0F;
         };
 
         "mode=dnd" = {
@@ -89,18 +82,7 @@ in
 
       gtk2.configLocation = "${config.xdg.configHome}/gtk-2.0/gtkrc";
 
-      theme = {
-        name = "Arc-Dark";
-        package = pkgs.arc-theme;
-      };
-      cursorTheme = {
-        name = "Bibata-Modern-Ice";
-        package = pkgs.bibata-cursors;
-      };
-      iconTheme = {
-        name = "Papirus";
-        package = pkgs.papirus-icon-theme;
-      };
+      iconTheme = { name = "Papirus"; package = pkgs.papirus-icon-theme; };
     };
 
     services.swayidle =
@@ -152,8 +134,6 @@ in
         up = "k";
         right = "l";
 
-        fonts = { names = [ "sans-serif" ]; size = 11.0; };
-
         window = {
           titlebar = false;
           commands = [
@@ -187,50 +167,6 @@ in
         focus.followMouse = false;
 
         gaps.smartBorders = "no_gaps";
-
-        colors = {
-          background = "#${theme.base00}";
-
-          focused = {
-            background = "#285577";
-            border = "#4c7899";
-            childBorder = "#285577";
-            indicator = "#2e9ef4";
-            text = "#ffffff";
-          };
-
-          focusedInactive = {
-            background = "#5f676a";
-            border = "#333333";
-            childBorder = "#5f676a";
-            indicator = "#484e50";
-            text = "#ffffff";
-          };
-
-          placeholder = {
-            background = "#0c0c0c";
-            border = "#000000";
-            childBorder = "#0c0c0c";
-            indicator = "#000000";
-            text = "#ffffff";
-          };
-
-          unfocused = {
-            background = "#222222";
-            border = "#333333";
-            childBorder = "#222222";
-            indicator = "#292d2e";
-            text = "#888888";
-          };
-
-          urgent = {
-            background = "#900000";
-            border = "#2f343a";
-            childBorder = "#900000";
-            indicator = "#900000";
-            text = "#ffffff";
-          };
-        };
 
         input = {
           "type:keyboard" = {
@@ -364,6 +300,8 @@ in
       lightModeScripts.gtk-theme = ''
         # Change system theme scheme to light
         ${lib.getExe pkgs.dconf} write /org/gnome/desktop/interface/color-scheme "'prefer-light'"
+
+        # TODO: change config specialization
 
         # Prepare laptop for wake: set full brightness and disable kbd backlight
         ${lib.getExe pkgs.brightnessctl} --class backlight set 100%

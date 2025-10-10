@@ -8,6 +8,11 @@
     home-manager.url = "github:nix-community/home-manager/release-25.05";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
+    stylix.url = "github:nix-community/stylix/release-25.05";
+    stylix.inputs.nixpkgs.follows = "nixpkgs";
+
+    ## Misc
+
     nix-darwin.url = "github:LnL7/nix-darwin";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
 
@@ -27,7 +32,8 @@
     # srvos.inputs.nixpkgs.follows = "srvos/nixpkgs";
     srvos.inputs.nixpkgs.follows = "nixpkgs";
 
-    # ——— Packages
+    ## Packages
+
     git-leave.url = "github:mrnossiom/git-leave";
     git-leave.inputs.nixpkgs.follows = "nixpkgs";
 

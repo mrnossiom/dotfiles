@@ -27,9 +27,6 @@ in
       # server.enable = true;
 
       settings = {
-        main = {
-          font = "monospace:size=10";
-        };
         colors = {
           background = "000000";
           foreground = "ffffff";

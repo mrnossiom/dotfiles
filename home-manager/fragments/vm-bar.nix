@@ -10,8 +10,6 @@ let
   integrated-keyboard-id = "1:1:AT_Translated_Set_2_keyboard";
   integrated-keyboard-id-bis = "1:1:kanata";
   swaymsg = lib.getExe' pkgs.sway "swaymsg";
-
-  theme = config.local.colorScheme.palette;
 in
 {
   config = lib.mkIf cfg.enable {
@@ -80,45 +78,6 @@ in
       hiddenState = "hide";
       mode = "hide";
       fonts.size = 11.0;
-
-      colors = {
-        background = "#${theme.base00}";
-        focusedBackground = "#${theme.base00}";
-        separator = "#cccccc";
-        focusedSeparator = "#cccccc";
-        statusline = "#cccccc";
-        focusedStatusline = "#cccccc";
-
-        focusedWorkspace = rec {
-          text = "#${theme.base07}";
-          background = "#${theme.base0C}";
-          border = background;
-        };
-
-        inactiveWorkspace = rec {
-          text = "#${theme.base05}";
-          background = "#${theme.base01}";
-          border = background;
-        };
-
-        activeWorkspace = rec {
-          text = "#${theme.base08}";
-          background = "#${theme.base0C}";
-          border = background;
-        };
-
-        urgentWorkspace = rec {
-          text = "#ffffff";
-          background = "#${theme.base0F}";
-          border = background;
-        };
-
-        bindingMode = rec {
-          text = "#ffffff";
-          background = "#${theme.base0F}";
-          border = background;
-        };
-      };
 
       # Would be nice to have rounded corners and padding when appearing
 

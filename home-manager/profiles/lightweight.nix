@@ -1,6 +1,5 @@
 { self
 , config
-, llib
 , pkgs
 
 , isDarwin
@@ -8,15 +7,10 @@
 }:
 
 let
-  inherit (self.outputs) homeManagerModules;
-
-  toml-format = pkgs.formats.toml { };
+  inherit (self.inputs) stylix;
 in
 {
-  imports = [
-    homeManagerModules.color-scheme
-    { config.local.colorScheme = llib.colorSchemes.oneDark; }
-  ];
+  imports = [ ];
 
   config = {
     assertions = [
