@@ -20,6 +20,9 @@
 
     nixos-hardware.url = "github:nixos/nixos-hardware";
 
+    lanzaboote.url = "github:nix-community/lanzaboote/v0.4.2";
+    lanzaboote.inputs.nixpkgs.follows = "unixpkgs";
+
     srvos.url = "github:nix-community/srvos";
     # srvos.inputs.nixpkgs.follows = "srvos/nixpkgs";
     srvos.inputs.nixpkgs.follows = "nixpkgs";

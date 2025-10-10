@@ -107,6 +107,15 @@ nixos-rebuild switch \
 	--use-remote-sudo
 ```
 
+## LUKS reminders
+
+- [Backup and Restore LUKS header](https://wiki.archlinux.org/title/Dm-crypt/Device_encryption#Backup_and_restore)
+
+## Secure boot
+
+- Lanzaboote
+- [SystemD cryptenroll](https://wiki.archlinux.org/title/Systemd-cryptenroll)
+
 ---
 
 Milo Moisson © 2023-2025
