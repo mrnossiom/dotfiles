@@ -51,5 +51,7 @@ in
     };
 
     programs.ssh.startAgent = true;
+
+    services.fwupd.enable = true;
   };
 }
