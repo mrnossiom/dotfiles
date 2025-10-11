@@ -15,6 +15,7 @@ in
   "api-digital-ocean.age".publicKeys = home-manager;
   "api-gitguardian.age".publicKeys = home-manager;
   "api-wakatime.age".publicKeys = home-manager;
+  "api-wakapi.age".publicKeys = home-manager;
 
   "pds-env.age".publicKeys = deploy;
 

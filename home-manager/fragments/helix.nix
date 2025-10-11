@@ -34,7 +34,7 @@ in
       defaultEditor = true;
 
       settings = {
-        # theme = "monokai_pro_octagon";
+        theme = lib.mkDefault "monokai_pro_octagon";
 
         editor = {
           auto-format = true;
@@ -76,7 +76,7 @@ in
 
             # Toggle inlay hints
             "A-u" = ":toggle lsp.display-inlay-hints";
-            # Toogle wrapping
+            # Toggle wrapping
             # TODO: change to `soft-wrap.enable` when supported by `:toggle`
             "A-w" = ":toggle soft-wrap.wrap-at-text-width";
           };
@@ -142,8 +142,10 @@ in
 
     programs.wakatime = {
       enable = true;
-      apiKeyFile = secrets.api-wakatime.path;
+      apiKeyFile = secrets.api-wakapi.path;
       settings = {
+        api_url = "https://wakapi.dev/api";
+
         exclude_unknown_project = true;
       };
     };

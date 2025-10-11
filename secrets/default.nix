@@ -9,6 +9,7 @@
     api-digital-ocean.file = ./api-digital-ocean.age;
     api-gitguardian.file = ./api-gitguardian.age;
     api-wakatime.file = ./api-wakatime.age;
+    api-wakapi.file = ./api-wakapi.age;
   };
 
   deploy = {
