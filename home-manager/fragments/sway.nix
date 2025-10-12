@@ -179,6 +179,8 @@ in
           "type:touch" = { events = "disabled"; };
         };
 
+        output."*".bg = lib.mkForce "#000000 solid_color";
+
         seat."*" = {
           # disable cursor when typing or on purpose
           hide_cursor = "when-typing enable";
