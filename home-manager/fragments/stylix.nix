@@ -55,8 +55,8 @@ in
       icons = {
         enable = true;
         package = pkgs.papirus-icon-theme;
-        light = "Papirus Light";
-        dark = "Papirus Dark";
+        light = "Papirus-Light";
+        dark = "Papirus-Dark";
       };
     };
   };
