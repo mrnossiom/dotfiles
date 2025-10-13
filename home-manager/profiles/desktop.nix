@@ -63,9 +63,6 @@
         jetbrains-toolbox
         spotify
 
-        # Game
-        superTuxKart
-
         # GUIs
         audacity
         baobab
