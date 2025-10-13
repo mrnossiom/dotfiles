@@ -27,6 +27,7 @@
     ./thunderbird.nix
     ./tools.nix
     ./vscodium.nix
+    ./waybar.nix
     ./xdg-mime.nix
     ./zellij
   ];

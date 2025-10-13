@@ -15,7 +15,10 @@ in
   config = lib.mkIf cfg.enable {
     home.sessionVariables.BROWSER = lib.getExe pkgs.firefox;
 
-    stylix.targets.firefox.profileNames = [ "default" ];
+    stylix.targets.firefox = {
+      enable = false;
+      profileNames = [ "default" ];
+    };
 
     programs.firefox = {
       enable = true;

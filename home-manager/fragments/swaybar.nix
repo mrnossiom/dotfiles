@@ -5,7 +5,7 @@
 }:
 
 let
-  cfg = config.local.fragment.sway;
+  cfg = config.local.fragment.swaybar;
 
   integrated-keyboard-id = "1:1:AT_Translated_Set_2_keyboard";
   integrated-keyboard-id-bis = "1:1:kanata";
@@ -13,6 +13,10 @@ let
   swaymsg = lib.getExe' pkgs.sway "swaymsg";
 in
 {
+  options.local.fragment.swaybar.enable = lib.mkEnableOption ''
+    Swaybar related
+  '';
+
   config = lib.mkIf cfg.enable {
     programs.i3status-rust = {
       enable = true;
@@ -22,7 +26,7 @@ in
         icons = "awesome6";
 
         settings.icon_format = " <span font_family='FontAwesome6'>{icon}</span> ";
-        
+
         blocks = [
           {
             block = "custom";

@@ -11,8 +11,6 @@ let
   inherit (self.outputs) homeManagerModules;
 
   cfg = config.local.fragment.sway;
-
-  theme = config.lib.stylix.colors;
   cfg-sway = config.wayland.windowManager.sway.config;
 
   workspacesRange = lib.zipListsWith (key-idx: workspace-idx: { inherit key-idx workspace-idx; }) [ 1 2 3 4 5 6 7 8 9 0 ] (lib.range 1 10);

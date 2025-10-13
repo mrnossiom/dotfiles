@@ -18,9 +18,10 @@ in
   '';
 
   config = lib.mkIf cfg.enable {
-    specialisation.light.configuration = {
-      stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/one-light.yaml";
-    };
+    # TODO: take a lot of build time
+    # specialisation.light.configuration = {
+    #   stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/one-light.yaml";
+    # };
 
     stylix = {
       enable = true;

@@ -30,6 +30,7 @@
       thunderbird.enable = true;
       tools.enable = true;
       vscodium.enable = true;
+      waybar.enable = true;
       xdg-mime.enable = true;
       zellij.enable = true;
     };

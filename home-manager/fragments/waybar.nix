@@ -1,0 +1,198 @@
+{ config
+, lib
+, pkgs
+, ...
+}:
+
+let
+  cfg = config.local.fragment.waybar;
+in
+{
+  options.local.fragment.waybar.enable = lib.mkEnableOption ''
+    Waybar related
+  '';
+
+  config = lib.mkIf cfg.enable {
+    stylix.targets.waybar = {
+      font = "sansSerif";
+      addCss = false;
+    };
+
+    services.playerctld.enable = true;
+
+    programs.waybar = {
+      enable = true;
+
+      settings.main = {
+        mode = "hide";
+        ipc = true;
+        position = "bottom";
+
+        modules-left = [
+          "sway/workspaces"
+        ];
+
+        modules-center = [ ];
+
+        modules-right = [
+          "cava"
+          "mpris"
+          "pulseaudio"
+          "battery"
+          "clock"
+          "tray"
+        ];
+
+        "sway/workspaces" = {
+          disable-scroll = true;
+          format = "{name}:{icon}";
+          format-icons = {
+            default = "";
+
+            "1" = "";
+            "2" = "";
+            "3" = "";
+            "4" = "";
+            "10" = "";
+          };
+        };
+
+        tray.spacing = 10;
+
+        clock = {
+          format = "{:%d %b %H:%M}";
+          tooltip = false;
+        };
+
+        battery = {
+          states = {
+            good = 95;
+            warning = 30;
+            critical = 15;
+          };
+
+          format = "{capacity}% {icon}";
+          format-full = "{capacity}% {icon}";
+          format-charging = "{capacity}% ";
+          format-plugged = "{capacity}% ";
+          format-icons = [ " " " " " " " " " " ];
+        };
+
+        pulseaudio = {
+          scroll-step = 5;
+
+          format = "{volume}% {icon} {format_source}";
+          tooltip = false;
+          format-bluetooth = "{volume}% {icon} {format_source}";
+          format-bluetooth-muted = " {icon} {format_source}";
+          format-muted = " {format_source}";
+          format-source = "{volume}% ";
+          format-source-muted = "";
+          format-icons = {
+            headset = "";
+            headphone = "";
+            hands-free = "";
+            phone = "";
+            portable = "";
+            car = "";
+            default = [ "" " " "  " ];
+          };
+
+          on-click = "pavucontrol";
+        };
+
+        mpris = {
+          format = "{title} - {artist}";
+          tooltip-format = "{album} ({player})";
+        };
+
+        cava = {
+          bars = 6;
+          format-icons = [ "▁" "▂" "▃" "▄" "▅" "▆" "▇" "█" ];
+          bar_delimiter = 0;
+          hide_on_silence = true;
+        };
+      };
+
+      style = ''
+          #waybar, tooltip { color: @base00; }
+          tooltip { border-color: @base0D; background-color: @base00; }
+          tooltip label { color: @base05; }
+
+          #clock { color: @base00; background-color: @base03; }
+
+          #battery { color: @base00; background-color: @base0D; }
+          #battery.charging { background-color: @base0E; }
+
+          #pulseaudio { color: @base00; background-color: @base09; }
+          #pulseaudio.muted { background-color: @base0C; }
+
+          #mpris { background-color: @base0B; }
+
+          #cava { background-color: @base0E; }
+        ''
+        + ''
+          * {
+            border-radius: 0;
+          }
+
+          /* Apply transparency to the bar (handled above by Stylix) */
+          #waybar { background: alpha(white, 0); }
+
+          /* Apply margin to all module groups */
+          .modules-left, .modules-center, .modules-right {
+            /*margin: .5rem .8rem;*/
+          }
+
+          /* Apply padding to all modules */
+          .modules-right widget .module {
+            padding: 0 1rem;
+
+            color: @base07; 
+          }
+
+          /* Round first and last child of left, right and center modules. Disable rounding on the sides*/
+          .modules-left widget:last-child .module,
+          .modules-center widget:last-child .module/*,
+          .modules-right widget:last-child .module*/ {
+            border-top-right-radius: 5px;
+          }
+          /*.modules-left widget:first-child .module,*/
+          .modules-center widget:first-child .module,
+          .modules-right widget:first-child .module {
+            border-top-left-radius: 5px;
+          }
+
+          #tray {
+            background-color: @base03;
+          }
+
+          /* Round first and last child of workspaces. */
+          #workspaces button:first-child {
+            /*border-top-left-radius: 5px;*/
+          }
+          #workspaces button:last-child {
+            border-top-right-radius: 5px;
+          }
+
+          #workspaces button {
+            color: @base07;
+            background-color: @base03;
+          }
+          #workspaces button:hover {
+            color: @base07;
+            background-color: @base03;
+          }
+          #workspaces button.urgent { color: @base08; }
+        '';
+    };
+
+    wayland.windowManager.sway.config.bars = [{
+      command = lib.getExe pkgs.waybar;
+
+      mode = "hide";
+      hiddenState = "hide";
+    }];
+  };
+}
+
