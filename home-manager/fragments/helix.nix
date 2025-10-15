@@ -28,6 +28,8 @@ in
       { assertion = config.local.fragment.agenix.enable; message = "`helix` fragment depends on `agenix` fragment"; }
     ];
 
+    stylix.targets.helix.enable = false;
+
     programs.helix = {
       enable = true;
       package = if flags.onlyCached then pkgs.helix else lpkgs.helix;

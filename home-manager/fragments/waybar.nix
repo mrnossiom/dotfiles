@@ -45,14 +45,15 @@ in
 
         "sway/workspaces" = {
           disable-scroll = true;
-          format = "{name}:{icon}";
+          format = "{name} {icon}";
           format-icons = {
             default = "";
 
-            "1" = "";
+            "1" = "";
             "2" = "";
             "3" = "";
             "4" = "";
+            "9" = "";
             "10" = "";
           };
         };
@@ -80,21 +81,22 @@ in
 
         pulseaudio = {
           scroll-step = 5;
-
-          format = "{volume}% {icon} {format_source}";
           tooltip = false;
-          format-bluetooth = "{volume}% {icon} {format_source}";
+
+          format = "{volume}% {icon}{format_source}";
+          format-bluetooth = "{volume}% {icon}{format_source}";
           format-bluetooth-muted = " {icon} {format_source}";
           format-muted = " {format_source}";
-          format-source = "{volume}% ";
-          format-source-muted = "";
+          format-source = "";
+          format-source-muted = "  ";
+
           format-icons = {
-            headset = "";
-            headphone = "";
-            hands-free = "";
-            phone = "";
-            portable = "";
-            car = "";
+            headset = " ";
+            headphone = " ";
+            hands-free = " ";
+            phone = " ";
+            portable = " ";
+            car = " ";
             default = [ "" " " "  " ];
           };
 
@@ -115,76 +117,79 @@ in
       };
 
       style = ''
-          #waybar, tooltip { color: @base00; }
-          tooltip { border-color: @base0D; background-color: @base00; }
-          tooltip label { color: @base05; }
+        #waybar { color: @base00; }
+        tooltip { border-color: @base0D; background-color: @base00; }
+        tooltip label { color: @base05; }
 
-          #clock { color: @base00; background-color: @base03; }
+        #workspaces button { border-bottom: 3px solid transparent; }
+        #workspaces button.focused, workspaces button.active { border-bottom: 3px solid @base05; }
 
-          #battery { color: @base00; background-color: @base0D; }
-          #battery.charging { background-color: @base0E; }
+        #clock { background-color: @base03; }
 
-          #pulseaudio { color: @base00; background-color: @base09; }
-          #pulseaudio.muted { background-color: @base0C; }
+        #battery { color: @base00; background-color: @base0D; }
+        #battery.charging { background-color: @base0E; }
 
-          #mpris { background-color: @base0B; }
+        #pulseaudio { color: @base00; background-color: @base09; }
+        #pulseaudio.muted { background-color: @base0C; }
 
-          #cava { background-color: @base0E; }
-        ''
-        + ''
-          * {
-            border-radius: 0;
-          }
+        #mpris { color: @base00; background-color: @base0B; }
 
-          /* Apply transparency to the bar (handled above by Stylix) */
-          #waybar { background: alpha(white, 0); }
+        #cava { color: @base00; background-color: @base0D; }
+      ''
+      + ''
+        * {
+          border-radius: 0;
+        }
 
-          /* Apply margin to all module groups */
-          .modules-left, .modules-center, .modules-right {
-            /*margin: .5rem .8rem;*/
-          }
+        /* Apply transparency to the bar (handled above by Stylix) */
+        #waybar { background: alpha(white, 0); }
 
-          /* Apply padding to all modules */
-          .modules-right widget .module {
-            padding: 0 1rem;
+        /* Apply margin to all module groups */
+        .modules-left, .modules-center, .modules-right {
+          /*margin: .5rem .8rem;*/
+        }
 
-            color: @base07; 
-          }
+        /* Apply padding to all modules */
+        .modules-right widget .module {
+          padding: 0 1rem;
 
-          /* Round first and last child of left, right and center modules. Disable rounding on the sides*/
-          .modules-left widget:last-child .module,
-          .modules-center widget:last-child .module/*,
-          .modules-right widget:last-child .module*/ {
-            border-top-right-radius: 5px;
-          }
-          /*.modules-left widget:first-child .module,*/
-          .modules-center widget:first-child .module,
-          .modules-right widget:first-child .module {
-            border-top-left-radius: 5px;
-          }
+          color: @base07; 
+        }
 
-          #tray {
-            background-color: @base03;
-          }
+        /* Round first and last child of left, right and center modules. Disable rounding on the sides*/
+        .modules-left widget:last-child .module,
+        .modules-center widget:last-child .module/*,
+        .modules-right widget:last-child .module*/ {
+          border-top-right-radius: 5px;
+        }
+        /*.modules-left widget:first-child .module,*/
+        .modules-center widget:first-child .module,
+        .modules-right widget:first-child .module {
+          border-top-left-radius: 5px;
+        }
 
-          /* Round first and last child of workspaces. */
-          #workspaces button:first-child {
-            /*border-top-left-radius: 5px;*/
-          }
-          #workspaces button:last-child {
-            border-top-right-radius: 5px;
-          }
+        #tray {
+          background-color: @base03;
+        }
 
-          #workspaces button {
-            color: @base07;
-            background-color: @base03;
-          }
-          #workspaces button:hover {
-            color: @base07;
-            background-color: @base03;
-          }
-          #workspaces button.urgent { color: @base08; }
-        '';
+        /* Round first and last child of workspaces. */
+        #workspaces button:first-child {
+          /*border-top-left-radius: 5px;*/
+        }
+        #workspaces button:last-child {
+          border-top-right-radius: 5px;
+        }
+
+        #workspaces button {
+          color: @base07;
+          background-color: @base03;
+        }
+        #workspaces button:hover {
+          color: @base07;
+          background-color: @base03;
+        }
+        #workspaces button.urgent { color: @base08; }
+      '';
     };
 
     wayland.windowManager.sway.config.bars = [{
