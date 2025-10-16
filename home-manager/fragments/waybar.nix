@@ -104,7 +104,7 @@ in
         };
 
         mpris = {
-          format = "{title} - {artist}";
+          format = "{title:.30} - {artist:.30}";
           tooltip-format = "{album} ({player})";
         };
 
