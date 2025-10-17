@@ -167,5 +167,7 @@ in
         obs-pipewire-audio-capture
       ];
     };
+
+    services.earlyoom.enable = true;
   };
 }
