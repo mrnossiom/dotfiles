@@ -134,6 +134,8 @@
       };
     };
 
+    stylix.targets.qt.enable = false;
+
     programs.go = {
       enable = true;
       goPath = ".local/share/go";
