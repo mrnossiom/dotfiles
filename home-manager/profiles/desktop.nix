@@ -123,6 +123,8 @@
 
     programs.broot.enable = true;
 
+    stylix.targets.qt.enable = false;
+
     programs.go = {
       enable = true;
       env.GOPATH = "${config.home.homeDirectory}/.local/share/go";
