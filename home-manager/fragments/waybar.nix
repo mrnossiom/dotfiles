@@ -27,6 +27,7 @@ in
         mode = "hide";
         ipc = true;
         position = "bottom";
+        output = ["eDP-1"];
 
         modules-left = [
           "sway/workspaces"
@@ -47,14 +48,14 @@ in
           disable-scroll = true;
           format = "{name} {icon}";
           format-icons = {
-            default = "";
+            default = " ";
 
-            "1" = "";
-            "2" = "";
-            "3" = "";
-            "4" = "";
-            "9" = "";
-            "10" = "";
+            "1" = " ";
+            "2" = " ";
+            "3" = " ";
+            "4" = " ";
+            "9" = " ";
+            "10" = " ";
           };
         };
 
