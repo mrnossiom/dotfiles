@@ -129,6 +129,8 @@ in
 
       # Symbols
       o.o = "∞";
+      # Irony point
+      question.question = "⸮";
 
       minus.greater = "→";
       less.minus = "←";
