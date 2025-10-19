@@ -6,6 +6,8 @@
 
 let
   cfg = config.local.fragment.waybar;
+
+  makoctl = lib.getExe' config.services.mako.package "makoctl";
 in
 {
   options.local.fragment.waybar.enable = lib.mkEnableOption ''
@@ -27,21 +29,10 @@ in
         mode = "hide";
         ipc = true;
         position = "bottom";
-        output = ["eDP-1"];
+        output = [ "eDP-1" ];
 
         modules-left = [
           "sway/workspaces"
-        ];
-
-        modules-center = [ ];
-
-        modules-right = [
-          "cava"
-          "mpris"
-          "pulseaudio"
-          "battery"
-          "clock"
-          "tray"
         ];
 
         "sway/workspaces" = {
@@ -56,6 +47,56 @@ in
             "4" = " ";
             "9" = " ";
             "10" = " ";
+          };
+        };
+
+        modules-center = [ ];
+
+        modules-right = [
+          "cava"
+          "mpris"
+          "pulseaudio"
+          "battery"
+          "clock"
+          "group/misc"
+        ];
+
+        "group/misc" = {
+          orientation = "inherit";
+          modules = [
+            "custom/notifications"
+            "tray"
+            "idle_inhibitor"
+          ];
+
+          drawer = {
+            transition-duration = 250;
+            transition-left-to-right = false;
+          };
+        };
+
+        "custom/notifications" = {
+          format = "{icon}";
+          format-icons = {
+            normal = " ";
+            dnd = " ";
+          };
+          tooltip = false;
+
+          interval = "once";
+          return-type = "json";
+          exec = ''${makoctl} mode | rg dnd >/dev/null; if [ $? == 0 ]; then echo '{"alt":"dnd"}'; else echo '{"alt":"normal"}'; fi'';
+          on-click = "${makoctl} mode -t dnd; pkill -SIGRTMIN+10 waybar";
+          signal = 10;
+          # rely on on click pkill signal
+          exec-on-event = false;
+        };
+
+        idle_inhibitor = {
+          format = "{icon}";
+          format-icons = {
+            activated = " ";
+            deactivated = " ";
           };
         };
 
@@ -125,6 +166,10 @@ in
         #workspaces button { border-bottom: 3px solid transparent; }
         #workspaces button.focused, workspaces button.active { border-bottom: 3px solid @base05; }
 
+        #tray { background-color: @base03; }
+        #idle_inhibitor { background-color: @base03; }
+        #custom-notifications { background-color: @base03; }
+
         #clock { background-color: @base03; }
 
         #battery { color: @base00; background-color: @base0D; }
@@ -142,7 +187,7 @@ in
           border-radius: 0;
         }
 
-        /* Apply transparency to the bar (handled above by Stylix) */
+        /* Apply transparency to the bar */
         #waybar { background: alpha(white, 0); }
 
         /* Apply margin to all module groups */
@@ -158,26 +203,22 @@ in
         }
 
         /* Round first and last child of left, right and center modules. Disable rounding on the sides*/
-        .modules-left widget:last-child .module,
-        .modules-center widget:last-child .module/*,
-        .modules-right widget:last-child .module*/ {
+        .modules-left > widget:last-child .module,
+        .modules-center > widget:last-child .module/*,
+        .modules-right > widget:last-child .module*/ {
           border-top-right-radius: 5px;
         }
-        /*.modules-left widget:first-child .module,*/
-        .modules-center widget:first-child .module,
-        .modules-right widget:first-child .module {
+        /*.modules-left > widget:first-child .module,*/
+        .modules-center > widget:first-child .module,
+        .modules-right > widget:first-child .module {
           border-top-left-radius: 5px;
         }
 
-        #tray {
-          background-color: @base03;
-        }
-
         /* Round first and last child of workspaces. */
-        #workspaces button:first-child {
+        #workspaces > button:first-child {
           /*border-top-left-radius: 5px;*/
         }
-        #workspaces button:last-child {
+        #workspaces > button:last-child {
           border-top-right-radius: 5px;
         }
 
