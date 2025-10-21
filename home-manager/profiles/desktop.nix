@@ -12,26 +12,30 @@
     ];
 
     local.fragment = {
-      agenix.enable = true;
-      aws.enable = true;
+      # Interface
       chromium.enable = true;
       compose-key.enable = true;
       epita.enable = true;
       firefox.enable = true;
+      imv.enable = true;
+      stylix.enable = true;
+      thunderbird.enable = true;
+      sway.enable = true;
+      waybar.enable = true;
+      xdg-mime.enable = true;
+  
+      # Tools
+      agenix.enable = true;
+      aws.enable = true;
       git.enable = true;
       helix.enable = true;
-      imv.enable = true;
       jujutsu.enable = true;
       kitty.enable = true;
       rust.enable = true;
       shell.enable = true;
-      stylix.enable = true;
-      sway.enable = true;
-      thunderbird.enable = true;
       tools.enable = true;
       vscodium.enable = true;
-      waybar.enable = true;
-      xdg-mime.enable = true;
+      zed.enable = true;
       zellij.enable = true;
     };
 

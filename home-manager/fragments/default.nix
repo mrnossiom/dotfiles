@@ -29,6 +29,7 @@
     ./vscodium.nix
     ./waybar.nix
     ./xdg-mime.nix
+    ./zed.nix
     ./zellij
   ];
 
