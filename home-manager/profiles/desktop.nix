@@ -23,7 +23,7 @@
       sway.enable = true;
       waybar.enable = true;
       xdg-mime.enable = true;
-  
+
       # Tools
       agenix.enable = true;
       aws.enable = true;

@@ -64,6 +64,14 @@ in
       lpkgs.otree
     ];
 
+    programs.fish.shellAbbrs = {
+      # Use newer tools
+      clear = "#"; # <ctrl-l>
+      cat = "#"; # bat
+      rm = "#"; # trash-put
+      tr = "#"; # srgn
+    };
+
     programs.bat = {
       enable = true;
       config = {

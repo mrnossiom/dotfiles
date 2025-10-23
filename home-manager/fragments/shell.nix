@@ -100,12 +100,6 @@ in
         # Nix-related
         ur = " unlink result";
 
-        # Use newer tools
-        clear = "#"; # <ctrl-l>
-        cat = "#"; # bat
-        rm = "#"; # trash-put
-        tr = "#"; # srgn
-
         # Do not keep these commands in history
         exit = " exit";
         history = " history";
