@@ -2,21 +2,27 @@ _default:
 	@just --list --unsorted --list-heading '' --list-prefix '—— '
 
 [linux]
-switch PROFILE="" *ARGS:
-	sudo nixos-rebuild switch --show-trace --flake .#{{PROFILE}} {{ARGS}}
+switch profile="" *args:
+	sudo nixos-rebuild switch --show-trace --flake .#{{profile}} {{args}}
 [macos]
-switch PROFILE="" *ARGS:
-	darwin-rebuild switch --show-trace --flake .#{{PROFILE}} {{ARGS}}
+switch profile="" *args:
+	darwin-rebuild switch --show-trace --flake .#{{profile}} {{args}}
 
 [linux]
-build PROFILE="" *ARGS:
-	nixos-rebuild build --show-trace --flake .#{{PROFILE}} {{ARGS}}
+build profile="" *args:
+	nixos-rebuild build --show-trace --flake .#{{profile}} {{args}}
 [macos]
-build PROFILE="" *ARGS:
-	darwin-rebuild build --show-trace --flake .#{{PROFILE}} {{ARGS}}
+build profile="" *args:
+	darwin-rebuild build --show-trace --flake .#{{profile}} {{args}}
 
-home-build PROFILE *ARGS:
-	home-manager build --show-trace --flake .#{{PROFILE}} {{ARGS}}
+home-build profile *args:
+	home-manager build --show-trace --flake .#{{profile}} {{args}}
 
-home-switch PROFILE *ARGS:
-	home-manager switch --show-trace --flake .#{{PROFILE}} {{ARGS}}
+home-switch profile *args:
+	home-manager switch --show-trace --flake .#{{profile}} {{args}}
+
+switch-target profile host *args:
+	nixos-rebuild switch \
+		--flake .#{{profile}} \
+		--target-host {{host}} \
+		--use-remote-sudo {{args}}
