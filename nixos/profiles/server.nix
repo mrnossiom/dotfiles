@@ -7,6 +7,7 @@
 
 let
   inherit (self.inputs) srvos agenix tangled;
+  inherit (self.nixosModules) mindustry-server;
 
   all-secrets = import ../../secrets;
 
@@ -45,6 +46,8 @@ in
 
     tangled.nixosModules.knot
     tangled.nixosModules.spindle
+
+    mindustry-server
   ];
 
   config = {
@@ -216,5 +219,12 @@ in
         reverseProxy = true;
       };
     };
+
+    services.mindustry-server = {
+      enable = true;
+      package = upkgs.mindustry-server;
+      openFirewall = true;
+    };
+    systemd.services.mindustry.enable = false;
   };
 }
