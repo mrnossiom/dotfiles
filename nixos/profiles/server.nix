@@ -28,13 +28,16 @@ let
   tangled-spindle-port = 3003;
   tangled-spindle-hostname = "spindle.wiro.world";
 
+  thelounge-port = 3004;
+  thelounge-hostname = "lounge.wiro.world";
+
+  headscale-port = 3005;
+  headscale-hostname = "headscale.wiro.world";
+
   grafana-port = 9000;
   grafana-hostname = "console.wiro.world";
   prometheus-port = 9001;
   prometheus-node-exporter-port = 9002;
-
-  thelounge-port = 3004;
-  thelounge-hostname = "lounge.wiro.world";
 in
 {
   imports = [
@@ -115,7 +118,11 @@ in
 
     services.caddy = {
       enable = true;
-      package = pkgs.caddy;
+      # TODO: add caddy tailscale plugin
+      # package = pkgs.caddy.withPlugins {
+      #   plugins = [ "github.com/tailscale/caddy-tailscale" ];
+      #   hash = "sha256-xxx";
+      # };
 
       globalConfig = ''
         metrics { per_host }
@@ -148,6 +155,10 @@ in
 
       virtualHosts.${thelounge-hostname}.extraConfig = ''
         reverse_proxy http://localhost:${toString thelounge-port}
+      '';
+
+      virtualHosts.${headscale-hostname}.extraConfig = ''
+        reverse_proxy http://localhost:${toString headscale-port}
       '';
     };
 
@@ -220,6 +231,29 @@ in
       };
     };
 
+    services.headscale = {
+      enable = true;
+
+      port = headscale-port;
+      settings = {
+        server_url = "https://${headscale-hostname}:443";
+        # metrics_listen_addr = "127.0.0.1:${headscale-port-metrics}";
+
+        # disable TLS
+        tls_cert_path = null;
+        tls_key_path = null;
+
+        dns = {
+          magic_dns = true;
+          # TODO: headnet? portal? keep short?
+          base_domain = "p.wiro.world";
+        };
+
+        oidc = { };
+      };
+    };
+
+    # port used is 6567
     services.mindustry-server = {
       enable = true;
       package = upkgs.mindustry-server;
