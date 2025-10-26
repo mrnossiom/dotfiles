@@ -21,6 +21,10 @@ in
   "pds-env.age".publicKeys = deploy;
   # Defines `LLDAP_JWT_SECRET`, `LLDAP_KEY_SEED`.
   "lldap-env.age".publicKeys = deploy;
+  "authelia-jwt-secret.age".publicKeys = deploy;
+  "authelia-storage-enc-key.age".publicKeys = deploy;
+  "authelia-ldap-password.age".publicKeys = deploy;
+  "authelia-smtp-password.age".publicKeys = deploy;
 
   # Not used in config but useful
   "pgp-ca5e.age".publicKeys = users;

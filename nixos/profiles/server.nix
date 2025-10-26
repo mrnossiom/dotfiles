@@ -35,6 +35,9 @@ let
   lldap-port = 3006;
   lldap-hostname = "ldap.wiro.world";
 
+  authelia-port = 3007;
+  authelia-hostname = "auth.wiro.world";
+
   grafana-port = 9000;
   grafana-hostname = "console.wiro.world";
   prometheus-port = 9001;
@@ -164,6 +167,10 @@ in
       virtualHosts.${lldap-hostname}.extraConfig = ''
         reverse_proxy http://localhost:${toString lldap-port}
       '';
+
+      virtualHosts.${authelia-hostname}.extraConfig = ''
+        reverse_proxy http://localhost:${toString authelia-port}
+      '';
     };
 
     security.sudo.wheelNeedsPassword = false;
@@ -267,6 +274,75 @@ in
         ldap_base_dn = "dc=wiro,dc=world";
       };
       environmentFile = config.age.secrets.lldap-env.path;
+    };
+
+    age.secrets.authelia-jwt-secret.file = ../../secrets/authelia-jwt-secret.age;
+    age.secrets.authelia-jwt-secret.owner = config.services.authelia.instances.main.user;
+    age.secrets.authelia-storage-enc-key.file = ../../secrets/authelia-storage-enc-key.age;
+    age.secrets.authelia-storage-enc-key.owner = config.services.authelia.instances.main.user;
+    age.secrets.authelia-ldap-password.file = ../../secrets/authelia-ldap-password.age;
+    age.secrets.authelia-ldap-password.owner = config.services.authelia.instances.main.user;
+    age.secrets.authelia-smtp-password.file = ../../secrets/authelia-smtp-password.age;
+    age.secrets.authelia-smtp-password.owner = config.services.authelia.instances.main.user;
+    services.authelia.instances.main = {
+      enable = true;
+
+      secrets = {
+        jwtSecretFile = config.age.secrets.authelia-jwt-secret.path;
+        # oidcHmacSecretFile = config.age.secrets.authelia-oidc-hmac-secret.path;
+        # oidcIssuerPrivateKeyFile = config.age.secrets.authelia-oidc-issuer-pkey.path;
+        # sessionSecretFile = config.age.secrets.authelia-session-secret.path;
+        storageEncryptionKeyFile = config.age.secrets.authelia-storage-enc-key.path;
+      };
+      environmentVariables = {
+        AUTHELIA_AUTHENTICATION_BACKEND_LDAP_PASSWORD_FILE = config.age.secrets.authelia-ldap-password.path;
+        AUTHELIA_NOTIFIER_SMTP_PASSWORD_FILE = config.age.secrets.authelia-smtp-password.path;
+      };
+      settings = {
+        server.address = "localhost:${toString authelia-port}";
+
+        storage.local.path = "/var/lib/authelia-main/db.sqlite3";
+
+        session = {
+          cookies = [{
+            domain = "wiro.world";
+            authelia_url = "https://${authelia-hostname}";
+            default_redirection_url = "https://wiro.world";
+          }];
+        };
+
+        authentication_backend = {
+          ldap = {
+            address = "ldap://localhost:3890";
+            timeout = "5m"; # replace with systemd dependency
+
+            base_dn = "dc=wiro,dc=world";
+            users_filter = "(&({username_attribute}={input})(objectClass=person))";
+            groups_filter = "(&(member={dn})(objectClass=groupOfNames))";
+
+            user = "uid=authelia,ou=people,dc=wiro,dc=world";
+            # Set in `AUTHELIA_AUTHENTICATION_BACKEND_LDAP_PASSWORD_FILE`.
+            # password = "";
+          };
+        };
+        access_control = {
+          default_policy = "deny";
+          rules = [
+            {
+              domain = "*.wiro.world";
+              policy = "one_factor";
+            }
+          ];
+        };
+
+        notifier.smtp = {
+          address = "smtp://smtp.resend.com:2587";
+          username = "resend";
+          # Set in `AUTHELIA_NOTIFIER_SMTP_PASSWORD_FILE`.
+          # password = "";
+          sender = "authelia@wiro.world";
+        };
+      };
     };
 
     # port used is 6567
