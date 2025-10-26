@@ -38,6 +38,9 @@ let
   authelia-port = 3007;
   authelia-hostname = "auth.wiro.world";
 
+  gerrit-port = 3008;
+  gerrit-hostname = "gerrit.wiro.world";
+
   grafana-port = 9000;
   grafana-hostname = "console.wiro.world";
   prometheus-port = 9001;
@@ -170,6 +173,10 @@ in
 
       virtualHosts.${authelia-hostname}.extraConfig = ''
         reverse_proxy http://localhost:${toString authelia-port}
+      '';
+
+      virtualHosts.${gerrit-hostname}.extraConfig = ''
+        reverse_proxy http://localhost:${toString gerrit-port}
       '';
     };
 
@@ -342,6 +349,20 @@ in
           # password = "";
           sender = "authelia@wiro.world";
         };
+      };
+    };
+
+    services.gerrit = {
+      enable = true;
+
+      listenAddress = "[::]:${toString gerrit-port}";
+      serverId = "d0b2cbe5-2f32-49af-8609-8be73e4bbbab";
+
+      settings = {
+        gerrit.canonicalWebUrl = "https://gerrit.wiro.world/";
+        httpd.listenUrl = "proxy-https://[::]:${toString gerrit-port}";
+
+        auth.type = "OpenID";
       };
     };
 
