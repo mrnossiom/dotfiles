@@ -32,6 +32,9 @@ let
   headscale-port = 3005;
   headscale-hostname = "headscale.wiro.world";
 
+  lldap-port = 3006;
+  lldap-hostname = "ldap.wiro.world";
+
   grafana-port = 9000;
   grafana-hostname = "console.wiro.world";
   prometheus-port = 9001;
@@ -157,6 +160,10 @@ in
       virtualHosts.${headscale-hostname}.extraConfig = ''
         reverse_proxy http://localhost:${toString headscale-port}
       '';
+
+      virtualHosts.${lldap-hostname}.extraConfig = ''
+        reverse_proxy http://localhost:${toString lldap-port}
+      '';
     };
 
     security.sudo.wheelNeedsPassword = false;
@@ -248,6 +255,18 @@ in
 
         oidc = { };
       };
+    };
+
+    age.secrets.lldap-env.file = ../../secrets/lldap-env.age;
+    services.lldap = {
+      enable = true;
+      settings = {
+        http_url = "https://${lldap-hostname}";
+        http_port = lldap-port;
+
+        ldap_base_dn = "dc=wiro,dc=world";
+      };
+      environmentFile = config.age.secrets.lldap-env.path;
     };
 
     # port used is 6567

@@ -19,6 +19,8 @@ in
 
   # Defines `PDS_JWT_SECRET`, `PDS_ADMIN_PASSWORD`, `PDS_PLC_ROTATION_KEY_K256_PRIVATE_KEY_HEX`, `PDS_EMAIL_SMTP_URL`, `PDS_EMAIL_FROM_ADDRESS`.
   "pds-env.age".publicKeys = deploy;
+  # Defines `LLDAP_JWT_SECRET`, `LLDAP_KEY_SEED`.
+  "lldap-env.age".publicKeys = deploy;
 
   # Not used in config but useful
   "pgp-ca5e.age".publicKeys = users;
