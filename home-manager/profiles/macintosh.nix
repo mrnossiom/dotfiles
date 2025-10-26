@@ -10,14 +10,11 @@
 
 let
   inherit (self.inputs) agenix;
-
-  all-secrets = import ../../secrets;
 in
 {
   imports = [
     agenix.homeManagerModules.default
     {
-      age.secrets = all-secrets.home-manager;
       # This allows us to decrypt user space secrets without having to use a
       # passwordless ssh key as you cannot interact with age in the service.
       age.identityPaths = [ "${config.home.homeDirectory}/.ssh/id_home_manager" ];

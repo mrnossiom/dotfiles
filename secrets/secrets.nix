@@ -7,16 +7,17 @@ let
 in
 {
   # Used in NixOS config
-  "backup/rclone-googledrive.age".publicKeys = nixos;
-  "backup/restic-key.age".publicKeys = nixos;
+  "backup-rclone-googledrive.age".publicKeys = nixos;
+  "backup-restic-key.age".publicKeys = nixos;
 
   # Used in Home Manager
   "api-crates-io.age".publicKeys = home-manager;
-  "api-digital-ocean.age".publicKeys = home-manager;
-  "api-gitguardian.age".publicKeys = home-manager;
   "api-wakatime.age".publicKeys = home-manager;
   "api-wakapi.age".publicKeys = home-manager;
 
+  # Used in server deployment
+
+  # Defines `PDS_JWT_SECRET`, `PDS_ADMIN_PASSWORD`, `PDS_PLC_ROTATION_KEY_K256_PRIVATE_KEY_HEX`, `PDS_EMAIL_SMTP_URL`, `PDS_EMAIL_FROM_ADDRESS`.
   "pds-env.age".publicKeys = deploy;
 
   # Not used in config but useful

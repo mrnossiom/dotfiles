@@ -17,72 +17,79 @@ in
     Backup related
   '';
 
-  # TODO: fix module
-  config.assertions = lib.optional cfg.enable { assertion = false; message = "module is broken"; };
-  config.services.restic.backups = lib.mkIf cfg.enable {
-    # Backup documents and repos code
-    google-drive = {
-      repository = "rclone:googledrive:/Backups/${hostname}";
-      passwordFile = secrets.backup-restic-key.path;
-      rcloneConfigFile = secrets.backup-rclone-googledrive.path;
-      initialize = true;
 
-      paths = [
-        "/home/${mainUsername}/Documents"
-        # Equivalent of `~/Development` but needs extra handling as explained below
-        "/home/${mainUsername}/.local/backup/repos"
-      ];
+  config = lib.mkIf cfg.enable {
+    # TODO: fix module
+    assertions = [{ assertion = false; message = "module is broken"; }];
 
-      # Extra handling for Development folder to respect `.gitignore` files.
-      #
-      # Backup folder should be stored somewhere to avoid changing ctimes
-      # which would cause otherwise unchanged files to be backed up again.
-      # Since `--link-dest` is used, file contents won't be duplicated on disk.
-      backupPrepareCommand = ''
-        # Remove stale Restic locks
-        ${lib.getExe pkgs.restic} unlock || true
+    age.secrets.backup-restic-key.file = ../../secrets/backup/restic-key.age;
+    age.secrets.backup-rclone-google-drive.file = ../../secrets/backup/rclone-googledrive.age;
 
-        ${lib.getExe pkgs.rsync} \
-          ${"\\" /* Archive mode and delete files that are not in the source directory. `--mkpath` is like `mkdir`'s `-p` option */}
-          --archive --delete --mkpath \
-          ${"\\" /* `:-` operator uses .gitignore files as exclude patterns */}
-          --filter=':- .gitignore' \
-          ${"\\" /* Exclude nixpkgs repository because they have some weird symlink test files that break rsync */}
-          --exclude 'nixpkgs' \
-          ${"\\" /* Hardlink files to avoid taking up more space */}
-          --link-dest=/home/${mainUsername}/Development \
-          /home/${mainUsername}/Development/ /home/${mainUsername}/.local/backup/repos
-      '';
+    services.restic.backups = {
+      # Backup documents and repos code
+      google-drive = {
+        repository = "rclone:googledrive:/Backups/${hostname}";
+        passwordFile = secrets.backup-restic-key.path;
+        rcloneConfigFile = secrets.backup-rclone-googledrive.path;
+        initialize = true;
 
-      pruneOpts = [
-        "--keep-daily 7"
-        "--keep-weekly 5"
-        "--keep-yearly 10"
-      ];
+        paths = [
+          "/home/${mainUsername}/Documents"
+          # Equivalent of `~/Development` but needs extra handling as explained below
+          "/home/${mainUsername}/.local/backup/repos"
+        ];
+
+        # Extra handling for Development folder to respect `.gitignore` files.
+        #
+        # Backup folder should be stored somewhere to avoid changing ctimes
+        # which would cause otherwise unchanged files to be backed up again.
+        # Since `--link-dest` is used, file contents won't be duplicated on disk.
+        backupPrepareCommand = ''
+          # Remove stale Restic locks
+          ${lib.getExe pkgs.restic} unlock || true
+
+          ${lib.getExe pkgs.rsync} \
+            ${"\\" /* Archive mode and delete files that are not in the source directory. `--mkpath` is like `mkdir`'s `-p` option */}
+            --archive --delete --mkpath \
+            ${"\\" /* `:-` operator uses .gitignore files as exclude patterns */}
+            --filter=':- .gitignore' \
+            ${"\\" /* Exclude nixpkgs repository because they have some weird symlink test files that break rsync */}
+            --exclude 'nixpkgs' \
+            ${"\\" /* Hardlink files to avoid taking up more space */}
+            --link-dest=/home/${mainUsername}/Development \
+            /home/${mainUsername}/Development/ /home/${mainUsername}/.local/backup/repos
+        '';
+
+        pruneOpts = [
+          "--keep-daily 7"
+          "--keep-weekly 5"
+          "--keep-yearly 10"
+        ];
 
 
-      # TODO: fix config
-      timerConfig = null;
-      # timerConfig = {
-      #   OnCalendar = "00:05";
-      #   RandomizedDelaySec = "5h";
-      # };
-    };
+        # TODO: fix config
+        timerConfig = null;
+        # timerConfig = {
+        #   OnCalendar = "00:05";
+        #   RandomizedDelaySec = "5h";
+        # };
+      };
 
-    # Backup documents and large files
-    archaic-bak = {
-      repository = "/run/media/${mainUsername}/ArchaicBak/Backups/${hostname}";
-      passwordFile = secrets.backup-restic-key.path;
-      initialize = true;
+      # Backup documents and large files
+      archaic-bak = {
+        repository = "/run/media/${mainUsername}/ArchaicBak/Backups/${hostname}";
+        passwordFile = secrets.backup-restic-key.path;
+        initialize = true;
 
-      # this would fix issue that folder is created as root
-      # but we cannot access the backup key
-      user = config.local.user.username;
+        # this would fix issue that folder is created as root
+        # but we cannot access the backup key
+        user = config.local.user.username;
 
-      paths = [ "/home/${mainUsername}/Documents" ];
+        paths = [ "/home/${mainUsername}/Documents" ];
 
-      # Should only be ran manually when the backup Disk is attached
-      timerConfig = null;
+        # Should only be ran manually when the backup Disk is attached
+        timerConfig = null;
+      };
     };
   };
 }

@@ -25,6 +25,7 @@ in
     home.sessionPath = [ "${config.home.sessionVariables.CARGO_HOME}/bin" ];
 
     # cargo config
+    age.secrets.api-crates-io.file = ../../secrets/api-crates-io.age;
     home.file."${config.home.sessionVariables.CARGO_HOME}/config.toml".source =
       let
         clang = lib.getExe pkgs.llvmPackages.clang;

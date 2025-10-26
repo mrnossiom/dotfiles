@@ -142,6 +142,8 @@ in
       };
     };
 
+    age.secrets.api-wakatime.file = ../../secrets/api-wakatime.age;
+    age.secrets.api-wakapi.file = ../../secrets/api-wakapi.age;
     programs.wakatime = {
       enable = true;
       apiKeyFile = secrets.api-wakapi.path;

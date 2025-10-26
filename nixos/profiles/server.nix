@@ -9,8 +9,6 @@ let
   inherit (self.inputs) srvos agenix tangled;
   inherit (self.nixosModules) mindustry-server;
 
-  all-secrets = import ../../secrets;
-
   ext-if = "eth0";
   external-ip = "91.99.55.74";
   external-netmask = 27;
@@ -54,8 +52,6 @@ in
   ];
 
   config = {
-    age.secrets = all-secrets.deploy;
-
     boot.loader.grub.enable = true;
     boot.initrd.availableKernelModules = [ "ahci" "xhci_pci" "virtio_pci" "virtio_scsi" "sd_mod" "sr_mod" "ext4" ];
 
@@ -100,6 +96,7 @@ in
 
     services.tailscale.enable = true;
 
+    age.secrets.pds-env.file = ../../secrets/pds-env.age;
     services.pds = {
       enable = true;
       package = upkgs.bluesky-pds;
@@ -112,7 +109,7 @@ in
       };
 
       environmentFiles = [
-        config.age.secrets.pds-config.path
+        config.age.secrets.pds-env.path
       ];
     };
 

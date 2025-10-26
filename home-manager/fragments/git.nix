@@ -12,9 +12,6 @@ in
 {
   options.local.fragment.git.enable = lib.mkEnableOption ''
     Git related
-
-    Depends on:
-    - `agenix` fragment: Need for GPG key and GitGuardian API key
   '';
 
   config = lib.mkIf cfg.enable {
@@ -104,13 +101,6 @@ in
         shl = "stash list";
         sha = "stash apply";
         shp = "stash pop";
-      };
-
-      hooks = {
-        git-guardian = pkgs.writeShellScript "git-guardian" ''
-          export GITGUARDIAN_API_KEY="$(cat ${config.age.secrets.api-gitguardian.path})"
-          ${lib.getExe' pkgs.ggshield "ggshield"} secret scan pre-commit "$@"
-        '';
       };
 
       extraConfig = {

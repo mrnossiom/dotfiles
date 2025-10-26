@@ -10,7 +10,6 @@ let
   inherit (self.inputs) agenix;
 
   cfg = config.local.fragment.agenix;
-  all-secrets = import ../../secrets;
 in
 {
   imports = [
@@ -26,7 +25,7 @@ in
 
   config = lib.mkIf cfg.enable {
     assertions = [
-      { assertion = config.services.openssh.enable; message = "`agenix` fragement depends on `openssh` program"; }
+      { assertion = config.services.openssh.enable; message = "`agenix` fragment depends on `openssh` program"; }
     ];
 
     age = {
@@ -35,7 +34,8 @@ in
       # be located on luks protected partitions.
       # identityPaths = [ ];
 
-      secrets = all-secrets.nixos;
+      # Secrets are defined in the fragments that use it
+      # secrets = ...;
     };
   };
 }
