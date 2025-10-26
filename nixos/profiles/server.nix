@@ -1,5 +1,6 @@
 { self
 , config
+, lib
 , pkgs
 , upkgs
 , ...
@@ -16,6 +17,9 @@ let
   external-ip6 = "2a01:4f8:c2c:76d2::1";
   external-netmask6 = 64;
   external-gw6 = "fe80::1";
+
+  # website-port = 3000;
+  # website-hostname = "wiro.world";
 
   pds-port = 3001;
   pds-hostname = "pds.wiro.world";
@@ -124,11 +128,10 @@ in
 
     services.caddy = {
       enable = true;
-      # TODO: add caddy tailscale plugin
-      # package = pkgs.caddy.withPlugins {
-      #   plugins = [ "github.com/tailscale/caddy-tailscale" ];
-      #   hash = "sha256-xxx";
-      # };
+      package = upkgs.caddy.withPlugins {
+        plugins = [ "github.com/tailscale/caddy-tailscale@v0.0.0-20251016213337-01d084e119cb" ];
+        hash = "sha256-gDNYWwlQQ0Hbg1/TCf421NYcY3LnYWW248RzyGR2f28=";
+      };
 
       globalConfig = ''
         metrics { per_host }
@@ -137,6 +140,13 @@ in
           ask http://localhost:${toString pds-port}/tls-check
         }
       '';
+
+      # TODO: add webfinger
+      # https://willnorris.com/2023/caddy-snippets/#webfinger
+
+      # virtualHosts.${website-hostname}.extraConfig = ''
+      #   reverse_proxy http://localhost:${toString website-port}
+      # '';
 
       # Grafana has its own auth
       virtualHosts.${grafana-hostname}.extraConfig = ''
