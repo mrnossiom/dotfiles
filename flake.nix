@@ -40,14 +40,14 @@
     helix.url = "github:helix-editor/helix";
     helix.inputs.nixpkgs.follows = "unixpkgs";
 
-    jujutsu.url = "github:jj-vcs/jj";
-    jujutsu.inputs.nixpkgs.follows = "unixpkgs";
-
     tangled.url = "git+https://tangled.org/@tangled.org/core";
     tangled.inputs.nixpkgs.follows = "unixpkgs";
 
     wakatime-ls.url = "github:mrnossiom/wakatime-ls";
     wakatime-ls.inputs.nixpkgs.follows = "nixpkgs";
+
+    zen-browser.url = "github:0xc000022070/zen-browser-flake";
+    zen-browser.inputs.nixpkgs.follows = "unixpkgs";
   };
 
   outputs = { self, nixpkgs, ... }:

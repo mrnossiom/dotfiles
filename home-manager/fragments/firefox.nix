@@ -1,10 +1,13 @@
-{ config
+{ self
+, config
 , lib
 , pkgs
 , ...
 }:
 
 let
+  inherit (self.inputs) zen-browser;
+
   cfg = config.local.fragment.firefox;
 in
 {
@@ -12,12 +15,23 @@ in
     Firefox related
   '';
 
+  imports = [
+    zen-browser.homeModules.beta
+  ];
+
   config = lib.mkIf cfg.enable {
     home.sessionVariables.BROWSER = lib.getExe pkgs.firefox;
 
     stylix.targets.firefox = {
       enable = false;
       profileNames = [ "default" ];
+    };
+
+    programs.zen-browser = {
+      enable = true;
+
+      policies = config.programs.firefox.policies;
+      # profiles = config.programs.firefox.profiles;
     };
 
     programs.firefox = {

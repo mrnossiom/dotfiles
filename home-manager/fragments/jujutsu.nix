@@ -1,13 +1,11 @@
 { config
 , lib
 , pkgs
-, lpkgs
+, upkgs
 , ...
 }:
 
 let
-  flags = config.local.flags;
-
   keys = import ../../secrets/keys.nix;
 
   cfg = config.local.fragment.jujutsu;
@@ -20,7 +18,7 @@ in
   config = lib.mkIf cfg.enable {
     programs.jujutsu = {
       enable = true;
-      package = if flags.onlyCached then pkgs.jujutsu else lpkgs.jujutsu;
+      package = upkgs.jujutsu;
 
       settings = {
         user = {

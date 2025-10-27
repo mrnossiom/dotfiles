@@ -1,6 +1,7 @@
 { self
 , config
 , pkgs
+, upkgs
 , lpkgs
 , lib
 , ...
@@ -32,7 +33,7 @@ in
 
     programs.helix = {
       enable = true;
-      package = if flags.onlyCached then pkgs.helix else lpkgs.helix;
+      package = if flags.onlyCached then upkgs.helix else lpkgs.helix;
       defaultEditor = true;
 
       settings = {
