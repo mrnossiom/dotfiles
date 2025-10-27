@@ -6,6 +6,8 @@
 
 let
   cfg = config.local.fragment.sway;
+
+  colors = config.lib.stylix.colors.withHashtag;
 in
 {
   config = lib.mkIf cfg.enable {
@@ -20,16 +22,16 @@ in
     programs.tofi = {
       enable = true;
       settings = {
-        horizontal = true;
         anchor = "top";
+        horizontal = true;
+        height = 52;
         width = "100%";
-        height = 48;
 
         outline-width = 0;
         border-width = 0;
 
         min-input-width = 100;
-        result-spacing = 20;
+        result-spacing = 30;
 
         padding-top = 12;
         padding-bottom = 12;
@@ -44,8 +46,15 @@ in
         input-background-padding = "5, 10";
         input-background-corner-radius = 5;
 
+        selection-color = lib.mkForce colors.base07;
+        selection-match-color = colors.base0A;
+        selection-background = lib.mkForce colors.base02;
         selection-background-padding = "5, 10";
         selection-background-corner-radius = 8;
+
+        default-result-background = lib.mkForce colors.base01;
+        default-result-background-corner-radius = 8;
+        default-result-background-padding = "5, 10";
 
         clip-to-padding = false;
       };
