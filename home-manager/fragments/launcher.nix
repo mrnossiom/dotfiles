@@ -13,10 +13,9 @@ in
       let
         tofi-drun = lib.getExe' pkgs.tofi "tofi-drun";
         swaymsg = lib.getExe' config.wayland.windowManager.sway.package "swaymsg";
-
-        jetbrains-nerd-font-regular = "${pkgs.nerd-fonts.jetbrains-mono}/share/fonts/truetype/JetBrainsMonoNerdFont-Regular.ttf";
+        jq = lib.getExe pkgs.jq;
       in
-      "${tofi-drun} --font ${jetbrains-nerd-font-regular} | xargs ${swaymsg} exec --";
+      "${tofi-drun} --output `${swaymsg} -t get_outputs| ${jq} -r '.[] | select(.focused).name'` | xargs ${swaymsg} exec --";
 
     programs.tofi = {
       enable = true;
