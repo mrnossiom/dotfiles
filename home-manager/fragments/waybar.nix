@@ -25,138 +25,170 @@ in
     programs.waybar = {
       enable = true;
 
-      settings.main = {
-        mode = "hide";
-        ipc = true;
-        position = "bottom";
-        output = [ "eDP-1" ];
+      settings =
+        let
+          modules-settings = {
+            "sway/workspaces" = {
+              disable-scroll = true;
+              format = "{name} {icon}";
+              format-icons = {
+                default = " ";
 
-        modules-left = [
-          "sway/workspaces"
-        ];
+                "1" = " ";
+                "2" = " ";
+                "3" = " ";
+                "4" = " ";
+                "9" = " ";
+                "10" = " ";
+              };
+            };
 
-        "sway/workspaces" = {
-          disable-scroll = true;
-          format = "{name} {icon}";
-          format-icons = {
-            default = " ";
+            "group/misc" = {
+              orientation = "inherit";
+              modules = [
+                "custom/notifications"
+                "tray"
+                "idle_inhibitor"
+              ];
 
-            "1" = " ";
-            "2" = " ";
-            "3" = " ";
-            "4" = " ";
-            "9" = " ";
-            "10" = " ";
-          };
-        };
+              drawer = {
+                transition-duration = 250;
+                transition-left-to-right = false;
+              };
+            };
 
-        modules-center = [ ];
+            "custom/notifications" = {
+              format = "{icon}";
+              format-icons = {
+                normal = " ";
+                dnd = " ";
+              };
+              tooltip = false;
 
-        modules-right = [
-          "cava"
-          "mpris"
-          "pulseaudio"
-          "battery"
-          "clock"
-          "group/misc"
-        ];
+              interval = "once";
+              return-type = "json";
+              exec = ''${makoctl} mode | rg dnd >/dev/null; if [ $? == 0 ]; then echo '{"alt":"dnd"}'; else echo '{"alt":"normal"}'; fi'';
+              on-click = "${makoctl} mode -t dnd; pkill -SIGRTMIN+10 waybar";
+              signal = 10;
+              # rely on on click pkill signal
+              exec-on-event = false;
+            };
 
-        "group/misc" = {
-          orientation = "inherit";
-          modules = [
-            "custom/notifications"
-            "tray"
-            "idle_inhibitor"
-          ];
+            idle_inhibitor = {
+              format = "{icon}";
+              format-icons = {
+                activated = " ";
+                deactivated = " ";
+              };
+            };
 
-          drawer = {
-            transition-duration = 250;
-            transition-left-to-right = false;
-          };
-        };
+            tray.spacing = 10;
 
-        "custom/notifications" = {
-          format = "{icon}";
-          format-icons = {
-            normal = " ";
-            dnd = " ";
-          };
-          tooltip = false;
+            clock = {
+              format = "{:%d %b %H:%M}";
+              tooltip = false;
+            };
 
-          interval = "once";
-          return-type = "json";
-          exec = ''${makoctl} mode | rg dnd >/dev/null; if [ $? == 0 ]; then echo '{"alt":"dnd"}'; else echo '{"alt":"normal"}'; fi'';
-          on-click = "${makoctl} mode -t dnd; pkill -SIGRTMIN+10 waybar";
-          signal = 10;
-          # rely on on click pkill signal
-          exec-on-event = false;
-        };
+            battery = {
+              states = {
+                good = 95;
+                warning = 30;
+                critical = 15;
+              };
 
-        idle_inhibitor = {
-          format = "{icon}";
-          format-icons = {
-            activated = " ";
-            deactivated = " ";
-          };
-        };
+              format = "{capacity}% {icon}";
+              format-full = "{capacity}% {icon}";
+              format-charging = "{capacity}% ";
+              format-plugged = "{capacity}% ";
+              format-icons = [ " " " " " " " " " " ];
+            };
 
-        tray.spacing = 10;
+            pulseaudio = {
+              scroll-step = 5;
+              tooltip = false;
 
-        clock = {
-          format = "{:%d %b %H:%M}";
-          tooltip = false;
-        };
+              format = "{volume}% {icon}{format_source}";
+              format-bluetooth = "{volume}% {icon}{format_source}";
+              format-bluetooth-muted = " {icon} {format_source}";
+              format-muted = " {format_source}";
+              format-source = "";
+              format-source-muted = "  ";
 
-        battery = {
-          states = {
-            good = 95;
-            warning = 30;
-            critical = 15;
-          };
+              format-icons = {
+                headset = " ";
+                headphone = " ";
+                hands-free = " ";
+                phone = " ";
+                portable = " ";
+                car = " ";
+                default = [ "" " " "  " ];
+              };
 
-          format = "{capacity}% {icon}";
-          format-full = "{capacity}% {icon}";
-          format-charging = "{capacity}% ";
-          format-plugged = "{capacity}% ";
-          format-icons = [ " " " " " " " " " " ];
-        };
+              on-click = "pavucontrol";
+            };
 
-        pulseaudio = {
-          scroll-step = 5;
-          tooltip = false;
+            mpris = {
+              format = "{title:.30} - {artist:.30}";
+              tooltip-format = "{album} ({player})";
+            };
 
-          format = "{volume}% {icon}{format_source}";
-          format-bluetooth = "{volume}% {icon}{format_source}";
-          format-bluetooth-muted = " {icon} {format_source}";
-          format-muted = " {format_source}";
-          format-source = "";
-          format-source-muted = "  ";
-
-          format-icons = {
-            headset = " ";
-            headphone = " ";
-            hands-free = " ";
-            phone = " ";
-            portable = " ";
-            car = " ";
-            default = [ "" " " "  " ];
+            cava = {
+              bars = 6;
+              format-icons = [ "▁" "▂" "▃" "▄" "▅" "▆" "▇" "█" ];
+              bar_delimiter = 0;
+              hide_on_silence = true;
+            };
           };
 
-          on-click = "pavucontrol";
-        };
+        in
+        {
+          primary = {
+            mode = "hide";
+            ipc = true;
+            position = "bottom";
+            output = [ "eDP-1" ];
 
-        mpris = {
-          format = "{title:.30} - {artist:.30}";
-          tooltip-format = "{album} ({player})";
-        };
+            modules-left = [
+              "sway/workspaces"
+            ];
 
-        cava = {
-          bars = 6;
-          format-icons = [ "▁" "▂" "▃" "▄" "▅" "▆" "▇" "█" ];
-          bar_delimiter = 0;
-          hide_on_silence = true;
+            modules-center = [ ];
+
+            modules-right = [
+              "cava"
+              "mpris"
+              "pulseaudio"
+              "battery"
+              "clock"
+              "group/misc"
+            ];
+          } // modules-settings;
+
+          additional = {
+            mode = "hide";
+            ipc = true;
+            position = "bottom";
+            output = [
+              "DP-1"
+              "DP-2"
+              "DP-3"
+              "DP-4"
+              "HDMI-1"
+              "HDMI-2"
+              "HDMI-3"
+              "HDMI-4"
+            ];
+
+            modules-left = [
+              "sway/workspaces"
+            ];
+
+            modules-right = [
+              "clock"
+              "group/misc"
+            ];
+          } // modules-settings;
         };
-      };
 
       style = ''
         #waybar { color: @base00; }
@@ -242,4 +274,3 @@ in
     }];
   };
 }
-
