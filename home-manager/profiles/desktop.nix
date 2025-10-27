@@ -18,9 +18,10 @@
       epita.enable = true;
       firefox.enable = true;
       imv.enable = true;
+      kanshi.enable = true;
       stylix.enable = true;
-      thunderbird.enable = true;
       sway.enable = true;
+      thunderbird.enable = true;
       waybar.enable = true;
       xdg-mime.enable = true;
 

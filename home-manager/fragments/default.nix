@@ -17,6 +17,7 @@
     ./helix.nix
     ./imv.nix
     ./jujutsu.nix
+    ./kanshi.nix
     ./kitty.nix
     ./launcher.nix
     ./rust.nix
