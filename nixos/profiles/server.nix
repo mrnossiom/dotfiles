@@ -1,14 +1,11 @@
 { self
 , config
-, lib
-, pkgs
 , upkgs
 , ...
 }:
 
 let
   inherit (self.inputs) srvos agenix tangled;
-  inherit (self.nixosModules) mindustry-server;
 
   ext-if = "eth0";
   external-ip = "91.99.55.74";
@@ -60,8 +57,6 @@ in
 
     tangled.nixosModules.knot
     tangled.nixosModules.spindle
-
-    mindustry-server
   ];
 
   config = {
@@ -375,13 +370,5 @@ in
         auth.type = "OpenID";
       };
     };
-
-    # port used is 6567
-    services.mindustry-server = {
-      enable = true;
-      package = upkgs.mindustry-server;
-      openFirewall = true;
-    };
-    systemd.services.mindustry.enable = false;
   };
 }
