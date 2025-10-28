@@ -21,8 +21,11 @@ in
   "pds-env.age".publicKeys = deploy;
   # Defines `LLDAP_JWT_SECRET`, `LLDAP_KEY_SEED`.
   "lldap-env.age".publicKeys = deploy;
+  "headscale-oidc-secret.age".publicKeys = deploy;
+  "grafana-oidc-secret.age".publicKeys = deploy;
   "authelia-jwt-secret.age".publicKeys = deploy;
-  "authelia-storage-enc-key.age".publicKeys = deploy;
+  "authelia-issuer-private-key.age".publicKeys = deploy;
+  "authelia-storage-key.age".publicKeys = deploy;
   "authelia-ldap-password.age".publicKeys = deploy;
   "authelia-smtp-password.age".publicKeys = deploy;
 

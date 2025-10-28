@@ -27,23 +27,19 @@ in
 {
   options.local.fragment.epita.enable = lib.mkEnableOption ''
     EPITA related
-
-    Depends on:
-    - `ssh` program: Mount AFS script needs SSH
   '';
 
   config = lib.mkIf cfg.enable {
-    assertions = [
-      { assertion = config.programs.ssh.enable; message = "`epita` fragment depends on `ssh` program"; }
-    ];
+    programs.ssh = {
+      package = pkgs.openssh_gssapi;
 
-    programs.ssh.package = pkgs.openssh_gssapi;
-
-    # Needed for sshfs
-    programs.ssh.matchBlocks."ssh.cri.epita.fr" = {
-      extraOptions = {
-        GSSAPIAuthentication = "yes";
-        GSSAPIDelegateCredentials = "yes";
+      # Needed for sshfs
+      enable = true;
+      matchBlocks."ssh.cri.epita.fr" = {
+        extraOptions = {
+          GSSAPIAuthentication = "yes";
+          GSSAPIDelegateCredentials = "yes";
+        };
       };
     };
 

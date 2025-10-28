@@ -128,19 +128,6 @@
 
     programs.broot.enable = true;
 
-    # TODO: move out
-    programs.ssh = {
-      enable = true;
-
-      matchBlocks."weird-row-server" = {
-        hostname = "weird-row.portal.wiro.world";
-        # TODO: reduce automated load on ssh port by changing to a random port
-        # port = ""
-      };
-    };
-
-    stylix.targets.qt.enable = false;
-
     programs.go = {
       enable = true;
       goPath = ".local/share/go";

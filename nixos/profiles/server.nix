@@ -21,31 +21,30 @@ let
   pds-port = 3001;
   pds-hostname = "pds.wiro.world";
 
+  grafana-port = 3002;
+  grafana-hostname = "console.wiro.world";
+
   tangled-owner = "did:plc:xhgrjm4mcx3p5h3y6eino6ti";
-  tangled-knot-port = 3002;
+  tangled-knot-port = 3003;
   tangled-knot-hostname = "knot.wiro.world";
-  tangled-spindle-port = 3003;
+  tangled-spindle-port = 3004;
   tangled-spindle-hostname = "spindle.wiro.world";
 
-  thelounge-port = 3004;
+  thelounge-port = 3005;
   thelounge-hostname = "lounge.wiro.world";
 
-  headscale-port = 3005;
+  headscale-port = 3006;
   headscale-hostname = "headscale.wiro.world";
 
-  lldap-port = 3006;
+  lldap-port = 3007;
   lldap-hostname = "ldap.wiro.world";
 
-  authelia-port = 3007;
+  authelia-port = 3008;
   authelia-hostname = "auth.wiro.world";
 
-  gerrit-port = 3008;
-  gerrit-hostname = "gerrit.wiro.world";
-
-  grafana-port = 9000;
-  grafana-hostname = "console.wiro.world";
   prometheus-port = 9001;
   prometheus-node-exporter-port = 9002;
+  headscale-metrics-port = 9003;
 in
 {
   imports = [
@@ -76,14 +75,21 @@ in
       defaultGateway = { interface = ext-if; address = external-gw; };
       defaultGateway6 = { interface = ext-if; address = external-gw6; };
 
-      # TODO: rely on Hetzner firewall instead?
-      # firewall.enable = false;
+      # Reflect firewall configuration on Hetzner
       firewall.allowedTCPPorts = [ 22 80 443 ];
     };
 
+    services.qemuGuest.enable = true;
+
     services.openssh.enable = true;
 
-    services.qemuGuest.enable = true;
+    services.tailscale.enable = true;
+
+    security.sudo.wheelNeedsPassword = false;
+
+    local.fragment.nix.enable = true;
+
+    programs.fish.enable = true;
 
     services.fail2ban = {
       enable = true;
@@ -102,31 +108,8 @@ in
       jails = { };
     };
 
-    services.tailscale.enable = true;
-
-    age.secrets.pds-env.file = ../../secrets/pds-env.age;
-    services.pds = {
-      enable = true;
-      package = upkgs.bluesky-pds;
-
-      settings = {
-        PDS_HOSTNAME = "pds.wiro.world";
-        PDS_PORT = pds-port;
-        # is in systemd /tmp subfolder
-        LOG_DESTINATION = "/tmp/pds.log";
-      };
-
-      environmentFiles = [
-        config.age.secrets.pds-env.path
-      ];
-    };
-
     services.caddy = {
       enable = true;
-      package = upkgs.caddy.withPlugins {
-        plugins = [ "github.com/tailscale/caddy-tailscale@v0.0.0-20251016213337-01d084e119cb" ];
-        hash = "sha256-gDNYWwlQQ0Hbg1/TCf421NYcY3LnYWW248RzyGR2f28=";
-      };
 
       globalConfig = ''
         metrics { per_host }
@@ -143,7 +126,6 @@ in
       #   reverse_proxy http://localhost:${toString website-port}
       # '';
 
-      # Grafana has its own auth
       virtualHosts.${grafana-hostname}.extraConfig = ''
         reverse_proxy http://localhost:${toString grafana-port}
       '';
@@ -179,17 +161,24 @@ in
       virtualHosts.${authelia-hostname}.extraConfig = ''
         reverse_proxy http://localhost:${toString authelia-port}
       '';
-
-      virtualHosts.${gerrit-hostname}.extraConfig = ''
-        reverse_proxy http://localhost:${toString gerrit-port}
-      '';
     };
 
-    security.sudo.wheelNeedsPassword = false;
+    age.secrets.pds-env.file = ../../secrets/pds-env.age;
+    services.pds = {
+      enable = true;
+      package = upkgs.bluesky-pds;
 
-    local.fragment.nix.enable = true;
+      settings = {
+        PDS_HOSTNAME = "pds.wiro.world";
+        PDS_PORT = pds-port;
+        # is in systemd /tmp subfolder
+        LOG_DESTINATION = "/tmp/pds.log";
+      };
 
-    programs.fish.enable = true;
+      environmentFiles = [
+        config.age.secrets.pds-env.path
+      ];
+    };
 
     services.tangled-knot = {
       enable = true;
@@ -203,7 +192,6 @@ in
       };
     };
 
-
     services.tangled-spindle = {
       enable = true;
 
@@ -214,12 +202,33 @@ in
       };
     };
 
+    age.secrets.grafana-oidc-secret = { file = ../../secrets/grafana-oidc-secret.age; owner = "grafana"; };
     services.grafana = {
       enable = true;
 
-      settings.server = {
-        http_port = grafana-port;
-        domain = grafana-hostname;
+      settings = {
+        server = {
+          http_port = grafana-port;
+          domain = grafana-hostname;
+        };
+
+        "auth.generic_auth" = {
+          enable = true;
+          name = "Authelia";
+          icon = "signin";
+
+          client_id = "grafana";
+          client_secret_path = config.age.secrets.grafana-oidc-secret.path;
+
+          scopes = [ "openid" "profile" "email" "groups" ];
+          auth_url = "https://auth.wiro.world/api/oidc/authorization";
+          token_url = "https://auth.wiro.world/api/oidc/token";
+          api_url = "https://auth.wiro.world/api/oidc/userinfo";
+          login_attribute_path = "preferred_username";
+          groups_attribute_path = "groups";
+          name_attribute_path = "name";
+          use_pkce = true;
+        };
       };
     };
 
@@ -248,19 +257,23 @@ in
       enable = true;
       port = thelounge-port;
       public = false;
+
       extraConfig = {
         host = "127.0.0.1";
         reverseProxy = true;
+
+        # TODO: use ldap, find a way to hide password
       };
     };
 
+    age.secrets.headscale-oidc-secret = { file = ../../secrets/headscale-oidc-secret.age; owner = config.services.headscale.user; };
     services.headscale = {
       enable = true;
 
       port = headscale-port;
       settings = {
-        server_url = "https://${headscale-hostname}:443";
-        # metrics_listen_addr = "127.0.0.1:${headscale-port-metrics}";
+        server_url = "https://${headscale-hostname}";
+        metrics_listen_addr = "127.0.0.1:${toString headscale-metrics-port}";
 
         # disable TLS
         tls_cert_path = null;
@@ -268,11 +281,15 @@ in
 
         dns = {
           magic_dns = true;
-          # TODO: headnet? portal? keep short?
-          base_domain = "p.wiro.world";
+          base_domain = "net.wiro.world";
         };
 
-        oidc = { };
+        oidc = {
+          issuer = "https://auth.wiro.world";
+          client_id = "headscale";
+          client_secret_path = config.age.secrets.headscale-oidc-secret.path;
+          pkce.enable = true;
+        };
       };
     };
 
@@ -288,23 +305,18 @@ in
       environmentFile = config.age.secrets.lldap-env.path;
     };
 
-    age.secrets.authelia-jwt-secret.file = ../../secrets/authelia-jwt-secret.age;
-    age.secrets.authelia-jwt-secret.owner = config.services.authelia.instances.main.user;
-    age.secrets.authelia-storage-enc-key.file = ../../secrets/authelia-storage-enc-key.age;
-    age.secrets.authelia-storage-enc-key.owner = config.services.authelia.instances.main.user;
-    age.secrets.authelia-ldap-password.file = ../../secrets/authelia-ldap-password.age;
-    age.secrets.authelia-ldap-password.owner = config.services.authelia.instances.main.user;
-    age.secrets.authelia-smtp-password.file = ../../secrets/authelia-smtp-password.age;
-    age.secrets.authelia-smtp-password.owner = config.services.authelia.instances.main.user;
+    age.secrets.authelia-jwt-secret = { file = ../../secrets/authelia-jwt-secret.age; owner = config.services.authelia.instances.main.user; };
+    age.secrets.authelia-issuer-private-key = { file = ../../secrets/authelia-issuer-private-key.age; owner = config.services.authelia.instances.main.user; };
+    age.secrets.authelia-storage-key = { file = ../../secrets/authelia-storage-key.age; owner = config.services.authelia.instances.main.user; };
+    age.secrets.authelia-ldap-password = { file = ../../secrets/authelia-ldap-password.age; owner = config.services.authelia.instances.main.user; };
+    age.secrets.authelia-smtp-password = { file = ../../secrets/authelia-smtp-password.age; owner = config.services.authelia.instances.main.user; };
     services.authelia.instances.main = {
       enable = true;
 
       secrets = {
         jwtSecretFile = config.age.secrets.authelia-jwt-secret.path;
-        # oidcHmacSecretFile = config.age.secrets.authelia-oidc-hmac-secret.path;
-        # oidcIssuerPrivateKeyFile = config.age.secrets.authelia-oidc-issuer-pkey.path;
-        # sessionSecretFile = config.age.secrets.authelia-session-secret.path;
-        storageEncryptionKeyFile = config.age.secrets.authelia-storage-enc-key.path;
+        oidcIssuerPrivateKeyFile = config.age.secrets.authelia-issuer-private-key.path;
+        storageEncryptionKeyFile = config.age.secrets.authelia-storage-key.path;
       };
       environmentVariables = {
         AUTHELIA_AUTHENTICATION_BACKEND_LDAP_PASSWORD_FILE = config.age.secrets.authelia-ldap-password.path;
@@ -312,7 +324,6 @@ in
       };
       settings = {
         server.address = "localhost:${toString authelia-port}";
-
         storage.local.path = "/var/lib/authelia-main/db.sqlite3";
 
         session = {
@@ -323,20 +334,27 @@ in
           }];
         };
 
-        authentication_backend = {
-          ldap = {
-            address = "ldap://localhost:3890";
-            timeout = "5m"; # replace with systemd dependency
+        authentication_backend.ldap = {
+          address = "ldap://localhost:3890";
+          timeout = "5m"; # replace with systemd dependency
 
-            base_dn = "dc=wiro,dc=world";
-            users_filter = "(&({username_attribute}={input})(objectClass=person))";
-            groups_filter = "(&(member={dn})(objectClass=groupOfNames))";
+          user = "uid=authelia,ou=people,dc=wiro,dc=world";
+          # Set in `AUTHELIA_AUTHENTICATION_BACKEND_LDAP_PASSWORD_FILE`.
+          # password = "";
 
-            user = "uid=authelia,ou=people,dc=wiro,dc=world";
-            # Set in `AUTHELIA_AUTHENTICATION_BACKEND_LDAP_PASSWORD_FILE`.
-            # password = "";
-          };
+          base_dn = "dc=wiro,dc=world";
+          users_filter = "(&({username_attribute}={input})(objectClass=person))";
+          groups_filter = "(&(member={dn})(objectClass=groupOfNames))";
+
+          # attributes = {
+          #   # username = "user_id";
+          #   username = "uid";
+          #   display_name = "display_name";
+          #   mail = "mail";
+          #   group_name = "cn";
+          # };
         };
+
         access_control = {
           default_policy = "deny";
           rules = [
@@ -347,6 +365,28 @@ in
           ];
         };
 
+
+        identity_providers.oidc = {
+          # enforce_pkce = "always";
+          clients = [
+            {
+              client_name = "Headscale";
+              client_id = "headscale";
+              client_secret = "$pbkdf2-sha256$310000$XY680D9gkSoWhD0UtYHNFg$ptWB3exOYCga6uq1N.oimuV3ILjK3F8lBWBpsBpibos";
+
+              redirect_uris = [ "https://headscale.wiro.world/oidc/callback" ];
+            }
+            {
+              client_name = "Grafana Console";
+              client_id = "grafana";
+              client_secret = "$pbkdf2-sha256$310000$UkwrqxTZodGMs9.Ca2cXAA$HCWFgQbFHGXZpuz.I3HHdkTZLUevRVGlhKEFaOlPmKs";
+
+              redirect_uris = [ "https://console.wiro.world/login/generic_oauth" ];
+            }
+          ];
+        };
+
+
         notifier.smtp = {
           address = "smtp://smtp.resend.com:2587";
           username = "resend";
@@ -354,20 +394,6 @@ in
           # password = "";
           sender = "authelia@wiro.world";
         };
-      };
-    };
-
-    services.gerrit = {
-      enable = true;
-
-      listenAddress = "[::]:${toString gerrit-port}";
-      serverId = "d0b2cbe5-2f32-49af-8609-8be73e4bbbab";
-
-      settings = {
-        gerrit.canonicalWebUrl = "https://gerrit.wiro.world/";
-        httpd.listenUrl = "proxy-https://[::]:${toString gerrit-port}";
-
-        auth.type = "OpenID";
       };
     };
   };
