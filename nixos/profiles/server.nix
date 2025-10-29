@@ -1,5 +1,6 @@
 { self
 , config
+, pkgs
 , upkgs
 , ...
 }:
@@ -15,8 +16,35 @@ let
   external-netmask6 = 64;
   external-gw6 = "fe80::1";
 
-  # website-port = 3000;
-  # website-hostname = "wiro.world";
+  well-known-discord-dir = pkgs.writeTextDir ".well-known/discord" ''
+    dh=919234284ceb2aba439d15b9136073eb2308989b
+  '';
+  webfinger-dir = pkgs.writeTextDir ".well-known/webfinger" ''
+    {
+      "subject": "acct:milo@wiro.world",
+      "aliases": [
+        "mailto:milo@wiro.world",
+        "https://wiro.world/"
+      ],
+      "links": [
+        {
+          "rel": "http://wiro.world/rel/avatar",
+          "href": "https://wiro.world/logo.jpg",
+          "type": "image/jpeg"
+        },
+        {
+          "rel": "http://webfinger.net/rel/profile-page",
+          "href": "https://wiro.world/",
+          "type": "text/html"
+        },
+        {
+          "rel": "http://openid.net/specs/connect/1.0/issuer",
+          "href": "https://auth.wiro.world"
+        }
+      ]
+    }
+  '';
+  website-hostname = "wiro.world";
 
   pds-port = 3001;
   pds-hostname = "pds.wiro.world";
@@ -119,12 +147,45 @@ in
         }
       '';
 
-      # TODO: add webfinger
-      # https://willnorris.com/2023/caddy-snippets/#webfinger
-
-      # virtualHosts.${website-hostname}.extraConfig = ''
-      #   reverse_proxy http://localhost:${toString website-port}
-      # '';
+      virtualHosts.${website-hostname}.extraConfig =
+        ''
+          @discord {
+            path /.well-known/discord
+            method GET HEAD
+          }
+          route @discord {
+            header {
+              Access-Control-Allow-Origin "*"
+              X-Robots-Tag "noindex"
+            }
+            root ${well-known-discord-dir}
+            file_server
+          }
+        '' +
+        ''
+          @webfinger {
+            path /.well-known/webfinger
+            method GET HEAD
+            query resource=acct:milo@wiro.world
+            query resource=mailto:milo@wiro.world
+            query resource=https://wiro.world
+            query resource=https://wiro.world/
+          }
+          route @webfinger {
+            header {
+              Content-Type "application/jrd+json"
+              Access-Control-Allow-Origin "*"
+              X-Robots-Tag "noindex"
+            }
+            root ${webfinger-dir}
+            file_server
+          }
+        '' +
+        ''
+          reverse_proxy https://mrnossiom.github.io {
+          	header_up Host {http.request.host}
+          }
+        '';
 
       virtualHosts.${grafana-hostname}.extraConfig = ''
         reverse_proxy http://localhost:${toString grafana-port}
