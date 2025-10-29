@@ -70,6 +70,9 @@ let
   authelia-port = 3008;
   authelia-hostname = "auth.wiro.world";
 
+  matrix-port = 3009;
+  matrix-hostname = "matrix.wiro.world";
+
   prometheus-port = 9001;
   prometheus-node-exporter-port = 9002;
   headscale-metrics-port = 9003;
@@ -182,6 +185,9 @@ in
           }
         '' +
         ''
+          reverse_proxy /.well-known/matrix/* http://localhost:${toString matrix-port}
+        '' +
+        ''
           reverse_proxy https://mrnossiom.github.io {
           	header_up Host {http.request.host}
           }
@@ -221,6 +227,10 @@ in
 
       virtualHosts.${authelia-hostname}.extraConfig = ''
         reverse_proxy http://localhost:${toString authelia-port}
+      '';
+
+      virtualHosts.${matrix-hostname}.extraConfig = ''
+        reverse_proxy /_matrix/* http://localhost:${toString matrix-port}
       '';
     };
 
@@ -457,5 +467,30 @@ in
         };
       };
     };
+
+    age.secrets.matrix-env.file = ../../secrets/matrix-env.age;
+    services.matrix-conduit = {
+      enable = true;
+      package = upkgs.matrix-conduit;
+
+      settings.global = {
+        address = "127.0.0.1";
+        port = matrix-port;
+
+        server_name = "wiro.world";
+        well_known = {
+          client = "https://matrix.wiro.world";
+          server = "matrix.wiro.world:443";
+        };
+
+        database_backend = "sqlite";
+        enable_lightning_bolt = false;
+
+        # Set in `CONDUIT_REGISTRATION_TOKEN`
+        # registration_token = ...;
+        allow_registration = true;
+      };
+    };
+    systemd.services.conduit.serviceConfig.EnvironmentFile = config.age.secrets.matrix-env.path;
   };
 }

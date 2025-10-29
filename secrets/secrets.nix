@@ -28,6 +28,8 @@ in
   "authelia-storage-key.age".publicKeys = deploy;
   "authelia-ldap-password.age".publicKeys = deploy;
   "authelia-smtp-password.age".publicKeys = deploy;
+  # Defines `CONDUIT_REGISTRATION_TOKEN`
+  "matrix-env.age".publicKeys = deploy;
 
   # Not used in config but useful
   "pgp-ca5e.age".publicKeys = users;
