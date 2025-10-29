@@ -30,7 +30,7 @@ in
       defaultApplications =
         let
           files = [ "org.gnome.Nautilus.desktop" ];
-          browser = [ "firefox.desktop" ];
+          browser = [ "zen-beta.desktop" ];
           images = [ "imv.desktop" ];
         in
         {
