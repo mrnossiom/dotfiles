@@ -56,6 +56,8 @@ in
         default-result-background-corner-radius = 8;
         default-result-background-padding = "5, 10";
 
+        font = lib.mkForce "Sans";
+
         clip-to-padding = false;
       };
     };
