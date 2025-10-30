@@ -73,6 +73,8 @@ in
         ls = "${lib.getExe pkgs.eza} --color=auto --icons=auto --hyperlink";
 
         pasters = "${lib.getExe pkgs.curl} --data-binary @- https://paste.rs/";
+
+        mkcd = "mkdir $argv[1] && builtin cd $argv[1]";
       };
 
       shellAbbrs = {
