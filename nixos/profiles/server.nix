@@ -6,7 +6,7 @@
 }:
 
 let
-  inherit (self.inputs) srvos agenix tangled;
+  inherit (self.inputs) unixpkgs srvos agenix tangled;
 
   ext-if = "eth0";
   external-ip = "91.99.55.74";
@@ -87,6 +87,8 @@ in
 
     tangled.nixosModules.knot
     tangled.nixosModules.spindle
+
+    "${unixpkgs}/nixos/modules/services/matrix/tuwunel.nix"
   ];
 
   config = {
@@ -468,14 +470,14 @@ in
       };
     };
 
-    age.secrets.matrix-env.file = ../../secrets/matrix-env.age;
-    services.matrix-conduit = {
+    age.secrets.tuwunel-registration-tokens = { file = ../../secrets/tuwunel-registration-tokens.age; owner = config.services.matrix-tuwunel.user; };
+    services.matrix-tuwunel = {
       enable = true;
-      package = upkgs.matrix-conduit;
+      package = upkgs.matrix-tuwunel;
 
       settings.global = {
-        address = "127.0.0.1";
-        port = matrix-port;
+        address = [ "127.0.0.1" ];
+        port = [ matrix-port ];
 
         server_name = "wiro.world";
         well_known = {
@@ -483,14 +485,12 @@ in
           server = "matrix.wiro.world:443";
         };
 
-        database_backend = "sqlite";
-        enable_lightning_bolt = false;
+        grant_admin_to_first_user = true;
+        new_user_displayname_suffix = "";
 
-        # Set in `CONDUIT_REGISTRATION_TOKEN`
-        # registration_token = ...;
         allow_registration = true;
+        registration_token_file = config.age.secrets.tuwunel-registration-tokens.path;
       };
     };
-    systemd.services.conduit.serviceConfig.EnvironmentFile = config.age.secrets.matrix-env.path;
   };
 }
