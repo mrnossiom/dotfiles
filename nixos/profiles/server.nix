@@ -73,6 +73,9 @@ let
   matrix-port = 3009;
   matrix-hostname = "matrix.wiro.world";
 
+  warrior-port = 3010;
+  warrior-hostname = "warrior.wiro.world";
+
   prometheus-port = 9001;
   prometheus-node-exporter-port = 9002;
   headscale-metrics-port = 9003;
@@ -233,6 +236,13 @@ in
 
       virtualHosts.${matrix-hostname}.extraConfig = ''
         reverse_proxy /_matrix/* http://localhost:${toString matrix-port}
+      '';
+
+      virtualHosts.${warrior-hostname}.extraConfig = ''
+        forward_auth localhost:${toString authelia-port} {
+            uri /api/authz/forward-auth
+        }
+        reverse_proxy http://localhost:${toString warrior-port}
       '';
     };
 
@@ -438,7 +448,6 @@ in
           ];
         };
 
-
         identity_providers.oidc = {
           # enforce_pkce = "always";
           clients = [
@@ -458,7 +467,6 @@ in
             }
           ];
         };
-
 
         notifier.smtp = {
           address = "smtp://smtp.resend.com:2587";
@@ -491,6 +499,12 @@ in
         allow_registration = true;
         registration_token_file = config.age.secrets.tuwunel-registration-tokens.path;
       };
+    };
+
+    virtualisation.oci-containers.containers.archive-warrior = {
+      image = "atdr.meo.ws/archiveteam/warrior-dockerfile";
+      ports = [ "127.0.0.1:${toString warrior-port}:8001" ];
+      pull = "newer";
     };
   };
 }
