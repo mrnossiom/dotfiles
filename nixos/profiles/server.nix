@@ -293,9 +293,10 @@ in
         server = {
           http_port = grafana-port;
           domain = grafana-hostname;
+          root_url = "https://${grafana-hostname}";
         };
 
-        "auth.generic_auth" = {
+        "auth.generic_oauth" = {
           enable = true;
           name = "Authelia";
           icon = "signin";
@@ -307,9 +308,6 @@ in
           auth_url = "https://auth.wiro.world/api/oidc/authorization";
           token_url = "https://auth.wiro.world/api/oidc/token";
           api_url = "https://auth.wiro.world/api/oidc/userinfo";
-          login_attribute_path = "preferred_username";
-          groups_attribute_path = "groups";
-          name_attribute_path = "name";
           use_pkce = true;
         };
       };
