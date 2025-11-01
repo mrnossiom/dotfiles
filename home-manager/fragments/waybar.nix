@@ -80,6 +80,7 @@ in
                 activated = " ";
                 deactivated = " ";
               };
+              tooltip = false;
             };
 
             tray.spacing = 10;
