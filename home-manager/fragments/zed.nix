@@ -22,6 +22,8 @@ in
 
         helix_mode = true;
         disable_ai = true;
+
+        autosave = "on_focus_change";
       };
     };
   };
