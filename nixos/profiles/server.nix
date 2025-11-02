@@ -596,6 +596,7 @@ in
     age.secrets.vaultwarden-env.file = ../../secrets/vaultwarden-env.age;
     services.vaultwarden = {
       enable = true;
+      package = upkgs.vaultwarden;
 
       environmentFile = config.age.secrets.vaultwarden-env.path;
       config = {
