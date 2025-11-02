@@ -398,10 +398,12 @@ in
         };
 
         oidc = {
+          only_start_if_oidc_is_available = true;
           issuer = "https://auth.wiro.world";
           client_id = "headscale";
           client_secret_path = config.age.secrets.headscale-oidc-secret.path;
-          pkce.enable = true;
+          scope = [ "openid" "profile" "email" "groups" ];
+          pkce.enabled = true;
         };
       };
     };
@@ -509,9 +511,12 @@ in
             in
             {
               headscale = mkStrictPolicy "two_factor" [ "group:headscale" ];
+              tailscale = mkStrictPolicy "two_factor" [ "group:headscale" ];
               grafana = mkStrictPolicy "one_factor" [ "group:grafana" ];
               miniflux = mkStrictPolicy "one_factor" [ "group:miniflux" ];
             };
+
+          claims_policies.headscale = { id_token = [ "email" "name" "preferred_username" "picture" "groups" ]; };
 
           clients = [
             {
@@ -519,23 +524,21 @@ in
               client_id = "headscale";
               client_secret = "$pbkdf2-sha256$310000$XY680D9gkSoWhD0UtYHNFg$ptWB3exOYCga6uq1N.oimuV3ILjK3F8lBWBpsBpibos";
               redirect_uris = [ "https://${headscale-hostname}/oidc/callback" ];
-
               authorization_policy = "headscale";
+              claims_policy = "headscale";
             }
             {
               client_name = "Tailscale";
               client_id = "tailscale";
               client_secret = "$pbkdf2-sha256$310000$PcUaup9aWKI9ZLeCF6.avw$FpsTxkDaxcoQlBi8aIacegXpjEDiCI6nXcaHyZ2Sxyc";
               redirect_uris = [ "https://login.tailscale.com/a/oauth_response" ];
-
-              authorization_policy = "headscale";
+              authorization_policy = "tailscale";
             }
             {
               client_name = "Grafana Console";
               client_id = "grafana";
               client_secret = "$pbkdf2-sha256$310000$UkwrqxTZodGMs9.Ca2cXAA$HCWFgQbFHGXZpuz.I3HHdkTZLUevRVGlhKEFaOlPmKs";
               redirect_uris = [ "https://${grafana-hostname}/login/generic_oauth" ];
-
               authorization_policy = "grafana";
             }
             {
@@ -543,7 +546,6 @@ in
               client_id = "miniflux";
               client_secret = "$pbkdf2-sha256$310000$uPqbWfCOBXDY6nV1vsx3uA$HOWG2hL.c/bs9Dwaee3b9DxjH7KFO.SaZMbasXV9Vdw";
               redirect_uris = [ "https://${miniflux-hostname}/oauth2/oidc/callback" ];
-
               authorization_policy = "miniflux";
             }
           ];
