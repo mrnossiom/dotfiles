@@ -56,6 +56,7 @@ in
       tlrc
       tokei
       trash-cli
+      uni
       unzip
       vlock
       wcurl
