@@ -73,6 +73,9 @@ let
   matrix-port = 3009;
   matrix-hostname = "matrix.wiro.world";
 
+  goatcounter-port = 3010;
+  goatcounter-hostname = "stats.wiro.world";
+
   prometheus-port = 9001;
   prometheus-node-exporter-port = 9002;
   headscale-metrics-port = 9003;
@@ -187,6 +190,13 @@ in
           }
         '' +
         ''
+          log {
+            level INFO
+            format console
+            output file /tmp/access-wiro.world.log
+          }
+        '' +
+        ''
           reverse_proxy /.well-known/matrix/* http://localhost:${toString matrix-port}
         '' +
         ''
@@ -233,6 +243,10 @@ in
 
       virtualHosts.${matrix-hostname}.extraConfig = ''
         reverse_proxy /_matrix/* http://localhost:${toString matrix-port}
+      '';
+
+      virtualHosts.${goatcounter-hostname}.extraConfig = ''
+        reverse_proxy http://localhost:${toString goatcounter-port}
       '';
     };
 
@@ -496,6 +510,14 @@ in
         allow_registration = true;
         registration_token_file = config.age.secrets.tuwunel-registration-tokens.path;
       };
+    };
+
+    services.goatcounter = {
+      enable = true;
+
+      port = goatcounter-port;
+      proxy = true;
+      extraArgs = [ "-automigrate" ];
     };
   };
 }
