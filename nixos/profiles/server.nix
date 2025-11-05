@@ -454,6 +454,13 @@ in
 
               redirect_uris = [ "https://console.wiro.world/login/generic_oauth" ];
             }
+            {
+              client_name = "Tailscale";
+              client_id = "tailscale";
+              client_secret = "$pbkdf2-sha256$310000$PcUaup9aWKI9ZLeCF6.avw$FpsTxkDaxcoQlBi8aIacegXpjEDiCI6nXcaHyZ2Sxyc";
+
+              redirect_uris = [ "https://login.tailscale.com/a/oauth_response" ];
+            }
           ];
         };
 
