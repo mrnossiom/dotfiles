@@ -358,6 +358,7 @@ in
       port = headscale-port;
       settings = {
         server_url = "https://${headscale-hostname}";
+        # TODO: prometheus scrape headscale metrics
         metrics_listen_addr = "127.0.0.1:${toString headscale-metrics-port}";
 
         # disable TLS
@@ -411,6 +412,8 @@ in
         server.address = "localhost:${toString authelia-port}";
         storage.local.path = "/var/lib/authelia-main/db.sqlite3";
 
+        # TODO: prometheus scrape authelia metrics
+
         session = {
           cookies = [{
             domain = "wiro.world";
@@ -428,16 +431,21 @@ in
           # password = "";
 
           base_dn = "dc=wiro,dc=world";
-          users_filter = "(&({username_attribute}={input})(objectClass=person))";
+          users_filter = "(&(|({username_attribute}={input})({mail_attribute}={input}))(objectClass=person))";
+          additional_users_dn = "ou=people";
           groups_filter = "(&(member={dn})(objectClass=groupOfNames))";
+          additional_groups_dn = "ou=groups";
 
-          # attributes = {
-          #   # username = "user_id";
-          #   username = "uid";
-          #   display_name = "display_name";
-          #   mail = "mail";
-          #   group_name = "cn";
-          # };
+          attributes = {
+            username = "uid";
+            display_name = "cn";
+            given_name = "givenname";
+            family_name = "last_name";
+            mail = "mail";
+            picture = "avatar";
+
+            group_name = "cn";
+          };
         };
 
         access_control = {
@@ -452,7 +460,7 @@ in
 
 
         identity_providers.oidc = {
-          # enforce_pkce = "always";
+          enforce_pkce = "always";
           clients = [
             {
               client_name = "Headscale";
