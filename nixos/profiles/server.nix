@@ -76,6 +76,9 @@ let
   goatcounter-port = 3010;
   goatcounter-hostname = "stats.wiro.world";
 
+  vaultwarden-port = 3011;
+  vaultwarden-hostname = "vault.wiro.world";
+
   prometheus-port = 9001;
   prometheus-node-exporter-port = 9002;
   headscale-metrics-port = 9003;
@@ -247,6 +250,10 @@ in
 
       virtualHosts.${goatcounter-hostname}.extraConfig = ''
         reverse_proxy http://localhost:${toString goatcounter-port}
+      '';
+
+      virtualHosts.${vaultwarden-hostname}.extraConfig = ''
+        reverse_proxy http://localhost:${toString vaultwarden-port}
       '';
     };
 
@@ -526,6 +533,27 @@ in
       port = goatcounter-port;
       proxy = true;
       extraArgs = [ "-automigrate" ];
+    };
+
+    age.secrets.vaultwarden-env.file = ../../secrets/vaultwarden-env.age; 
+    services.vaultwarden = {
+      enable = true;
+
+      environmentFile = config.age.secrets.vaultwarden-env.path;
+      config = {
+        ROCKET_PORT = vaultwarden-port;
+        DOMAIN = "https://${vaultwarden-hostname}";
+        SIGNUPS_ALLOWED = false;
+        # ADMIN_TOKEN = ...; # Via secret env
+
+        SMTP_HOST = "smtp.resend.com";
+        SMTP_PORT = 2465;
+        SMTP_SECURITY = "force_tls";
+        SMTP_USERNAME = "resend";
+        # SMTP_PASSWORD = ...; # Via secret env
+        SMTP_FROM = "bitwarden@wiro.world";
+        SMTP_FROM_NAME = "Bitwarden wiro.world";
+      };
     };
   };
 }
