@@ -79,6 +79,9 @@ let
   vaultwarden-port = 3011;
   vaultwarden-hostname = "vault.wiro.world";
 
+  miniflux-port = 3012;
+  miniflux-hostname = "news.wiro.world";
+
   prometheus-port = 9001;
   prometheus-node-exporter-port = 9002;
   headscale-metrics-port = 9003;
@@ -254,6 +257,10 @@ in
 
       virtualHosts.${vaultwarden-hostname}.extraConfig = ''
         reverse_proxy http://localhost:${toString vaultwarden-port}
+      '';
+
+      virtualHosts.${miniflux-hostname}.extraConfig = ''
+        reverse_proxy http://localhost:${toString miniflux-port}
       '';
     };
 
@@ -465,7 +472,6 @@ in
           ];
         };
 
-
         identity_providers.oidc = {
           enforce_pkce = "always";
           clients = [
@@ -489,6 +495,13 @@ in
               client_secret = "$pbkdf2-sha256$310000$PcUaup9aWKI9ZLeCF6.avw$FpsTxkDaxcoQlBi8aIacegXpjEDiCI6nXcaHyZ2Sxyc";
 
               redirect_uris = [ "https://login.tailscale.com/a/oauth_response" ];
+            }
+            {
+              client_name = "Miniflux";
+              client_id = "miniflux";
+              client_secret = "$pbkdf2-sha256$310000$uPqbWfCOBXDY6nV1vsx3uA$HOWG2hL.c/bs9Dwaee3b9DxjH7KFO.SaZMbasXV9Vdw";
+
+              redirect_uris = [ "https://${miniflux-hostname}/oauth2/oidc/callback" ];
             }
           ];
         };
@@ -553,6 +566,34 @@ in
         # SMTP_PASSWORD = ...; # Via secret env
         SMTP_FROM = "bitwarden@wiro.world";
         SMTP_FROM_NAME = "Bitwarden wiro.world";
+      };
+    };
+
+    users.users.miniflux = { isSystemUser = true; group = "miniflux"; };
+    users.groups.miniflux = { };
+    age.secrets.miniflux-oidc-secret = { file = ../../secrets/miniflux-oidc-secret.age; owner = "miniflux"; };
+    services.miniflux = {
+      enable = true;
+
+      createDatabaseLocally = true;
+      adminCredentialsFile = config.age.secrets.miniflux-oidc-secret.path;
+      config = {
+        BASE_URL = "https://${miniflux-hostname}/";
+        LISTEN_ADDR = "127.0.0.1:${toString miniflux-port}";
+
+        # TODO: scrape metrics endpoint with prometheus
+
+        OAUTH2_PROVIDER = "oidc";
+        OAUTH2_OIDC_PROVIDER_NAME = "wiro.world SSO";
+        OAUTH2_CLIENT_ID = "miniflux";
+        OAUTH2_CLIENT_SECRET_FILE = config.age.secrets.miniflux-oidc-secret.path;
+        OAUTH2_REDIRECT_URL = "https://${miniflux-hostname}/oauth2/oidc/callback";
+        OAUTH2_OIDC_DISCOVERY_ENDPOINT = "https://auth.wiro.world";
+        OAUTH2_USER_CREATION = 1;
+        DISABLE_LOCAL_AUTH = 1;
+
+        # NetNewsWire is a very good iOS oss client that integrates well
+        # https://b.j4.lc/2025/05/05/setting-up-netnewswire-with-miniflux/
       };
     };
   };

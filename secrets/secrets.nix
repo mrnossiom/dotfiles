@@ -31,6 +31,7 @@ in
   "tuwunel-registration-tokens.age".publicKeys = deploy;
   # Defines `SMTP_PASSWORD`
   "vaultwarden-env.age".publicKeys = deploy;
+  "miniflux-oidc-secret.age".publicKeys = deploy;
 
   # Not used in config but useful
   "pgp-ca5e.age".publicKeys = users;
