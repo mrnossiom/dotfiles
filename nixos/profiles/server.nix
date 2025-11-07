@@ -535,7 +535,7 @@ in
       extraArgs = [ "-automigrate" ];
     };
 
-    age.secrets.vaultwarden-env.file = ../../secrets/vaultwarden-env.age; 
+    age.secrets.vaultwarden-env.file = ../../secrets/vaultwarden-env.age;
     services.vaultwarden = {
       enable = true;
 
