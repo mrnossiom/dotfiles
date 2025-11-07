@@ -544,7 +544,7 @@ in
         ROCKET_PORT = vaultwarden-port;
         DOMAIN = "https://${vaultwarden-hostname}";
         SIGNUPS_ALLOWED = false;
-        # ADMIN_TOKEN = ...; # Via secret env
+        ADMIN_TOKEN = "$argon2id$v=19$m=65540,t=3,p=4$YIe9wmrTsmjgZNPxe8m34O/d3XW3Fl/uZPPLQs79dAc$mjDVQSdBJqz2uBJuxtAvCIoHPzOnTDhNPuhER3dhHrY";
 
         SMTP_HOST = "smtp.resend.com";
         SMTP_PORT = 2465;

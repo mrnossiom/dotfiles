@@ -29,7 +29,7 @@ in
   "authelia-ldap-password.age".publicKeys = deploy;
   "authelia-smtp-password.age".publicKeys = deploy;
   "tuwunel-registration-tokens.age".publicKeys = deploy;
-  # Defines `ADMIN_TOKEN`, `SMTP_PASSWORD`
+  # Defines `SMTP_PASSWORD`
   "vaultwarden-env.age".publicKeys = deploy;
 
   # Not used in config but useful
