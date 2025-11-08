@@ -299,6 +299,7 @@ in
 
     services.gammastep = {
       enable = true;
+      tray = true;
       provider = "geoclue2";
       settings.general = {
         adjustment-method = "wayland";
