@@ -464,44 +464,72 @@ in
 
         access_control = {
           default_policy = "deny";
+          # Rules are sequential and do not apply to OIDC
           rules = [
             {
-              domain = "*.wiro.world";
+              domain = "headscale.wiro.world";
+              policy = "two_factor";
+
+            }
+            {
+              domain = "news.wiro.world";
               policy = "one_factor";
+
+              subject = [ [ "group:miniflux" "oauth2:client:miniflux" ] ];
+            }
+            {
+              domain = "*.wiro.world";
+              policy = "two_factor";
             }
           ];
         };
 
         identity_providers.oidc = {
           enforce_pkce = "always";
+
+          authorization_policies =
+            let
+              mkStrictPolicy = policy: subject:
+                { default_policy = "deny"; rules = [{ inherit policy subject; }]; };
+            in
+            {
+              headscale = mkStrictPolicy "two_factor" [ "group:headscale" ];
+              grafana = mkStrictPolicy "one_factor" [ "group:grafana" ];
+              miniflux = mkStrictPolicy "one_factor" [ "group:miniflux" ];
+            };
+
           clients = [
             {
               client_name = "Headscale";
               client_id = "headscale";
               client_secret = "$pbkdf2-sha256$310000$XY680D9gkSoWhD0UtYHNFg$ptWB3exOYCga6uq1N.oimuV3ILjK3F8lBWBpsBpibos";
+              redirect_uris = [ "https://${headscale-hostname}/oidc/callback" ];
 
-              redirect_uris = [ "https://headscale.wiro.world/oidc/callback" ];
-            }
-            {
-              client_name = "Grafana Console";
-              client_id = "grafana";
-              client_secret = "$pbkdf2-sha256$310000$UkwrqxTZodGMs9.Ca2cXAA$HCWFgQbFHGXZpuz.I3HHdkTZLUevRVGlhKEFaOlPmKs";
-
-              redirect_uris = [ "https://console.wiro.world/login/generic_oauth" ];
+              authorization_policy = "headscale";
             }
             {
               client_name = "Tailscale";
               client_id = "tailscale";
               client_secret = "$pbkdf2-sha256$310000$PcUaup9aWKI9ZLeCF6.avw$FpsTxkDaxcoQlBi8aIacegXpjEDiCI6nXcaHyZ2Sxyc";
-
               redirect_uris = [ "https://login.tailscale.com/a/oauth_response" ];
+
+              authorization_policy = "headscale";
+            }
+            {
+              client_name = "Grafana Console";
+              client_id = "grafana";
+              client_secret = "$pbkdf2-sha256$310000$UkwrqxTZodGMs9.Ca2cXAA$HCWFgQbFHGXZpuz.I3HHdkTZLUevRVGlhKEFaOlPmKs";
+              redirect_uris = [ "https://${grafana-hostname}/login/generic_oauth" ];
+
+              authorization_policy = "grafana";
             }
             {
               client_name = "Miniflux";
               client_id = "miniflux";
               client_secret = "$pbkdf2-sha256$310000$uPqbWfCOBXDY6nV1vsx3uA$HOWG2hL.c/bs9Dwaee3b9DxjH7KFO.SaZMbasXV9Vdw";
-
               redirect_uris = [ "https://${miniflux-hostname}/oauth2/oidc/callback" ];
+
+              authorization_policy = "miniflux";
             }
           ];
         };
@@ -576,10 +604,10 @@ in
       enable = true;
 
       createDatabaseLocally = true;
-      adminCredentialsFile = config.age.secrets.miniflux-oidc-secret.path;
       config = {
         BASE_URL = "https://${miniflux-hostname}/";
         LISTEN_ADDR = "127.0.0.1:${toString miniflux-port}";
+        CREATE_ADMIN = 0;
 
         # TODO: scrape metrics endpoint with prometheus
 
@@ -591,6 +619,8 @@ in
         OAUTH2_OIDC_DISCOVERY_ENDPOINT = "https://auth.wiro.world";
         OAUTH2_USER_CREATION = 1;
         DISABLE_LOCAL_AUTH = 1;
+
+        RUN_MIGRATIONS = 1;
 
         # NetNewsWire is a very good iOS oss client that integrates well
         # https://b.j4.lc/2025/05/05/setting-up-netnewswire-with-miniflux/
