@@ -62,6 +62,7 @@ let
   thelounge-hostname = "lounge.wiro.world";
 
   headscale-port = 3006;
+  headscale-derp-port = 3478;
   headscale-hostname = "headscale.wiro.world";
 
   lldap-port = 3007;
@@ -120,6 +121,7 @@ in
 
       # Reflect firewall configuration on Hetzner
       firewall.allowedTCPPorts = [ 22 80 443 ];
+      firewall.allowedUDPPorts = [ headscale-derp-port ];
     };
 
     services.qemuGuest.enable = true;
@@ -404,6 +406,11 @@ in
           client_secret_path = config.age.secrets.headscale-oidc-secret.path;
           scope = [ "openid" "profile" "email" "groups" ];
           pkce.enabled = true;
+        };
+
+        derp.server = {
+          enable = true;
+          stun_listen_addr = "0.0.0.0:${toString headscale-derp-port}";
         };
       };
     };
