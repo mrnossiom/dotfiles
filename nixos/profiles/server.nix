@@ -322,6 +322,7 @@ in
 
           client_id = "grafana";
           client_secret_path = config.age.secrets.grafana-oidc-secret.path;
+          auto_login = true;
 
           scopes = [ "openid" "profile" "email" "groups" ];
           auth_url = "https://auth.wiro.world/api/oidc/authorization";
