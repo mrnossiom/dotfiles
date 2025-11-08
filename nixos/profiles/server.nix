@@ -85,6 +85,7 @@ let
   prometheus-port = 9001;
   prometheus-node-exporter-port = 9002;
   headscale-metrics-port = 9003;
+  authelia-metrics-port = 9004;
 in
 {
   imports = [
@@ -341,8 +342,20 @@ in
           static_configs = [{ targets = [ "localhost:${toString 2019}" ]; }];
         }
         {
-          job_name = "node";
+          job_name = "node-exporter";
           static_configs = [{ targets = [ "localhost:${toString config.services.prometheus.exporters.node.port}" ]; }];
+        }
+        {
+          job_name = "headscale";
+          static_configs = [{ targets = [ "localhost:${toString headscale-metrics-port}" ]; }];
+        }
+        {
+          job_name = "authelia";
+          static_configs = [{ targets = [ "localhost:${toString authelia-metrics-port}" ]; }];
+        }
+        {
+          job_name = "miniflux";
+          static_configs = [{ targets = [ "localhost:${toString miniflux-port}" ]; }];
         }
       ];
 
@@ -372,7 +385,6 @@ in
       port = headscale-port;
       settings = {
         server_url = "https://${headscale-hostname}";
-        # TODO: prometheus scrape headscale metrics
         metrics_listen_addr = "127.0.0.1:${toString headscale-metrics-port}";
 
         # disable TLS
@@ -425,8 +437,10 @@ in
       settings = {
         server.address = "localhost:${toString authelia-port}";
         storage.local.path = "/var/lib/authelia-main/db.sqlite3";
-
-        # TODO: prometheus scrape authelia metrics
+        telemetry.metrics = {
+          enabled = true;
+          address = "tcp://:${toString authelia-metrics-port}/metrics";
+        };
 
         session = {
           cookies = [{
@@ -609,7 +623,7 @@ in
         LISTEN_ADDR = "127.0.0.1:${toString miniflux-port}";
         CREATE_ADMIN = 0;
 
-        # TODO: scrape metrics endpoint with prometheus
+        METRICS_COLLECTOR = 1;
 
         OAUTH2_PROVIDER = "oidc";
         OAUTH2_OIDC_PROVIDER_NAME = "wiro.world SSO";
