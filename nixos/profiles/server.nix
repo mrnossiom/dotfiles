@@ -8,6 +8,8 @@
 let
   inherit (self.inputs) unixpkgs srvos agenix tangled;
 
+  json-format = pkgs.formats.json { };
+
   ext-if = "eth0";
   external-ip = "91.99.55.74";
   external-netmask = 27;
@@ -44,6 +46,7 @@ let
       ]
     }
   '';
+
   website-hostname = "wiro.world";
 
   pds-port = 3001;
@@ -89,12 +92,16 @@ let
   authelia-metrics-port = 9004;
 in
 {
+  disabledModules = [ "services/networking/headscale.nix" ];
+
   imports = [
     srvos.nixosModules.server
     srvos.nixosModules.hardware-hetzner-cloud
     srvos.nixosModules.mixins-terminfo
 
     agenix.nixosModules.default
+
+    self.nixosModules.headscale
 
     tangled.nixosModules.knot
     tangled.nixosModules.spindle
@@ -384,11 +391,31 @@ in
     age.secrets.headscale-oidc-secret = { file = ../../secrets/headscale-oidc-secret.age; owner = config.services.headscale.user; };
     services.headscale = {
       enable = true;
+      package = upkgs.headscale;
 
       port = headscale-port;
       settings = {
         server_url = "https://${headscale-hostname}";
         metrics_listen_addr = "127.0.0.1:${toString headscale-metrics-port}";
+
+        policy.path = json-format.generate "policy.json" {
+          acls = [
+            {
+              action = "accept";
+              src = [ "autogroup:member" ];
+              dst = [ "autogroup:self:*" ];
+            }
+          ];
+          ssh = [
+            {
+              action = "accept";
+              src = [ "autogroup:member" ];
+              dst = [ "autogroup:self" ];
+              # Adding root here is privilege escalation as a feature :)
+              users = [ "autogroup:nonroot" ];
+            }
+          ];
+        };
 
         # disable TLS
         tls_cert_path = null;
@@ -397,6 +424,10 @@ in
         dns = {
           magic_dns = true;
           base_domain = "net.wiro.world";
+
+          override_local_dns = true;
+          # Quad9 nameservers
+          nameservers.global = [ "9.9.9.9" "149.112.112.112" "2620:fe::fe" "2620:fe::9" ];
         };
 
         oidc = {
