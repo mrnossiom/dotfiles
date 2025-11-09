@@ -87,6 +87,7 @@
         insomnia
         kicad
         ldtk
+        legcord
         libreoffice-qt
         localsend
         mpv
@@ -98,7 +99,6 @@
         simple-scan
         sonic-pi
         transmission_4-gtk
-        vesktop
         wdisplays
         wireshark
 
