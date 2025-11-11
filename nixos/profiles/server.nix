@@ -206,15 +206,9 @@ in
           }
         '' +
         ''
-          log {
-            level INFO
-            format console
-            output file /tmp/access-wiro.world.log
-          }
-        '' +
-        ''
           reverse_proxy /.well-known/matrix/* http://localhost:${toString matrix-port}
         '' +
+        # TODO: host website on server with automatic deployment
         ''
           reverse_proxy https://mrnossiom.github.io {
           	header_up Host {http.request.host}
