@@ -152,6 +152,7 @@ in
             { criteria.app_id = "firefox"; command = "inhibit_idle fullscreen"; }
             { criteria.app_id = "mpv"; command = "inhibit_idle fullscreen"; }
             { criteria.app_id = "spotify"; command = "inhibit_idle fullscreen"; }
+            { criteria.app_id = "zen-beta"; command = "inhibit_idle fullscreen"; }
           ];
         };
 
