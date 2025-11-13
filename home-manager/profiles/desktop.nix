@@ -81,12 +81,8 @@
         figma-linux
         file-roller
         gnome-disk-utility
-        # TODO: move and embed config in nix
-        halloy
-        heroic
         insomnia
         kicad
-        ldtk
         legcord
         libreoffice-qt
         localsend
@@ -95,9 +91,7 @@
         pavucontrol
         prismlauncher
         rawtherapee
-        showmethekey
         simple-scan
-        sonic-pi
         transmission_4-gtk
         wdisplays
         wireshark
