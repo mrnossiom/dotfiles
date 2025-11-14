@@ -44,6 +44,7 @@ in
       lsof
       mediainfo
       openssl
+      otree
       ouch
       parallel
       pv
@@ -61,9 +62,7 @@ in
       vlock
       wcurl
       wormhole-rs
-    ]) ++ lib.optionals (!flags.onlyCached) [
-      lpkgs.otree
-    ];
+    ]) ++ lib.optionals (!flags.onlyCached) [ ];
 
     programs.fish.shellAbbrs = {
       # Use newer tools
