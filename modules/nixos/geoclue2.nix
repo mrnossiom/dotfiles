@@ -6,7 +6,7 @@
 # Target interface to manage the static file would be:
 # static = {
 #   latitude = 48.8;
-#   logitude = 2.3;
+#   longitude = 2.3;
 # };
 #
 # I spent way too much time getting this to work with a submodule.
@@ -210,7 +210,7 @@ in
     #   type = types.nullOr (types.attrsOf staticModule);
     #   default = null;
     #   description = ''
-    #     Add a fallback location that will be overriden by other location services
+    #     Add a fallback location that will be overridden by other location services
     #   '';
     # };
 
@@ -218,7 +218,7 @@ in
       type = types.nullOr (types.str);
       default = null;
       description = ''
-        Add a fallback location that will be overriden by other location services
+        Add a fallback location that will be overridden by other location services
       '';
     };
   };

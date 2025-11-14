@@ -6,7 +6,7 @@
 }:
 
 let
-  inherit (self.inputs) unixpkgs srvos agenix tangled;
+  inherit (self.inputs) unixpkgs srvos tangled;
 
   json-format = pkgs.formats.json { };
 
@@ -98,8 +98,6 @@ in
     srvos.nixosModules.server
     srvos.nixosModules.hardware-hetzner-cloud
     srvos.nixosModules.mixins-terminfo
-
-    agenix.nixosModules.default
 
     self.nixosModules.headscale
 
@@ -285,7 +283,7 @@ in
       ];
     };
 
-    services.tangled-knot = {
+    services.tangled.knot = {
       enable = true;
       openFirewall = true;
 
@@ -297,7 +295,7 @@ in
       };
     };
 
-    services.tangled-spindle = {
+    services.tangled.spindle = {
       enable = true;
 
       server = {
@@ -383,6 +381,7 @@ in
     };
 
     age.secrets.headscale-oidc-secret = { file = ../../secrets/headscale-oidc-secret.age; owner = config.services.headscale.user; };
+    # TODO: add dependency on authelia
     services.headscale = {
       enable = true;
       package = upkgs.headscale;

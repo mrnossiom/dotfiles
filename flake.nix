@@ -8,37 +8,33 @@
     home-manager.url = "github:nix-community/home-manager/release-25.05";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
+    nix-darwin.url = "github:LnL7/nix-darwin/nix-darwin-25.05";
+    nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
+
     stylix.url = "github:nix-community/stylix/release-25.05";
     stylix.inputs.nixpkgs.follows = "nixpkgs";
 
-    ## Misc
+    ## Miscellaneous
 
-    nix-darwin.url = "github:LnL7/nix-darwin";
-    nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
-
-    agenix.url = "github:ryantm/agenix";
+    agenix.url = "github:ryantm/agenix/0.15.0";
     agenix.inputs.nixpkgs.follows = "nixpkgs";
     agenix.inputs.home-manager.follows = "home-manager";
 
-    disko.url = "github:nix-community/disko";
+    disko.url = "github:nix-community/disko/v1.11.0";
     disko.inputs.nixpkgs.follows = "nixpkgs";
 
     nixos-hardware.url = "github:nixos/nixos-hardware";
 
-    lanzaboote.url = "github:nix-community/lanzaboote/v0.4.2";
+    lanzaboote.url = "github:nix-community/lanzaboote/v0.4.3";
     lanzaboote.inputs.nixpkgs.follows = "unixpkgs";
 
     srvos.url = "github:nix-community/srvos";
-    # srvos.inputs.nixpkgs.follows = "srvos/nixpkgs";
     srvos.inputs.nixpkgs.follows = "nixpkgs";
 
     ## Packages
 
     git-leave.url = "github:mrnossiom/git-leave";
     git-leave.inputs.nixpkgs.follows = "nixpkgs";
-
-    helix.url = "github:helix-editor/helix";
-    helix.inputs.nixpkgs.follows = "unixpkgs";
 
     tangled.url = "git+https://tangled.org/@tangled.org/core";
     tangled.inputs.nixpkgs.follows = "unixpkgs";
@@ -48,6 +44,7 @@
 
     zen-browser.url = "github:0xc000022070/zen-browser-flake";
     zen-browser.inputs.nixpkgs.follows = "unixpkgs";
+    zen-browser.inputs.home-manager.follows = "home-manager";
   };
 
   outputs = { self, nixpkgs, ... }:
