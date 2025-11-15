@@ -32,6 +32,9 @@ in
   # Defines `SMTP_PASSWORD`
   "vaultwarden-env.age".publicKeys = deploy;
   "miniflux-oidc-secret.age".publicKeys = deploy;
+  # Defines `HYPIXEL_API_KEY`, `PROFILE_UUID`
+  "hypixel-bank-tracker-main.age".publicKeys = deploy;
+  "hypixel-bank-tracker-banana.age".publicKeys = deploy;
 
   # Not used in config but useful
   "pgp-ca5e.age".publicKeys = users;

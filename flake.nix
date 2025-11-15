@@ -36,6 +36,9 @@
     git-leave.url = "github:mrnossiom/git-leave";
     git-leave.inputs.nixpkgs.follows = "nixpkgs";
 
+    hypixel-bank-tracker.url = "github:pixilie/hypixel-bank-tracker";
+    hypixel-bank-tracker.inputs.nixpkgs.follows = "nixpkgs";
+
     tangled.url = "git+https://tangled.org/@tangled.org/core";
     tangled.inputs.nixpkgs.follows = "unixpkgs";
 

@@ -6,7 +6,7 @@
 }:
 
 let
-  inherit (self.inputs) unixpkgs srvos tangled;
+  inherit (self.inputs) unixpkgs srvos hypixel-bank-tracker tangled;
 
   json-format = pkgs.formats.json { };
 
@@ -86,6 +86,9 @@ let
   miniflux-port = 3012;
   miniflux-hostname = "news.wiro.world";
 
+  hbt-main-port = 3013;
+  hbt-banana-port = 3014;
+
   prometheus-port = 9001;
   prometheus-node-exporter-port = 9002;
   headscale-metrics-port = 9003;
@@ -100,6 +103,8 @@ in
     srvos.nixosModules.mixins-terminfo
 
     self.nixosModules.headscale
+
+    hypixel-bank-tracker.nixosModules.default
 
     tangled.nixosModules.knot
     tangled.nixosModules.spindle
@@ -263,6 +268,14 @@ in
 
       virtualHosts.${miniflux-hostname}.extraConfig = ''
         reverse_proxy http://localhost:${toString miniflux-port}
+      '';
+
+      virtualHosts."hypixel-bank-tracker.xyz".extraConfig = ''
+        reverse_proxy http://localhost:${toString hbt-main-port}
+      '';
+
+      virtualHosts."banana.hypixel-bank-tracker.xyz".extraConfig = ''
+        reverse_proxy http://localhost:${toString hbt-banana-port}
       '';
     };
 
@@ -674,6 +687,22 @@ in
         # NetNewsWire is a very good iOS oss client that integrates well
         # https://b.j4.lc/2025/05/05/setting-up-netnewswire-with-miniflux/
       };
+    };
+
+    age.secrets.hypixel-bank-tracker-main.file = ../../secrets/hypixel-bank-tracker-main.age;
+    services.hypixel-bank-tracker.instances.main = {
+      enable = true;
+
+      port = hbt-main-port;
+      environmentFile = config.age.secrets.hypixel-bank-tracker-main.path;
+    };
+
+    age.secrets.hypixel-bank-tracker-banana.file = ../../secrets/hypixel-bank-tracker-banana.age;
+    services.hypixel-bank-tracker.instances.banana = {
+      enable = true;
+
+      port = hbt-banana-port;
+      environmentFile = config.age.secrets.hypixel-bank-tracker-banana.path;
     };
   };
 }

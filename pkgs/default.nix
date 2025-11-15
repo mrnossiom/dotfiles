@@ -1,7 +1,11 @@
 { self, system, ... }@pkgs:
 
 let
-  inherit (self.inputs) agenix git-leave wakatime-ls;
+  inherit (self.inputs)
+    agenix
+    git-leave
+    wakatime-ls
+    ;
 in
 {
   asak = pkgs.callPackage ./asak.nix { };
