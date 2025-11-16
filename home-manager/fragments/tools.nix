@@ -1,7 +1,6 @@
 { config
 , lib
 , pkgs
-, lpkgs
 , ...
 }:
 
@@ -27,6 +26,7 @@ in
       # CLIs
       asciinema
       calc
+      csvlens
       delta
       dogdns
       du-dust
