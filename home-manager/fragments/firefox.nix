@@ -78,7 +78,7 @@ in
   ];
 
   config = lib.mkIf cfg.enable {
-    home.sessionVariables.BROWSER = lib.getExe pkgs.firefox;
+    home.sessionVariables.BROWSER = lib.getExe config.programs.zen-browser.package;
 
     stylix.targets.firefox = {
       enable = false;
