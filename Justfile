@@ -21,8 +21,8 @@ home-build profile *args:
 home-switch profile *args:
 	home-manager switch --show-trace --flake .#{{profile}} {{args}}
 
-switch-target profile host *args:
+switch-target host *args:
 	nixos-rebuild switch \
-		--flake .#{{profile}} \
+		--flake .#{{host}} \
 		--target-host {{host}} \
 		--use-remote-sudo {{args}}
