@@ -489,11 +489,11 @@
         "rust-overlay": "rust-overlay_2"
       },
       "locked": {
-        "lastModified": 1763289634,
-        "narHash": "sha256-NbaPpZFy3A14TIPGry09TGvO2u0/iu0lJE/Nmef6AiU=",
+        "lastModified": 1763654528,
+        "narHash": "sha256-FngaJrwCZT+SSiw4BrkepYoW6SwZtzVg/1nX9k6nUdc=",
         "owner": "pixilie",
         "repo": "hypixel-bank-tracker",
-        "rev": "d8907749d733f7dd5d9e08f4c4b69c0f55bf1935",
+        "rev": "047d3bcabae9c7aa87214f92292a8ee3550927cc",
         "type": "github"
       },
       "original": {
