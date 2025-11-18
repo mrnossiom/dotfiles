@@ -36,6 +36,7 @@ in
       ffmpeg
       file
       fzf
+      gemini-cli
       inetutils
       jq
       just
