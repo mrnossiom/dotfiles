@@ -86,6 +86,8 @@ let
   miniflux-port = 3012;
   miniflux-hostname = "news.wiro.world";
 
+  static-hostname = "static.wiro.world";
+
   hbt-main-port = 3013;
   hbt-banana-port = 3014;
 
@@ -270,10 +272,14 @@ in
         reverse_proxy http://localhost:${toString miniflux-port}
       '';
 
+      virtualHosts.${static-hostname}.extraConfig = ''
+        root /var/www/static
+        file_server browse
+      '';
+
       virtualHosts."hypixel-bank-tracker.xyz".extraConfig = ''
         reverse_proxy http://localhost:${toString hbt-main-port}
       '';
-
       virtualHosts."banana.hypixel-bank-tracker.xyz".extraConfig = ''
         reverse_proxy http://localhost:${toString hbt-banana-port}
       '';
