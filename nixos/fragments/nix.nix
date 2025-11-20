@@ -33,7 +33,6 @@ in
         # Make NixOS system's legacy channels consistent with registry and flake inputs
         else lib.mapAttrsToList (key: value: "${key}=${value.to.path}") config.nix.registry;
 
-
       gc = {
         automatic = true;
         # absolute disk space saver, if you forget to run GC
@@ -54,6 +53,8 @@ in
         # Disable flake registry to keep system pure and
         # avoid network calls at each nix invoation.
         flake-registry = "";
+
+        use-xdg-base-directories = true;
 
         keep-going = true;
 
