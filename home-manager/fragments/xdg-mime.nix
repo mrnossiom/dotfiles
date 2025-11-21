@@ -24,6 +24,8 @@ in
       { assertion = lib.lists.count (drv: (drv.pname or "") == pkgs.nautilus.pname) config.home.packages > 0; message = "`xdg-mime` fragment depends on `nautilus` program"; }
     ];
 
+    xdg.enable = true;
+
     xdg.mimeApps = {
       enable = true;
 
