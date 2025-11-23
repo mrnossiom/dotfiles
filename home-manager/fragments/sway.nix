@@ -220,6 +220,8 @@ in
                   rm $tmpimg
                 ''}";
 
+                "${modifier}+t" = ''input "type:touch" events toggle'';
+
                 "${modifier}+${cfg-sway.left}" = "focus left";
                 "${modifier}+${cfg-sway.down}" = "focus down";
                 "${modifier}+${cfg-sway.up}" = "focus up";
