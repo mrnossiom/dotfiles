@@ -1,12 +1,11 @@
 { self
 , config
 , pkgs
-, upkgs
 , ...
 }:
 
 let
-  inherit (self.inputs) unixpkgs srvos hypixel-bank-tracker tangled;
+  inherit (self.inputs) srvos hypixel-bank-tracker tangled;
 
   json-format = pkgs.formats.json { };
 
@@ -100,21 +99,15 @@ let
   authelia-metrics-port = 9004;
 in
 {
-  disabledModules = [ "services/networking/headscale.nix" ];
-
   imports = [
     srvos.nixosModules.server
     srvos.nixosModules.hardware-hetzner-cloud
     srvos.nixosModules.mixins-terminfo
 
-    self.nixosModules.headscale
-
     hypixel-bank-tracker.nixosModules.default
 
     tangled.nixosModules.knot
     tangled.nixosModules.spindle
-
-    "${unixpkgs}/nixos/modules/services/matrix/tuwunel.nix"
   ];
 
   config = {
@@ -296,9 +289,8 @@ in
     };
 
     age.secrets.pds-env.file = ../../secrets/pds-env.age;
-    services.pds = {
+    services.bluesky-pds = {
       enable = true;
-      package = upkgs.bluesky-pds;
 
       settings = {
         PDS_HOSTNAME = "pds.wiro.world";
@@ -413,7 +405,6 @@ in
     # TODO: add dependency on authelia
     services.headscale = {
       enable = true;
-      package = upkgs.headscale;
 
       port = headscale-port;
       settings = {
@@ -469,11 +460,15 @@ in
     };
 
     age.secrets.lldap-env.file = ../../secrets/lldap-env.age;
+    age.secrets.lldap-user-pass = { file = ../../secrets/lldap-user-pass.age; };
     services.lldap = {
       enable = true;
       settings = {
         http_url = "https://${lldap-hostname}";
         http_port = lldap-port;
+
+        ldap_user_pass_file = config.age.secrets.lldap-user-pass.path;
+        force_ldap_user_pass_reset = "always";
 
         ldap_base_dn = "dc=wiro,dc=world";
       };
@@ -624,7 +619,6 @@ in
     age.secrets.tuwunel-registration-tokens = { file = ../../secrets/tuwunel-registration-tokens.age; owner = config.services.matrix-tuwunel.user; };
     services.matrix-tuwunel = {
       enable = true;
-      package = upkgs.matrix-tuwunel;
 
       settings.global = {
         address = [ "127.0.0.1" ];
@@ -655,7 +649,6 @@ in
     age.secrets.vaultwarden-env.file = ../../secrets/vaultwarden-env.age;
     services.vaultwarden = {
       enable = true;
-      package = upkgs.vaultwarden;
 
       environmentFile = config.age.secrets.vaultwarden-env.path;
       config = {

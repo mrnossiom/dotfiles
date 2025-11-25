@@ -125,7 +125,7 @@
 
     programs.go = {
       enable = true;
-      goPath = ".local/share/go";
+      env.GOPATH = ".local/share/go";
     };
 
     programs.gpg = {
@@ -139,5 +139,7 @@
       enableFishIntegration = false;
       enableZshIntegration = false;
     };
+
+    programs.ssh.enableDefaultConfig = false;
   };
 }

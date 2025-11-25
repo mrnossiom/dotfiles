@@ -1,7 +1,6 @@
 { self
 , config
 , lib
-, pkgs
 , ...
 }:
 
@@ -19,7 +18,6 @@ in
 
   config.services.logiops = lib.mkIf cfg.enable {
     enable = true;
-    package = pkgs.logiops_0_2_3;
 
     settings =
       let

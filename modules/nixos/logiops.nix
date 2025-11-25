@@ -11,12 +11,12 @@ let
   rendered-config = libconfig-format.generate "logid.cfg" cfg.settings;
 in
 {
-  options.services.logiops = with lib; {
-    enable = mkEnableOption (mdDoc "Logiops HID++ configuration");
+  options.services.logiops = {
+    enable = lib.mkEnableOption "Logiops HID++ configuration";
 
-    package = mkPackageOption pkgs "logiops" { };
+    package = lib.mkPackageOption pkgs "logiops_0_2_3" { };
 
-    settings = mkOption {
+    settings = lib.mkOption {
       type = libconfig-format.type;
       default = { };
       example = {
@@ -54,7 +54,7 @@ in
           ];
         }];
       };
-      description = mdDoc ''
+      description = lib.mdDoc ''
         Logid configuration. Refer to
         [the `logiops` wiki](https://github.com/PixlOne/logiops/wiki/Configuration)
         for details on supported values.
@@ -72,6 +72,4 @@ in
       restartTriggers = [ rendered-config ];
     };
   };
-
-  meta.maintainers = with lib.maintainers; [ ckie ];
 }

@@ -1,18 +1,9 @@
-{ self
-, config
+{ config
 , pkgs
 , ...
 }:
 
-let
-  inherit (self.outputs) nixosModules;
-in
 {
-  imports = [
-    # Replaces nixpkgs module with a custom one that support fallback static location
-    nixosModules.geoclue2
-  ];
-
   config = {
     local.fragment = {
       agenix.enable = true;
@@ -42,7 +33,7 @@ in
       kernel.sysctl."kernel.perf_event_paranoid" = -1;
 
       kernelPackages = pkgs.linuxKernel.packages.linux_zen;
-      extraModulePackages = with config.boot.kernelPackages; [ perf xone ];
+      extraModulePackages = with config.boot.kernelPackages; [ xone ];
 
       loader = {
         systemd-boot.enable = true;
@@ -56,9 +47,7 @@ in
 
     # Once in a while, the session stop job hangs and lasts the full default
     # time (1min30). I just want to shutdown my computer please.
-    systemd.extraConfig = ''
-      DefaultTimeoutStopSec = 10s
-    '';
+    systemd.settings.Manager.DefaultTimeoutStopSec = "10s";
 
     programs.dconf.enable = true;
 
@@ -86,16 +75,14 @@ in
         };
       };
 
-    programs.command-not-found.enable = false;
-
     # This is needed for services like `darkman` and `gammastep`
     services.geoclue2 = {
       enable = true;
 
-      # Fallback using custom geoclue2 module waitng for an alternative to MLS
+      # Fallback using custom geoclue2 module waiting for an alternative to MLS
       # (Mozilla Location Services). See related module in repo.
       # INFO:   lat vvvv  vvv long → Paris rough location
-      staticFile = "48.8\n2.3\n0\n0\n";
+      # staticFile = "48.8\n2.3\n0\n0\n";
     };
 
     programs.wireshark = {

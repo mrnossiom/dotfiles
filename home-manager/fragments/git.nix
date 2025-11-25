@@ -28,10 +28,6 @@ in
       enable = true;
       lfs.enable = true;
 
-      userName = "Milo Moisson";
-      # TODO: this email should be behind a secret or at least a config
-      userEmail = "milo@wiro.world";
-
       signing.signByDefault = true;
       signing.key = "~/.ssh/id_ed25519.pub";
 
@@ -43,67 +39,73 @@ in
         "result"
       ];
 
-      aliases = {
-        b = "branch --all";
-        brm = "branch --delete";
+      settings = {
+        user = {
+          name = "Milo Moisson";
+          # TODO: this email should be behind a secret or at least a config
+          email = "milo@wiro.world";
+        };
 
-        ll = "log --graph --oneline --pretty=custom";
-        lla = "log --graph --oneline --pretty=custom --all";
-        last = "log -1 HEAD --stat";
+        alias = {
+          b = "branch --all";
+          brm = "branch --delete";
 
-        st = "status --short --branch";
+          ll = "log --graph --oneline --pretty=custom";
+          lla = "log --graph --oneline --pretty=custom --all";
+          last = "log -1 HEAD --stat";
 
-        cm = "commit --message";
-        oups = "commit --amend";
+          st = "status --short --branch";
 
-        ui = "!lazygit";
+          cm = "commit --message";
+          oups = "commit --amend";
 
-        rv = "remote --verbose";
+          ui = "!lazygit";
 
-        ri = "rebase --interactive";
-        ris = "!git ri $(git slc)";
-        rc = "rebase --continue";
-        rs = "rebase --skip";
-        ra = "rebase --abort";
+          rv = "remote --verbose";
 
-        # Select commit
-        slc = "!git log --oneline --pretty=custom | fzf | awk '{printf $1}'";
+          ri = "rebase --interactive";
+          ris = "!git ri $(git slc)";
+          rc = "rebase --continue";
+          rs = "rebase --skip";
+          ra = "rebase --abort";
 
-        a = "add";
-        al = "add --all";
-        ac = "add .";
-        ap = "add --patch";
+          # Select commit
+          slc = "!git log --oneline --pretty=custom | fzf | awk '{printf $1}'";
 
-        pu = "push";
-        put = "push --follow-tags";
-        puf = "push --force-with-lease";
-        pl = "pull";
+          a = "add";
+          al = "add --all";
+          ac = "add .";
+          ap = "add --patch";
 
-        f = "fetch";
+          pu = "push";
+          put = "push --follow-tags";
+          puf = "push --force-with-lease";
+          pl = "pull";
 
-        s = "switch";
-        sc = "switch --create";
+          f = "fetch";
 
-        ck = "checkout";
+          s = "switch";
+          sc = "switch --create";
 
-        cp = "cherry-pick";
+          ck = "checkout";
 
-        df = "diff";
-        dfs = "diff --staged";
-        dfc = "diff --cached";
+          cp = "cherry-pick";
 
-        m = "merge";
+          df = "diff";
+          dfs = "diff --staged";
+          dfc = "diff --cached";
 
-        rms = "restore --staged";
-        res = "restore";
+          m = "merge";
 
-        sh = "stash";
-        shl = "stash list";
-        sha = "stash apply";
-        shp = "stash pop";
-      };
+          rms = "restore --staged";
+          res = "restore";
 
-      extraConfig = {
+          sh = "stash";
+          shl = "stash list";
+          sha = "stash apply";
+          shp = "stash pop";
+        };
+
         fetch.prune = true;
         color.ui = true;
         init.defaultBranch = "main";
@@ -158,8 +160,9 @@ in
           showCommandLog = false;
           border = "single";
         };
+
         git = {
-          paging.externalDiffCommand = "difft --color=always";
+          pagers.externalDiffCommand = "difft --color=always";
         };
 
         # to be declarative or not to be declarative?

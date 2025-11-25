@@ -93,7 +93,6 @@ in
       };
 
       extraPackages = with pkgs; [
-        ansible-language-server
         clang-tools
         gopls
         kotlin-language-server

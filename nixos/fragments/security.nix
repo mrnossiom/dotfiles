@@ -20,15 +20,13 @@ in
     security.polkit.enable = true;
     security.rtkit.enable = true;
 
-    # Systemd Login
-    services.logind = {
-      lidSwitch = "suspend";
-      extraConfig = lib.generators.toKeyValue { } {
-        IdleAction = "lock";
-        # Don’t shutdown when power button is short-pressed
-        HandlePowerKey = "lock";
-        HandlePowerKeyLongPress = "suspend";
-      };
+    # Systemd Login  
+    services.logind.settings.Login = {
+      HandleLidSwitch = "suspend";
+      IdleAction = "lock";
+      # Don’t shutdown when power button is short-pressed
+      HandlePowerKey = "lock";
+      HandlePowerKeyLongPress = "suspend";
     };
 
     # `swaylock` pam service must be at least declared to work properly
@@ -40,6 +38,7 @@ in
     # Signing
     programs.gnupg.agent.enable = true;
     services.gnome.gnome-keyring.enable = true;
+    services.gnome.gcr-ssh-agent.enable = false;
 
     # SSH
     services.openssh = {

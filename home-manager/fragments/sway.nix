@@ -1,5 +1,4 @@
-{ self
-, config
+{ config
 , lib
 , pkgs
 
@@ -8,18 +7,12 @@
 }:
 
 let
-  inherit (self.outputs) homeManagerModules;
-
   cfg = config.local.fragment.sway;
   cfg-sway = config.wayland.windowManager.sway.config;
 
   workspacesRange = lib.zipListsWith (key-idx: workspace-idx: { inherit key-idx workspace-idx; }) [ 1 2 3 4 5 6 7 8 9 0 ] (lib.range 1 10);
 in
 {
-  imports = [
-    homeManagerModules.wl-clip-persist
-  ];
-
   options.local.fragment.sway.enable = lib.mkEnableOption ''
     Sway related
   '';

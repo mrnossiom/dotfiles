@@ -1,6 +1,13 @@
-{ self, system, ... }@pkgs:
+{ self
+
+, stdenv
+, callPackage
+, ...
+}:
 
 let
+  inherit (stdenv.hostPlatform) system;
+
   inherit (self.inputs)
     agenix
     git-leave
@@ -8,11 +15,11 @@ let
     ;
 in
 {
-  asak = pkgs.callPackage ./asak.nix { };
-  ebnfer = pkgs.callPackage ./ebnfer.nix { };
-  find-unicode = pkgs.callPackage ./find-unicode.nix { };
-  names = pkgs.callPackage ./names.nix { };
-  probe-rs-udev-rules = pkgs.callPackage ./probe-rs-udev-rules.nix { };
+  asak = callPackage ./asak.nix { };
+  ebnfer = callPackage ./ebnfer.nix { };
+  find-unicode = callPackage ./find-unicode.nix { };
+  names = callPackage ./names.nix { };
+  probe-rs-udev-rules = callPackage ./probe-rs-udev-rules.nix { };
 
   # Import packages defined in foreign repositories
   inherit (agenix.packages.${system}) agenix;

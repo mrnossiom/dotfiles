@@ -84,6 +84,10 @@ in
       enable = false;
       profileNames = [ "default" ];
     };
+    stylix.targets.zen-browser = {
+      enable = false;
+      profileNames = [ "default" ];
+    };
 
     programs.zen-browser = {
       enable = true;

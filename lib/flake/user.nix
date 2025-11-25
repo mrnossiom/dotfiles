@@ -36,6 +36,7 @@ in
     } else {
       home = "/home/${name}";
       extraGroups = [
+        # TODO: remove or put under an condition
         "wheel" # sudo access
         "networkmanager" # needed for nm
       ];

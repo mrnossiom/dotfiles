@@ -2,21 +2,23 @@
   description = "NixOS and Home Manager configuration for Milo's laptops";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
     unixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
-    home-manager.url = "github:nix-community/home-manager/release-25.05";
+    home-manager.url = "github:nix-community/home-manager/release-25.11";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
-    nix-darwin.url = "github:LnL7/nix-darwin/nix-darwin-25.05";
+    # nix-darwin.url = "github:nix-darwin/nix-darwin/nix-darwin-25.11";
+    nix-darwin.url = "github:nix-darwin/nix-darwin/nix-darwin-25.05";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
 
-    stylix.url = "github:nix-community/stylix/release-25.05";
+    stylix.url = "github:nix-community/stylix/release-25.11";
     stylix.inputs.nixpkgs.follows = "nixpkgs";
 
     ## Miscellaneous
 
-    agenix.url = "github:ryantm/agenix/0.15.0";
+    # agenix.url = "github:ryantm/agenix/0.15.0";
+    agenix.url = "github:mrnossiom/agenix";
     agenix.inputs.nixpkgs.follows = "nixpkgs";
     agenix.inputs.home-manager.follows = "home-manager";
 
@@ -57,14 +59,14 @@
 
       flake-lib = import ./lib/flake (nixpkgs // { inherit self; });
 
-      forAllPkgs = func: forAllSystems (system: func pkgs.${system});
-
       # This should be the only constructed nixpkgs instances in this flake
-      pkgs = forAllSystems (system: (import nixpkgs {
+      allPkgs = forAllSystems (system: (import nixpkgs {
         inherit system;
         config.allowUnfreePredicate = import ./lib/unfree.nix { lib = nixpkgs.lib; };
         overlays = [ outputs.overlays.all ];
       }));
+
+      forAllPkgs = func: forAllSystems (system: func allPkgs.${system});
     in
     {
       formatter = forAllPkgs (pkgs: pkgs.nixpkgs-fmt);
@@ -73,7 +75,7 @@
       lib = forAllPkgs (import ./lib);
       templates = import ./templates;
 
-      apps = forAllPkgs (import ./apps { pkgs-per-system = pkgs; });
+      apps = forAllPkgs (import ./apps { pkgs-per-system = allPkgs; });
       devShells = forAllPkgs (import ./shells.nix);
       overlays = import ./overlays (nixpkgs // { inherit self; });
       packages = forAllPkgs (import ./pkgs);

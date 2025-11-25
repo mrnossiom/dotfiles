@@ -20,7 +20,10 @@ rec {
     # local packages set
     lpkgs = import ../../pkgs pkgs;
     # unstable nixpkgs set
-    upkgs = import unixpkgs { inherit (pkgs) system config; };
+    upkgs = import unixpkgs {
+      config = pkgs.config;
+      system = pkgs.stdenv.hostPlatform.system;
+    };
     # indicates if system is darwin
     isDarwin = pkgs.stdenv.isDarwin;
   };

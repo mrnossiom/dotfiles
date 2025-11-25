@@ -29,7 +29,7 @@ in
       csvlens
       delta
       dogdns
-      du-dust
+      dust
       encfs
       fastfetch
       fd
@@ -47,6 +47,7 @@ in
       otree
       ouch
       parallel
+      perf
       pv
       restic
       ripgrep
@@ -60,7 +61,6 @@ in
       uni
       unzip
       vlock
-      wcurl
       wormhole-rs
     ]) ++ lib.optionals (!flags.onlyCached) [ ];
 

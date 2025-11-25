@@ -27,6 +27,9 @@ in
       enable = true;
       base16Scheme = lib.mkDefault "${pkgs.base16-schemes}/share/themes/onedark-dark.yaml";
 
+      # issues a warning because we use `useGlobalPkgs`
+      overlays.enable = false;
+
       image = ../../assets/wallpaper-binary-cloud.png;
 
       fonts = {
