@@ -91,6 +91,9 @@ let
   hbt-main-port = 3013;
   hbt-banana-port = 3014;
 
+  warrior-port = 3015;
+  warrior-hostname = "warrior.wiro.world";
+
   prometheus-port = 9001;
   prometheus-node-exporter-port = 9002;
   headscale-metrics-port = 9003;
@@ -282,6 +285,13 @@ in
       '';
       virtualHosts."banana.hypixel-bank-tracker.xyz".extraConfig = ''
         reverse_proxy http://localhost:${toString hbt-banana-port}
+      '';
+
+      virtualHosts.${warrior-hostname}.extraConfig = ''
+        forward_auth localhost:${toString authelia-port} {
+            uri /api/authz/forward-auth
+        }
+        reverse_proxy http://localhost:${toString warrior-port}
       '';
     };
 
@@ -601,7 +611,6 @@ in
           ];
         };
 
-
         notifier.smtp = {
           address = "smtp://smtp.resend.com:2587";
           username = "resend";
@@ -709,6 +718,12 @@ in
 
       port = hbt-banana-port;
       environmentFile = config.age.secrets.hypixel-bank-tracker-banana.path;
+    };
+
+    virtualisation.oci-containers.containers.archive-warrior = {
+      image = "atdr.meo.ws/archiveteam/warrior-dockerfile";
+      ports = [ "127.0.0.1:${toString warrior-port}:8001" ];
+      pull = "newer";
     };
   };
 }
