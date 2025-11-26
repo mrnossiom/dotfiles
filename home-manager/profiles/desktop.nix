@@ -95,6 +95,7 @@
         transmission_4-gtk
         wdisplays
         wireshark
+        zulip
 
         # Needed for libreoffice spellchecking
         hunspell
