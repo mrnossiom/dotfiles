@@ -141,5 +141,7 @@
     };
 
     programs.ssh.enableDefaultConfig = false;
+
+    services.tailscale-systray.enable = true;
   };
 }
