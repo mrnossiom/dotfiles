@@ -491,11 +491,11 @@
         "rust-overlay": "rust-overlay_2"
       },
       "locked": {
-        "lastModified": 1763654528,
-        "narHash": "sha256-FngaJrwCZT+SSiw4BrkepYoW6SwZtzVg/1nX9k6nUdc=",
+        "lastModified": 1764455123,
+        "narHash": "sha256-ePlZ3OHBLTRlRa9zs2IeHNA8CuiMLyu5ZUzxoGI5Hp0=",
         "owner": "pixilie",
         "repo": "hypixel-bank-tracker",
-        "rev": "047d3bcabae9c7aa87214f92292a8ee3550927cc",
+        "rev": "8e4e91b1a8fa264895fa40dda93c3363be33a958",
         "type": "github"
       },
       "original": {
@@ -927,11 +927,11 @@
         "rev": "7358ec6edfa4d17b8b8f543d99e83a4705901148",
         "revCount": 1687,
         "type": "git",
-        "url": "https://tangled.org/@tangled.org/core"
+        "url": "https://tangled.org/tangled.org/core"
       },
       "original": {
         "type": "git",
-        "url": "https://tangled.org/@tangled.org/core"
+        "url": "https://tangled.org/tangled.org/core"
       }
     },
     "tinted-foot": {

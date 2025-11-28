@@ -65,5 +65,12 @@ in
         extra-trusted-public-keys = [ "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs=" ];
       };
     };
+
+    # other disk space saver
+    services.angrr = {
+      enable = true;
+      period = "2weeks";
+      enableNixGcIntegration = true;
+    };
   };
 }

@@ -29,7 +29,7 @@ in
         git_status.disabled = true;
 
         nix_shell = {
-          format = "via [$symbol$state]($style) "; # Remove nix shell name
+          format = "via [$symbol]($style) "; # Remove nix shell name
           symbol = " ";
         };
       };
@@ -38,18 +38,21 @@ in
     programs.direnv = {
       enable = true;
       silent = true;
+
       nix-direnv.enable = true;
-    };
 
-    programs.nushell = {
-      enable = true;
-
-      extraConfig = ''
-        $env.config = {
-          show_banner: false,
-        }
+      stdlib = ''
+        use angrr
       '';
     };
+    # TODO: depend on osConfig
+    xdg.configFile."direnv/lib/angrr.sh".text = ''
+      use_angrr() {
+        layout_dir="$(direnv_layout_dir)"
+        log_status "angrr: touch GC roots $layout_dir"
+        RUST_LOG="''${ANGRR_DIRENV_LOG:-angrr=error}" ${lib.getExe upkgs.angrr} touch "$layout_dir" --silent
+      }
+    '';
 
     programs.zoxide = {
       enable = true;

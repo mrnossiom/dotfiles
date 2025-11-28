@@ -25,4 +25,4 @@ switch-target host *args:
 	nixos-rebuild switch \
 		--flake .#{{host}} \
 		--target-host {{host}} \
-		--use-remote-sudo {{args}}
+		--sudo {{args}}

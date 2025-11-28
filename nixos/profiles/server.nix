@@ -460,7 +460,9 @@ in
     };
 
     age.secrets.lldap-env.file = ../../secrets/lldap-env.age;
-    age.secrets.lldap-user-pass = { file = ../../secrets/lldap-user-pass.age; };
+    users.users.lldap = { isSystemUser = true; group = "lldap"; };
+    users.groups.lldap = { };
+    age.secrets.lldap-user-pass = { file = ../../secrets/lldap-user-pass.age; owner = "lldap"; };
     services.lldap = {
       enable = true;
       settings = {
@@ -468,7 +470,7 @@ in
         http_port = lldap-port;
 
         ldap_user_pass_file = config.age.secrets.lldap-user-pass.path;
-        force_ldap_user_pass_reset = "always";
+        force_ldap_user_pass_reset = false;
 
         ldap_base_dn = "dc=wiro,dc=world";
       };
