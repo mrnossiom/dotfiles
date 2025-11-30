@@ -31,7 +31,7 @@ in
 
     services.caddy = {
       virtualHosts.${vaultwarden-hostname}.extraConfig = ''
-        reverse_proxy http://localhost:${toString vaultwarden-port}
+        reverse_proxy http://localhost:${toString config.services.vaultwarden.config.ROCKET_PORT}
       '';
     };
   };

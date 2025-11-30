@@ -4,9 +4,7 @@
 
 let
   warrior-port = 3015;
-  warrior-hostname = "warrior.wiro.world";
-
-  authelia-port = 3008;
+  warrior-hostname = "warrior.net.wiro.world";
 in
 {
   config = {
@@ -17,10 +15,8 @@ in
     };
 
     services.caddy = {
-      virtualHosts.${warrior-hostname}.extraConfig = ''
-        forward_auth localhost:${toString authelia-port} {
-            uri /api/authz/forward-auth
-        }
+      virtualHosts."http://${warrior-hostname}".extraConfig = ''
+        bind tailscale/warrior
         reverse_proxy http://localhost:${toString warrior-port}
       '';
     };

@@ -23,4 +23,5 @@ in
   # Defines `HYPIXEL_API_KEY`, `PROFILE_UUID`
   "hypixel-bank-tracker-main.age".publicKeys = deploy;
   "hypixel-bank-tracker-banana.age".publicKeys = deploy;
+  "caddy-env.age".publicKeys = deploy;
 }

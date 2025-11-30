@@ -34,8 +34,8 @@ in
       virtualHosts.${pds-hostname} = {
         serverAliases = [ "*.${pds-hostname}" ];
         extraConfig = ''
-          	tls { on_demand }
-            reverse_proxy http://localhost:${toString pds-port}
+        	tls { on_demand }
+          reverse_proxy http://localhost:${toString config.services.bluesky-pds.settings.PDS_HOSTNAME}
         '';
       };
     };

@@ -101,19 +101,25 @@ in
       jails = { };
     };
 
+    age.secrets.caddy-env.file = secrets/caddy-env.age;
     services.caddy = {
       enable = true;
       package = pkgs.caddy.withPlugins {
-        doInstallCheck = false;
         plugins = [
+          "github.com/caddy-dns/hetzner/v2@v2.0.0-preview-1"
           "github.com/tailscale/caddy-tailscale@v0.0.0-20251016213337-01d084e119cb"
-          "github.com/caddy-dns/hetzner@v2.0.0-preview-1"
         ];
         hash = "sha256-muKwDYs5Jp4ib/psZxpp1Kyfsqz6wPz/lpHFGtx67uY=";
       };
 
+      environmentFile = config.age.secrets.caddy-env.path;
+
       globalConfig = ''
         tailscale {
+          # this caddy instance already proxies headscale but needs to access headscale to start
+          # control_url https://headscale.wiro.world
+          control_url http://localhost:3006
+
           ephemeral
         }
       '';

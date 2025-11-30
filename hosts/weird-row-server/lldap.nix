@@ -4,7 +4,7 @@
 
 let
   lldap-port = 3007;
-  lldap-hostname = "ldap.wiro.world";
+  lldap-hostname = "ldap.net.wiro.world";
 in
 {
   config = {
@@ -30,8 +30,9 @@ in
     };
 
     services.caddy = {
-      virtualHosts.${lldap-hostname}.extraConfig = ''
-        reverse_proxy http://localhost:${toString lldap-port}
+      virtualHosts."http://${lldap-hostname}".extraConfig = ''
+        bind tailscale/ldap
+        reverse_proxy http://localhost:${toString config.services.lldap.settings.http_port}
       '';
     };
   };

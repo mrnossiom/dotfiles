@@ -18,7 +18,7 @@ in
 
     services.caddy = {
       virtualHosts.${goatcounter-hostname}.extraConfig = ''
-        reverse_proxy http://localhost:${toString goatcounter-port}
+        reverse_proxy http://localhost:${toString config.services.goatcounter.port}
       '';
     };
   };

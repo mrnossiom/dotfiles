@@ -4,7 +4,7 @@
 
 let
   grafana-port = 3002;
-  grafana-hostname = "console.wiro.world";
+  grafana-hostname = "console.net.wiro.world";
 
   prometheus-port = 9001;
   prometheus-node-exporter-port = 9002;
@@ -76,7 +76,8 @@ in
       globalConfig = ''
         metrics { per_host }
       '';
-      virtualHosts.${grafana-hostname}.extraConfig = ''
+      virtualHosts."http://${grafana-hostname}".extraConfig = ''
+        bind tailscale/console
         reverse_proxy http://localhost:${toString grafana-port}
       '';
     };

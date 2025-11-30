@@ -4,7 +4,7 @@
 
 let
   thelounge-port = 3005;
-  thelounge-hostname = "lounge.wiro.world";
+  thelounge-hostname = "irc-lounge.net.wiro.world";
 in
 {
   config = {
@@ -22,8 +22,9 @@ in
     };
 
     services.caddy = {
-      virtualHosts.${thelounge-hostname}.extraConfig = ''
-        reverse_proxy http://localhost:${toString thelounge-port}
+      virtualHosts."http://${thelounge-hostname}".extraConfig = ''
+        bind tailscale/irc-lounge
+        reverse_proxy http://localhost:${toString config.services.thelounge.port}
       '';
     };
   };
