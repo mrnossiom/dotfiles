@@ -19,8 +19,9 @@ in
 
     # Servers
     "weird-row-server" = createSystem pkgs [
-      (system "weird-row-server" "server")
+      (host "weird-row-server")
       (managedDiskLayout "ext4-hetzner" { device = "sda"; swapSize = 2; })
+      # TODO: should we keep a real user there?
       (user "milomoisson" { description = "Milo Moisson"; profile = "server"; keys = keys.users; })
     ];
   };

@@ -29,7 +29,7 @@ lib.getExe (writeShellApplication {
     fi
 
     echo "Flashing to $dev"
-    
+
     # Format selected disk
     pv -tpreb "${isoPath}" | sudo dd bs=4M of="$dev" iflag=fullblock conv=notrunc,noerror oflag=sync
   '';

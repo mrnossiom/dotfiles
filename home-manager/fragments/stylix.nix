@@ -11,7 +11,11 @@ let
   cfg = config.local.fragment.stylix;
 in
 {
-  imports = [ stylix.homeModules.stylix ];
+  imports = [
+    stylix.homeModules.stylix
+    # issues a warning because we use `useGlobalPkgs`
+    { config.stylix.overlays.enable = false; }
+  ];
 
   options.local.fragment.stylix.enable = lib.mkEnableOption ''
     Stylix related
@@ -26,9 +30,6 @@ in
     stylix = {
       enable = true;
       base16Scheme = lib.mkDefault "${pkgs.base16-schemes}/share/themes/onedark-dark.yaml";
-
-      # issues a warning because we use `useGlobalPkgs`
-      overlays.enable = false;
 
       image = ../../assets/wallpaper-binary-cloud.png;
 

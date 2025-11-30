@@ -232,7 +232,7 @@ in
         .modules-right widget .module {
           padding: 0 1rem;
 
-          color: @base07; 
+          color: @base07;
         }
 
         /* Round first and last child of left, right and center modules. Disable rounding on the sides*/

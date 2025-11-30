@@ -44,7 +44,14 @@ rec {
         ../../nixos/hardware/${hostName}.nix
         ../../nixos/profiles/${profile}.nix
       ];
-      networking.hostName = hostName;
+      config.networking.hostName = hostName;
+    };
+    host = hostName: {
+      imports = [
+        ../../nixos/hardware/${hostName}.nix
+        ../../hosts/${hostName}/default.nix
+      ];
+      config.networking.hostName = hostName;
     };
     user = import ./user.nix;
     managedDiskLayout = import ./managedDiskLayout.nix;

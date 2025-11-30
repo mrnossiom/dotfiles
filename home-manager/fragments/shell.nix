@@ -150,7 +150,7 @@ in
         '';
 
         # Quickly explore a derivation (using registry syntax)
-        # e.g. `cdd nixpkgs#fontforge` or `cdd unixpkgs#fontforge` 
+        # e.g. `cdd nixpkgs#fontforge` or `cdd unixpkgs#fontforge`
         cdd = "cd (nix build --no-link --print-out-paths $argv | ${lib.getExe pkgs.fzf})";
       } // lib.optionalAttrs (!flags.onlyCached) {
         # Quickly get outta here to test something

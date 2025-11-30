@@ -20,7 +20,7 @@ in
     security.polkit.enable = true;
     security.rtkit.enable = true;
 
-    # Systemd Login  
+    # Systemd Login
     services.logind.settings.Login = {
       HandleLidSwitch = "suspend";
       IdleAction = "lock";

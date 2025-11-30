@@ -26,7 +26,7 @@ in
 
         The recommended amount from RedHat is:
 
-        Amount of RAM    Recommended swap space       Recommended swap space 
+        Amount of RAM    Recommended swap space       Recommended swap space
         in the system                                 if allowing for hibernation
         ——————————————   ——————————————————————————   ———————————————————————————
         ⩽ 2 GB           2 times the amount of RAM    3 times the amount of RAM

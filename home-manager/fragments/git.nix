@@ -162,7 +162,9 @@ in
         };
 
         git = {
-          pagers.externalDiffCommand = "difft --color=always";
+          pagers = [
+            { externalDiffCommand = "difft --color=always"; }
+          ];
         };
 
         # to be declarative or not to be declarative?

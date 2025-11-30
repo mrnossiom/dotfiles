@@ -91,7 +91,7 @@
     };
     users.users.${config.local.user.username}.extraGroups = [ "wireshark" "plugdev" ];
 
-    # This option is already filled with aliases that snowball and have 
+    # This option is already filled with aliases that snowball and have
     # priority on fish internal `ls` aliases
     environment.shellAliases = { ls = null; ll = null; l = null; };
     programs.fish.enable = true;

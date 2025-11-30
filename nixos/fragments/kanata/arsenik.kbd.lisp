@@ -59,7 +59,7 @@
 ;; Numrow layer
 (deflayer numrow
   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX
-  XX   XX   XX   XX   XX        XX   XX   XX   XX   XX  
+  XX   XX   XX   XX   XX        XX   XX   XX   XX   XX
   @1   @2   @3   @4   @5        @6   @7   @8   @9   @0
   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX
        XX   XX             XX             XX   XX

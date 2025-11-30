@@ -23,8 +23,8 @@ in
       let
         cid = {
           #                  Control IDs │ reprog? │ fn key? │ mouse key? │ gesture support?
-          leftMouse = 80; #         0x50 │         │         │ YES        │ 
-          rightMouse = 81; #        0x51 │         │         │ YES        │ 
+          leftMouse = 80; #         0x50 │         │         │ YES        │
+          rightMouse = 81; #        0x51 │         │         │ YES        │
           middleMouse = 81; #       0x52 │ YES     │         │ YES        │ YES
           back = 83; #              0x53 │ YES     │         │ YES        │ YES
           forward = 86; #           0x56 │ YES     │         │ YES        │ YES
