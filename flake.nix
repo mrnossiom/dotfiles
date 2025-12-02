@@ -8,8 +8,7 @@
     home-manager.url = "github:nix-community/home-manager/release-25.11";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
-    # nix-darwin.url = "github:nix-darwin/nix-darwin/nix-darwin-25.11";
-    nix-darwin.url = "github:nix-darwin/nix-darwin/nix-darwin-25.05";
+    nix-darwin.url = "github:nix-darwin/nix-darwin/nix-darwin-25.11";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
 
     stylix.url = "github:nix-community/stylix/release-25.11";
@@ -18,7 +17,7 @@
     ## Miscellaneous
 
     # agenix.url = "github:ryantm/agenix/0.15.0";
-    agenix.url = "github:mrnossiom/agenix";
+    agenix.url = "github:ryantm/agenix";
     agenix.inputs.nixpkgs.follows = "nixpkgs";
     agenix.inputs.home-manager.follows = "home-manager";
 
