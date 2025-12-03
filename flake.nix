@@ -16,17 +16,16 @@
 
     ## Miscellaneous
 
-    # agenix.url = "github:ryantm/agenix/0.15.0";
     agenix.url = "github:ryantm/agenix";
     agenix.inputs.nixpkgs.follows = "nixpkgs";
     agenix.inputs.home-manager.follows = "home-manager";
 
-    disko.url = "github:nix-community/disko/v1.11.0";
+    disko.url = "github:nix-community/disko";
     disko.inputs.nixpkgs.follows = "nixpkgs";
 
     nixos-hardware.url = "github:nixos/nixos-hardware";
 
-    lanzaboote.url = "github:nix-community/lanzaboote/v0.4.3";
+    lanzaboote.url = "github:nix-community/lanzaboote";
     lanzaboote.inputs.nixpkgs.follows = "unixpkgs";
 
     srvos.url = "github:nix-community/srvos";

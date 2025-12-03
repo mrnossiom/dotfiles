@@ -15,10 +15,6 @@ in
   '';
 
   config = lib.mkIf cfg.enable {
-    assertions = [
-      { assertion = config.local.fragment.agenix.enable; message = "`git` fragment depends on `agenix` fragment"; }
-    ];
-
     home.sessionVariables = {
       # Disable annoying warning message
       GIT_DISCOVERY_ACROSS_FILESYSTEM = 0;
@@ -133,7 +129,10 @@ in
         "credentials \"https://github.com\"".helper = "!${lib.getExe pkgs.gh} auth git-credential";
 
         # TODO: change to $PROJECTS env var?
-        leaveTool.defaultFolder = "~/Development";
+        leaveTool = {
+          defaultFolder = "${config.home.homeDirectory}/Development";
+          checks = [ "dirty" "ahead-branches" ];
+        };
       };
     };
 
