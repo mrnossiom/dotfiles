@@ -164,6 +164,12 @@ in
             repeat_rate = toString 30;
           };
 
+          "type:touchpad" = {
+            dwt = "enabled";
+            tap = "enabled";
+            tap_button_map = "lrm";
+          };
+
           # Split keyboard also acts as a mouse
           # "type:touchpad" = { events = "disabled_on_external_mouse"; };
 
