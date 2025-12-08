@@ -39,6 +39,9 @@
     hypixel-bank-tracker.url = "github:pixilie/hypixel-bank-tracker";
     hypixel-bank-tracker.inputs.nixpkgs.follows = "nixpkgs";
 
+    nix-alien.url = "github:thiagokokada/nix-alien";
+    nix-alien.inputs.nixpkgs.follows = "nixpkgs";
+
     tangled.url = "git+https://tangled.org/tangled.org/core";
     tangled.inputs.nixpkgs.follows = "unixpkgs";
 
