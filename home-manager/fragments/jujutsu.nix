@@ -62,6 +62,7 @@ in
 
         templates = {
           log = "custom_log_compact";
+          git_push_bookmark = ''"push-" ++ change_id.short()'';
         };
 
         ui = {
