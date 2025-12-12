@@ -1,6 +1,7 @@
 { config
 , lib
 , pkgs
+, lpkgs
 , ...
 }:
 
@@ -63,7 +64,9 @@ in
       unzip
       vlock
       wormhole-rs
-    ]) ++ lib.optionals (!flags.onlyCached) [ ];
+    ]) ++ lib.optionals (!flags.onlyCached) [
+      lpkgs.nix-alien
+    ];
 
     programs.fish.shellAbbrs = {
       # Use newer tools
