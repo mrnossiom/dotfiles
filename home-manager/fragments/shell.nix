@@ -29,8 +29,8 @@ in
         git_status.disabled = true;
 
         nix_shell = {
-           # remove nix shell name
-          format = "via [$symbol]($style)";
+          # remove nix shell name
+          format = "via [$symbol]($style) ";
           symbol = " ";
         };
       };
