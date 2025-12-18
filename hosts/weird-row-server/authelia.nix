@@ -8,7 +8,7 @@ let
 
   authelia-metrics-port = 9004;
   headscale-hostname = "headscale.wiro.world";
-  grafana-hostname = "console.net.wiro.world";
+  grafana-hostname = "console.wiro.world";
   miniflux-hostname = "news.wiro.world";
 in
 {

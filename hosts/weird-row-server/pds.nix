@@ -35,7 +35,7 @@ in
         serverAliases = [ "*.${pds-hostname}" ];
         extraConfig = ''
         	tls { on_demand }
-          reverse_proxy http://localhost:${toString config.services.bluesky-pds.settings.PDS_HOSTNAME}
+          reverse_proxy http://localhost:${toString config.services.bluesky-pds.settings.PDS_PORT}
         '';
       };
     };
