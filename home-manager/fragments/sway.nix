@@ -108,7 +108,7 @@ in
       xwayland = true; # explicit, op is true by default
 
       config = {
-        modifier = "Mod4"; # Super key
+        modifier = "Super";
         terminal = config.home.sessionVariables.TERMINAL;
 
         defaultWorkspace = "workspace number 1";
@@ -187,88 +187,90 @@ in
         bindkeysToCode = true;
         keybindings =
           let
+            mod = cfg-sway.modifier;
+
             pamixer = lib.getExe pkgs.pamixer;
             playerctl = lib.getExe pkgs.playerctl;
+            loginctl = lib.getExe' pkgs.systemd "loginctl";
             brightnessctl = lib.getExe pkgs.brightnessctl;
+            nautilus = lib.getExe pkgs.nautilus;
             makoctl = lib.getExe' pkgs.mako "makoctl";
 
             grim = lib.getExe pkgs.grim;
             slurp = lib.getExe pkgs.slurp;
+            swappy = lib.getExe pkgs.swappy;
             wl-copy = lib.getExe' pkgs.wl-clipboard "wl-copy";
             wl-paste = lib.getExe' pkgs.wl-clipboard "wl-paste";
           in
-          lib.foldl (acc: val: acc // val) { }
-            (map
-              (modifier: {
-                "${modifier}+Return" = "exec ${cfg-sway.terminal}";
-                "${modifier}+Shift+Return" = "exec ${lib.getExe' pkgs.nautilus "nautilus"}";
-                "${modifier}+Shift+q" = "kill";
-                "${modifier}+d" = "exec ${cfg-sway.menu}";
-                "${modifier}+Space" = "exec ${makoctl} dismiss";
+          {
+            "${mod}+Return" = "exec ${cfg-sway.terminal}";
+            "${mod}+Shift+Return" = "exec ${nautilus}";
+            "${mod}+Shift+q" = "kill";
+            "${mod}+d" = "exec ${cfg-sway.menu}";
+            "${mod}+Space" = "exec ${makoctl} dismiss";
 
-                "${modifier}+Escape" = "exec ${lib.getExe' pkgs.systemd "loginctl"} lock-session";
-                "${modifier}+Alt+Escape" = "exec ${pkgs.writeShellScript "lock-screenshot.sh" ''
-                  tmpimg=$(${lib.getExe' pkgs.coreutils "mktemp"} /tmp/lock-bg.XXX)
+            "${mod}+Escape" = "exec ${loginctl} lock-session";
+            "${mod}+Alt+Escape" = "exec ${pkgs.writeShellScript "lock-screenshot.sh" ''
+              tmpimg=$(${lib.getExe' pkgs.coreutils "mktemp"} /tmp/lock-bg.XXX)
 
-                  # Give some time to hide the bar
-                  sleep 1
+              # Give some time to hide the bar
+              sleep 1
 
-                  ${grim} $tmpimg
-                  ${lib.getExe pkgs.swaylock} --image $tmpimg
+              ${grim} $tmpimg
+              ${lib.getExe pkgs.swaylock} --image $tmpimg
 
-                  rm $tmpimg
-                ''}";
+              rm $tmpimg
+            ''}";
 
-                "${modifier}+t" = ''input "type:touch" events toggle'';
+            "${mod}+t" = ''input "type:touch" events toggle'';
 
-                "${modifier}+${cfg-sway.left}" = "focus left";
-                "${modifier}+${cfg-sway.down}" = "focus down";
-                "${modifier}+${cfg-sway.up}" = "focus up";
-                "${modifier}+${cfg-sway.right}" = "focus right";
+            "${mod}+${cfg-sway.left}" = "focus left";
+            "${mod}+${cfg-sway.down}" = "focus down";
+            "${mod}+${cfg-sway.up}" = "focus up";
+            "${mod}+${cfg-sway.right}" = "focus right";
 
-                "${modifier}+Shift+${cfg-sway.left}" = "move left";
-                "${modifier}+Shift+${cfg-sway.down}" = "move down";
-                "${modifier}+Shift+${cfg-sway.up}" = "move up";
-                "${modifier}+Shift+${cfg-sway.right}" = "move right";
-                "${modifier}+b" = "split vertical";
-                "${modifier}+n" = "split horizontal";
+            "${mod}+Shift+${cfg-sway.left}" = "move left";
+            "${mod}+Shift+${cfg-sway.down}" = "move down";
+            "${mod}+Shift+${cfg-sway.up}" = "move up";
+            "${mod}+Shift+${cfg-sway.right}" = "move right";
+            "${mod}+b" = "split vertical";
+            "${mod}+n" = "split horizontal";
 
-                "${modifier}+Alt+${cfg-sway.left}" = "resize shrink width 60 px";
-                "${modifier}+Alt+${cfg-sway.down}" = "resize grow height 60 px";
-                "${modifier}+Alt+${cfg-sway.up}" = "resize shrink height 60 px";
-                "${modifier}+Alt+${cfg-sway.right}" = "resize grow width 60 px";
-                "${modifier}+f" = "fullscreen toggle";
-                "${modifier}+Shift+space" = "floating toggle";
-                # Change between tiling and floating focus
-                "${modifier}+Alt+space" = "focus mode_toggle";
-                "${modifier}+Alt+c" = "move position cursor";
-                "${modifier}+p" = "sticky toggle";
+            "${mod}+Alt+${cfg-sway.left}" = "resize shrink width 60 px";
+            "${mod}+Alt+${cfg-sway.down}" = "resize grow height 60 px";
+            "${mod}+Alt+${cfg-sway.up}" = "resize shrink height 60 px";
+            "${mod}+Alt+${cfg-sway.right}" = "resize grow width 60 px";
+            "${mod}+f" = "fullscreen toggle";
+            "${mod}+Shift+space" = "floating toggle";
+            # Change between tiling and floating focus
+            "${mod}+Alt+space" = "focus mode_toggle";
+            "${mod}+Alt+c" = "move position cursor";
+            "${mod}+p" = "sticky toggle";
 
-                # Screenshotting
-                "${modifier}+s" = ''exec ${grim} -g "$(${slurp})" - | ${wl-copy}'';
-                "${modifier}+Shift+s" = "exec ${wl-paste} | ${lib.getExe pkgs.swappy} --file - --output-file - | ${wl-copy}";
+            # Screenshotting
+            "${mod}+s" = ''exec ${grim} -g "$(${slurp})" - | ${wl-copy}'';
+            "${mod}+Shift+s" = "exec ${wl-paste} | ${swappy} --file - --output-file - | ${wl-copy}";
 
-                # Soundcontrol Keys
-                "--locked XF86AudioPrev" = "exec ${playerctl} previous";
-                "--locked XF86AudioNext" = "exec ${playerctl} next";
-                "--locked XF86AudioPlay" = "exec ${playerctl} play-pause";
-                "--locked XF86AudioStop" = "exec ${playerctl} stop";
-                "--locked XF86AudioRaiseVolume" = "exec ${pamixer} --unmute --increase 5";
-                "--locked XF86AudioLowerVolume" = "exec ${pamixer} --unmute --decrease 5";
-                "--locked XF86AudioMute" = "exec ${pamixer} --toggle-mute";
-                "--locked XF86AudioMicMute" = "exec ${pamixer} --default-source --toggle-mute";
-                "--locked XF86MonBrightnessUp" = "exec ${brightnessctl} --exponent set 5%+";
-                "--locked XF86MonBrightnessDown" = "exec ${brightnessctl} --exponent  set 5%- --min-value=1";
-                "--locked XF86TouchpadToggle" = ''input "type:touchpad" events toggle enabled disabled_on_external_mouse'';
-              }
-              // lib.listToAttrs (lib.flatten (map
-                ({ key-idx, workspace-idx }: [
-                  { name = "${modifier}+${toString key-idx}"; value = "workspace number ${toString workspace-idx}"; }
-                  { name = "${modifier}+Alt+${toString key-idx}"; value = "move container to workspace number ${toString workspace-idx}"; }
-                  { name = "${modifier}+Shift+${toString key-idx}"; value = "move container to workspace number ${toString workspace-idx}; workspace number ${toString workspace-idx}"; }
-                ])
-                workspacesRange))
-              ) [ cfg-sway.modifier ]);
+            # Soundcontrol Keys
+            "--locked XF86AudioPrev" = "exec ${playerctl} previous";
+            "--locked XF86AudioNext" = "exec ${playerctl} next";
+            "--locked XF86AudioPlay" = "exec ${playerctl} play-pause";
+            "--locked XF86AudioStop" = "exec ${playerctl} stop";
+            "--locked XF86AudioRaiseVolume" = "exec ${pamixer} --unmute --increase 5";
+            "--locked XF86AudioLowerVolume" = "exec ${pamixer} --unmute --decrease 5";
+            "--locked XF86AudioMute" = "exec ${pamixer} --toggle-mute";
+            "--locked XF86AudioMicMute" = "exec ${pamixer} --default-source --toggle-mute";
+            "--locked XF86MonBrightnessUp" = "exec ${brightnessctl} --exponent set 5%+";
+            "--locked XF86MonBrightnessDown" = "exec ${brightnessctl} --exponent  set 5%- --min-value=1";
+            "--locked XF86TouchpadToggle" = ''input "type:touchpad" events toggle enabled disabled_on_external_mouse'';
+          }
+          // lib.listToAttrs (lib.flatten (map
+            ({ key-idx, workspace-idx }: [
+              { name = "${mod}+${toString key-idx}"; value = "workspace number ${toString workspace-idx}"; }
+              { name = "${mod}+Alt+${toString key-idx}"; value = "move container to workspace number ${toString workspace-idx}"; }
+              { name = "${mod}+Shift+${toString key-idx}"; value = "move container to workspace number ${toString workspace-idx}; workspace number ${toString workspace-idx}"; }
+            ])
+            workspacesRange));
       };
     };
 
@@ -276,28 +278,33 @@ in
 
     services.poweralertd.enable = true;
 
-    services.darkman = {
-      enable = true;
-      settings.usegeoclue = true;
+    services.darkman =
+      let
+        dconf = lib.getExe pkgs.dconf;
+        brightnessctl = lib.getExe pkgs.brightnessctl;
+      in
+      {
+        enable = true;
+        settings.usegeoclue = true;
 
-      darkModeScripts.gtk-theme = ''
-        # Change system theme scheme to dark
-        ${lib.getExe pkgs.dconf} write /org/gnome/desktop/interface/color-scheme "'prefer-dark'"
+        darkModeScripts.gtk-theme = ''
+          # Change system theme scheme to dark
+          ${dconf} write /org/gnome/desktop/interface/color-scheme "'prefer-dark'"
 
-        # Do not change brightness as I'm usually on my computer as this time
-      '';
+          # Do not change brightness as I'm usually on my computer as this time
+        '';
 
-      lightModeScripts.gtk-theme = ''
-        # Change system theme scheme to light
-        ${lib.getExe pkgs.dconf} write /org/gnome/desktop/interface/color-scheme "'prefer-light'"
+        lightModeScripts.gtk-theme = ''
+          # Change system theme scheme to light
+          ${dconf} write /org/gnome/desktop/interface/color-scheme "'prefer-light'"
 
-        # TODO: change config specialization
+          # TODO: change config specialization
 
-        # Prepare laptop for wake: set full brightness and disable kbd backlight
-        ${lib.getExe pkgs.brightnessctl} --class backlight set 100%
-        ${lib.getExe pkgs.brightnessctl} --class leds --device "*::kbd_backlight" set 0%
-      '';
-    };
+          # Prepare laptop for wake: set full brightness and disable kbd backlight
+          ${brightnessctl} --class backlight set 100%
+          ${brightnessctl} --class leds --device "*::kbd_backlight" set 0%
+        '';
+      };
 
     services.gammastep = {
       enable = true;
