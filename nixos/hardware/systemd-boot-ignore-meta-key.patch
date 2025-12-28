@@ -1,0 +1,27 @@
+From 666eb563eabc461b55b348e997670cfde5e2a0d9 Mon Sep 17 00:00:00 2001
+From: Milo Moisson <milo@wiro.world>
+Date: Mon, 29 Dec 2025 12:06:29 +0100
+Subject: [PATCH] disable key
+
+---
+ src/boot/console.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/src/boot/console.c b/src/boot/console.c
+index 21b36e5a6e..7ca6664123 100644
+--- a/src/boot/console.c
++++ b/src/boot/console.c
+@@ -134,8 +134,8 @@ EFI_STATUS console_key_read(uint64_t *ret_key, uint64_t timeout_usec) {
+                                 shift |= EFI_CONTROL_PRESSED;
+                         if (keydata.KeyState.KeyShiftState & EFI_ALT_PRESSED)
+                                 shift |= EFI_ALT_PRESSED;
+-                        if (keydata.KeyState.KeyShiftState & EFI_LOGO_PRESSED)
+-                                shift |= EFI_LOGO_PRESSED;
++                        // if (keydata.KeyState.KeyShiftState & EFI_LOGO_PRESSED)
++                        //         shift |= EFI_LOGO_PRESSED;
+ 
+                         /* Shift is not supposed to be reported for keys that can be represented as uppercase
+                          * unicode chars (Shift+f is reported as F instead). Some firmware does it anyway, so
+-- 
+2.51.2
+
