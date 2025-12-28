@@ -17,7 +17,7 @@ in
       settings = { };
     };
     systemd.services.paisa.path = [ pkgs.hledger ];
-    
+
     services.caddy = {
       virtualHosts."http://paisa.net.wiro.world".extraConfig = ''
         bind tailscale/paisa

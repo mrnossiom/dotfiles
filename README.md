@@ -83,9 +83,9 @@ nix run nixpkgs#home-manager -- switch --flake .#lightweight
 
 ## Make a backup
 
-Pull up your favorite ArchaicBakup disc
+Pull up your favorite ArchaicBackup disc
 
-- Set environnement variables
+- Set environment variables
 
 	`RESTIC_REPOSITORY`: `/run/media/user/discname/`
 	`RESTIC_PASSWORD_FILE`: ?

@@ -15,7 +15,7 @@ in
     Depends on:
     - (Darwin) `fish` program: launches fish on startup
 
-      Has weird behavior if set as login shell
+      fish has weird behavior if set as login shell
   '';
 
   config = lib.mkIf cfg.enable {
@@ -38,5 +38,3 @@ in
     };
   };
 }
-
-
