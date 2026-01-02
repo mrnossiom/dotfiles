@@ -1,5 +1,4 @@
-{ config
-, ...
+{ ...
 }:
 
 let
@@ -12,6 +11,12 @@ in
       image = "atdr.meo.ws/archiveteam/warrior-dockerfile";
       ports = [ "127.0.0.1:${toString warrior-port}:8001" ];
       pull = "newer";
+
+      environment = {
+        DOWNLOADER = "wiro";
+        SELECTED_PROJECT = "urls";
+        CONCURRENT_ITEMS = "6";
+      };
     };
 
     services.caddy = {
