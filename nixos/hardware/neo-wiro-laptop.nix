@@ -19,6 +19,9 @@ in
   config = {
     system.stateVersion = "23.05";
 
+    # time.timeZone = "Europe/Paris";
+    time.timeZone = "Europe/London";
+
     systemd.package = patched-systemd;
 
     # Disable the meta key at the kernel level, rebind unused right alt to meta

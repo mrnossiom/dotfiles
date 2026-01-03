@@ -51,8 +51,6 @@
 
     programs.dconf.enable = true;
 
-    time.timeZone = "Europe/Paris";
-
     services.ntpd-rs.enable = true;
 
     i18n =
