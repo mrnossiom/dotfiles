@@ -23,10 +23,12 @@ in
     # Systemd Login
     services.logind.settings.Login = {
       HandleLidSwitch = "suspend";
-      IdleAction = "lock";
+      IdleAction = "ignore";
+      # IdleAction = "lock";
       # Don’t shutdown when power button is short-pressed
-      HandlePowerKey = "lock";
-      HandlePowerKeyLongPress = "suspend";
+      HandlePowerKey = "suspend";
+      # i have no long press on neo-wiro-laptop
+      HandlePowerKeyLongPress = "ignore";
     };
 
     # `swaylock` pam service must be at least declared to work properly

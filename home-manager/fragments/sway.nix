@@ -25,7 +25,6 @@ in
     programs.swaylock = {
       enable = true;
       settings = {
-        daemonize = true;
         ignore-empty-password = true;
         show-failed-attempts = true;
 
@@ -71,34 +70,41 @@ in
 
     services.swayidle =
       let
-        swaymsg = lib.getExe' config.wayland.windowManager.sway.package "swaymsg";
         loginctl = lib.getExe' pkgs.systemd "loginctl";
-        systemctl = lib.getExe' pkgs.systemd "systemctl";
+        playerctl = lib.getExe pkgs.playerctl;
+        swaymsg = lib.getExe' config.wayland.windowManager.sway.package "swaymsg";
+
+        display = status: ''${swaymsg} "output * power ${status}"'';
+        lock = "${lib.getExe config.programs.swaylock.package} --daemonize";
       in
       {
         enable = true;
-        timeouts = [
-          # TODO: this doesn't work find a way to quickly cut output when locked and idle
-          # {
-          #   timeout = 10;
-          #   command = "if ${pgrep} -x swaylock; then ${swaymsg} \"output * power off\"; fi";
-          #   resumeCommand = "${swaymsg} \"output * power on\"";
-          # }
 
+        timeouts = [
           {
-            timeout = 60 * 5;
-            # ——————————————— Dims the screen for n seconds ↓↓ and then switch it off
-            command = ''${lib.getExe pkgs.chayang} -d${toString 10} && ${swaymsg} "output * power off"'';
-            resumeCommand = ''${swaymsg} "output * power on"'';
+            # Dims the screen for X seconds and then switch it off
+            timeout = 5 * 60 - 10;
+            command = ''${lib.getExe pkgs.chayang} -d${toString 10}'';
           }
-          { timeout = 60 * 10; command = "${loginctl} lock-session"; }
-          { timeout = 60 * 15; command = "${systemctl} suspend"; }
+          {
+            timeout = 5 * 60;
+            command = display "off";
+            resumeCommand = display "on";
+          }
+          {
+            timeout = 10 * 60;
+            command = "${loginctl} lock-session";
+          }
+          {
+            timeout = 15 * 60;
+            command = "${lib.getExe' pkgs.systemd "systemctl"} suspend";
+          }
         ];
         events = [
-          { event = "before-sleep"; command = "${lib.getExe pkgs.playerctl} pause"; }
-          { event = "before-sleep"; command = "${loginctl} lock-session"; }
-          # Can be triggered with `loginctl lock-session`
-          { event = "lock"; command = lib.getExe pkgs.swaylock; }
+          { event = "before-sleep"; command = "${playerctl} pause; ${display "off"}; ${loginctl} lock-session"; }
+          { event = "after-resume"; command = display "on"; }
+          { event = "lock"; command = lock; }
+          { event = "unlock"; command = display "on"; }
         ];
       };
 
