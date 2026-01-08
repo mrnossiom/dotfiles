@@ -1,12 +1,29 @@
-From 666eb563eabc461b55b348e997670cfde5e2a0d9 Mon Sep 17 00:00:00 2001
+From e5b9954ae07dc66f91a7eb87f51d601a85131673 Mon Sep 17 00:00:00 2001
 From: Milo Moisson <milo@wiro.world>
 Date: Mon, 29 Dec 2025 12:06:29 +0100
-Subject: [PATCH] disable key
+Subject: [PATCH] boot: ignore meta key in menu
 
 ---
+ src/boot/boot.c    | 5 +++++
  src/boot/console.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ 2 files changed, 7 insertions(+), 2 deletions(-)
 
+diff --git a/src/boot/boot.c b/src/boot/boot.c
+index 3ff757c53d..254647b202 100644
+--- a/src/boot/boot.c
++++ b/src/boot/boot.c
+@@ -671,6 +671,11 @@ static bool menu_run(
+                         break;
+                 }
+ 
++                /* Ignore shadow keypresses */
++                if (key == KEYPRESS(0, 0, 0)) {
++                        continue;
++                }
++
+                 timeout_remain = 0;
+ 
+                 /* clear status after keystroke */
 diff --git a/src/boot/console.c b/src/boot/console.c
 index 21b36e5a6e..7ca6664123 100644
 --- a/src/boot/console.c
