@@ -32,7 +32,7 @@ in
               disable-scroll = true;
               format = "{name} {icon}";
               format-icons = {
-                default = " ";
+                default = "●";
 
                 "1" = " ";
                 "2" = " ";
@@ -230,7 +230,7 @@ in
 
         /* Apply padding to all modules */
         .modules-right widget .module {
-          padding: 0 1rem;
+          padding: 0 .7rem;
 
           color: @base07;
         }
