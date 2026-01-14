@@ -36,6 +36,10 @@ in
       toml-format.generate "cargo-config" {
         registry.global-credential-providers = [ "cargo:token-from-stdout ${get-crates-io-token}" ];
 
+        build = {
+          target = "host-tuple";
+        };
+
         source = {
           local-mirror.registry = "sparse+http://local.crates.io:8080/index/";
           # crates-io.replace-with = "local-mirror";
