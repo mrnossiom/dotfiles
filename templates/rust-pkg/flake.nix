@@ -36,8 +36,8 @@
       });
 
       devShells = forAllPkgs (pkgs:
-        with pkgs.lib;
         let
+          inherit (pkgs) lib;
           file-rust-toolchain = pkgs.rust-bin.fromRustupToolchainFile ./rust-toolchain.toml;
           rust-toolchain = file-rust-toolchain.override { extensions = [ "rust-analyzer" ]; };
         in
@@ -49,12 +49,10 @@
               act
             ];
 
-            buildInputs = with pkgs; [ ];
+            buildInputs = [ ];
 
             RUST_SRC_PATH = pkgs.rustPlatform.rustLibSrc;
-            LD_LIBRARY_PATH = makeLibraryPath buildInputs;
-
-            # RUST_LOG = "";
+            LD_LIBRARY_PATH = lib.makeLibraryPath buildInputs;
           };
         });
     };

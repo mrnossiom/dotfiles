@@ -19,17 +19,18 @@
       formatter = forAllPkgs (pkgs: pkgs.nixpkgs-fmt);
 
       devShells = forAllPkgs (pkgs:
-        with pkgs.lib;
+        let
+          inherit (pkgs) lib;
+        in
         {
           default = pkgs.mkShell rec {
             nativeBuildInputs = with pkgs; [
               # hello
             ];
-            buildInputs = with pkgs; [
-              # openssl
-            ];
 
-            LD_LIBRARY_PATH = makeLibraryPath buildInputs;
+            buildInputs = [ ];
+
+            LD_LIBRARY_PATH = lib.makeLibraryPath buildInputs;
           };
         });
     };

@@ -19,8 +19,8 @@
       formatter = forAllPkgs (pkgs: pkgs.nixpkgs-fmt);
 
       devShells = forAllPkgs (pkgs:
-        with pkgs.lib;
         let
+          inherit (pkgs) lib;
           mkClangShell = pkgs.mkShell.override { stdenv = pkgs.clangStdenv; };
         in
         {
@@ -29,9 +29,9 @@
               clang-tools
             ] ++ (with llvmPackages; [ clang lldb ]);
 
-            buildInputs = with pkgs; [ ];
+            buildInputs = [ ];
 
-            LD_LIBRARY_PATH = makeLibraryPath buildInputs;
+            LD_LIBRARY_PATH = lib.makeLibraryPath buildInputs;
           };
         });
     };
