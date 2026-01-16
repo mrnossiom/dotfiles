@@ -119,6 +119,9 @@ in
           "zen.workspaces.continue-where-left-off" = true;
           "zen.view.compact.enable-at-startup" = true;
           "zen.view.window.scheme" = 2; # 0 dark theme, 1 light theme, 2 auto
+
+          # Remove borders around windows
+          "zen.theme.content-element-separation" = 0;
         };
 
         inherit userContent;
