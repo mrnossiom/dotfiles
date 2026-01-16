@@ -170,5 +170,9 @@
     services.earlyoom.enable = true;
 
     programs.command-not-found.enable = false;
+
+    environment.systemPackages = [
+      pkgs.keyutils
+    ];
   };
 }
