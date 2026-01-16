@@ -16,9 +16,12 @@ rec {
 
   # User keys (~/.ssh/id_{ed25519,ecdsa}.pub)
   milo-ed25519 = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJdt7atyPTOfaBIsgDYYb0DG1yid2u78abaCDji6Uxgi";
+  milo-ecdsa = "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBPtqdjt54Wys20nb8pF74rKtZCWHs/v99BJkL4kyYyz9QyJ3H+YilojTbxj25BjPktqi2GqLHjsdC8L87cTXlhA=";
   wirody = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMdW6ijH9oTsrswUJmQBF2LQkhjrMFkJ1LktnirPuL2S";
   users = [
     milo-ed25519
+    # not supported by age
+    # milo-ecdsa
     wirody
   ];
 }

@@ -30,7 +30,7 @@ in
         signing = {
           behavior = "own";
           backend = "ssh";
-          key = keys.milo-ed25519;
+          key = keys.milo-ecdsa;
           git.sign-on-push = true;
         };
 

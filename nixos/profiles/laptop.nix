@@ -162,5 +162,9 @@
     };
 
     services.earlyoom.enable = true;
+
+    environment.systemPackages = [
+      pkgs.keyutils
+    ];
   };
 }
