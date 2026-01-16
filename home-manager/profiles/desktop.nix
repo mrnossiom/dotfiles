@@ -1,5 +1,6 @@
 {
   config,
+  lib,
   pkgs,
 
   isDarwin,
@@ -57,6 +58,7 @@
         # Makes electron apps use ozone and not crash because xwayland is not there
         NIXOS_OZONE_WL = "1";
 
+        SSH_ASKPASS = lib.getExe pkgs.lxqt.lxqt-openssh-askpass;
         # Respect XDG spec
         BUN_INSTALL = "${config.xdg.dataHome}/bun";
         CALCHISTFILE = "${config.xdg.cacheHome}/calc_history";
@@ -164,5 +166,8 @@
     };
 
     services.tailscale-systray.enable = true;
+
+    services.ssh-tpm-agent.enable = true;
+    # maybe? needed for ssh-tpm-agent to enroll the key the first time, find another way
   };
 }

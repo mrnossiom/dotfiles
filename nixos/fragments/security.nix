@@ -50,6 +50,8 @@ in
       };
     };
 
+    security.tpm2.enable = true;
+
     # Signing
     programs.gnupg.agent.enable = true;
     services.gnome.gnome-keyring.enable = true;
@@ -64,7 +66,7 @@ in
       };
     };
 
-    programs.ssh.startAgent = true;
+    programs.ssh.startAgent = false;
 
     services.fwupd.enable = true;
   };
