@@ -1,4 +1,4 @@
-name: { description, profile, keys ? [ ], user ? { } }:
+name: { description, profile, keys ? [ ], user ? { }, elevated }:
 
 { self
 , pkgs
@@ -35,12 +35,13 @@ in
       home = "/Users/${name}";
     } else {
       home = "/home/${name}";
-      extraGroups = [
-        # TODO: remove or put under an condition
-        "wheel" # sudo access
-        "networkmanager" # needed for nm
-      ];
       isNormalUser = true;
+      extraGroups = [
+        "networkmanager"
+      ] ++ lib.optionals elevated [
+        "wheel" # root access    
+        "tss" # tpm access
+      ];
     }) // user;
 
     home-manager = {
