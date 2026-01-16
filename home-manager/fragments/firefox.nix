@@ -1,7 +1,6 @@
 { self
 , config
 , lib
-, pkgs
 , ...
 }:
 
@@ -97,20 +96,6 @@ in
       profiles.default = {
         isDefault = true;
 
-        inherit
-          settings
-          userContent;
-      };
-    };
-
-    programs.firefox = {
-      enable = true;
-
-      inherit policies;
-
-      profiles.default = {
-        isDefault = true;
-
         settings = settings // {
           "zen.view.experimental-no-window-controls" = true;
           "zen.view.show-newtab-button-top" = false;
@@ -125,6 +110,21 @@ in
         };
 
         inherit userContent;
+      };
+    };
+
+    programs.firefox = {
+      enable = true;
+
+      inherit policies;
+
+      profiles.default = {
+        isDefault = true;
+
+        inherit
+          settings
+          userContent
+          ;
 
         # <https://www.userchrome.org/how-create-userchrome-css.html>
         userChrome = ''
