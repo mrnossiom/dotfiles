@@ -68,13 +68,13 @@ let
   cfg = config.local.fragment.firefox;
 in
 {
-  options.local.fragment.firefox.enable = lib.mkEnableOption ''
-    Firefox related
-  '';
-
   imports = [
     zen-browser.homeModules.beta
   ];
+
+  options.local.fragment.firefox.enable = lib.mkEnableOption ''
+    Firefox related
+  '';
 
   config = lib.mkIf cfg.enable {
     home.sessionVariables.BROWSER = lib.getExe config.programs.zen-browser.package;

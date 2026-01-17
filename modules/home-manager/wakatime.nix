@@ -63,9 +63,7 @@ in
     lib.mkIf cfg.enable {
       home.sessionVariables.WAKATIME_HOME = "${config.xdg.configHome}/wakatime";
 
-      xdg.configFile = {
-        "wakatime/.wakatime.cfg".source = ini-format.generate "wakatime-config" final-config;
-      };
+      xdg.configFile."wakatime/.wakatime.cfg".source = ini-format.generate "wakatime-config" final-config;
     };
 }
 

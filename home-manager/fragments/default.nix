@@ -21,6 +21,7 @@
     ./kitty.nix
     ./launcher.nix
     ./rust.nix
+    ./screen.nix
     ./shell.nix
     ./stylix.nix
     ./swaybar.nix
