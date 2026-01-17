@@ -65,6 +65,7 @@
       packages = with pkgs; [
         # Unfree
         aseprite
+        gurobi
         ida-free
         jetbrains-toolbox
         spotify

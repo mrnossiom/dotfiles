@@ -11,6 +11,8 @@ package: builtins.elem (lib.getName package) [
 
   # Home Manager
   "aseprite"
+  "gurobi"
+  "gurobipy"
   "ida-free"
   "jetbrains-toolbox"
   "spotify"
