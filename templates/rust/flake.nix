@@ -31,7 +31,6 @@
             packages = with pkgs; [
               pkg-config
               rust-toolchain
-              act
             ];
 
             RUST_SRC_PATH = pkgs.rustPlatform.rustLibSrc;
