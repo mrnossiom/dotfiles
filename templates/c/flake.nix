@@ -20,18 +20,13 @@
 
       devShells = forAllPkgs (pkgs:
         let
-          inherit (pkgs) lib;
           mkClangShell = pkgs.mkShell.override { stdenv = pkgs.clangStdenv; };
         in
         {
-          default = mkClangShell rec {
-            nativeBuildInputs = with pkgs; [
+          default = mkClangShell {
+            packages = with pkgs; [
               clang-tools
             ] ++ (with llvmPackages; [ clang lldb ]);
-
-            buildInputs = [ ];
-
-            LD_LIBRARY_PATH = lib.makeLibraryPath buildInputs;
           };
         });
     };

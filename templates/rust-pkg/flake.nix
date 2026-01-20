@@ -37,22 +37,18 @@
 
       devShells = forAllPkgs (pkgs:
         let
-          inherit (pkgs) lib;
           file-rust-toolchain = pkgs.rust-bin.fromRustupToolchainFile ./rust-toolchain.toml;
           rust-toolchain = file-rust-toolchain.override { extensions = [ "rust-analyzer" ]; };
         in
         {
-          default = pkgs.mkShell rec {
-            nativeBuildInputs = with pkgs; [
+          default = pkgs.mkShell {
+            packages = with pkgs; [
               pkg-config
               rust-toolchain
               act
             ];
 
-            buildInputs = [ ];
-
             RUST_SRC_PATH = pkgs.rustPlatform.rustLibSrc;
-            LD_LIBRARY_PATH = lib.makeLibraryPath buildInputs;
           };
         });
     };
