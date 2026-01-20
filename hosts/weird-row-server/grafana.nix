@@ -35,6 +35,9 @@ in
           client_secret_path = config.age.secrets.grafana-oidc-secret.path;
           auto_login = true;
 
+          role_attribute_path = "contains(roles[*], 'admin') && 'GrafanaAdmin' || contains(roles[*], 'editor') && 'Editor' || 'Viewer'";
+          allow_assign_grafana_admin = true;
+
           scopes = [ "openid" "profile" "email" "groups" ];
           auth_url = "https://auth.wiro.world/api/oidc/authorization";
           token_url = "https://auth.wiro.world/api/oidc/token";
