@@ -29,7 +29,8 @@ in
     home.file."${config.home.sessionVariables.CARGO_HOME}/config.toml".source =
       let
         clang = lib.getExe pkgs.llvmPackages.clang;
-        mold = lib.getExe pkgs.mold;
+        mold = lib.getExe pkgs.mold-wrapped;
+        wild = lib.getExe pkgs.wild;
 
         get-crates-io-token = pkgs.writeShellScript "get-crates-io-token" "cat ${config.age.secrets.api-crates-io.path}";
       in
@@ -48,7 +49,7 @@ in
         target = {
           x86_64-unknown-linux-gnu = {
             linker = clang;
-            rustflags = [ "-Clink-arg=--ld-path=${mold}" "-Ctarget-cpu=native" ];
+            rustflags = [ "-Clink-arg=--ld-path=${wild}" "-Ctarget-cpu=native" ];
           };
           x86_64-apple-darwin.rustflags = [ "-Ctarget-cpu=native" ];
           aarch64-apple-darwin.rustflags = [ "-Ctarget-cpu=native" ];
