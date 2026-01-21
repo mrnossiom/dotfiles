@@ -1,6 +1,6 @@
 {
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:NixOS/nixpkgs?ref=nixos-unstable";
 
     rust-overlay.url = "github:oxalica/rust-overlay";
     rust-overlay.inputs.nixpkgs.follows = "nixpkgs";
@@ -18,10 +18,10 @@
 
       mkApp = (program: { type = "app"; inherit program; });
 
-      pkgs = forAllSystems (system: (import nixpkgs {
+      pkgs = forAllSystems (system: import nixpkgs {
         inherit system;
         overlays = [ (import rust-overlay) ];
-      }));
+      });
     in
     {
       formatter = forAllPkgs (pkgs: pkgs.nixpkgs-fmt);
