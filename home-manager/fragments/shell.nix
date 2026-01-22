@@ -75,7 +75,7 @@ in
         # This is also a more pure version than using `__fish_ls_*` variables
         # that depends on fish internal ls wrappers and can be overridden by
         # bad configuration. (e.g. NixOS `environment.shellAliases` default)
-        ls = "${lib.getExe upkgs.lsr}";
+        ls = "${lib.getExe lpkgs.lsr}";
 
         pasters = "${lib.getExe pkgs.curl} --data-binary @- https://paste.rs/";
 
