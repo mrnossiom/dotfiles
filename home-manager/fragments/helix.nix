@@ -37,7 +37,7 @@ in
       defaultEditor = true;
 
       settings = {
-        theme = lib.mkDefault "monokai_pro_octagon";
+        theme = lib.mkDefault "wolf-alabaster-dark";
 
         editor = {
           auto-format = true;
