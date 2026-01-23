@@ -1,8 +1,9 @@
-{ lib
-, pkgs
+{
+  lib,
+  pkgs,
 
-, modulesPath
-, ...
+  modulesPath,
+  ...
 }:
 
 let
@@ -20,7 +21,7 @@ let
   connect-wifi = writeShellScriptBin "connect-wifi" ''
     if [ -z "$1" ]; then echo "Interface unset"; exit; fi
     if [ -z "$2" ]; then echo "SSID unset"; exit; fi
-    
+
     CONFIG=$(mktemp)
     wpa_passphrase $2 > $CONFIG 
     sudo wpa_supplicant -B -i$1 -c$CONFIG
@@ -69,9 +70,14 @@ in
     boot.kernelPackages = lib.mkForce pkgs.linuxKernel.packages.linux_6_6;
 
     nix.settings = {
-      experimental-features = [ "nix-command" "flakes" ];
+      experimental-features = [
+        "nix-command"
+        "flakes"
+      ];
       extra-substituters = [ "https://nix-community.cachix.org" ];
-      extra-trusted-public-keys = [ "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs=" ];
+      extra-trusted-public-keys = [
+        "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+      ];
     };
 
     # Add our keys to default users for better remote experience

@@ -1,7 +1,8 @@
-{ pkgs
-, config
-, lib
-, ...
+{
+  pkgs,
+  config,
+  lib,
+  ...
 }:
 
 let
@@ -15,7 +16,11 @@ in
 
   config = lib.mkIf cfg.enable {
     # Wifi
-    networking.nameservers = [ "1.1.1.1" "8.8.8.8" "9.9.9.9" ];
+    networking.nameservers = [
+      "1.1.1.1"
+      "8.8.8.8"
+      "9.9.9.9"
+    ];
     networking.networkmanager.enable = true;
 
     # Firewall
@@ -28,11 +33,17 @@ in
       # Open arbitrary ports to share things on local networks
       allowedTCPPorts = [ 4242 ];
       allowedTCPPortRanges = [
-        { from = 42420; to = 42429; }
+        {
+          from = 42420;
+          to = 42429;
+        }
       ];
       allowedUDPPorts = [ 4242 ];
       allowedUDPPortRanges = [
-        { from = 42420; to = 42429; }
+        {
+          from = 42420;
+          to = 42429;
+        }
       ];
 
       # Allow packets from Docker containers

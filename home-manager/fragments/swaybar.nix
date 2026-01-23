@@ -1,7 +1,8 @@
-{ config
-, lib
-, pkgs
-, ...
+{
+  config,
+  lib,
+  pkgs,
+  ...
 }:
 
 let
@@ -37,26 +38,30 @@ in
                   | select(.identifier=="${integrated-keyboard-id}")
                   | .libinput.send_events')
             '';
-            click = [{
-              button = "left";
-              cmd = ''
-                ${swaymsg} input ${integrated-keyboard-id} events toggle;
-                ${swaymsg} input ${integrated-keyboard-id-bis} events toggle
-              '';
-              update = true;
-            }];
+            click = [
+              {
+                button = "left";
+                cmd = ''
+                  ${swaymsg} input ${integrated-keyboard-id} events toggle;
+                  ${swaymsg} input ${integrated-keyboard-id-bis} events toggle
+                '';
+                update = true;
+              }
+            ];
             interval = "once";
           }
 
           {
             block = "custom";
             command = "echo  $(${lib.getExe' pkgs.mako "makoctl"} mode)";
-            click = [{
-              button = "left";
-              # Toggle DND mode
-              cmd = "${lib.getExe' pkgs.mako "makoctl"} mode -t dnd";
-              update = true;
-            }];
+            click = [
+              {
+                button = "left";
+                # Toggle DND mode
+                cmd = "${lib.getExe' pkgs.mako "makoctl"} mode -t dnd";
+                update = true;
+              }
+            ];
             interval = "once";
           }
 
@@ -66,7 +71,10 @@ in
             block = "keyboard_layout";
             driver = "sway";
           }
-          { block = "backlight"; device = "intel_backlight"; }
+          {
+            block = "backlight";
+            device = "intel_backlight";
+          }
           { block = "sound"; }
           { block = "battery"; }
           {
@@ -79,17 +87,22 @@ in
     };
 
     wayland.windowManager.sway.config.bars = [
-      ({
-        statusCommand = "${lib.getExe pkgs.i3status-rust} ${config.home.homeDirectory}/${config.xdg.configFile."i3status-rust/config-default.toml".target}";
+      (
+        {
+          statusCommand = "${lib.getExe pkgs.i3status-rust} ${config.home.homeDirectory}/${
+            config.xdg.configFile."i3status-rust/config-default.toml".target
+          }";
 
-        hiddenState = "hide";
-        mode = "hide";
+          hiddenState = "hide";
+          mode = "hide";
 
-        # TODO: fix color theme on the bar
-        # TODO: would be nice to have rounded corners and padding when appearing
+          # TODO: fix color theme on the bar
+          # TODO: would be nice to have rounded corners and padding when appearing
 
-        extraConfig = "icon_theme Papirus";
-      } // config.stylix.targets.sway.exportedBarConfig)
+          extraConfig = "icon_theme Papirus";
+        }
+        // config.stylix.targets.sway.exportedBarConfig
+      )
     ];
   };
 }

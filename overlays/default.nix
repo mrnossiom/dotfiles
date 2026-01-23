@@ -1,6 +1,7 @@
-{ self
-, lib
-, ...
+{
+  self,
+  lib,
+  ...
 }:
 
 let
@@ -8,7 +9,10 @@ let
 in
 rec {
   # Bundles all overlays, order matters here
-  all = composeManyExtensions [ bringSpecialArgs patches ];
+  all = composeManyExtensions [
+    bringSpecialArgs
+    patches
+  ];
 
   # Bring `self`, `llib` and `upkgs`
   bringSpecialArgs = final: prev: self.flake-lib.specialModuleArgs final;

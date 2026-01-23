@@ -1,6 +1,7 @@
-{ pkgs
-, config
-, ...
+{
+  pkgs,
+  config,
+  ...
 }:
 
 let
@@ -57,8 +58,8 @@ in
           root ${webfinger-dir}
           file_server
         }
-      '' +
       ''
+      + ''
         @discord {
           path /.well-known/discord
           method GET HEAD

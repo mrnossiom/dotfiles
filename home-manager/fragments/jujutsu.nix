@@ -1,8 +1,9 @@
-{ config
-, lib
-, pkgs
-, upkgs
-, ...
+{
+  config,
+  lib,
+  pkgs,
+  upkgs,
+  ...
 }:
 
 let
@@ -72,11 +73,22 @@ in
           merge-editor = ":builtin";
           pager = ":builtin";
 
-          diff-formatter = [ "difft" "--color=always" "--display=inline" "$left" "$right" ];
+          diff-formatter = [
+            "difft"
+            "--color=always"
+            "--display=inline"
+            "$left"
+            "$right"
+          ];
         };
 
         aliases = {
-          ui = [ "util" "exec" "--" "lazyjj" ];
+          ui = [
+            "util"
+            "exec"
+            "--"
+            "lazyjj"
+          ];
         };
 
         git = {

@@ -1,7 +1,8 @@
-{ config
-, lib
-, pkgs
-, ...
+{
+  config,
+  lib,
+  pkgs,
+  ...
 }:
 
 let
@@ -101,7 +102,13 @@ in
               format-full = "{capacity}% {icon}";
               format-charging = "{capacity}% ";
               format-plugged = "{capacity}% ";
-              format-icons = [ " " " " " " " " " " ];
+              format-icons = [
+                " "
+                " "
+                " "
+                " "
+                " "
+              ];
             };
 
             pulseaudio = {
@@ -122,7 +129,11 @@ in
                 phone = " ";
                 portable = " ";
                 car = " ";
-                default = [ "" " " "  " ];
+                default = [
+                  ""
+                  " "
+                  "  "
+                ];
               };
 
               on-click = "pavucontrol";
@@ -135,7 +146,16 @@ in
 
             cava = {
               bars = 6;
-              format-icons = [ "▁" "▂" "▃" "▄" "▅" "▆" "▇" "█" ];
+              format-icons = [
+                "▁"
+                "▂"
+                "▃"
+                "▄"
+                "▅"
+                "▆"
+                "▇"
+                "█"
+              ];
               bar_delimiter = 0;
               hide_on_silence = true;
             };
@@ -163,7 +183,8 @@ in
               "clock"
               "group/misc"
             ];
-          } // modules-settings;
+          }
+          // modules-settings;
 
           additional = {
             mode = "hide";
@@ -188,7 +209,8 @@ in
               "clock"
               "group/misc"
             ];
-          } // modules-settings;
+          }
+          // modules-settings;
         };
 
       style = ''
@@ -267,11 +289,13 @@ in
       '';
     };
 
-    wayland.windowManager.sway.config.bars = [{
-      command = lib.getExe pkgs.waybar;
+    wayland.windowManager.sway.config.bars = [
+      {
+        command = lib.getExe pkgs.waybar;
 
-      mode = "hide";
-      hiddenState = "hide";
-    }];
+        mode = "hide";
+        hiddenState = "hide";
+      }
+    ];
   };
 }

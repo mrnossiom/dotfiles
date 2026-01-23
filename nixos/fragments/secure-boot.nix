@@ -1,8 +1,9 @@
-{ self
-, config
-, lib
-, upkgs
-, ...
+{
+  self,
+  config,
+  lib,
+  upkgs,
+  ...
 }:
 
 # https://github.com/nix-community/lanzaboote/blob/master/docs/QUICK_START.md
@@ -37,5 +38,3 @@ in
     ];
   };
 }
-
-

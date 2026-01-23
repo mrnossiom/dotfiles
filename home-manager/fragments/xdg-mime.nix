@@ -1,7 +1,8 @@
-{ config
-, lib
-, pkgs
-, ...
+{
+  config,
+  lib,
+  pkgs,
+  ...
 }:
 
 let
@@ -19,9 +20,19 @@ in
 
   config = lib.mkIf cfg.enable {
     assertions = [
-      { assertion = config.programs.firefox.enable; message = "`xdg-mime` fragment depends on `firefox` program"; }
-      { assertion = config.programs.imv.enable; message = "`xdg-mime` fragment depends on `imv` program"; }
-      { assertion = lib.lists.count (drv: (drv.pname or "") == pkgs.nautilus.pname) config.home.packages > 0; message = "`xdg-mime` fragment depends on `nautilus` program"; }
+      {
+        assertion = config.programs.firefox.enable;
+        message = "`xdg-mime` fragment depends on `firefox` program";
+      }
+      {
+        assertion = config.programs.imv.enable;
+        message = "`xdg-mime` fragment depends on `imv` program";
+      }
+      {
+        assertion =
+          lib.lists.count (drv: (drv.pname or "") == pkgs.nautilus.pname) config.home.packages > 0;
+        message = "`xdg-mime` fragment depends on `nautilus` program";
+      }
     ];
 
     xdg.enable = true;

@@ -1,8 +1,9 @@
-{ self
-, config
-, lib
-, pkgs
-, ...
+{
+  self,
+  config,
+  lib,
+  pkgs,
+  ...
 }:
 
 let
@@ -34,9 +35,18 @@ in
       image = ../../assets/wallpaper-binary-cloud.png;
 
       fonts = {
-        sansSerif = { package = pkgs.inter; name = "Inter"; };
-        serif = { package = pkgs.merriweather; name = "Merriweather"; };
-        monospace = { package = pkgs.nerd-fonts.jetbrains-mono; name = "JetBrainsMono Nerd Font"; };
+        sansSerif = {
+          package = pkgs.inter;
+          name = "Inter";
+        };
+        serif = {
+          package = pkgs.merriweather;
+          name = "Merriweather";
+        };
+        monospace = {
+          package = pkgs.nerd-fonts.jetbrains-mono;
+          name = "JetBrainsMono Nerd Font";
+        };
 
         sizes = {
           applications = 12;

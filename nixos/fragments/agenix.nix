@@ -1,9 +1,10 @@
-{ self
-, config
-, lib
+{
+  self,
+  config,
+  lib,
 
-, isDarwin
-, ...
+  isDarwin,
+  ...
 }:
 
 let
@@ -25,7 +26,10 @@ in
 
   config = lib.mkIf cfg.enable {
     assertions = [
-      { assertion = config.services.openssh.enable; message = "`agenix` fragment depends on `openssh` program"; }
+      {
+        assertion = config.services.openssh.enable;
+        message = "`agenix` fragment depends on `openssh` program";
+      }
     ];
 
     age = {
@@ -39,4 +43,3 @@ in
     };
   };
 }
-

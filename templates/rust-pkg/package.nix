@@ -1,7 +1,8 @@
-{ lib
+{
+  lib,
 
-, rustPlatform
-, gitignore
+  rustPlatform,
+  gitignore,
 }:
 
 let
@@ -16,7 +17,9 @@ rustPlatform.buildRustPackage {
 
   inherit src;
 
-  cargoLock = { lockFile = "${src}/Cargo.lock"; };
+  cargoLock = {
+    lockFile = "${src}/Cargo.lock";
+  };
 
   nativeBuildInputs = [ ];
   buildInputs = [ ];

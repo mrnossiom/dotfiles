@@ -9,22 +9,40 @@
     gitignore.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { self, nixpkgs, rust-overlay, gitignore }:
+  outputs =
+    {
+      self,
+      nixpkgs,
+      rust-overlay,
+      gitignore,
+    }:
     let
       inherit (nixpkgs.lib) genAttrs getExe;
 
-      forAllSystems = genAttrs [ "x86_64-linux" "aarch64-linux" "aarch64-darwin" ];
+      forAllSystems = genAttrs [
+        "x86_64-linux"
+        "aarch64-linux"
+        "aarch64-darwin"
+      ];
       forAllPkgs = function: forAllSystems (system: function pkgs.${system});
 
-      mkApp = (program: { type = "app"; inherit program; });
+      mkApp = (
+        program: {
+          type = "app";
+          inherit program;
+        }
+      );
 
-      pkgs = forAllSystems (system: import nixpkgs {
-        inherit system;
-        overlays = [ (import rust-overlay) ];
-      });
+      pkgs = forAllSystems (
+        system:
+        import nixpkgs {
+          inherit system;
+          overlays = [ (import rust-overlay) ];
+        }
+      );
     in
     {
-      formatter = forAllPkgs (pkgs: pkgs.nixpkgs-fmt);
+      formatter = forAllPkgs (pkgs: pkgs.nixfmt-tree);
 
       packages = forAllPkgs (pkgs: rec {
         default = app;
@@ -35,7 +53,8 @@
         app = mkApp (getExe self.packages.${system}.app);
       });
 
-      devShells = forAllPkgs (pkgs:
+      devShells = forAllPkgs (
+        pkgs:
         let
           file-rust-toolchain = pkgs.rust-bin.fromRustupToolchainFile ./rust-toolchain.toml;
           rust-toolchain = file-rust-toolchain.override { extensions = [ "rust-analyzer" ]; };
@@ -49,6 +68,7 @@
 
             RUST_SRC_PATH = pkgs.rustPlatform.rustLibSrc;
           };
-        });
+        }
+      );
     };
 }

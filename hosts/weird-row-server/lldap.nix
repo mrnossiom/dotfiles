@@ -1,5 +1,6 @@
-{ config
-, ...
+{
+  config,
+  ...
 }:
 
 let
@@ -9,9 +10,15 @@ in
 {
   config = {
     age.secrets.lldap-env.file = secrets/lldap-env.age;
-    users.users.lldap = { isSystemUser = true; group = "lldap"; };
+    users.users.lldap = {
+      isSystemUser = true;
+      group = "lldap";
+    };
     users.groups.lldap = { };
-    age.secrets.lldap-user-pass = { file = secrets/lldap-user-pass.age; owner = "lldap"; };
+    age.secrets.lldap-user-pass = {
+      file = secrets/lldap-user-pass.age;
+      owner = "lldap";
+    };
     services.lldap = {
       enable = true;
 

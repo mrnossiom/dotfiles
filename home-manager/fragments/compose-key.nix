@@ -1,9 +1,9 @@
-{ self
-, config
-, lib
-, ...
+{
+  self,
+  config,
+  lib,
+  ...
 }:
-
 
 let
   inherit (self.outputs) homeManagerModules;

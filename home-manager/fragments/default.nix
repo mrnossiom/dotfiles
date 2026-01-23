@@ -1,7 +1,7 @@
 {
   # Provides the NixOS configuration if HM was loaded through the NixOS module
-  osConfig ? null
-, ...
+  osConfig ? null,
+  ...
 }:
 
 {
@@ -38,10 +38,7 @@
   config = {
     programs.home-manager.enable = osConfig == null;
 
-    home.stateVersion =
-      if osConfig != null
-      then osConfig.system.stateVersion
-      else "24.05";
+    home.stateVersion = if osConfig != null then osConfig.system.stateVersion else "24.05";
 
     # Reload system units when switching config
     systemd.user.startServices = "sd-switch";

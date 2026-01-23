@@ -1,8 +1,9 @@
-{ config
-, lib
+{
+  config,
+  lib,
 
-, isDarwin
-, ...
+  isDarwin,
+  ...
 }:
 
 let
@@ -15,7 +16,10 @@ in
 
   config = lib.mkIf cfg.enable {
     assertions = [
-      { assertion = !isDarwin; message = "this is a non-darwin fragment"; }
+      {
+        assertion = !isDarwin;
+        message = "this is a non-darwin fragment";
+      }
     ];
 
     home.sessionVariables.TERMINAL = lib.getExe config.programs.foot.package;
@@ -28,5 +32,3 @@ in
     };
   };
 }
-
-

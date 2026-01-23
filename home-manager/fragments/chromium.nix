@@ -1,7 +1,8 @@
-{ config
-, lib
-, pkgs
-, ...
+{
+  config,
+  lib,
+  pkgs,
+  ...
 }:
 
 let
@@ -16,7 +17,10 @@ in
     programs.chromium = {
       enable = true;
 
-      dictionaries = with pkgs.hunspellDictsChromium; [ en_US fr_FR ];
+      dictionaries = with pkgs.hunspellDictsChromium; [
+        en_US
+        fr_FR
+      ];
 
       extensions = [
         # Language Tool
@@ -31,4 +35,3 @@ in
     };
   };
 }
-

@@ -1,6 +1,7 @@
-{ pkgs
-, config
-, ...
+{
+  pkgs,
+  config,
+  ...
 }:
 
 let
@@ -16,7 +17,10 @@ in
   config = {
     networking.firewall.allowedUDPPorts = [ headscale-derp-port ];
 
-    age.secrets.headscale-oidc-secret = { file = secrets/headscale-oidc-secret.age; owner = config.services.headscale.user; };
+    age.secrets.headscale-oidc-secret = {
+      file = secrets/headscale-oidc-secret.age;
+      owner = config.services.headscale.user;
+    };
     services.headscale = {
       enable = true;
 
@@ -54,7 +58,12 @@ in
 
           override_local_dns = true;
           # Quad9 nameservers
-          nameservers.global = [ "9.9.9.9" "149.112.112.112" "2620:fe::fe" "2620:fe::9" ];
+          nameservers.global = [
+            "9.9.9.9"
+            "149.112.112.112"
+            "2620:fe::fe"
+            "2620:fe::9"
+          ];
         };
 
         oidc = {
@@ -62,7 +71,12 @@ in
           issuer = "https://auth.wiro.world";
           client_id = "headscale";
           client_secret_path = config.age.secrets.headscale-oidc-secret.path;
-          scope = [ "openid" "profile" "email" "groups" ];
+          scope = [
+            "openid"
+            "profile"
+            "email"
+            "groups"
+          ];
           pkce.enabled = true;
         };
 

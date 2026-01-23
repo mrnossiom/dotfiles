@@ -6,22 +6,35 @@
     rust-overlay.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { self, nixpkgs, rust-overlay }:
+  outputs =
+    {
+      self,
+      nixpkgs,
+      rust-overlay,
+    }:
     let
       inherit (nixpkgs.lib) genAttrs;
 
-      forAllSystems = genAttrs [ "x86_64-linux" "aarch64-linux" "aarch64-darwin" ];
+      forAllSystems = genAttrs [
+        "x86_64-linux"
+        "aarch64-linux"
+        "aarch64-darwin"
+      ];
       forAllPkgs = function: forAllSystems (system: function pkgs.${system});
 
-      pkgs = forAllSystems (system: import nixpkgs {
-        inherit system;
-        overlays = [ (import rust-overlay) ];
-      });
+      pkgs = forAllSystems (
+        system:
+        import nixpkgs {
+          inherit system;
+          overlays = [ (import rust-overlay) ];
+        }
+      );
     in
     {
-      formatter = forAllPkgs (pkgs: pkgs.nixpkgs-fmt);
+      formatter = forAllPkgs (pkgs: pkgs.nixfmt-tree);
 
-      devShells = forAllPkgs (pkgs:
+      devShells = forAllPkgs (
+        pkgs:
         let
           file-rust-toolchain = pkgs.rust-bin.fromRustupToolchainFile ./rust-toolchain.toml;
           rust-toolchain = file-rust-toolchain.override { extensions = [ "rust-analyzer" ]; };
@@ -35,6 +48,7 @@
 
             RUST_SRC_PATH = pkgs.rustPlatform.rustLibSrc;
           };
-        });
+        }
+      );
     };
 }

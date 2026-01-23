@@ -1,10 +1,11 @@
 targetSystemPkgs:
 
-{ self
-, lib
+{
+  self,
+  lib,
 
-, writeShellApplication
-, ...
+  writeShellApplication,
+  ...
 }@pkgs:
 
 let
@@ -17,7 +18,10 @@ let
 in
 lib.getExe (writeShellApplication {
   name = "flash-installer";
-  runtimeInputs = with pkgs; [ pv fzf ];
+  runtimeInputs = with pkgs; [
+    pv
+    fzf
+  ];
 
   text = ''
     # Select disk to flash

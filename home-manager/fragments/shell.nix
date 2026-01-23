@@ -1,11 +1,12 @@
-{ config
-, lib
-, pkgs
-, upkgs
-, lpkgs
+{
+  config,
+  lib,
+  pkgs,
+  upkgs,
+  lpkgs,
 
-, isDarwin
-, ...
+  isDarwin,
+  ...
 }:
 
 let
@@ -153,7 +154,8 @@ in
         # Quickly explore a derivation (using registry syntax)
         # e.g. `cdd nixpkgs#fontforge` or `cdd unixpkgs#fontforge`
         cdd = "cd (nix build --no-link --print-out-paths $argv | ${lib.getExe pkgs.fzf})";
-      } // lib.optionalAttrs (!flags.onlyCached) {
+      }
+      // lib.optionalAttrs (!flags.onlyCached) {
         # Quickly get outta here to test something
         cdtmp = ''
           set -l name $argv[1] (${lib.getExe lpkgs.names})
@@ -162,11 +164,12 @@ in
           mkdir $dir
           cd $dir
         '';
-      } // lib.optionalAttrs (!isDarwin) {
+      }
+      // lib.optionalAttrs (!isDarwin) {
         change-mac = ''
           set dev (nmcli --get-values GENERAL.DEVICE,GENERAL.TYPE device show | sed '/^wifi/!{h;d;};x;q')
           sudo ip link set $dev down
-    
+
           if test "$argv[1]" = "reset";
               sudo ${lib.getExe pkgs.macchanger} --permanent $dev
           else;

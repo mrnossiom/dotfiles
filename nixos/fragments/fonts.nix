@@ -1,9 +1,10 @@
-{ config
-, lib
-, pkgs
+{
+  config,
+  lib,
+  pkgs,
 
-, isDarwin
-, ...
+  isDarwin,
+  ...
 }:
 
 let
@@ -25,12 +26,22 @@ in
         noto-fonts-cjk-sans
         noto-fonts-color-emoji
       ];
-    } // lib.optionalAttrs (!isDarwin) {
+    }
+    // lib.optionalAttrs (!isDarwin) {
       fontconfig = {
         defaultFonts = {
-          sansSerif = [ "Inter" "Noto Sans" "Noto Sans Japanese" "Noto Sans Korean" "Noto Sans Chinese" ];
+          sansSerif = [
+            "Inter"
+            "Noto Sans"
+            "Noto Sans Japanese"
+            "Noto Sans Korean"
+            "Noto Sans Chinese"
+          ];
           serif = [ "Merriweather" ];
-          monospace = [ "JetBrainsMono Nerd Font" "Noto Sans Mono" ];
+          monospace = [
+            "JetBrainsMono Nerd Font"
+            "Noto Sans Mono"
+          ];
           emoji = [ "Noto Color Emoji" ];
         };
       };

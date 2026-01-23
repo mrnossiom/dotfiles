@@ -1,10 +1,18 @@
-name: { description, profile, keys ? [ ], user ? { }, elevated }:
+name:
+{
+  description,
+  profile,
+  keys ? [ ],
+  user ? { },
+  elevated,
+}:
 
-{ self
-, pkgs
-, lib
-, isDarwin
-, ...
+{
+  self,
+  pkgs,
+  lib,
+  isDarwin,
+  ...
 }:
 
 let
@@ -13,7 +21,9 @@ let
 in
 {
   imports = [
-    (if isDarwin then home-manager.darwinModules.home-manager else home-manager.nixosModules.home-manager)
+    (
+      if isDarwin then home-manager.darwinModules.home-manager else home-manager.nixosModules.home-manager
+    )
   ];
 
   options = {
@@ -31,18 +41,26 @@ in
       shell = pkgs.fish;
 
       openssh.authorizedKeys.keys = keys;
-    } // (if isDarwin then {
-      home = "/Users/${name}";
-    } else {
-      home = "/home/${name}";
-      isNormalUser = true;
-      extraGroups = [
-        "networkmanager"
-      ] ++ lib.optionals elevated [
-        "wheel" # root access    
-        "tss" # tpm access
-      ];
-    }) // user;
+    }
+    // (
+      if isDarwin then
+        {
+          home = "/Users/${name}";
+        }
+      else
+        {
+          home = "/home/${name}";
+          isNormalUser = true;
+          extraGroups = [
+            "networkmanager"
+          ]
+          ++ lib.optionals elevated [
+            "wheel" # root access
+            "tss" # tpm access
+          ];
+        }
+    )
+    // user;
 
     home-manager = {
       extraSpecialArgs = specialModuleArgs pkgs;
@@ -50,13 +68,15 @@ in
       useUserPackages = false;
       useGlobalPkgs = true;
 
-      users.${name} = { ... }: {
-        imports = [
-          ../../home-manager/profiles/${profile}.nix
-          ../../home-manager/fragments/default.nix
-          ../../home-manager/options.nix
-        ];
-      };
+      users.${name} =
+        { ... }:
+        {
+          imports = [
+            ../../home-manager/profiles/${profile}.nix
+            ../../home-manager/fragments/default.nix
+            ../../home-manager/options.nix
+          ];
+        };
     };
   };
 }

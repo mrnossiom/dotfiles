@@ -1,6 +1,12 @@
-layout: { device, swapSize }:
+layout:
+{ device, swapSize }:
 
-{ self, pkgs, lib, ... }:
+{
+  self,
+  pkgs,
+  lib,
+  ...
+}:
 
 let
   inherit (self.inputs) disko;

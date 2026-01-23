@@ -1,6 +1,7 @@
-{ self
-, lib
-, ...
+{
+  self,
+  lib,
+  ...
 }:
 
 let
@@ -10,7 +11,11 @@ let
   inherit (home-manager.lib) homeManagerConfiguration;
 in
 rec {
-  forAllSystems = lib.genAttrs [ "x86_64-linux" "aarch64-linux" "aarch64-darwin" ];
+  forAllSystems = lib.genAttrs [
+    "x86_64-linux"
+    "aarch64-linux"
+    "aarch64-darwin"
+  ];
 
   specialModuleArgs = pkgs: {
     # this flake
@@ -30,13 +35,15 @@ rec {
 
   # NixOS related
   nixos = {
-    createSystem = pkgs: modules: lib.nixosSystem {
-      inherit pkgs;
-      modules = modules ++ [
-        ../../nixos/fragments/default.nix
-      ];
-      specialArgs = specialModuleArgs pkgs;
-    };
+    createSystem =
+      pkgs: modules:
+      lib.nixosSystem {
+        inherit pkgs;
+        modules = modules ++ [
+          ../../nixos/fragments/default.nix
+        ];
+        specialArgs = specialModuleArgs pkgs;
+      };
 
     # `createSystem` modules
     system = hostName: profile: {
@@ -59,13 +66,15 @@ rec {
 
   # Darwin related
   darwin = {
-    createSystem = pkgs: modules: darwinSystem {
-      inherit pkgs;
-      modules = modules ++ [
-        ../../nixos/fragments/default.nix
-      ];
-      specialArgs = specialModuleArgs pkgs;
-    };
+    createSystem =
+      pkgs: modules:
+      darwinSystem {
+        inherit pkgs;
+        modules = modules ++ [
+          ../../nixos/fragments/default.nix
+        ];
+        specialArgs = specialModuleArgs pkgs;
+      };
 
     # `darwin.createSystem` modules
     user = import ./user.nix;
@@ -73,14 +82,18 @@ rec {
 
   # Home Manager related
   home-manager = {
-    createHome = pkgs: modules: homeManagerConfiguration {
-      inherit pkgs;
-      modules = modules ++ [
-        ../../home-manager/fragments/default.nix
-        ../../home-manager/options.nix
-      ];
-      extraSpecialArgs = (specialModuleArgs pkgs) // { osConfig = null; };
-    };
+    createHome =
+      pkgs: modules:
+      homeManagerConfiguration {
+        inherit pkgs;
+        modules = modules ++ [
+          ../../home-manager/fragments/default.nix
+          ../../home-manager/options.nix
+        ];
+        extraSpecialArgs = (specialModuleArgs pkgs) // {
+          osConfig = null;
+        };
+      };
 
     # `home-manager.createHome` modules
     home = username: home-dir: profile: {

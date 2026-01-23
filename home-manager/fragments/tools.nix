@@ -1,8 +1,9 @@
-{ config
-, lib
-, pkgs
-, lpkgs
-, ...
+{
+  config,
+  lib,
+  pkgs,
+  lpkgs,
+  ...
 }:
 
 let
@@ -15,58 +16,60 @@ in
   '';
 
   config = lib.mkIf cfg.enable {
-    home.packages = (with pkgs; [
-      # Man
-      ascii
-      man-pages
+    home.packages =
+      (with pkgs; [
+        # Man
+        ascii
+        man-pages
 
-      # TUIs
-      btop
-      glow
+        # TUIs
+        btop
+        glow
 
-      # CLIs
-      asciinema
-      calc
-      csvlens
-      delta
-      dogdns
-      dust
-      encfs
-      fastfetch
-      fd
-      ffmpeg
-      file
-      fzf
-      gemini-cli
-      inetutils
-      jq
-      just
-      killall
-      libnotify
-      lsof
-      mediainfo
-      openssl
-      otree
-      ouch
-      parallel
-      perf
-      pv
-      restic
-      ripgrep
-      speedtest-go
-      srgn
-      sshfs
-      termimage
-      tlrc
-      tokei
-      trash-cli
-      uni
-      unzip
-      vlock
-      wormhole-rs
-    ]) ++ lib.optionals (!flags.onlyCached) [
-      lpkgs.nix-alien
-    ];
+        # CLIs
+        asciinema
+        calc
+        csvlens
+        delta
+        dogdns
+        dust
+        encfs
+        fastfetch
+        fd
+        ffmpeg
+        file
+        fzf
+        gemini-cli
+        inetutils
+        jq
+        just
+        killall
+        libnotify
+        lsof
+        mediainfo
+        openssl
+        otree
+        ouch
+        parallel
+        perf
+        pv
+        restic
+        ripgrep
+        speedtest-go
+        srgn
+        sshfs
+        termimage
+        tlrc
+        tokei
+        trash-cli
+        uni
+        unzip
+        vlock
+        wormhole-rs
+      ])
+      ++ lib.optionals (!flags.onlyCached) [
+        lpkgs.nix-alien
+      ];
 
     programs.fish.shellAbbrs = {
       # Use newer tools

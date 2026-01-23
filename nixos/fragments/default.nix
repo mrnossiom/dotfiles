@@ -1,6 +1,7 @@
-{ lib
-, isDarwin
-, ...
+{
+  lib,
+  isDarwin,
+  ...
 }:
 
 {
@@ -16,7 +17,8 @@
     ./security.nix
     ./virtualisation.nix
     ./wireless.nix
-  ] ++ lib.optionals isDarwin [
+  ]
+  ++ lib.optionals isDarwin [
     ./yabai.nix
   ];
 }

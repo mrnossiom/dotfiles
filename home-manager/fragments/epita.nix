@@ -1,7 +1,8 @@
-{ config
-, lib
-, pkgs
-, ...
+{
+  config,
+  lib,
+  pkgs,
+  ...
 }:
 
 let
@@ -11,7 +12,10 @@ let
 
   mount-epita-afs = pkgs.writeShellApplication {
     name = "mount-epita-afs";
-    runtimeInputs = with pkgs; [ krb5 sshfs ];
+    runtimeInputs = with pkgs; [
+      krb5
+      sshfs
+    ];
     text = ''
       USERNAME="${epita-forge-username}"
 
@@ -44,12 +48,14 @@ in
     };
 
     # The forge uses master as its default branch
-    programs.git.includes = [{
-      condition = "gitdir:~/Development/forge.epita.fr/";
-      contents = {
-        init.defaultBranch = "master";
-      };
-    }];
+    programs.git.includes = [
+      {
+        condition = "gitdir:~/Development/forge.epita.fr/";
+        contents = {
+          init.defaultBranch = "master";
+        };
+      }
+    ];
 
     home.packages = [
       # Useful to connect to EPITA related services

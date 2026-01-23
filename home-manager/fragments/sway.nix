@@ -1,16 +1,19 @@
-{ config
-, lib
-, pkgs
+{
+  config,
+  lib,
+  pkgs,
 
-, isDarwin
-, ...
+  isDarwin,
+  ...
 }:
 
 let
   cfg = config.local.fragment.sway;
   cfg-sway = config.wayland.windowManager.sway.config;
 
-  workspacesRange = lib.zipListsWith (key-idx: workspace-idx: { inherit key-idx workspace-idx; }) [ 1 2 3 4 5 6 7 8 9 0 ] (lib.range 1 10);
+  workspacesRange = lib.zipListsWith (key-idx: workspace-idx: { inherit key-idx workspace-idx; }) (
+    (lib.range 1 9) ++ [ 0 ]
+  ) (lib.range 1 10);
 in
 {
   options.local.fragment.sway.enable = lib.mkEnableOption ''
@@ -19,7 +22,10 @@ in
 
   config = lib.mkIf cfg.enable {
     assertions = [
-      { assertion = !isDarwin; message = "this is a non-darwin fragment"; }
+      {
+        assertion = !isDarwin;
+        message = "this is a non-darwin fragment";
+      }
     ];
 
     programs.swaylock = {
@@ -101,10 +107,22 @@ in
           }
         ];
         events = [
-          { event = "before-sleep"; command = "${playerctl} pause; ${display "off"}; ${loginctl} lock-session"; }
-          { event = "after-resume"; command = display "on"; }
-          { event = "lock"; command = lock; }
-          { event = "unlock"; command = display "on"; }
+          {
+            event = "before-sleep";
+            command = "${playerctl} pause; ${display "off"}; ${loginctl} lock-session";
+          }
+          {
+            event = "after-resume";
+            command = display "on";
+          }
+          {
+            event = "lock";
+            command = lock;
+          }
+          {
+            event = "unlock";
+            command = display "on";
+          }
         ];
       };
 
@@ -137,21 +155,40 @@ in
             # Toggle floating mode for some specific windows
             {
               # TODO: Bitwarden window glitches on opening
-              criteria = { app_id = "^firefox$"; title = "Bitwarden Password Manager"; };
+              criteria = {
+                app_id = "^firefox$";
+                title = "Bitwarden Password Manager";
+              };
               command = ''floating enable'';
             }
             {
               # Toggles floating for every Unity window but the main one
               # Only the main window begins with `Unity - `
-              criteria = { title = "^((?!^Unity - ).)*$"; class = "^Unity$"; instance = "^Unity$"; };
+              criteria = {
+                title = "^((?!^Unity - ).)*$";
+                class = "^Unity$";
+                instance = "^Unity$";
+              };
               command = ''floating enable'';
             }
 
             # Inhibit IDLE when these are fullscreen
-            { criteria.app_id = "firefox"; command = "inhibit_idle fullscreen"; }
-            { criteria.app_id = "mpv"; command = "inhibit_idle fullscreen"; }
-            { criteria.app_id = "spotify"; command = "inhibit_idle fullscreen"; }
-            { criteria.app_id = "zen-beta"; command = "inhibit_idle fullscreen"; }
+            {
+              criteria.app_id = "firefox";
+              command = "inhibit_idle fullscreen";
+            }
+            {
+              criteria.app_id = "mpv";
+              command = "inhibit_idle fullscreen";
+            }
+            {
+              criteria.app_id = "spotify";
+              command = "inhibit_idle fullscreen";
+            }
+            {
+              criteria.app_id = "zen-beta";
+              command = "inhibit_idle fullscreen";
+            }
           ];
         };
 
@@ -180,7 +217,9 @@ in
           # "type:touchpad" = { events = "disabled_on_external_mouse"; };
 
           # Disable touchscreen by default
-          "type:touch" = { events = "disabled"; };
+          "type:touch" = {
+            events = "disabled";
+          };
         };
 
         output."*".bg = lib.mkForce "#000000 solid_color";
@@ -268,15 +307,30 @@ in
             "--locked XF86AudioMicMute" = "exec ${pamixer} --default-source --toggle-mute";
             "--locked XF86MonBrightnessUp" = "exec ${brightnessctl} --exponent set 5%+";
             "--locked XF86MonBrightnessDown" = "exec ${brightnessctl} --exponent  set 5%- --min-value=1";
-            "--locked XF86TouchpadToggle" = ''input "type:touchpad" events toggle enabled disabled_on_external_mouse'';
+            "--locked XF86TouchpadToggle" =
+              ''input "type:touchpad" events toggle enabled disabled_on_external_mouse'';
           }
-          // lib.listToAttrs (lib.flatten (map
-            ({ key-idx, workspace-idx }: [
-              { name = "${mod}+${toString key-idx}"; value = "workspace number ${toString workspace-idx}"; }
-              { name = "${mod}+Alt+${toString key-idx}"; value = "move container to workspace number ${toString workspace-idx}"; }
-              { name = "${mod}+Shift+${toString key-idx}"; value = "move container to workspace number ${toString workspace-idx}; workspace number ${toString workspace-idx}"; }
-            ])
-            workspacesRange));
+          // lib.listToAttrs (
+            lib.flatten (
+              map (
+                { key-idx, workspace-idx }:
+                [
+                  {
+                    name = "${mod}+${toString key-idx}";
+                    value = "workspace number ${toString workspace-idx}";
+                  }
+                  {
+                    name = "${mod}+Alt+${toString key-idx}";
+                    value = "move container to workspace number ${toString workspace-idx}";
+                  }
+                  {
+                    name = "${mod}+Shift+${toString key-idx}";
+                    value = "move container to workspace number ${toString workspace-idx}; workspace number ${toString workspace-idx}";
+                  }
+                ]
+              ) workspacesRange
+            )
+          );
       };
     };
 

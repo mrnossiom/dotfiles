@@ -1,7 +1,8 @@
-{ self
-, config
-, lib
-, ...
+{
+  self,
+  config,
+  lib,
+  ...
 }:
 
 let
@@ -135,7 +136,11 @@ in
         search = {
           force = true;
           default = "ddg";
-          order = [ "ddg" "wikipedia" "google" ];
+          order = [
+            "ddg"
+            "wikipedia"
+            "google"
+          ];
         };
       };
     };

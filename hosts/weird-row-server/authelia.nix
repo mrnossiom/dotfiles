@@ -1,5 +1,6 @@
-{ config
-, ...
+{
+  config,
+  ...
 }:
 
 let
@@ -13,11 +14,26 @@ let
 in
 {
   config = {
-    age.secrets.authelia-jwt-secret = { file = secrets/authelia-jwt-secret.age; owner = config.services.authelia.instances.main.user; };
-    age.secrets.authelia-issuer-private-key = { file = secrets/authelia-issuer-private-key.age; owner = config.services.authelia.instances.main.user; };
-    age.secrets.authelia-storage-key = { file = secrets/authelia-storage-key.age; owner = config.services.authelia.instances.main.user; };
-    age.secrets.authelia-ldap-password = { file = secrets/authelia-ldap-password.age; owner = config.services.authelia.instances.main.user; };
-    age.secrets.authelia-smtp-password = { file = secrets/authelia-smtp-password.age; owner = config.services.authelia.instances.main.user; };
+    age.secrets.authelia-jwt-secret = {
+      file = secrets/authelia-jwt-secret.age;
+      owner = config.services.authelia.instances.main.user;
+    };
+    age.secrets.authelia-issuer-private-key = {
+      file = secrets/authelia-issuer-private-key.age;
+      owner = config.services.authelia.instances.main.user;
+    };
+    age.secrets.authelia-storage-key = {
+      file = secrets/authelia-storage-key.age;
+      owner = config.services.authelia.instances.main.user;
+    };
+    age.secrets.authelia-ldap-password = {
+      file = secrets/authelia-ldap-password.age;
+      owner = config.services.authelia.instances.main.user;
+    };
+    age.secrets.authelia-smtp-password = {
+      file = secrets/authelia-smtp-password.age;
+      owner = config.services.authelia.instances.main.user;
+    };
     services.authelia.instances.main = {
       enable = true;
 
@@ -39,11 +55,13 @@ in
         };
 
         session = {
-          cookies = [{
-            domain = "wiro.world";
-            authelia_url = "https://${authelia-hostname}";
-            default_redirection_url = "https://wiro.world";
-          }];
+          cookies = [
+            {
+              domain = "wiro.world";
+              authelia_url = "https://${authelia-hostname}";
+              default_redirection_url = "https://wiro.world";
+            }
+          ];
         };
 
         authentication_backend.ldap = {
@@ -85,7 +103,12 @@ in
               domain = "news.wiro.world";
               policy = "one_factor";
 
-              subject = [ [ "group:miniflux" "oauth2:client:miniflux" ] ];
+              subject = [
+                [
+                  "group:miniflux"
+                  "oauth2:client:miniflux"
+                ]
+              ];
             }
             {
               domain = "*.wiro.world";
@@ -99,8 +122,10 @@ in
 
           authorization_policies =
             let
-              mkStrictPolicy = policy: subject:
-                { default_policy = "deny"; rules = [{ inherit policy subject; }]; };
+              mkStrictPolicy = policy: subject: {
+                default_policy = "deny";
+                rules = [ { inherit policy subject; } ];
+              };
             in
             {
               headscale = mkStrictPolicy "two_factor" [ "group:headscale" ];
@@ -109,7 +134,15 @@ in
               miniflux = mkStrictPolicy "one_factor" [ "group:miniflux" ];
             };
 
-          claims_policies.headscale = { id_token = [ "email" "name" "preferred_username" "picture" "groups" ]; };
+          claims_policies.headscale = {
+            id_token = [
+              "email"
+              "name"
+              "preferred_username"
+              "picture"
+              "groups"
+            ];
+          };
 
           clients = [
             {

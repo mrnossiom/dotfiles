@@ -1,7 +1,8 @@
-{ self
-, config
-, pkgs
-, ...
+{
+  self,
+  config,
+  pkgs,
+  ...
 }:
 
 let
@@ -44,23 +45,54 @@ in
 
   config = {
     boot.loader.grub.enable = true;
-    boot.initrd.availableKernelModules = [ "ahci" "xhci_pci" "virtio_pci" "virtio_scsi" "sd_mod" "sr_mod" "ext4" ];
+    boot.initrd.availableKernelModules = [
+      "ahci"
+      "xhci_pci"
+      "virtio_pci"
+      "virtio_scsi"
+      "sd_mod"
+      "sr_mod"
+      "ext4"
+    ];
 
     # Single network card is `eth0`
     networking.usePredictableInterfaceNames = false;
 
-    networking.nameservers = [ "2001:4860:4860::8888" "2001:4860:4860::8844" ];
+    networking.nameservers = [
+      "2001:4860:4860::8888"
+      "2001:4860:4860::8844"
+    ];
 
     networking = {
       interfaces.${ext-if} = {
-        ipv4.addresses = [{ address = external-ip; prefixLength = external-netmask; }];
-        ipv6.addresses = [{ address = external-ip6; prefixLength = external-netmask6; }];
+        ipv4.addresses = [
+          {
+            address = external-ip;
+            prefixLength = external-netmask;
+          }
+        ];
+        ipv6.addresses = [
+          {
+            address = external-ip6;
+            prefixLength = external-netmask6;
+          }
+        ];
       };
-      defaultGateway = { interface = ext-if; address = external-gw; };
-      defaultGateway6 = { interface = ext-if; address = external-gw6; };
+      defaultGateway = {
+        interface = ext-if;
+        address = external-gw;
+      };
+      defaultGateway6 = {
+        interface = ext-if;
+        address = external-gw6;
+      };
 
       # Reflect firewall configuration on Hetzner
-      firewall.allowedTCPPorts = [ 22 80 443 ];
+      firewall.allowedTCPPorts = [
+        22
+        80
+        443
+      ];
     };
 
     services.qemuGuest.enable = true;

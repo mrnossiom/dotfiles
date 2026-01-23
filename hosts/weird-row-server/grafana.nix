@@ -1,5 +1,6 @@
-{ config
-, ...
+{
+  config,
+  ...
 }:
 
 let
@@ -15,7 +16,10 @@ let
 in
 {
   config = {
-    age.secrets.grafana-oidc-secret = { file = secrets/grafana-oidc-secret.age; owner = "grafana"; };
+    age.secrets.grafana-oidc-secret = {
+      file = secrets/grafana-oidc-secret.age;
+      owner = "grafana";
+    };
     services.grafana = {
       enable = true;
 
@@ -38,7 +42,12 @@ in
           role_attribute_path = "contains(roles[*], 'admin') && 'GrafanaAdmin' || contains(roles[*], 'editor') && 'Editor' || 'Viewer'";
           allow_assign_grafana_admin = true;
 
-          scopes = [ "openid" "profile" "email" "groups" ];
+          scopes = [
+            "openid"
+            "profile"
+            "email"
+            "groups"
+          ];
           auth_url = "https://auth.wiro.world/api/oidc/authorization";
           token_url = "https://auth.wiro.world/api/oidc/token";
           api_url = "https://auth.wiro.world/api/oidc/userinfo";
@@ -59,19 +68,21 @@ in
       scrapeConfigs = [
         {
           job_name = "caddy";
-          static_configs = [{ targets = [ "localhost:${toString caddy-metrics-port}" ]; }];
+          static_configs = [ { targets = [ "localhost:${toString caddy-metrics-port}" ]; } ];
         }
         {
           job_name = "node-exporter";
-          static_configs = [{ targets = [ "localhost:${toString config.services.prometheus.exporters.node.port}" ]; }];
+          static_configs = [
+            { targets = [ "localhost:${toString config.services.prometheus.exporters.node.port}" ]; }
+          ];
         }
         {
           job_name = "headscale";
-          static_configs = [{ targets = [ "localhost:${toString headscale-metrics-port}" ]; }];
+          static_configs = [ { targets = [ "localhost:${toString headscale-metrics-port}" ]; } ];
         }
         {
           job_name = "authelia";
-          static_configs = [{ targets = [ "localhost:${toString authelia-metrics-port}" ]; }];
+          static_configs = [ { targets = [ "localhost:${toString authelia-metrics-port}" ]; } ];
         }
       ];
     };

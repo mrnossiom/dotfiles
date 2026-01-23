@@ -1,5 +1,6 @@
-{ config
-, ...
+{
+  config,
+  ...
 }:
 
 let
@@ -10,7 +11,10 @@ let
 in
 {
   config = {
-    age.secrets.tuwunel-registration-tokens = { file = secrets/tuwunel-registration-tokens.age; owner = config.services.matrix-tuwunel.user; };
+    age.secrets.tuwunel-registration-tokens = {
+      file = secrets/tuwunel-registration-tokens.age;
+      owner = config.services.matrix-tuwunel.user;
+    };
     services.matrix-tuwunel = {
       enable = true;
 

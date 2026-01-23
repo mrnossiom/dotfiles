@@ -53,7 +53,8 @@
     zen-browser.inputs.home-manager.follows = "home-manager";
   };
 
-  outputs = { self, nixpkgs, ... }:
+  outputs =
+    { self, nixpkgs, ... }:
     let
       inherit (self) outputs;
       inherit (flake-lib) forAllSystems;
@@ -61,16 +62,19 @@
       flake-lib = import ./lib/flake (nixpkgs // { inherit self; });
 
       # This should be the only constructed nixpkgs instances in this flake
-      allPkgs = forAllSystems (system: (import nixpkgs {
-        inherit system;
-        config.allowUnfreePredicate = import ./lib/unfree.nix { lib = nixpkgs.lib; };
-        overlays = [ outputs.overlays.all ];
-      }));
+      allPkgs = forAllSystems (
+        system:
+        import nixpkgs {
+          inherit system;
+          config.allowUnfreePredicate = import ./lib/unfree.nix { lib = nixpkgs.lib; };
+          overlays = [ outputs.overlays.all ];
+        }
+      );
 
       forAllPkgs = func: forAllSystems (system: func allPkgs.${system});
     in
     {
-      formatter = forAllPkgs (pkgs: pkgs.nixpkgs-fmt);
+      formatter = forAllPkgs (pkgs: pkgs.nixfmt-tree);
 
       inherit flake-lib; # Nonstandard
       lib = forAllPkgs (import ./lib);

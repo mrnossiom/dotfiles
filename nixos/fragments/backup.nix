@@ -1,7 +1,8 @@
-{ config
-, lib
-, pkgs
-, ...
+{
+  config,
+  lib,
+  pkgs,
+  ...
 }:
 
 let
@@ -17,10 +18,14 @@ in
     Backup related
   '';
 
-
   config = lib.mkIf cfg.enable {
     # TODO: fix module
-    assertions = [{ assertion = false; message = "module is broken"; }];
+    assertions = [
+      {
+        assertion = false;
+        message = "module is broken";
+      }
+    ];
 
     age.secrets.backup-restic-key.file = ../../secrets/backup/restic-key.age;
     age.secrets.backup-rclone-google-drive.file = ../../secrets/backup/rclone-googledrive.age;
@@ -48,16 +53,20 @@ in
           # Remove stale Restic locks
           ${lib.getExe pkgs.restic} unlock || true
 
-          ${lib.getExe pkgs.rsync} \
-            ${"\\" /* Archive mode and delete files that are not in the source directory. `--mkpath` is like `mkdir`'s `-p` option */}
-            --archive --delete --mkpath \
-            ${"\\" /* `:-` operator uses .gitignore files as exclude patterns */}
-            --filter=':- .gitignore' \
-            ${"\\" /* Exclude nixpkgs repository because they have some weird symlink test files that break rsync */}
-            --exclude 'nixpkgs' \
-            ${"\\" /* Hardlink files to avoid taking up more space */}
-            --link-dest=/home/${mainUsername}/Development \
-            /home/${mainUsername}/Development/ /home/${mainUsername}/.local/backup/repos
+          ${lib.getExe pkgs.rsync} ${
+            lib.cli.toCommandLineGNU { } {
+              # Archive mode and delete files that are not in the source directory. `--mkpath` is like `mkdir`'s `-p` option
+              archive = true;
+              delete = true;
+              mkpath = true;
+              # `:-` operator uses .gitignore files as exclude patterns
+              filter = ":- .gitignore";
+              # Exclude nixpkgs repository because they have some weird symlink test files that break rsync
+              exclude = "nixpkgs";
+              # Hardlink files to avoid taking up more space
+              link-dest = "/home/${mainUsername}/Development";
+            }
+          } /home/${mainUsername}/Development/ /home/${mainUsername}/.local/backup/repos
         '';
 
         pruneOpts = [
@@ -65,7 +74,6 @@ in
           "--keep-weekly 5"
           "--keep-yearly 10"
         ];
-
 
         # TODO: fix config
         timerConfig = null;

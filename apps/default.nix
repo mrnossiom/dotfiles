@@ -1,7 +1,8 @@
 { pkgs-per-system }:
 
-{ lib
-, ...
+{
+  lib,
+  ...
 }@pkgs:
 
 let
@@ -10,4 +11,7 @@ let
   };
 in
 
-lib.mapAttrs (_: program: { type = "app"; inherit program; }) apps
+lib.mapAttrs (_: program: {
+  type = "app";
+  inherit program;
+}) apps

@@ -1,7 +1,8 @@
-{ config
-, lib
-, pkgs
-, ...
+{
+  config,
+  lib,
+  pkgs,
+  ...
 }:
 
 let
@@ -57,8 +58,12 @@ in
       # e.g. agenix uses `$XDG_RUNTIME_DIR`
       wakatime-key = pkgs.writeShellScript "cat-wakatime-api-key" "cat ${cfg.apiKeyFile}";
 
-      merged-settings = cfg.settings // { api_key_vault_cmd = "${wakatime-key}"; };
-      final-config = cfg.extraConfig // { settings = merged-settings; };
+      merged-settings = cfg.settings // {
+        api_key_vault_cmd = "${wakatime-key}";
+      };
+      final-config = cfg.extraConfig // {
+        settings = merged-settings;
+      };
     in
     lib.mkIf cfg.enable {
       home.sessionVariables.WAKATIME_HOME = "${config.xdg.configHome}/wakatime";
@@ -66,4 +71,3 @@ in
       xdg.configFile."wakatime/.wakatime.cfg".source = ini-format.generate "wakatime-config" final-config;
     };
 }
-

@@ -1,7 +1,8 @@
-{ lib
+{
+  lib,
 
-, fetchFromGitHub
-, rustPlatform
+  fetchFromGitHub,
+  rustPlatform,
 }:
 
 rustPlatform.buildRustPackage rec {
@@ -26,4 +27,3 @@ rustPlatform.buildRustPackage rec {
     mainProgram = "ebnfer";
   };
 }
-

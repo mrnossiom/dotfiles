@@ -1,8 +1,9 @@
-{ config
-, lib
-, pkgs
-, lpkgs
-, ...
+{
+  config,
+  lib,
+  pkgs,
+  lpkgs,
+  ...
 }:
 
 let
@@ -131,20 +132,25 @@ in
         # TODO: change to $PROJECTS env var?
         leaveTool = {
           defaultFolder = "${config.home.homeDirectory}/Development";
-          checks = [ "dirty" "ahead-branches" ];
+          checks = [
+            "dirty"
+            "ahead-branches"
+          ];
         };
       };
     };
 
-    home.packages = (with pkgs; [
-      glab
+    home.packages =
+      (with pkgs; [
+        glab
 
-      lazyjj
+        lazyjj
 
-      difftastic
-    ]) ++ lib.optionals (!flags.onlyCached) [
-      lpkgs.git-leave
-    ];
+        difftastic
+      ])
+      ++ lib.optionals (!flags.onlyCached) [
+        lpkgs.git-leave
+      ];
 
     programs.gh.enable = true;
 

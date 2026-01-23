@@ -1,7 +1,8 @@
-{ config
-, lib
-, pkgs
-, ...
+{
+  config,
+  lib,
+  pkgs,
+  ...
 }:
 
 let
@@ -49,7 +50,10 @@ in
         target = {
           x86_64-unknown-linux-gnu = {
             linker = clang;
-            rustflags = [ "-Clink-arg=--ld-path=${wild}" "-Ctarget-cpu=native" ];
+            rustflags = [
+              "-Clink-arg=--ld-path=${wild}"
+              "-Ctarget-cpu=native"
+            ];
           };
           x86_64-apple-darwin.rustflags = [ "-Ctarget-cpu=native" ];
           aarch64-apple-darwin.rustflags = [ "-Ctarget-cpu=native" ];
@@ -59,4 +63,3 @@ in
       };
   };
 }
-

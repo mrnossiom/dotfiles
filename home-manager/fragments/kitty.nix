@@ -1,8 +1,9 @@
-{ config
-, lib
+{
+  config,
+  lib,
 
-, isDarwin
-, ...
+  isDarwin,
+  ...
 }:
 
 let
@@ -20,7 +21,10 @@ in
 
   config = lib.mkIf cfg.enable {
     assertions = [
-      { assertion = (!isDarwin) || config.programs.fish.enable; message = "`kitty` fragment depends on `fish` program on darwin platforms"; }
+      {
+        assertion = (!isDarwin) || config.programs.fish.enable;
+        message = "`kitty` fragment depends on `fish` program on darwin platforms";
+      }
     ];
 
     home.sessionVariables.TERMINAL = lib.getExe config.programs.kitty.package;
@@ -31,7 +35,8 @@ in
         confirm_os_window_close = 0;
         enable_audio_bell = "no";
         macos_option_as_alt = "left";
-      } // lib.optionalAttrs isDarwin {
+      }
+      // lib.optionalAttrs isDarwin {
         # Workaround to avoid launching fish as a login shell
         shell = "zsh -c fish";
       };

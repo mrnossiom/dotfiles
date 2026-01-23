@@ -1,10 +1,11 @@
-{ self
-, config
-, lib
-, pkgs
+{
+  self,
+  config,
+  lib,
+  pkgs,
 
-, isDarwin
-, ...
+  isDarwin,
+  ...
 }:
 
 let
@@ -27,11 +28,14 @@ in
       registry = lib.mapAttrs (_: value: { flake = value; }) (self.inputs // { inherit self; });
 
       nixPath =
-        if clear-nix-env
+        if
+          clear-nix-env
         # Actually make it empty to disable nix-* legacy commands
-        then [ ]
+        then
+          [ ]
         # Make NixOS system's legacy channels consistent with registry and flake inputs
-        else lib.mapAttrsToList (key: value: "${key}=${value.to.path}") config.nix.registry;
+        else
+          lib.mapAttrsToList (key: value: "${key}=${value.to.path}") config.nix.registry;
 
       gc = {
         automatic = true;
@@ -40,14 +44,26 @@ in
         options = "--delete-older-than 30d";
       }
       # Same option to say that GC is ran weekly at 3h15
-      // (if isDarwin then {
-        interval = { Weekday = 7; Hour = 3; Minute = 15; };
-      } else {
-        dates = "Sun *-*-* 03:15:00";
-      });
+      // (
+        if isDarwin then
+          {
+            interval = {
+              Weekday = 7;
+              Hour = 3;
+              Minute = 15;
+            };
+          }
+        else
+          {
+            dates = "Sun *-*-* 03:15:00";
+          }
+      );
 
       settings = {
-        experimental-features = [ "nix-command" "flakes" ];
+        experimental-features = [
+          "nix-command"
+          "flakes"
+        ];
         auto-optimise-store = true;
 
         # Disable flake registry to keep system pure and
@@ -62,7 +78,9 @@ in
 
         trusted-users = [ config.local.user.username ];
         extra-substituters = [ "https://nix-community.cachix.org" ];
-        extra-trusted-public-keys = [ "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs=" ];
+        extra-trusted-public-keys = [
+          "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+        ];
       };
     };
 

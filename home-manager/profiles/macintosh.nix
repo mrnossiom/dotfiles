@@ -1,11 +1,12 @@
-{ self
-, config
-, pkgs
+{
+  self,
+  config,
+  pkgs,
 
-, isDarwin
+  isDarwin,
   # Provides the NixOS configuration if HM was loaded through the NixOS module
-, osConfig ? null
-, ...
+  osConfig ? null,
+  ...
 }:
 
 let
@@ -23,7 +24,10 @@ in
 
   config = {
     assertions = [
-      { assertion = isDarwin; message = "this is a HM darwin-only config"; }
+      {
+        assertion = isDarwin;
+        message = "this is a HM darwin-only config";
+      }
     ];
 
     local.fragment = {

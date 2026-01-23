@@ -1,10 +1,11 @@
-{ lib
-, rustPlatform
-, fetchFromGitHub
+{
+  lib,
+  rustPlatform,
+  fetchFromGitHub,
 
-, pkg-config
-, alsa-lib
-, jack2
+  pkg-config,
+  alsa-lib,
+  jack2,
 }:
 
 rustPlatform.buildRustPackage rec {
@@ -37,4 +38,3 @@ rustPlatform.buildRustPackage rec {
     mainProgram = "asak";
   };
 }
-

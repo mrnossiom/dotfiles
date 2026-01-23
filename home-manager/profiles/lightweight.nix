@@ -1,9 +1,10 @@
-{ self
-, config
-, pkgs
+{
+  self,
+  config,
+  pkgs,
 
-, isDarwin
-, ...
+  isDarwin,
+  ...
 }:
 
 let
@@ -14,7 +15,10 @@ in
 
   config = {
     assertions = [
-      { assertion = !isDarwin; message = "this is a HM non-darwin config"; }
+      {
+        assertion = !isDarwin;
+        message = "this is a HM non-darwin config";
+      }
     ];
 
     local.flags.onlyCached = true;

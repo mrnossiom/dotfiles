@@ -1,7 +1,8 @@
-{ config
-, lib
-, pkgs
-, ...
+{
+  config,
+  lib,
+  pkgs,
+  ...
 }:
 
 let
@@ -64,18 +65,38 @@ in
       comboListToString = foldl (acc: val: acc + "<${val}> ") "";
       sanitizeComboResult = escape [ ''"'' ];
 
-      comboSetToList = ip: flatten (mapAttrsToList
-        (name: value:
-          if isAttrs value then
-            let vs = comboSetToList value;
-            in
-            map ({ combo, value }: { combo = [ name ] ++ combo; inherit value; }) vs
-          else if isString value then
-            { combo = [ name ]; inherit value; }
-          else throw "combo value must be a string"
-        )
-        ip);
-      complexListToSimple = map ({ combo, value }: { combo = comboListToString combo; value = sanitizeComboResult value; });
+      comboSetToList =
+        ip:
+        flatten (
+          mapAttrsToList (
+            name: value:
+            if isAttrs value then
+              let
+                vs = comboSetToList value;
+              in
+              map (
+                { combo, value }:
+                {
+                  combo = [ name ] ++ combo;
+                  inherit value;
+                }
+              ) vs
+            else if isString value then
+              {
+                combo = [ name ];
+                inherit value;
+              }
+            else
+              throw "combo value must be a string"
+          ) ip
+        );
+      complexListToSimple = map (
+        { combo, value }:
+        {
+          combo = comboListToString combo;
+          value = sanitizeComboResult value;
+        }
+      );
       toComposeFile = foldl (acc: val: acc + "${val.combo}: \"${val.value}\"\n") "";
 
       processComposeSet = set: toComposeFile (complexListToSimple (comboSetToList set));

@@ -1,10 +1,11 @@
-{ self
-, config
-, pkgs
-, upkgs
-, lpkgs
-, lib
-, ...
+{
+  self,
+  config,
+  pkgs,
+  upkgs,
+  lpkgs,
+  lib,
+  ...
 }:
 
 let
@@ -26,7 +27,10 @@ in
 
   config = lib.mkIf cfg.enable {
     assertions = [
-      { assertion = config.local.fragment.agenix.enable; message = "`helix` fragment depends on `agenix` fragment"; }
+      {
+        assertion = config.local.fragment.agenix.enable;
+        message = "`helix` fragment depends on `agenix` fragment";
+      }
     ];
 
     stylix.targets.helix.enable = false;
@@ -92,26 +96,31 @@ in
         };
       };
 
-      extraPackages = with pkgs; [
-        clang-tools
-        gopls
-        kotlin-language-server
-        ltex-ls
-        marksman
-        nil
-        nodePackages.bash-language-server
-        nodePackages.typescript-language-server
-        taplo
-        typos-lsp
-        vscode-langservers-extracted
-        yaml-language-server
-      ] ++ lib.optionals (!flags.onlyCached) [
-        lpkgs.wakatime-ls
-      ];
+      extraPackages =
+        with pkgs;
+        [
+          clang-tools
+          gopls
+          kotlin-language-server
+          ltex-ls
+          marksman
+          nil
+          nodePackages.bash-language-server
+          nodePackages.typescript-language-server
+          taplo
+          typos-lsp
+          vscode-langservers-extracted
+          yaml-language-server
+        ]
+        ++ lib.optionals (!flags.onlyCached) [
+          lpkgs.wakatime-ls
+        ];
 
       languages = {
         language-server = {
-          rust-analyzer.config = { check.command = "clippy"; };
+          rust-analyzer.config = {
+            check.command = "clippy";
+          };
 
           ltex-ls.command = "ltex-ls";
           typos-ls.command = "typos-lsp";
@@ -120,12 +129,24 @@ in
 
         language =
           let
-            global-lsps = [ "wakatime-ls" "typos-ls" ];
-            mk-lang = name: language-servers: extra: { inherit name; language-servers = language-servers ++ global-lsps; } // extra;
+            global-lsps = [
+              "wakatime-ls"
+              "typos-ls"
+            ];
+            mk-lang =
+              name: language-servers: extra:
+              {
+                inherit name;
+                language-servers = language-servers ++ global-lsps;
+              }
+              // extra;
           in
           [
             (mk-lang "c" [ "clangd" ] {
-              formatter = { command = lib.getExe' pkgs.clang-tools "clang-format"; args = [ ]; };
+              formatter = {
+                command = lib.getExe' pkgs.clang-tools "clang-format";
+                args = [ ];
+              };
             })
             (mk-lang "markdown" [ "marksman" ] {
               soft-wrap.enable = true;

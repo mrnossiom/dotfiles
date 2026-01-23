@@ -1,5 +1,6 @@
-{ config
-, ...
+{
+  config,
+  ...
 }:
 
 let
@@ -8,9 +9,15 @@ let
 in
 {
   config = {
-    users.users.miniflux = { isSystemUser = true; group = "miniflux"; };
+    users.users.miniflux = {
+      isSystemUser = true;
+      group = "miniflux";
+    };
     users.groups.miniflux = { };
-    age.secrets.miniflux-oidc-secret = { file = secrets/miniflux-oidc-secret.age; owner = "miniflux"; };
+    age.secrets.miniflux-oidc-secret = {
+      file = secrets/miniflux-oidc-secret.age;
+      owner = "miniflux";
+    };
     services.miniflux = {
       enable = true;
 
@@ -38,10 +45,12 @@ in
       };
     };
 
-    services.prometheus.scrapeConfigs = [{
-      job_name = "miniflux";
-      static_configs = [{ targets = [ "localhost:${toString miniflux-port}" ]; }];
-    }];
+    services.prometheus.scrapeConfigs = [
+      {
+        job_name = "miniflux";
+        static_configs = [ { targets = [ "localhost:${toString miniflux-port}" ]; } ];
+      }
+    ];
 
     services.caddy = {
       virtualHosts.${miniflux-hostname}.extraConfig = ''
