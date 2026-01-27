@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  pkgs,
 
   isDarwin,
   ...
@@ -41,5 +42,14 @@ in
         shell = "zsh -c fish";
       };
     };
+
+    xdg.configFile =
+      let
+        kitty-theme = name: "${pkgs.kitty-themes}/share/kitty-themes/themes/${name}.conf";
+      in
+      {
+        "kitty/dark-theme.auto.conf".source = kitty-theme "Alabaster_Dark";
+        "kitty/light-theme.auto.conf".source = kitty-theme "Alabaster";
+      };
   };
 }
