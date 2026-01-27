@@ -134,13 +134,19 @@ in
               miniflux = mkStrictPolicy "one_factor" [ "group:miniflux" ];
             };
 
-          claims_policies.headscale = {
-            id_token = [
+          claims_policies = {
+            headscale.id_token = [
               "email"
               "name"
               "preferred_username"
               "picture"
               "groups"
+            ];
+            grafana.id_token = [
+              "email"
+              "name"
+              "groups"
+              "preferred_username"
             ];
           };
 
@@ -166,6 +172,7 @@ in
               client_secret = "$pbkdf2-sha256$310000$UkwrqxTZodGMs9.Ca2cXAA$HCWFgQbFHGXZpuz.I3HHdkTZLUevRVGlhKEFaOlPmKs";
               redirect_uris = [ "https://${grafana-hostname}/login/generic_oauth" ];
               authorization_policy = "grafana";
+              claims_policy = "grafana";
             }
             {
               client_name = "Miniflux";

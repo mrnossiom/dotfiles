@@ -39,7 +39,11 @@ in
           client_secret_path = config.age.secrets.grafana-oidc-secret.path;
           auto_login = true;
 
-          role_attribute_path = "contains(roles[*], 'admin') && 'GrafanaAdmin' || contains(roles[*], 'editor') && 'Editor' || 'Viewer'";
+          login_attribute_path = "preferred_username";
+          groups_attribute_path = "groups";
+          name_attribute_path = "name";
+
+          role_attribute_path = "contains(roles[*], 'admin') && 'Admin' || contains(roles[*], 'editor') && 'Editor' || 'Viewer'";
           allow_assign_grafana_admin = true;
 
           scopes = [
