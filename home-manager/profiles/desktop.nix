@@ -93,6 +93,7 @@
         localsend
         mpv
         nautilus
+        nicotine-plus
         pavucontrol
         prismlauncher
         rawtherapee
