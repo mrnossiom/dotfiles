@@ -30,6 +30,14 @@ in
 
     stylix = {
       enable = true;
+      autoEnable = false;
+
+      targets.mako.enable = true;
+      targets.sway.enable = true;
+      targets.swaylock.enable = true;
+      targets.tofi.enable = true;
+      targets.waybar.enable = true;
+
       base16Scheme = lib.mkDefault "${pkgs.base16-schemes}/share/themes/onedark-dark.yaml";
 
       image = ../../assets/wallpaper-binary-cloud.png;
