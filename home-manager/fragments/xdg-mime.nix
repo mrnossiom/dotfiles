@@ -45,9 +45,12 @@ in
           files = [ "org.gnome.Nautilus.desktop" ];
           browser = [ "zen-beta.desktop" ];
           images = [ "imv.desktop" ];
+          video = [ "mpv.desktop" ];
+          audio = [ "mpv.desktop" ];
+          torrents = [ "transmission-gtk.desktop" ];
         in
         {
-          "inode/directory" = files;
+          "inode/directory" = files ++ images ++ audio ++ video;
 
           "application/pdf" = browser;
           "text/html" = browser;
@@ -57,7 +60,6 @@ in
           "x-scheme-handler/unknown" = browser;
           "image/svg+xml" = browser;
 
-          # Associate images to `imv`
           "image/bmp" = images;
           "image/gif" = images;
           "image/jpeg" = images;
@@ -66,9 +68,22 @@ in
           "image/png" = images;
           "image/tiff" = images;
           "image/heif" = images;
+
+          "video/mp4" = video;
+          "video/x-matroska" = video;
+
+          "audio/flac" = audio;
+
+          "x-scheme-handler/magnet" = torrents;
+          "application/x-bittorrent" = torrents;
         };
 
       associations.added = {
+        "inode/directory" = [
+          "imv.desktop"
+          "mpv.desktop"
+        ];
+
         "application/pdf" = [ "firefox.desktop" ];
         "x-scheme-handler/about" = [ "firefox.desktop" ];
         "x-scheme-handler/unknown" = [ "firefox.desktop" ];
