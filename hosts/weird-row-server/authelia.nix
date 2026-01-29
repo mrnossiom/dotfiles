@@ -194,6 +194,8 @@ in
       };
     };
 
+    systemd.services.authelia.after = [ "lldap.service" ];
+
     services.caddy = {
       virtualHosts.${authelia-hostname}.extraConfig = ''
         reverse_proxy http://localhost:${toString authelia-port}
