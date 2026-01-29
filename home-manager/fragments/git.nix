@@ -144,8 +144,6 @@ in
       (with pkgs; [
         glab
 
-        lazyjj
-
         difftastic
       ])
       ++ lib.optionals (!flags.onlyCached) [
@@ -153,8 +151,6 @@ in
       ];
 
     programs.gh.enable = true;
-
-    programs.gh-dash.enable = true;
 
     programs.lazygit = {
       enable = true;
