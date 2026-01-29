@@ -86,6 +86,7 @@
         file-roller
         gnome-disk-utility
         insomnia
+        upkgs.jellyfin-desktop
         kicad
         legcord
         libreoffice-qt
