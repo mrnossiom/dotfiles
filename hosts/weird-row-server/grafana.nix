@@ -3,6 +3,8 @@
   ...
 }:
 
+# TODO: configure SMTP for alerts
+
 let
   grafana-port = 3002;
   # grafana-hostname = "console.net.wiro.world";
@@ -36,14 +38,19 @@ in
           icon = "signin";
 
           client_id = "grafana";
-          client_secret_path = config.age.secrets.grafana-oidc-secret.path;
+          client_secret = "$__file{${config.age.secrets.grafana-oidc-secret.path}}";
           auto_login = true;
 
           login_attribute_path = "preferred_username";
           groups_attribute_path = "groups";
           name_attribute_path = "name";
 
-          role_attribute_path = "contains(roles[*], 'admin') && 'Admin' || contains(roles[*], 'editor') && 'Editor' || 'Viewer'";
+          role_attribute_path = builtins.concatStringsSep " || " [
+            "contains(groups[*], 'admin') && 'GrafanaAdmin'"
+            "contains(groups[*], 'admin') && 'Admin'"
+            "contains(groups[*], 'editor') && 'Editor'"
+            "'Viewer'"
+          ];
           allow_assign_grafana_admin = true;
 
           scopes = [
