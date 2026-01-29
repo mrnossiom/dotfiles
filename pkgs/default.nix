@@ -17,7 +17,6 @@ let
     ;
 in
 {
-  asak = callPackage ./asak.nix { };
   ebnfer = callPackage ./ebnfer.nix { };
   find-unicode = callPackage ./find-unicode.nix { };
   lsr = callPackage ./lsr { };

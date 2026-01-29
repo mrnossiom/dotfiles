@@ -109,9 +109,6 @@
         hunspellDicts.en_US-large
         hunspellDicts.en_GB-large
 
-        # TUIs
-        lpkgs.asak
-
         # CLIs
         wf-recorder
         wl-clipboard
