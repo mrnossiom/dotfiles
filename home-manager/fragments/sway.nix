@@ -144,52 +144,40 @@ in
 
         window = {
           titlebar = false;
-          commands = [
-            # Tag of shame
-            {
-              # Equivalent to `[shell="xwayland"] title_format "%title [XWayland]"` but for all other shells
-              criteria.shell = "^((?!xdg_shell).)*$";
-              command = ''title_format "%title <small>[%shell]</small>"'';
-            }
-
-            # Toggle floating mode for some specific windows
-            {
-              # TODO: Bitwarden window glitches on opening
-              criteria = {
-                app_id = "^firefox$";
-                title = "Bitwarden Password Manager";
+          commands =
+            let
+              fullscreenAppInhibitIdle = appId: {
+                criteria.app_id = "^${appId}$";
+                command = "inhibit_idle fullscreen";
               };
-              command = ''floating enable'';
-            }
-            {
-              # Toggles floating for every Unity window but the main one
-              # Only the main window begins with `Unity - `
-              criteria = {
-                title = "^((?!^Unity - ).)*$";
-                class = "^Unity$";
-                instance = "^Unity$";
-              };
-              command = ''floating enable'';
-            }
+            in
+            [
+              # Tag of shame
+              {
+                # Equivalent to `[shell="xwayland"] title_format "%title [XWayland]"` but for all other shells
+                criteria.shell = "^((?!xdg_shell).)*$";
+                command = ''title_format "%title <small>[%shell]</small>"'';
+              }
 
-            # Inhibit IDLE when these are fullscreen
-            {
-              criteria.app_id = "firefox";
-              command = "inhibit_idle fullscreen";
-            }
-            {
-              criteria.app_id = "mpv";
-              command = "inhibit_idle fullscreen";
-            }
-            {
-              criteria.app_id = "spotify";
-              command = "inhibit_idle fullscreen";
-            }
-            {
-              criteria.app_id = "zen-beta";
-              command = "inhibit_idle fullscreen";
-            }
-          ];
+              # Toggle floating mode for some specific windows
+              {
+                # Toggles floating for every Unity window but the main one
+                # Only the main window begins with `Unity - `
+                criteria = {
+                  title = "^((?!^Unity - ).)*$";
+                  class = "^Unity$";
+                  instance = "^Unity$";
+                };
+                command = ''floating enable'';
+              }
+
+              # Inhibit IDLE when these are fullscreen
+              (fullscreenAppInhibitIdle "firefox")
+              (fullscreenAppInhibitIdle "mpv")
+              (fullscreenAppInhibitIdle "spotify")
+              (fullscreenAppInhibitIdle "zen-beta")
+              (fullscreenAppInhibitIdle "org.jellyfin.JellyfinDesktop")
+            ];
         };
 
         focus.followMouse = false;
