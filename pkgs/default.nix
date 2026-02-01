@@ -22,6 +22,7 @@ in
   lsr = callPackage ./lsr { };
   names = callPackage ./names.nix { };
   probe-rs-udev-rules = callPackage ./probe-rs-udev-rules.nix { };
+  swaylock = callPackage ./swaylock.nix { };
 
   # Import packages defined in foreign repositories
   inherit (agenix.packages.${system}) agenix;

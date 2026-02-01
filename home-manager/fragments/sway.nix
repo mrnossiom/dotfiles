@@ -2,12 +2,14 @@
   config,
   lib,
   pkgs,
+  lpkgs,
 
   isDarwin,
   ...
 }:
 
 let
+  inherit (config.local) flags;
   cfg = config.local.fragment.sway;
   cfg-sway = config.wayland.windowManager.sway.config;
 
@@ -30,12 +32,13 @@ in
 
     programs.swaylock = {
       enable = true;
+      package = if !flags.onlyCached then lpkgs.swaylock else pkgs.swaylock;
       settings = {
         ignore-empty-password = true;
         show-failed-attempts = true;
 
         # relies on custom swaylock version in `overlays/patches.nix`
-        indicator-y-position = -100;
+        indicator-y-position = if !flags.onlyCached then -100 else 100;
         indicator-x-position = 100;
       };
     };
@@ -250,7 +253,7 @@ in
               sleep 1
 
               ${grim} $tmpimg
-              ${lib.getExe pkgs.swaylock} --image $tmpimg
+              ${lib.getExe config.programs.swaylock.package} --image $tmpimg
 
               rm $tmpimg
             ''}";
