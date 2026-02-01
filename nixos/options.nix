@@ -61,9 +61,9 @@ in
     assertions =
       let
         # map port numbers to a list of port names
-        portToNames = lib.groupBy 
-          (name: config.local.ports.${name}.string) 
-          (lib.attrNames config.local.ports);
+        portToNames = lib.groupBy (name: config.local.ports.${name}.string) (
+          lib.attrNames config.local.ports
+        );
         clashes = lib.filterAttrs (port: names: (lib.length names) > 1) portToNames;
         clashStrings = lib.mapAttrsToList (
           port: names: "Port ${port} is shared by: ${lib.concatStringsSep ", " names}"

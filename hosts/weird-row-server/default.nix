@@ -30,7 +30,6 @@ in
     ./hypixel-bank-tracker.nix
     ./lldap.nix
     ./miniflux.nix
-    # ./paisa.nix
     ./pds.nix
     ./tangled.nix
     ./thelounge.nix
