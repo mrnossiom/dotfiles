@@ -12,6 +12,7 @@ let
   inherit (self.inputs)
     agenix
     git-leave
+    git-pages
     nix-alien
     wakatime-ls
     ;
@@ -27,6 +28,7 @@ in
   # Import packages defined in foreign repositories
   inherit (agenix.packages.${system}) agenix;
   inherit (git-leave.packages.${system}) git-leave;
+  inherit (git-pages.packages.${system}) git-pages;
   inherit (nix-alien.packages.${system}) nix-alien;
   inherit (wakatime-ls.packages.${system}) wakatime-ls;
 }

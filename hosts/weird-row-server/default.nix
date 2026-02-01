@@ -25,6 +25,7 @@ in
 
     ./agnos.nix
     ./authelia.nix
+    # ./git-pages.nix
     ./goatcounter.nix
     ./grafana.nix
     ./headscale.nix
@@ -168,11 +169,6 @@ in
           	header_up Host {http.request.host}
           }
         '';
-
-      virtualHosts.${globals.domains.static}.extraConfig = ''
-        root /var/www/static
-        file_server browse
-      '';
     };
 
     # TODO: use bind to declare dns records declaratively

@@ -11,6 +11,7 @@
     headscale = "headscale.${wiro-world}";
     matrix = "matrix.${wiro-world}";
     miniflux = "news.${wiro-world}";
+    pages = "pages.${wiro-world}";
     pds = "pds.${wiro-world}";
     static = "static.${wiro-world}";
     tangled-knot = "knot.${wiro-world}";

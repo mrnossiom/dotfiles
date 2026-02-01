@@ -40,6 +40,7 @@ in
         file
         fzf
         gemini-cli
+        git-pages-cli
         inetutils
         jq
         just

@@ -36,6 +36,9 @@
     git-leave.url = "github:mrnossiom/git-leave";
     git-leave.inputs.nixpkgs.follows = "nixpkgs";
 
+    git-pages.url = "git+https://codeberg.org/git-pages/git-pages";
+    git-pages.inputs.nixpkgs.follows = "nixpkgs";
+
     hypixel-bank-tracker.url = "github:pixilie/hypixel-bank-tracker";
     hypixel-bank-tracker.inputs.nixpkgs.follows = "nixpkgs";
 
