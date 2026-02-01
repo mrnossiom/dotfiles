@@ -25,17 +25,10 @@
     };
 
     services.caddy = {
-      globalConfig = ''
-        on_demand_tls {
-          ask http://localhost:${config.local.ports.pds.string}/tls-check
-        }
-      '';
-
       virtualHosts.${globals.domains.pds} = {
-        # TODO: use wildcard certificate
         serverAliases = [ "*.${globals.domains.pds}" ];
         extraConfig = ''
-          	tls { on_demand }
+          	tls /var/lib/agnos/pds.wiro.world_fullchain.pem /var/lib/agnos/pds.wiro.world_privkey.pem
             reverse_proxy http://localhost:${toString config.services.bluesky-pds.settings.PDS_PORT}
         '';
       };

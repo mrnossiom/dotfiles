@@ -23,6 +23,7 @@ in
     srvos.nixosModules.hardware-hetzner-cloud
     srvos.nixosModules.mixins-terminfo
 
+    ./agnos.nix
     ./authelia.nix
     ./goatcounter.nix
     ./grafana.nix
@@ -137,6 +138,7 @@ in
     };
 
     age.secrets.caddy-env.file = secrets/caddy-env.age;
+    users.users.caddy.extraGroups = [ "agnos" ];
     services.caddy = {
       enable = true;
       package = pkgs.caddy.withPlugins {

@@ -22,8 +22,9 @@
     };
 
     services.caddy = {
-      virtualHosts."http://${globals.domains.thelounge}".extraConfig = ''
+      virtualHosts.${globals.domains.thelounge}.extraConfig = ''
         bind tailscale/irc-lounge
+        tls /var/lib/agnos/net.wiro.world_fullchain.pem /var/lib/agnos/net.wiro.world_privkey.pem
         reverse_proxy http://localhost:${toString config.services.thelounge.port}
       '';
     };

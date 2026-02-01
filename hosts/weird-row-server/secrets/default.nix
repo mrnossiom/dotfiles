@@ -4,6 +4,7 @@ let
   deploy = servers ++ users;
 in
 {
+  "agnos-account-key.age".publicKeys = deploy;
   # Defines `TS_AUTHKEY`, `HETZNER_API_TOKEN`
   "caddy-env.age".publicKeys = deploy;
   "authelia-issuer-private-key.age".publicKeys = deploy;
