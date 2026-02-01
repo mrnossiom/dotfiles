@@ -19,13 +19,13 @@ in
 
   options.local.disk = {
     device = lib.mkOption {
-      type = with lib.types; str;
+      type = lib.types.str;
       default = "/dev/${device}";
       description = "Identifier of the disk (/dev/<device>)";
     };
 
     swapSize = lib.mkOption {
-      type = with lib.types; int;
+      type = lib.types.int;
       default = swapSize;
       description = ''
         Size (in GB) of the swap file

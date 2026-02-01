@@ -19,10 +19,10 @@ stdenv.mkDerivation rec {
     install -Dm 644 "${src}" "$out/lib/udev/rules.d/69-probe-rs.rules"
   '';
 
-  meta = with lib; {
+  meta = {
     description = "UDev rules for Probe-rs supported probes calculators";
     homepage = "https://probe.rs/";
     maintainers = [ "mrnossiom" ];
-    platforms = platforms.linux;
+    platforms = lib.platforms.linux;
   };
 }

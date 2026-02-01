@@ -1,6 +1,4 @@
 {
-  lib,
-
   fetchFromGitHub,
   rustPlatform,
 }:
@@ -19,10 +17,9 @@ rustPlatform.buildRustPackage rec {
 
   cargoHash = "sha256-URT4jTKkCkK7Mr94ll1DloSEcrbkUJk8HFxkTmePf/w=";
 
-  meta = with lib; {
+  meta = {
     description = "A language server for EBNF";
     homepage = "https://github.com/DanielHauge/ebnfer";
-    # license = licenses.mit;
     maintainers = [ "mrnossiom" ];
     mainProgram = "ebnfer";
   };

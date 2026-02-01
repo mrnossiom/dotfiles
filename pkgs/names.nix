@@ -18,10 +18,10 @@ rustPlatform.buildRustPackage rec {
 
   cargoHash = "sha256-+zNlzo/+CCGzxreDdCj/bjF28euFGuXJspJoBPaG+8E=";
 
-  meta = with lib; {
+  meta = {
     description = "Random name generator";
     homepage = "https://github.com/fnichol/names";
-    license = licenses.mit;
+    license = lib.licenses.mit;
     maintainers = [ "mrnossiom" ];
     mainProgram = "names";
   };

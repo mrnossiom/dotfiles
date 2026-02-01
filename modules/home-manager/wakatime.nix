@@ -11,15 +11,15 @@ let
   ini-format = pkgs.formats.ini { };
 in
 {
-  options.programs.wakatime = with lib; {
-    enable = mkEnableOption "Wakatime code time tracker";
+  options.programs.wakatime = {
+    enable = lib.mkEnableOption "Wakatime code time tracker";
 
-    apiKeyFile = mkOption {
+    apiKeyFile = lib.mkOption {
       description = "Path to a file containing your api key";
-      type = types.nullOr types.str;
+      type = lib.types.nullOr lib.types.str;
     };
 
-    settings = mkOption {
+    settings = lib.mkOption {
       description = ''
         Wakatime CLI settings that impacts every extension
 
@@ -39,7 +39,7 @@ in
       type = ini-format.type.nestedTypes.elemType;
     };
 
-    extraConfig = mkOption {
+    extraConfig = lib.mkOption {
       description = "Define additional wakatime configuration options";
       default = { };
       example = {

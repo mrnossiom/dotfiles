@@ -9,10 +9,10 @@ let
   cfg = config.programs.xcompose;
 in
 {
-  options.programs.xcompose = with lib; {
-    enable = mkEnableOption "XCompose keyboard configuration";
+  options.programs.xcompose = {
+    enable = lib.mkEnableOption "XCompose keyboard configuration";
 
-    loadConfigInEnv = mkOption {
+    loadConfigInEnv = lib.mkOption {
       description = ''
         Load the XCompose file by passing the `XCOMPOSEFILE` environment variable instead of linking to ~/.XCompose.
 
@@ -20,16 +20,16 @@ in
         with your compose config to reload faster than having to reload your VM.
       '';
       default = true;
-      type = types.bool;
+      type = lib.types.bool;
     };
 
-    includeLocaleCompose = mkOption {
+    includeLocaleCompose = lib.mkOption {
       description = "Whether to include the base libX11 locale compose file";
       default = false;
-      type = types.bool;
+      type = lib.types.bool;
     };
 
-    sequences = mkOption {
+    sequences = lib.mkOption {
       description = ''
         Shapeless tree of macros
         - Keys name can be easily found with wev (or xev)
@@ -44,10 +44,10 @@ in
           };
         };
       };
-      type = types.anything;
+      type = lib.types.anything;
     };
 
-    extraConfig = mkOption {
+    extraConfig = lib.mkOption {
       description = ''
         Unmanaged xcompose sequences and directives
       '';
@@ -55,22 +55,21 @@ in
       example = ''
         <Multi_key> <Multi_key> <a> <5> : "٥"
       '';
-      type = types.lines;
+      type = lib.types.lines;
     };
   };
 
   config =
-    with lib;
     let
-      comboListToString = foldl (acc: val: acc + "<${val}> ") "";
-      sanitizeComboResult = escape [ ''"'' ];
+      comboListToString = lib.foldl (acc: val: acc + "<${val}> ") "";
+      sanitizeComboResult = lib.escape [ ''"'' ];
 
       comboSetToList =
         ip:
-        flatten (
-          mapAttrsToList (
+        lib.flatten (
+          lib.mapAttrsToList (
             name: value:
-            if isAttrs value then
+            if lib.isAttrs value then
               let
                 vs = comboSetToList value;
               in
@@ -81,7 +80,7 @@ in
                   inherit value;
                 }
               ) vs
-            else if isString value then
+            else if lib.isString value then
               {
                 combo = [ name ];
                 inherit value;
@@ -97,19 +96,19 @@ in
           value = sanitizeComboResult value;
         }
       );
-      toComposeFile = foldl (acc: val: acc + "${val.combo}: \"${val.value}\"\n") "";
+      toComposeFile = lib.foldl (acc: val: acc + "${val.combo}: \"${val.value}\"\n") "";
 
       processComposeSet = set: toComposeFile (complexListToSimple (comboSetToList set));
 
       # TODO: see if include changes if put after compose declarations
       composeFile = pkgs.writeText "XCompose" ''
-        ${optionalString cfg.includeLocaleCompose "include \"%L\""}
+        ${lib.optionalString cfg.includeLocaleCompose "include \"%L\""}
         ${processComposeSet cfg.sequences}
         ${cfg.extraConfig}
       '';
     in
-    mkIf cfg.enable {
-      home.sessionVariables = mkIf cfg.loadConfigInEnv { XCOMPOSEFILE = composeFile; };
-      home.file = mkIf (!cfg.loadConfigInEnv) { ".XCompose".source = composeFile; };
+    lib.mkIf cfg.enable {
+      home.sessionVariables = lib.mkIf cfg.loadConfigInEnv { XCOMPOSEFILE = composeFile; };
+      home.file = lib.mkIf (!cfg.loadConfigInEnv) { ".XCompose".source = composeFile; };
     };
 }

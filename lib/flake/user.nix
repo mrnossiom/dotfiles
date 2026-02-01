@@ -28,7 +28,7 @@ in
 
   options = {
     local.user.username = lib.mkOption {
-      type = with lib.types; str;
+      type = lib.types.str;
       description = "The name of the main user account";
     };
   };
