@@ -1,21 +1,23 @@
 {
-  pkgs,
   config,
+  pkgs,
+  globals,
   ...
 }:
 
 let
   json-format = pkgs.formats.json { };
-
-  headscale-port = 3006;
-  headscale-derp-port = 3478;
-  headscale-hostname = "headscale.wiro.world";
-
-  headscale-metrics-port = 9003;
 in
 {
   config = {
-    networking.firewall.allowedUDPPorts = [ headscale-derp-port ];
+    local.ports.headscale = 3006;
+
+    local.ports.headscale-derp = {
+      number = 3478;
+      public = true;
+      tcp = false;
+      udp = true;
+    };
 
     age.secrets.headscale-oidc-secret = {
       file = secrets/headscale-oidc-secret.age;
@@ -24,10 +26,10 @@ in
     services.headscale = {
       enable = true;
 
-      port = headscale-port;
+      port = config.local.ports.headscale.number;
       settings = {
-        server_url = "https://${headscale-hostname}";
-        metrics_listen_addr = "127.0.0.1:${toString headscale-metrics-port}";
+        server_url = "https://${globals.domains.headscale}";
+        metrics_listen_addr = "127.0.0.1:${config.local.ports.headscale-metrics.string}";
 
         policy.path = json-format.generate "policy.json" {
           acls = [
@@ -82,16 +84,17 @@ in
 
         derp.server = {
           enable = true;
-          stun_listen_addr = "0.0.0.0:${toString headscale-derp-port}";
+          stun_listen_addr = "0.0.0.0:${config.local.ports.headscale-derp.string}";
         };
       };
     };
+
     # headscale only starts if oidc is available
     systemd.services.headscale.after = [ "authelia-main.service" ];
 
     services.caddy = {
-      virtualHosts.${headscale-hostname}.extraConfig = ''
-        reverse_proxy http://localhost:${toString headscale-port}
+      virtualHosts.${globals.domains.headscale}.extraConfig = ''
+        reverse_proxy http://localhost:${config.local.ports.headscale.string}
       '';
     };
   };

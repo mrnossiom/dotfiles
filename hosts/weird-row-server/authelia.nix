@@ -1,19 +1,14 @@
 {
   config,
+  globals,
   ...
 }:
 
-let
-  authelia-port = 3008;
-  authelia-hostname = "auth.wiro.world";
-
-  authelia-metrics-port = 9004;
-  headscale-hostname = "headscale.wiro.world";
-  grafana-hostname = "console.wiro.world";
-  miniflux-hostname = "news.wiro.world";
-in
 {
   config = {
+    local.ports.authelia = 3008;
+    local.ports.authelia-metrics = 9004;
+
     age.secrets.authelia-jwt-secret = {
       file = secrets/authelia-jwt-secret.age;
       owner = config.services.authelia.instances.main.user;
@@ -47,47 +42,31 @@ in
         AUTHELIA_NOTIFIER_SMTP_PASSWORD_FILE = config.age.secrets.authelia-smtp-password.path;
       };
       settings = {
-        server.address = "localhost:${toString authelia-port}";
+        server.address = "localhost:${config.local.ports.authelia.string}";
         storage.local.path = "/var/lib/authelia-main/db.sqlite3";
         telemetry.metrics = {
           enabled = true;
-          address = "tcp://:${toString authelia-metrics-port}/metrics";
+          address = "tcp://:${config.local.ports.authelia-metrics.string}/metrics";
         };
 
         session = {
           cookies = [
             {
-              domain = "wiro.world";
-              authelia_url = "https://${authelia-hostname}";
-              default_redirection_url = "https://wiro.world";
+              domain = globals.domains.wiro-world;
+              authelia_url = "https://${globals.domains.authelia}";
+              default_redirection_url = "https://${globals.domains.website}";
             }
           ];
         };
 
         authentication_backend.ldap = {
-          address = "ldap://localhost:3890";
-          timeout = "5m"; # replace with systemd dependency
+          implementation = "lldap";
+          address = "ldap://localhost:${config.local.ports.lldap-ldap.string}";
+          base_dn = "dc=wiro,dc=world";
 
           user = "uid=authelia,ou=people,dc=wiro,dc=world";
           # Set in `AUTHELIA_AUTHENTICATION_BACKEND_LDAP_PASSWORD_FILE`.
           # password = "";
-
-          base_dn = "dc=wiro,dc=world";
-          users_filter = "(&(|({username_attribute}={input})({mail_attribute}={input}))(objectClass=person))";
-          additional_users_dn = "ou=people";
-          groups_filter = "(&(member={dn})(objectClass=groupOfNames))";
-          additional_groups_dn = "ou=groups";
-
-          attributes = {
-            username = "uid";
-            display_name = "cn";
-            given_name = "givenname";
-            family_name = "last_name";
-            mail = "mail";
-            picture = "avatar";
-
-            group_name = "cn";
-          };
         };
 
         access_control = {
@@ -95,12 +74,11 @@ in
           # Rules are sequential and do not apply to OIDC
           rules = [
             {
-              domain = "headscale.wiro.world";
+              domain = globals.domains.headscale;
               policy = "two_factor";
-
             }
             {
-              domain = "news.wiro.world";
+              domain = globals.domains.miniflux;
               policy = "one_factor";
 
               subject = [
@@ -111,7 +89,7 @@ in
               ];
             }
             {
-              domain = "*.wiro.world";
+              domain = "*.${globals.domains.wiro-world}";
               policy = "two_factor";
             }
           ];
@@ -155,7 +133,7 @@ in
               client_name = "Headscale";
               client_id = "headscale";
               client_secret = "$pbkdf2-sha256$310000$XY680D9gkSoWhD0UtYHNFg$ptWB3exOYCga6uq1N.oimuV3ILjK3F8lBWBpsBpibos";
-              redirect_uris = [ "https://${headscale-hostname}/oidc/callback" ];
+              redirect_uris = [ "https://${globals.domains.headscale}/oidc/callback" ];
               authorization_policy = "headscale";
               claims_policy = "headscale";
             }
@@ -170,7 +148,7 @@ in
               client_name = "Grafana Console";
               client_id = "grafana";
               client_secret = "$pbkdf2-sha256$310000$UkwrqxTZodGMs9.Ca2cXAA$HCWFgQbFHGXZpuz.I3HHdkTZLUevRVGlhKEFaOlPmKs";
-              redirect_uris = [ "https://${grafana-hostname}/login/generic_oauth" ];
+              redirect_uris = [ "https://${globals.domains.grafana}/login/generic_oauth" ];
               authorization_policy = "grafana";
               claims_policy = "grafana";
             }
@@ -178,7 +156,7 @@ in
               client_name = "Miniflux";
               client_id = "miniflux";
               client_secret = "$pbkdf2-sha256$310000$uPqbWfCOBXDY6nV1vsx3uA$HOWG2hL.c/bs9Dwaee3b9DxjH7KFO.SaZMbasXV9Vdw";
-              redirect_uris = [ "https://${miniflux-hostname}/oauth2/oidc/callback" ];
+              redirect_uris = [ "https://${globals.domains.miniflux}/oauth2/oidc/callback" ];
               authorization_policy = "miniflux";
             }
           ];
@@ -197,8 +175,8 @@ in
     systemd.services.authelia.after = [ "lldap.service" ];
 
     services.caddy = {
-      virtualHosts.${authelia-hostname}.extraConfig = ''
-        reverse_proxy http://localhost:${toString authelia-port}
+      virtualHosts.${globals.domains.authelia}.extraConfig = ''
+        reverse_proxy http://localhost:${config.local.ports.authelia.string}
       '';
     };
   };

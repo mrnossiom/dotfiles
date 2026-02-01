@@ -1,6 +1,6 @@
 {
   pkgs,
-  config,
+  globals,
   ...
 }:
 
@@ -34,13 +34,11 @@ let
   well-known-discord-dir = pkgs.writeTextDir ".well-known/discord" ''
     dh=919234284ceb2aba439d15b9136073eb2308989b
   '';
-
-  website-hostname = "wiro.world";
 in
 {
   config = {
     services.caddy = {
-      virtualHosts.${website-hostname}.extraConfig = ''
+      virtualHosts.${globals.domains.website}.extraConfig = ''
         @webfinger {
           path /.well-known/webfinger
           method GET HEAD

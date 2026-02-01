@@ -1,24 +1,23 @@
 {
   config,
+  globals,
   ...
 }:
 
-let
-  goatcounter-port = 3010;
-  goatcounter-hostname = "stats.wiro.world";
-in
 {
   config = {
+    local.ports.goatcounter = 3010;
+
     services.goatcounter = {
       enable = true;
 
-      port = goatcounter-port;
+      port = config.local.ports.goatcounter.number;
       proxy = true;
       extraArgs = [ "-automigrate" ];
     };
 
     services.caddy = {
-      virtualHosts.${goatcounter-hostname}.extraConfig = ''
+      virtualHosts.${globals.domains.goatcounter}.extraConfig = ''
         reverse_proxy http://localhost:${toString config.services.goatcounter.port}
       '';
     };

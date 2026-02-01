@@ -1,23 +1,21 @@
 {
   config,
+  globals,
   ...
 }:
 
 # TODO: configure SMTP for alerts
 
-let
-  grafana-port = 3002;
-  # grafana-hostname = "console.net.wiro.world";
-  grafana-hostname = "console.wiro.world";
-
-  prometheus-port = 9001;
-  prometheus-node-exporter-port = 9002;
-  caddy-metrics-port = 2019;
-  authelia-metrics-port = 9004;
-  headscale-metrics-port = 9003;
-in
 {
   config = {
+    local.ports.grafana = 3002;
+
+    local.ports.prometheus = 9001;
+    local.ports.prometheus-node-exporter = 9002;
+    local.ports.caddy-metrics = 2019;
+    local.ports.authelia-metrics = 9004;
+    local.ports.headscale-metrics = 9003;
+
     age.secrets.grafana-oidc-secret = {
       file = secrets/grafana-oidc-secret.age;
       owner = "grafana";
@@ -27,9 +25,9 @@ in
 
       settings = {
         server = {
-          http_port = grafana-port;
-          domain = grafana-hostname;
-          root_url = "https://${grafana-hostname}";
+          http_port = config.local.ports.grafana.number;
+          domain = globals.domains.grafana;
+          root_url = "https://${globals.domains.grafana}";
         };
 
         "auth.generic_oauth" = {
@@ -69,17 +67,18 @@ in
 
     services.prometheus = {
       enable = true;
-      port = prometheus-port;
+      port = config.local.ports.prometheus.number;
 
       exporters.node = {
         enable = true;
-        port = prometheus-node-exporter-port;
+        port = config.local.ports.prometheus-node-exporter.number;
       };
 
+      # TODO: move them to their respective modules
       scrapeConfigs = [
         {
           job_name = "caddy";
-          static_configs = [ { targets = [ "localhost:${toString caddy-metrics-port}" ]; } ];
+          static_configs = [ { targets = [ "localhost:${config.local.ports.caddy-metrics.string}" ]; } ];
         }
         {
           job_name = "node-exporter";
@@ -89,11 +88,11 @@ in
         }
         {
           job_name = "headscale";
-          static_configs = [ { targets = [ "localhost:${toString headscale-metrics-port}" ]; } ];
+          static_configs = [ { targets = [ "localhost:${config.local.ports.headscale-metrics.string}" ]; } ];
         }
         {
           job_name = "authelia";
-          static_configs = [ { targets = [ "localhost:${toString authelia-metrics-port}" ]; } ];
+          static_configs = [ { targets = [ "localhost:${config.local.ports.authelia-metrics.string}" ]; } ];
         }
       ];
     };
@@ -102,10 +101,10 @@ in
       globalConfig = ''
         metrics { per_host }
       '';
-      # virtualHosts."http://${grafana-hostname}".extraConfig = ''
+      # virtualHosts."http://${globals.domains.grafana}".extraConfig = ''
       # bind tailscale/console
-      virtualHosts.${grafana-hostname}.extraConfig = ''
-        reverse_proxy http://localhost:${toString grafana-port}
+      virtualHosts.${globals.domains.grafana}.extraConfig = ''
+        reverse_proxy http://localhost:${config.local.ports.grafana.string}
       '';
     };
   };

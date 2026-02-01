@@ -1,14 +1,13 @@
 {
   config,
+  globals,
   ...
 }:
 
-let
-  miniflux-port = 3012;
-  miniflux-hostname = "news.wiro.world";
-in
 {
   config = {
+    local.ports.miniflux = 3012;
+
     users.users.miniflux = {
       isSystemUser = true;
       group = "miniflux";
@@ -23,8 +22,8 @@ in
 
       createDatabaseLocally = true;
       config = {
-        BASE_URL = "https://${miniflux-hostname}/";
-        LISTEN_ADDR = "127.0.0.1:${toString miniflux-port}";
+        BASE_URL = "https://${globals.domains.miniflux}/";
+        LISTEN_ADDR = "127.0.0.1:${config.local.ports.miniflux.string}";
         CREATE_ADMIN = 0;
 
         METRICS_COLLECTOR = 1;
@@ -33,7 +32,7 @@ in
         OAUTH2_OIDC_PROVIDER_NAME = "wiro.world SSO";
         OAUTH2_CLIENT_ID = "miniflux";
         OAUTH2_CLIENT_SECRET_FILE = config.age.secrets.miniflux-oidc-secret.path;
-        OAUTH2_REDIRECT_URL = "https://${miniflux-hostname}/oauth2/oidc/callback";
+        OAUTH2_REDIRECT_URL = "https://${globals.domains.miniflux}/oauth2/oidc/callback";
         OAUTH2_OIDC_DISCOVERY_ENDPOINT = "https://auth.wiro.world";
         OAUTH2_USER_CREATION = 1;
         DISABLE_LOCAL_AUTH = 1;
@@ -48,13 +47,13 @@ in
     services.prometheus.scrapeConfigs = [
       {
         job_name = "miniflux";
-        static_configs = [ { targets = [ "localhost:${toString miniflux-port}" ]; } ];
+        static_configs = [ { targets = [ "localhost:${config.local.ports.miniflux.string}" ]; } ];
       }
     ];
 
     services.caddy = {
-      virtualHosts.${miniflux-hostname}.extraConfig = ''
-        reverse_proxy http://localhost:${toString miniflux-port}
+      virtualHosts.${globals.domains.miniflux}.extraConfig = ''
+        reverse_proxy http://localhost:${config.local.ports.miniflux.string}
       '';
     };
   };

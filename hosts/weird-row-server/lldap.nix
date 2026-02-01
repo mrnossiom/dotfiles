@@ -1,14 +1,14 @@
 {
   config,
+  globals,
   ...
 }:
 
-let
-  lldap-port = 3007;
-  lldap-hostname = "ldap.net.wiro.world";
-in
 {
   config = {
+    local.ports.lldap-interface = 3007;
+    local.ports.lldap-ldap = 3890;
+
     age.secrets.lldap-env.file = secrets/lldap-env.age;
     users.users.lldap = {
       isSystemUser = true;
@@ -25,8 +25,8 @@ in
       silenceForceUserPassResetWarning = true;
 
       settings = {
-        http_url = "https://${lldap-hostname}";
-        http_port = lldap-port;
+        http_url = "https://${globals.domains.lldap}";
+        http_port = config.local.ports.lldap-interface.number;
 
         ldap_user_pass_file = config.age.secrets.lldap-user-pass.path;
         force_ldap_user_pass_reset = false;
@@ -37,7 +37,7 @@ in
     };
 
     services.caddy = {
-      virtualHosts."http://${lldap-hostname}".extraConfig = ''
+      virtualHosts."http://${globals.domains.lldap}".extraConfig = ''
         bind tailscale/ldap
         reverse_proxy http://localhost:${toString config.services.lldap.settings.http_port}
       '';

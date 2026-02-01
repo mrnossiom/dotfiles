@@ -22,6 +22,7 @@ rec {
     inherit self;
     # local flake library
     llib = import ../. pkgs;
+    globals = import ../../globals.nix;
     # local packages set
     lpkgs = import ../../pkgs pkgs;
     # unstable nixpkgs set
@@ -41,6 +42,7 @@ rec {
         inherit pkgs;
         modules = modules ++ [
           ../../nixos/fragments/default.nix
+          ../../nixos/options.nix
         ];
         specialArgs = specialModuleArgs pkgs;
       };

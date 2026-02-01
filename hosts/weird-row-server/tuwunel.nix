@@ -1,16 +1,13 @@
 {
   config,
+  globals,
   ...
 }:
 
-let
-  matrix-port = 3009;
-  matrix-hostname = "matrix.wiro.world";
-
-  website-hostname = "wiro.world";
-in
 {
   config = {
+    local.ports.matrix = 3009;
+
     age.secrets.tuwunel-registration-tokens = {
       file = secrets/tuwunel-registration-tokens.age;
       owner = config.services.matrix-tuwunel.user;
@@ -20,7 +17,7 @@ in
 
       settings.global = {
         address = [ "127.0.0.1" ];
-        port = [ matrix-port ];
+        port = [ config.local.ports.matrix.number ];
 
         server_name = "wiro.world";
         well_known = {
@@ -37,12 +34,12 @@ in
     };
 
     services.caddy = {
-      virtualHosts.${matrix-hostname}.extraConfig = ''
-        reverse_proxy /_matrix/* http://localhost:${toString matrix-port}
+      virtualHosts.${globals.domains.matrix}.extraConfig = ''
+        reverse_proxy /_matrix/* http://localhost:${config.local.ports.matrix.string}
       '';
 
-      virtualHosts.${website-hostname}.extraConfig = ''
-        reverse_proxy /.well-known/matrix/* http://localhost:${toString matrix-port}
+      virtualHosts.${globals.domains.website}.extraConfig = ''
+        reverse_proxy /.well-known/matrix/* http://localhost:${config.local.ports.matrix.string}
       '';
     };
   };

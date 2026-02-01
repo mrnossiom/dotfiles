@@ -1,16 +1,16 @@
 {
+  config,
+  globals,
   ...
 }:
 
-let
-  warrior-port = 3015;
-  warrior-hostname = "warrior.net.wiro.world";
-in
 {
   config = {
+    local.ports.warrior = 3015;
+
     virtualisation.oci-containers.containers.archive-warrior = {
       image = "atdr.meo.ws/archiveteam/warrior-dockerfile";
-      ports = [ "127.0.0.1:${toString warrior-port}:8001" ];
+      ports = [ "127.0.0.1:${config.local.ports.warrior.string}:8001" ];
       pull = "newer";
 
       environment = {
@@ -21,9 +21,9 @@ in
     };
 
     services.caddy = {
-      virtualHosts."http://${warrior-hostname}".extraConfig = ''
+      virtualHosts."http://${globals.domains.warrior}".extraConfig = ''
         bind tailscale/warrior
-        reverse_proxy http://localhost:${toString warrior-port}
+        reverse_proxy http://localhost:${config.local.ports.warrior.string}
       '';
     };
   };

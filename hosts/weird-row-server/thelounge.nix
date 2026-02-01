@@ -1,17 +1,16 @@
 {
   config,
+  globals,
   ...
 }:
 
-let
-  thelounge-port = 3005;
-  thelounge-hostname = "irc-lounge.net.wiro.world";
-in
 {
   config = {
+    local.ports.thelounge = 3005;
+
     services.thelounge = {
       enable = true;
-      port = thelounge-port;
+      port = config.local.ports.thelounge.number;
       public = false;
 
       extraConfig = {
@@ -23,7 +22,7 @@ in
     };
 
     services.caddy = {
-      virtualHosts."http://${thelounge-hostname}".extraConfig = ''
+      virtualHosts."http://${globals.domains.thelounge}".extraConfig = ''
         bind tailscale/irc-lounge
         reverse_proxy http://localhost:${toString config.services.thelounge.port}
       '';

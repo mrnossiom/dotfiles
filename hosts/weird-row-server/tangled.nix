@@ -1,6 +1,7 @@
 {
   self,
   config,
+  globals,
   ...
 }:
 
@@ -8,10 +9,6 @@ let
   inherit (self.inputs) tangled;
 
   tangled-owner = "did:plc:xhgrjm4mcx3p5h3y6eino6ti";
-  tangled-knot-port = 3003;
-  tangled-knot-hostname = "knot.wiro.world";
-  tangled-spindle-port = 3004;
-  tangled-spindle-hostname = "spindle.wiro.world";
 in
 {
   imports = [
@@ -20,14 +17,17 @@ in
   ];
 
   config = {
+    local.ports.tangled-knot = 3003;
+    local.ports.tangled-spindle = 3004;
+
     services.tangled.knot = {
       enable = true;
       openFirewall = true;
 
       motd = "Welcome to @wiro.world's knot!\n";
       server = {
-        listenAddr = "localhost:${toString tangled-knot-port}";
-        hostname = tangled-knot-hostname;
+        listenAddr = "localhost:${config.local.ports.tangled-knot.string}";
+        hostname = globals.domains.tangled-knot;
         owner = tangled-owner;
       };
     };
@@ -36,19 +36,19 @@ in
       enable = true;
 
       server = {
-        listenAddr = "localhost:${toString tangled-spindle-port}";
-        hostname = tangled-spindle-hostname;
+        listenAddr = "localhost:${config.local.ports.tangled-spindle.string}";
+        hostname = globals.domains.tangled-spindle;
         owner = tangled-owner;
       };
     };
 
     services.caddy = {
-      virtualHosts.${tangled-knot-hostname}.extraConfig = ''
-        reverse_proxy http://localhost:${toString tangled-knot-port}
+      virtualHosts.${globals.domains.tangled-knot}.extraConfig = ''
+        reverse_proxy http://localhost:${config.local.ports.tangled-knot.string}
       '';
 
-      virtualHosts.${tangled-spindle-hostname}.extraConfig = ''
-        reverse_proxy http://localhost:${toString tangled-spindle-port}
+      virtualHosts.${globals.domains.tangled-spindle}.extraConfig = ''
+        reverse_proxy http://localhost:${config.local.ports.tangled-spindle.string}
       '';
     };
   };

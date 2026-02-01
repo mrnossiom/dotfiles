@@ -2,6 +2,7 @@
   self,
   config,
   pkgs,
+  globals,
   ...
 }:
 
@@ -15,10 +16,6 @@ let
   external-ip6 = "2a01:4f8:c2c:76d2::1";
   external-netmask6 = 64;
   external-gw6 = "fe80::1";
-
-  website-hostname = "wiro.world";
-
-  static-hostname = "static.wiro.world";
 in
 {
   imports = [
@@ -86,17 +83,14 @@ in
         interface = ext-if;
         address = external-gw6;
       };
-
-      # Reflect firewall configuration on Hetzner
-      firewall.allowedTCPPorts = [
-        22
-        80
-        443
-      ];
     };
 
     services.qemuGuest.enable = true;
 
+    local.ports.openssh = {
+      number = 22;
+      public = true;
+    };
     services.openssh.enable = true;
 
     # age.secrets.tailscale-authkey.file = secrets/tailscale-authkey.age;
@@ -105,7 +99,7 @@ in
       extraSetFlags = [ "--advertise-exit-node" ];
       # authKeyFile = config.age.secrets.tailscale-authkey.path;
       authKeyParameters = {
-        baseURL = "https://headscale.wiro.world";
+        baseURL = "https://${globals.domains.headscale}";
         ephemeral = true;
         preauthorized = true;
       };
@@ -134,6 +128,15 @@ in
       jails = { };
     };
 
+    local.ports.caddy-http = {
+      number = 80;
+      public = true;
+    };
+    local.ports.caddy-https = {
+      number = 443;
+      public = true;
+    };
+
     age.secrets.caddy-env.file = secrets/caddy-env.age;
     services.caddy = {
       enable = true;
@@ -151,13 +154,13 @@ in
         tailscale {
           # this caddy instance already proxies headscale but needs to access headscale to start
           # control_url https://headscale.wiro.world
-          control_url http://localhost:3006
+          control_url http://localhost:${config.local.ports.headscale.string}
 
           ephemeral
         }
       '';
 
-      virtualHosts.${website-hostname}.extraConfig =
+      virtualHosts.${globals.domains.website}.extraConfig =
         # TODO: host website on server with automatic deployment
         ''
           reverse_proxy https://mrnossiom.github.io {
@@ -165,7 +168,7 @@ in
           }
         '';
 
-      virtualHosts.${static-hostname}.extraConfig = ''
+      virtualHosts.${globals.domains.static}.extraConfig = ''
         root /var/www/static
         file_server browse
       '';
