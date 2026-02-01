@@ -148,9 +148,7 @@ in
                 args = [ ];
               };
             })
-            (mk-lang "markdown" [ "marksman" ] {
-              soft-wrap.enable = true;
-            })
+            (mk-lang "markdown" [ "marksman" ] { })
 
             (mk-lang "html" [ "vscode-html-language-server" ] { })
             (mk-lang "nix" [ "nil" ] { })
