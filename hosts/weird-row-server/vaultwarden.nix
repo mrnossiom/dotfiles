@@ -24,8 +24,8 @@
         SMTP_SECURITY = "force_tls";
         SMTP_USERNAME = "resend";
         # SMTP_PASSWORD = ...; # Via secret env
-        SMTP_FROM = "bitwarden@wiro.world";
-        SMTP_FROM_NAME = "Bitwarden wiro.world";
+        SMTP_FROM = "vaultwarden@services.wiro.world";
+        SMTP_FROM_NAME = "wiro.world Vaultwarden";
       };
     };
 

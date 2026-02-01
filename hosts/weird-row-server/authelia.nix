@@ -167,7 +167,7 @@
           username = "resend";
           # Set in `AUTHELIA_NOTIFIER_SMTP_PASSWORD_FILE`.
           # password = "";
-          sender = "authelia@wiro.world";
+          sender = "authelia@services.wiro.world";
         };
       };
     };

@@ -11,6 +11,7 @@ in
   "lldap-user-pass.age".publicKeys = deploy;
   "headscale-oidc-secret.age".publicKeys = deploy;
   "grafana-oidc-secret.age".publicKeys = deploy;
+  "grafana-smtp-password.age".publicKeys = deploy;
   "authelia-jwt-secret.age".publicKeys = deploy;
   "authelia-issuer-private-key.age".publicKeys = deploy;
   "authelia-storage-key.age".publicKeys = deploy;

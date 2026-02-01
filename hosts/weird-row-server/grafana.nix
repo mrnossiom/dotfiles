@@ -4,8 +4,6 @@
   ...
 }:
 
-# TODO: configure SMTP for alerts
-
 {
   config = {
     local.ports.grafana = 3002;
@@ -18,6 +16,10 @@
 
     age.secrets.grafana-oidc-secret = {
       file = secrets/grafana-oidc-secret.age;
+      owner = "grafana";
+    };
+    age.secrets.grafana-smtp-password = {
+      file = secrets/grafana-smtp-password.age;
       owner = "grafana";
     };
     services.grafana = {
@@ -61,6 +63,17 @@
           token_url = "https://auth.wiro.world/api/oidc/token";
           api_url = "https://auth.wiro.world/api/oidc/userinfo";
           use_pkce = true;
+        };
+
+        smtp = {
+          enabled = true;
+          host = "smtp.resend.com:2587";
+          user = "resend";
+          password = "$__file{${config.age.secrets.grafana-smtp-password.path}}";
+
+          from_address = "grafana@services.wiro.world";
+          from_name = "wiro.world Grafana Alerts";
+          startTLS_policy = "MandatoryStartTLS";
         };
       };
     };
