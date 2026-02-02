@@ -174,6 +174,13 @@
 
     systemd.services.authelia.after = [ "lldap.service" ];
 
+    services.prometheus.scrapeConfigs = [
+      {
+        job_name = "authelia";
+        static_configs = [ { targets = [ "localhost:${config.local.ports.authelia-metrics.string}" ]; } ];
+      }
+    ];
+
     services.caddy = {
       virtualHosts.${globals.domains.authelia}.extraConfig = ''
         reverse_proxy http://localhost:${config.local.ports.authelia.string}

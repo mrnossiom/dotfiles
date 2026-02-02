@@ -7,19 +7,17 @@
     # wiro.world Public
     authelia = "auth.${wiro-world}";
     goatcounter = "stats.${wiro-world}";
-    grafana = "console.${wiro-world}";
     headscale = "headscale.${wiro-world}";
     matrix = "matrix.${wiro-world}";
     miniflux = "news.${wiro-world}";
-    pages = "pages.${wiro-world}";
     pds = "pds.${wiro-world}";
-    static = "static.${wiro-world}";
     tangled-knot = "knot.${wiro-world}";
     tangled-spindle = "spindle.${wiro-world}";
     vaultwarden = "vault.${wiro-world}";
     website = wiro-world;
 
     # wiro.world private net
+    grafana = "console.${wiro-world-net}";
     lldap = "ldap.${wiro-world-net}";
     thelounge = "irc-lounge.${wiro-world-net}";
     warrior = "warrior.${wiro-world-net}";

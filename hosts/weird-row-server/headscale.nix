@@ -11,7 +11,7 @@ in
 {
   config = {
     local.ports.headscale = 3006;
-
+    local.ports.headscale-metrics = 9003;
     local.ports.headscale-derp = {
       number = 3478;
       public = true;
@@ -91,6 +91,13 @@ in
 
     # headscale only starts if oidc is available
     systemd.services.headscale.after = [ "authelia-main.service" ];
+
+    services.prometheus.scrapeConfigs = [
+      {
+        job_name = "headscale";
+        static_configs = [ { targets = [ "localhost:${config.local.ports.headscale-metrics.string}" ]; } ];
+      }
+    ];
 
     services.caddy = {
       virtualHosts.${globals.domains.headscale}.extraConfig = ''

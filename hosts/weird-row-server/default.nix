@@ -1,8 +1,5 @@
 {
   self,
-  config,
-  pkgs,
-  globals,
   ...
 }:
 
@@ -25,7 +22,7 @@ in
 
     ./agnos.nix
     ./authelia.nix
-    # ./git-pages.nix
+    ./caddy.nix
     ./goatcounter.nix
     ./grafana.nix
     ./headscale.nix
@@ -33,12 +30,16 @@ in
     ./lldap.nix
     ./miniflux.nix
     ./pds.nix
+    ./tailscale.nix
     ./tangled.nix
     ./thelounge.nix
     ./tuwunel.nix
     ./vaultwarden.nix
     ./warrior.nix
     ./webfinger.nix
+
+    # doesn't support domain restrictions
+    # ./git-pages.nix
   ];
 
   config = {
@@ -94,18 +95,6 @@ in
     };
     services.openssh.enable = true;
 
-    # age.secrets.tailscale-authkey.file = secrets/tailscale-authkey.age;
-    services.tailscale = {
-      enable = true;
-      extraSetFlags = [ "--advertise-exit-node" ];
-      # authKeyFile = config.age.secrets.tailscale-authkey.path;
-      authKeyParameters = {
-        baseURL = "https://${globals.domains.headscale}";
-        ephemeral = true;
-        preauthorized = true;
-      };
-    };
-
     security.sudo.wheelNeedsPassword = false;
 
     local.fragment.nix.enable = true;
@@ -127,48 +116,6 @@ in
       };
 
       jails = { };
-    };
-
-    local.ports.caddy-http = {
-      number = 80;
-      public = true;
-    };
-    local.ports.caddy-https = {
-      number = 443;
-      public = true;
-    };
-
-    age.secrets.caddy-env.file = secrets/caddy-env.age;
-    users.users.caddy.extraGroups = [ "agnos" ];
-    services.caddy = {
-      enable = true;
-      package = pkgs.caddy.withPlugins {
-        plugins = [
-          "github.com/caddy-dns/hetzner/v2@v2.0.0-preview-1"
-          "github.com/tailscale/caddy-tailscale@v0.0.0-20251016213337-01d084e119cb"
-        ];
-        hash = "sha256-muKwDYs5Jp4ib/psZxpp1Kyfsqz6wPz/lpHFGtx67uY=";
-      };
-
-      environmentFile = config.age.secrets.caddy-env.path;
-
-      globalConfig = ''
-        tailscale {
-          # this caddy instance already proxies headscale but needs to access headscale to start
-          # control_url https://headscale.wiro.world
-          control_url http://localhost:${config.local.ports.headscale.string}
-
-          ephemeral
-        }
-      '';
-
-      virtualHosts.${globals.domains.website}.extraConfig =
-        # TODO: host website on server with automatic deployment
-        ''
-          reverse_proxy https://mrnossiom.github.io {
-          	header_up Host {http.request.host}
-          }
-        '';
     };
 
     # TODO: use bind to declare dns records declaratively

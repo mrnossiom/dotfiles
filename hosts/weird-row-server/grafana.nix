@@ -7,13 +7,8 @@
 {
   config = {
     local.ports.grafana = 3002;
-
     local.ports.prometheus = 9001;
     local.ports.prometheus-node-exporter = 9002;
-    local.ports.tailscale-exporter = 9005;
-    local.ports.caddy-metrics = 2019;
-    local.ports.authelia-metrics = 9004;
-    local.ports.headscale-metrics = 9003;
 
     age.secrets.grafana-oidc-secret = {
       file = secrets/grafana-oidc-secret.age;
@@ -23,7 +18,7 @@
       file = secrets/grafana-smtp-password.age;
       owner = "grafana";
     };
-    age.secrets.tailscale-exporter-env.file = secrets/tailscale-exporter-env.age;
+
     services.grafana = {
       enable = true;
 
@@ -88,51 +83,25 @@
         enable = true;
         port = config.local.ports.prometheus-node-exporter.number;
       };
-      exporters.tailscale = {
-        enable = true;
-        port = config.local.ports.tailscale-exporter.number;
-        environmentFile = config.age.secrets.tailscale-exporter-env.path;
-      };
 
-      # TODO: move them to their respective modules
       scrapeConfigs = [
-        {
-          job_name = "caddy";
-          static_configs = [ { targets = [ "localhost:${config.local.ports.caddy-metrics.string}" ]; } ];
-        }
         {
           job_name = "node-exporter";
           static_configs = [
             { targets = [ "localhost:${toString config.services.prometheus.exporters.node.port}" ]; }
-
-          ];
-        }
-        {
-          job_name = "headscale";
-          static_configs = [ { targets = [ "localhost:${config.local.ports.headscale-metrics.string}" ]; } ];
-        }
-        {
-          job_name = "authelia";
-          static_configs = [ { targets = [ "localhost:${config.local.ports.authelia-metrics.string}" ]; } ];
-        }
-        {
-          job_name = "tailscale";
-          static_configs = [
-            { targets = [ "localhost:${toString config.services.prometheus.exporters.tailscale.port}" ]; }
           ];
         }
       ];
     };
 
-    services.caddy = {
-      globalConfig = ''
-        metrics { per_host }
-      '';
-      # virtualHosts."http://${globals.domains.grafana}".extraConfig = ''
-      # bind tailscale/console
-      virtualHosts.${globals.domains.grafana}.extraConfig = ''
-        reverse_proxy http://localhost:${config.local.ports.grafana.string}
-      '';
-    };
+    services.caddy.globalConfig = ''
+      metrics { per_host }
+    '';
+
+    services.caddy.virtualHosts.${globals.domains.grafana}.extraConfig = ''
+      bind tailscale/console
+      tls /var/lib/agnos/net.wiro.world_fullchain.pem /var/lib/agnos/net.wiro.world_privkey.pem
+      reverse_proxy http://localhost:${config.local.ports.grafana.string}
+    '';
   };
 }
