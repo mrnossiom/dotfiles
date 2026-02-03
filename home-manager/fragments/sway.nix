@@ -149,9 +149,9 @@ in
           titlebar = false;
           commands =
             let
-              fullscreenAppInhibitIdle = appId: {
+              inhibitIdle = appId: behaviour: {
                 criteria.app_id = "^${appId}$";
-                command = "inhibit_idle fullscreen";
+                command = "inhibit_idle ${behaviour}";
               };
             in
             [
@@ -174,12 +174,12 @@ in
                 command = ''floating enable'';
               }
 
-              # Inhibit IDLE when these are fullscreen
-              (fullscreenAppInhibitIdle "firefox")
-              (fullscreenAppInhibitIdle "mpv")
-              (fullscreenAppInhibitIdle "spotify")
-              (fullscreenAppInhibitIdle "zen-beta")
-              (fullscreenAppInhibitIdle "org.jellyfin.JellyfinDesktop")
+              # Inhibit IDLE when these are in fullscreen or focused
+              (inhibitIdle "firefox" "fullscreen")
+              (inhibitIdle "zen-beta" "fullscreen")
+              (inhibitIdle "spotify" "fullscreen")
+              (inhibitIdle "mpv" "focus")
+              (inhibitIdle "org.jellyfin.JellyfinDesktop" "focus")
             ];
         };
 
