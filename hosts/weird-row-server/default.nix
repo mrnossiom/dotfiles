@@ -30,6 +30,7 @@ in
     ./lldap.nix
     ./miniflux.nix
     ./pds.nix
+    ./ripe-atlas.nix
     ./tailscale.nix
     ./tangled.nix
     ./thelounge.nix
