@@ -113,6 +113,7 @@ in
           yaml-language-server
         ]
         ++ lib.optionals (!flags.onlyCached) [
+          lpkgs.ebnfer
           lpkgs.wakatime-ls
         ];
 
@@ -122,14 +123,15 @@ in
             check.command = "clippy";
           };
 
-          ltex-ls.command = "ltex-ls";
+          ebnfer.command = "ebnfer";
+
           typos-ls.command = "typos-lsp";
           wakatime-ls.command = "wakatime-ls";
         };
 
         language =
           let
-            global-lsps = [
+            global-language-servers = [
               "wakatime-ls"
               "typos-ls"
             ];
@@ -137,27 +139,53 @@ in
               name: language-servers: extra:
               {
                 inherit name;
-                language-servers = language-servers ++ global-lsps;
+                language-servers = language-servers ++ global-language-servers;
               }
               // extra;
           in
           [
-            (mk-lang "c" [ "clangd" ] {
-              formatter = {
-                command = lib.getExe' pkgs.clang-tools "clang-format";
-                args = [ ];
-              };
-            })
-            (mk-lang "markdown" [ "marksman" ] { })
-
             (mk-lang "html" [ "vscode-html-language-server" ] { })
+            (mk-lang "markdown" [ "marksman" ] { })
             (mk-lang "nix" [ "nil" ] { })
             (mk-lang "ocaml" [ "ocamllsp" ] { })
             (mk-lang "python" [ "ruff" "jedi" "pylsp" ] { })
             (mk-lang "rust" [ "rust-analyzer" ] { })
             (mk-lang "typescript" [ "typescript-language-server" ] { })
             (mk-lang "zig" [ "zls" ] { })
+
+            (mk-lang "c" [ "clangd" ] {
+              formatter = {
+                command = lib.getExe' pkgs.clang-tools "clang-format";
+                args = [ ];
+              };
+            })
+
+            # TODO: remove when merged upstream
+            (mk-lang "ebnf" [ "ebnfer" ] {
+              scope = "source.ebnf";
+              injection-regex = "ebnf";
+              file-types = [ "ebnf" ];
+              indent = {
+                tab-width = 4;
+                unit = "    ";
+              };
+              block-comment-tokens = {
+                start = "(*";
+                end = "*)";
+              };
+            })
           ];
+
+        grammar = [
+          {
+            name = "ebnf";
+            source = {
+              git = "https://github.com/RubixDev/ebnf/";
+              rev = "8e635b0b723c620774dfb8abf382a7f531894b40";
+              subpath = "crates/tree-sitter-ebnf";
+            };
+          }
+        ];
       };
     };
 

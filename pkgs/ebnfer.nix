@@ -5,7 +5,7 @@
 
 rustPlatform.buildRustPackage rec {
   pname = "ebnfer";
-  version = "0.14.0";
+  version = "1.0.0";
 
   src = fetchFromGitHub {
     owner = "DanielHauge";
@@ -15,7 +15,7 @@ rustPlatform.buildRustPackage rec {
     hash = "sha256-CSe2HCToYW7ivH6jpJwqHKH/yZDZgW8el8FVCmq75cU=";
   };
 
-  cargoHash = "sha256-URT4jTKkCkK7Mr94ll1DloSEcrbkUJk8HFxkTmePf/w=";
+  cargoHash = "sha256-K+6pYv8hHTXlTs32HHYiBs6WFKXeRBlAEJWEaQ+HrV8";
 
   meta = {
     description = "A language server for EBNF";
