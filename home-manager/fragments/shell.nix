@@ -39,22 +39,18 @@ in
 
     programs.direnv = {
       enable = true;
-      silent = true;
-
       nix-direnv.enable = true;
+      # angrr.enable = true;
 
       stdlib = ''
-        use angrr
+        _angrr_auto_use "$@"
       '';
+
+      config.hide_env_diff = true;
     };
     # TODO: depend on osConfig
-    xdg.configFile."direnv/lib/angrr.sh".text = ''
-      use_angrr() {
-        layout_dir="$(direnv_layout_dir)"
-        log_status "angrr: touch GC roots $layout_dir"
-        RUST_LOG="''${ANGRR_DIRENV_LOG:-angrr=error}" ${lib.getExe upkgs.angrr} touch "$layout_dir" --silent
-      }
-    '';
+    xdg.configFile."direnv/lib/angrr.sh".source = "${upkgs.angrr}/share/direnv/lib/angrr.sh";
+    home.packages = [ upkgs.angrr ];
 
     programs.zoxide = {
       enable = true;

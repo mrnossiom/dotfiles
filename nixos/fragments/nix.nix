@@ -3,6 +3,7 @@
   config,
   lib,
   pkgs,
+  upkgs,
 
   isDarwin,
   ...
@@ -87,6 +88,7 @@ in
     # other disk space saver
     services.angrr = {
       enable = true;
+      package = upkgs.angrr;
       period = "2weeks";
       enableNixGcIntegration = true;
     };
