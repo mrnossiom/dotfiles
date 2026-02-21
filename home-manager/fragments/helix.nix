@@ -107,7 +107,7 @@ in
           nil
           nodePackages.bash-language-server
           nodePackages.typescript-language-server
-          taplo
+          tombi
           typos-lsp
           vscode-langservers-extracted
           yaml-language-server
