@@ -69,8 +69,14 @@ in
         };
 
         oidc = {
+          # ensure there is no circle dependency
+          # Caddy depends on Headscale being available to start if the tailscale plugin is used.
+          # But Headscale depends on Authelia that may be behind such a Caddy instance.
+          # when both Headscale and Authelia are on the same host, connect directly
+          # maybe use a different caddy instance for tailnet related services
           only_start_if_oidc_is_available = true;
-          issuer = "https://auth.wiro.world";
+          # issuer = "https://auth.wiro.world";
+          issuer = "http://localhost:${config.local.ports.authelia.string}";
           client_id = "headscale";
           client_secret_path = config.age.secrets.headscale-oidc-secret.path;
           scope = [
