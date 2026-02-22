@@ -105,10 +105,8 @@ in
       }
     ];
 
-    services.caddy = {
-      virtualHosts.${globals.domains.headscale}.extraConfig = ''
-        reverse_proxy http://localhost:${config.local.ports.headscale.string}
-      '';
-    };
+    services.caddy.virtualHosts.${globals.domains.headscale}.extraConfig = ''
+      reverse_proxy http://localhost:${config.local.ports.headscale.string}
+    '';
   };
 }

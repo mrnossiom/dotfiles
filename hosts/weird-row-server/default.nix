@@ -1,5 +1,6 @@
 {
   self,
+  globals,
   ...
 }:
 
@@ -7,12 +8,8 @@ let
   inherit (self.inputs) srvos;
 
   ext-if = "eth0";
-  external-ip = "91.99.55.74";
-  external-netmask = 27;
-  external-gw = "144.x.x.255";
-  external-ip6 = "2a01:4f8:c2c:76d2::1";
-  external-netmask6 = 64;
-  external-gw6 = "fe80::1";
+  external-gateway = "144.x.x.255";
+  external-gateway6 = "fe80::1";
 in
 {
   imports = [
@@ -23,6 +20,7 @@ in
     ./agnos.nix
     ./authelia.nix
     ./caddy.nix
+    ./gatus.nix
     ./goatcounter.nix
     ./grafana.nix
     ./headscale.nix
@@ -67,24 +65,24 @@ in
       interfaces.${ext-if} = {
         ipv4.addresses = [
           {
-            address = external-ip;
-            prefixLength = external-netmask;
+            address = globals.hosts.weird-row-server.ip;
+            prefixLength = globals.hosts.weird-row-server.ip-prefix-length;
           }
         ];
         ipv6.addresses = [
           {
-            address = external-ip6;
-            prefixLength = external-netmask6;
+            address = globals.hosts.weird-row-server.ip6;
+            prefixLength = globals.hosts.weird-row-server.ip6-prefix-length;
           }
         ];
       };
       defaultGateway = {
         interface = ext-if;
-        address = external-gw;
+        address = external-gateway;
       };
       defaultGateway6 = {
         interface = ext-if;
-        address = external-gw6;
+        address = external-gateway6;
       };
     };
 

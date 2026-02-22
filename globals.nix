@@ -11,6 +11,8 @@
     matrix = "matrix.${wiro-world}";
     miniflux = "news.${wiro-world}";
     pds = "pds.${wiro-world}";
+    status = "status.${wiro-world}";
+    status' = "status.status.${wiro-world}";
     tangled-knot = "knot.${wiro-world}";
     tangled-spindle = "spindle.${wiro-world}";
     vaultwarden = "vault.${wiro-world}";
@@ -24,5 +26,14 @@
 
     hbt-main = hypixel-bank-tracker;
     hbt-banana = "banana.${hypixel-bank-tracker}";
+  };
+
+  hosts = {
+    weird-row-server = {
+      ip = "91.99.55.74";
+      ip-prefix-length = 1;
+      ip6 = "2a01:4f8:c2c:76d2::1";
+      ip6-prefix-length = 64;
+    };
   };
 }

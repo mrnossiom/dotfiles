@@ -181,10 +181,8 @@
       }
     ];
 
-    services.caddy = {
-      virtualHosts.${globals.domains.authelia}.extraConfig = ''
-        reverse_proxy http://localhost:${config.local.ports.authelia.string}
-      '';
-    };
+    services.caddy.virtualHosts.${globals.domains.authelia}.extraConfig = ''
+      reverse_proxy http://localhost:${config.local.ports.authelia.string}
+    '';
   };
 }

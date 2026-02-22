@@ -1,5 +1,6 @@
 {
   config,
+  globals,
   ...
 }:
 
@@ -11,11 +12,6 @@
       tcp = false; # let agnos manage the firewall
     };
 
-    # disable dns stub listener or agnos cannot bind
-    services.resolved.extraConfig = ''
-      DNSStubListener=no
-    '';
-
     age.secrets.agnos-account-key = {
       file = secrets/agnos-account-key.age;
       owner = config.security.agnos.user;
@@ -24,7 +20,7 @@
       enable = true;
       temporarilyOpenFirewall = true;
       settings = {
-        dns_listen_addr = "0.0.0.0:53";
+        dns_listen_addr = "${globals.hosts.weird-row-server.ip}:53";
 
         accounts = [
           {

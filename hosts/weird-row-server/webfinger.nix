@@ -37,40 +37,38 @@ let
 in
 {
   config = {
-    services.caddy = {
-      virtualHosts.${globals.domains.website}.extraConfig = ''
-        @webfinger {
-          path /.well-known/webfinger
-          method GET HEAD
-          query resource=acct:milo@wiro.world
-          query resource=mailto:milo@wiro.world
-          query resource=https://wiro.world
-          query resource=https://wiro.world/
+    services.caddy.virtualHosts.${globals.domains.website}.extraConfig = ''
+      @webfinger {
+        path /.well-known/webfinger
+        method GET HEAD
+        query resource=acct:milo@wiro.world
+        query resource=mailto:milo@wiro.world
+        query resource=https://wiro.world
+        query resource=https://wiro.world/
+      }
+      route @webfinger {
+        header {
+          Content-Type "application/jrd+json"
+          Access-Control-Allow-Origin "*"
+          X-Robots-Tag "noindex"
         }
-        route @webfinger {
-          header {
-            Content-Type "application/jrd+json"
-            Access-Control-Allow-Origin "*"
-            X-Robots-Tag "noindex"
-          }
-          root ${webfinger-dir}
-          file_server
+        root ${webfinger-dir}
+        file_server
+      }
+    ''
+    + ''
+      @discord {
+        path /.well-known/discord
+        method GET HEAD
+      }
+      route @discord {
+        header {
+          Access-Control-Allow-Origin "*"
+          X-Robots-Tag "noindex"
         }
-      ''
-      + ''
-        @discord {
-          path /.well-known/discord
-          method GET HEAD
-        }
-        route @discord {
-          header {
-            Access-Control-Allow-Origin "*"
-            X-Robots-Tag "noindex"
-          }
-          root ${well-known-discord-dir}
-          file_server
-        }
-      '';
-    };
+        root ${well-known-discord-dir}
+        file_server
+      }
+    '';
   };
 }

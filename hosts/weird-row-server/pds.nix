@@ -24,14 +24,12 @@
       ];
     };
 
-    services.caddy = {
-      virtualHosts.${globals.domains.pds} = {
-        serverAliases = [ "*.${globals.domains.pds}" ];
-        extraConfig = ''
-          	tls /var/lib/agnos/pds.wiro.world_fullchain.pem /var/lib/agnos/pds.wiro.world_privkey.pem
-            reverse_proxy http://localhost:${toString config.services.bluesky-pds.settings.PDS_PORT}
-        '';
-      };
+    services.caddy.virtualHosts.${globals.domains.pds} = {
+      serverAliases = [ "*.${globals.domains.pds}" ];
+      extraConfig = ''
+        	tls /var/lib/agnos/pds.wiro.world_fullchain.pem /var/lib/agnos/pds.wiro.world_privkey.pem
+          reverse_proxy http://localhost:${toString config.services.bluesky-pds.settings.PDS_PORT}
+      '';
     };
   };
 }

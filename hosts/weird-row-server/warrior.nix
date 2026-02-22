@@ -20,12 +20,10 @@
       };
     };
 
-    services.caddy = {
-      virtualHosts.${globals.domains.warrior}.extraConfig = ''
-        bind tailscale/warrior
-        tls /var/lib/agnos/net.wiro.world_fullchain.pem /var/lib/agnos/net.wiro.world_privkey.pem
-        reverse_proxy http://localhost:${config.local.ports.warrior.string}
-      '';
-    };
+    services.caddy.virtualHosts.${globals.domains.warrior}.extraConfig = ''
+      bind tailscale/warrior
+      tls /var/lib/agnos/net.wiro.world_fullchain.pem /var/lib/agnos/net.wiro.world_privkey.pem
+      reverse_proxy http://localhost:${config.local.ports.warrior.string}
+    '';
   };
 }

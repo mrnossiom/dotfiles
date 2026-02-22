@@ -51,10 +51,8 @@
       }
     ];
 
-    services.caddy = {
-      virtualHosts.${globals.domains.miniflux}.extraConfig = ''
-        reverse_proxy http://localhost:${config.local.ports.miniflux.string}
-      '';
-    };
+    services.caddy.virtualHosts.${globals.domains.miniflux}.extraConfig = ''
+      reverse_proxy http://localhost:${config.local.ports.miniflux.string}
+    '';
   };
 }

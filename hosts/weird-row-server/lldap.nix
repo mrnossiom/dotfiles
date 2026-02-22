@@ -36,12 +36,10 @@
       environmentFile = config.age.secrets.lldap-env.path;
     };
 
-    services.caddy = {
-      virtualHosts.${globals.domains.lldap}.extraConfig = ''
-        bind tailscale/ldap
-        tls /var/lib/agnos/net.wiro.world_fullchain.pem /var/lib/agnos/net.wiro.world_privkey.pem
-        reverse_proxy http://localhost:${toString config.services.lldap.settings.http_port}
-      '';
-    };
+    services.caddy.virtualHosts.${globals.domains.lldap}.extraConfig = ''
+      bind tailscale/ldap
+      tls /var/lib/agnos/net.wiro.world_fullchain.pem /var/lib/agnos/net.wiro.world_privkey.pem
+      reverse_proxy http://localhost:${toString config.services.lldap.settings.http_port}
+    '';
   };
 }

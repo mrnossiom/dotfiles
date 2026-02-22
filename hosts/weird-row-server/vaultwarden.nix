@@ -29,10 +29,8 @@
       };
     };
 
-    services.caddy = {
-      virtualHosts.${globals.domains.vaultwarden}.extraConfig = ''
-        reverse_proxy http://localhost:${toString config.services.vaultwarden.config.ROCKET_PORT}
-      '';
-    };
+    services.caddy.virtualHosts.${globals.domains.vaultwarden}.extraConfig = ''
+      reverse_proxy http://localhost:${toString config.services.vaultwarden.config.ROCKET_PORT}
+    '';
   };
 }
