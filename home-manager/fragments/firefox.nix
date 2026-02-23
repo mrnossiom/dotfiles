@@ -116,7 +116,7 @@ in
     };
 
     programs.firefox = {
-      enable = true;
+      enable = false;
 
       inherit policies;
 

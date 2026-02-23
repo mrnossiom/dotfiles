@@ -21,7 +21,7 @@ in
   config = lib.mkIf cfg.enable {
     assertions = [
       {
-        assertion = config.programs.firefox.enable;
+        assertion = config.programs.firefox.enable || config.programs.zen-browser.enable;
         message = "`xdg-mime` fragment depends on `firefox` program";
       }
       {
