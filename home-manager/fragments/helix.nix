@@ -41,7 +41,10 @@ in
       defaultEditor = true;
 
       settings = {
-        theme = lib.mkDefault "wolf-alabaster-dark";
+        theme = {
+          dark = lib.mkDefault "wolf-alabaster-dark";
+          light = lib.mkDefault "wolf-alabaster-light-bg";
+        };
 
         editor = {
           auto-format = true;
@@ -127,7 +130,10 @@ in
           wakatime-ls.command = "wakatime-ls";
 
           ebnfer.command = "ebnfer";
-          tofu-ls = { command = "tofu-ls"; args = [ "serve" ]; };
+          tofu-ls = {
+            command = "tofu-ls";
+            args = [ "serve" ];
+          };
         };
 
         language =
