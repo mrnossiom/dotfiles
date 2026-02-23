@@ -18,6 +18,8 @@ in
       nix-inspect
       nixos-anywhere
       nix-tree
+      opentofu
+      tofu-ls
     ]
   );
 
