@@ -21,6 +21,7 @@
       compose-key.enable = true;
       epita.enable = true;
       firefox.enable = true;
+      heriot-watt.enable = true;
       imv.enable = true;
       kanshi.enable = true;
       stylix.enable = true;
@@ -146,7 +147,10 @@
       enableZshIntegration = false;
     };
 
-    programs.ssh.enableDefaultConfig = false;
+    programs.ssh = {
+      enable = true;
+      enableDefaultConfig = false;
+    };
 
     services.tailscale-systray.enable = true;
   };
