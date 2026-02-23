@@ -2,6 +2,7 @@
   config,
   lib,
   pkgs,
+  upkgs,
   lpkgs,
   ...
 }:
@@ -39,7 +40,7 @@ in
         ffmpeg
         file
         fzf
-        gemini-cli
+        upkgs.gemini-cli
         git-pages-cli
         inetutils
         jq

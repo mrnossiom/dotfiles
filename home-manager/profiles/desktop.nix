@@ -69,7 +69,7 @@
       packages = with pkgs; [
         # Unfree
         aseprite
-        ida-free
+        # ida-free
         jetbrains-toolbox
         spotify
 
