@@ -37,7 +37,7 @@ in
 
     programs.helix = {
       enable = true;
-      package = upkgs.helix;
+      package = if flags.onlyCached then upkgs.helix else lpkgs.helix;
       defaultEditor = true;
 
       settings = {

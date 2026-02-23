@@ -39,6 +39,9 @@
     git-pages.url = "git+https://codeberg.org/git-pages/git-pages";
     git-pages.inputs.nixpkgs.follows = "nixpkgs";
 
+    helix.url = "github:helix-editor/helix";
+    helix.inputs.nixpkgs.follows = "unixpkgs";
+
     hypixel-bank-tracker.url = "github:pixilie/hypixel-bank-tracker";
     hypixel-bank-tracker.inputs.nixpkgs.follows = "nixpkgs";
 

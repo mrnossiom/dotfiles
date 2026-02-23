@@ -13,6 +13,7 @@ let
     agenix
     git-leave
     git-pages
+    helix
     nix-alien
     wakatime-ls
     ;
@@ -29,6 +30,7 @@ in
   inherit (agenix.packages.${system}) agenix;
   inherit (git-leave.packages.${system}) git-leave;
   inherit (git-pages.packages.${system}) git-pages;
+  inherit (helix.packages.${system}) helix;
   inherit (nix-alien.packages.${system}) nix-alien;
   inherit (wakatime-ls.packages.${system}) wakatime-ls;
 }
