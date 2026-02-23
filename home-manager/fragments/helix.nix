@@ -123,17 +123,18 @@ in
             check.command = "clippy";
           };
 
-          ebnfer.command = "ebnfer";
-
           typos-ls.command = "typos-lsp";
           wakatime-ls.command = "wakatime-ls";
+
+          ebnfer.command = "ebnfer";
+          tofu-ls = { command = "tofu-ls"; args = [ "serve" ]; };
         };
 
         language =
           let
             global-language-servers = [
-              "wakatime-ls"
               "typos-ls"
+              "wakatime-ls"
             ];
             mk-lang =
               name: language-servers: extra:
@@ -145,6 +146,7 @@ in
           in
           [
             (mk-lang "html" [ "vscode-html-language-server" ] { })
+            (mk-lang "hcl" [ "terraform-ls" "tofu-ls" ] { })
             (mk-lang "markdown" [ "marksman" ] { })
             (mk-lang "nix" [ "nil" ] { })
             (mk-lang "ocaml" [ "ocamllsp" ] { })
