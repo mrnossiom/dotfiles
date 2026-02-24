@@ -53,15 +53,15 @@ in
       "ext4"
     ];
 
-    # Single network card is `eth0`
-    networking.usePredictableInterfaceNames = false;
-
-    networking.nameservers = [
-      "2001:4860:4860::8888"
-      "2001:4860:4860::8844"
-    ];
-
     networking = {
+      # Single network card is `eth0`
+      usePredictableInterfaceNames = false;
+
+      nameservers = [
+        "2001:4860:4860::8888"
+        "2001:4860:4860::8844"
+      ];
+
       interfaces.${ext-if} = {
         ipv4.addresses = [
           {
@@ -74,6 +74,10 @@ in
             address = globals.hosts.weird-row-server.ip6;
             prefixLength = globals.hosts.weird-row-server.ip6-prefix-length;
           }
+          {
+            address = globals.hosts.weird-row-server.ip6-agnos;
+            prefixLength = globals.hosts.weird-row-server.ip6-prefix-length;
+          }
         ];
       };
       defaultGateway = {
@@ -84,6 +88,7 @@ in
         interface = ext-if;
         address = external-gateway6;
       };
+
     };
 
     services.qemuGuest.enable = true;

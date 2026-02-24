@@ -56,7 +56,8 @@
 
             tests = {
               status200 = "[STATUS] == 200";
-              time300 = "[RESPONSE_TIME] < 300";
+              time300 = "[RESPONSE_TIME] <= 500";
+              cert1w = "[CERTIFICATE_EXPIRATION] >= 168h";
             };
 
             mkHttp =
@@ -66,6 +67,7 @@
                 conditions ? [
                   tests.status200
                   tests.time300
+                  tests.cert1w
                 ],
                 alerts ? [
                   { type = "email"; }
@@ -87,8 +89,6 @@
             (mkHttp "Hypixel Bank Tracker" groups.public "https://${globals.domains.hbt-main}/" { })
             (mkHttp "Hypixel Bank Tracker Banana" groups.public "https://${globals.domains.hbt-banana}/" { })
             (mkHttp "Status" groups.public "https://${globals.domains.status}/" { })
-            # ensure we are reachable ourselves
-            (mkHttp "Status'" groups.public "https://${globals.domains.status'}/" { })
 
             (mkHttp "Miniflux" groups.auth "https://${globals.domains.miniflux}/" { })
             (mkHttp "Vaultwarden" groups.auth "https://${globals.domains.vaultwarden}/" { })
@@ -105,7 +105,7 @@
       };
     };
 
-    services.caddy.virtualHosts.${globals.domains.status'}.extraConfig = ''
+    services.caddy.virtualHosts.${globals.domains.status}.extraConfig = ''
       reverse_proxy http://localhost:${toString config.services.gatus.settings.web.port}
     '';
   };

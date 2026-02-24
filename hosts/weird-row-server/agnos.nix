@@ -20,7 +20,7 @@
       enable = true;
       temporarilyOpenFirewall = true;
       settings = {
-        dns_listen_addr = "${globals.hosts.weird-row-server.ip}:53";
+        dns_listen_addr = "[${globals.hosts.weird-row-server.ip6-agnos}]:53";
 
         accounts = [
           {
