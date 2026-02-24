@@ -153,7 +153,7 @@ in
           [
             (mk-lang "html" [ "vscode-html-language-server" ] { })
             (mk-lang "hcl" [ "terraform-ls" "tofu-ls" ] { })
-            (mk-lang "markdown" [ "marksman" ] { })
+            (mk-lang "markdown" [ ] { }) # removed "marksman"
             (mk-lang "nix" [ "nil" ] { })
             (mk-lang "ocaml" [ "ocamllsp" ] { })
             (mk-lang "python" [ "ruff" "jedi" "pylsp" ] { })
