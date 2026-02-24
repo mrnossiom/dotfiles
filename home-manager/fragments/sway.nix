@@ -93,7 +93,7 @@ in
           {
             # Dims the screen for X seconds and then switch it off
             timeout = 5 * 60 - 10;
-            command = ''${lib.getExe pkgs.chayang} -d${toString 10}'';
+            command = "${lib.getExe pkgs.chayang} -d${toString 10}";
           }
           {
             timeout = 5 * 60;
@@ -171,7 +171,7 @@ in
                   class = "^Unity$";
                   instance = "^Unity$";
                 };
-                command = ''floating enable'';
+                command = "floating enable";
               }
 
               # Inhibit IDLE when these are in fullscreen or focused

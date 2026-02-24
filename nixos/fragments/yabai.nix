@@ -54,7 +54,7 @@ in
     services.skhd = {
       enable = true;
 
-      skhdConfig = '''';
+      skhdConfig = "";
     };
   };
 }

@@ -132,7 +132,7 @@ in
           end
         '';
 
-        launch = ''nohup $argv &> /dev/null &'';
+        launch = "nohup $argv &> /dev/null &";
 
         # Transform a store link file to a real one
         # Useful when playing with config files
