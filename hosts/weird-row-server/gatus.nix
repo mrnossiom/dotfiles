@@ -14,6 +14,8 @@
       enable = true;
       environmentFile = config.age.secrets.gatus-env.path;
 
+      # GATUS_DELAY_START_SECONDS=10
+
       settings = {
         web.port = config.local.ports.gatus.number;
         ui = {
