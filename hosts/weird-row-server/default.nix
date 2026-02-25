@@ -6,10 +6,6 @@
 
 let
   inherit (self.inputs) srvos;
-
-  ext-if = "eth0";
-  external-gateway = "144.x.x.255";
-  external-gateway6 = "fe80::1";
 in
 {
   imports = [
@@ -53,43 +49,33 @@ in
       "ext4"
     ];
 
-    networking = {
-      # Single network card is `eth0`
-      usePredictableInterfaceNames = false;
+    networking.nameservers = [
+      "2001:4860:4860::8888"
+      "2001:4860:4860::8844"
+    ];
+    
+    # Single network card is `eth0`
+    networking.usePredictableInterfaceNames = false;
 
-      nameservers = [
-        "2001:4860:4860::8888"
-        "2001:4860:4860::8844"
+    systemd.network.networks."40-eth0" = {
+      matchConfig.Name = "eth0";
+      address = [
+        "${globals.hosts.weird-row-server.ip}/${toString globals.hosts.weird-row-server.ip-prefix-length}"
+        "${globals.hosts.weird-row-server.ip6}/${toString globals.hosts.weird-row-server.ip6-prefix-length}"
+        "${globals.hosts.weird-row-server.ip6-agnos}/${toString globals.hosts.weird-row-server.ip6-prefix-length}"
       ];
-
-      interfaces.${ext-if} = {
-        ipv4.addresses = [
-          {
-            address = globals.hosts.weird-row-server.ip;
-            prefixLength = globals.hosts.weird-row-server.ip-prefix-length;
-          }
-        ];
-        ipv6.addresses = [
-          {
-            address = globals.hosts.weird-row-server.ip6;
-            prefixLength = globals.hosts.weird-row-server.ip6-prefix-length;
-          }
-          {
-            address = globals.hosts.weird-row-server.ip6-agnos;
-            prefixLength = globals.hosts.weird-row-server.ip6-prefix-length;
-          }
-        ];
-      };
-      defaultGateway = {
-        interface = ext-if;
-        address = external-gateway;
-      };
-      defaultGateway6 = {
-        interface = ext-if;
-        address = external-gateway6;
-      };
-
+      routes = [
+        {
+          Gateway = "172.31.1.1";
+          GatewayOnLink = true;
+        }
+        { Gateway = "fe80::1"; }
+      ];
+      linkConfig.RequiredForOnline = "routable";
     };
+
+    # wrote a file in /etc/systemd/networking/ that override networking.interfaces
+    services.cloud-init.network.enable = false;
 
     services.qemuGuest.enable = true;
 

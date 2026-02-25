@@ -35,7 +35,7 @@
   hosts = {
     weird-row-server = {
       ip = "91.99.55.74";
-      ip-prefix-length = 1;
+      ip-prefix-length = 32;
       ip6 = "2a01:4f8:c2c:76d2::1";
       ip6-prefix-length = 64;
       ip6-agnos = "2a01:4f8:c2c:76d2::2";
