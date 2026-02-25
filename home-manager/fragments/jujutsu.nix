@@ -102,7 +102,7 @@ in
         };
 
         git = {
-          private-commits = ''description(glob:"private:*")'';
+          private-commits = ''description(glob:"LOCAL:*")'';
         };
       };
     };
