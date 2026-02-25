@@ -53,7 +53,7 @@ in
       "2001:4860:4860::8888"
       "2001:4860:4860::8844"
     ];
-    
+
     # Single network card is `eth0`
     networking.usePredictableInterfaceNames = false;
 

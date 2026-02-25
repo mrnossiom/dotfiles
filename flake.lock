@@ -662,6 +662,26 @@
         "url": "https://github.com/lucide-icons/lucide/releases/download/0.536.0/lucide-icons-0.536.0.zip"
       }
     },
+    "net": {
+      "inputs": {
+        "nixpkgs": [
+          "unixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1769341404,
+        "narHash": "sha256-DRe4hoL880v6SSprIQIXeXjAUvpSqPmxFkEVWU0zdGE=",
+        "owner": "0xCCF4",
+        "repo": "nix-net-lib",
+        "rev": "f7a02760eb2864e525da462f3e366ad6e8b5f7f0",
+        "type": "github"
+      },
+      "original": {
+        "owner": "0xCCF4",
+        "repo": "nix-net-lib",
+        "type": "github"
+      }
+    },
     "nix-alien": {
       "inputs": {
         "flake-compat": "flake-compat_2",
@@ -830,6 +850,7 @@
         "home-manager": "home-manager",
         "hypixel-bank-tracker": "hypixel-bank-tracker",
         "lanzaboote": "lanzaboote",
+        "net": "net",
         "nix-alien": "nix-alien",
         "nix-darwin": "nix-darwin",
         "nixos-hardware": "nixos-hardware",

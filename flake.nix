@@ -31,6 +31,11 @@
     srvos.url = "github:nix-community/srvos";
     srvos.inputs.nixpkgs.follows = "nixpkgs";
 
+    ## Libraries
+
+    net.url = "github:0xCCF4/nix-net-lib";
+    net.inputs.nixpkgs.follows = "unixpkgs";
+
     ## Packages
 
     git-leave.url = "github:mrnossiom/git-leave";
@@ -65,14 +70,18 @@
       inherit (self) outputs;
       inherit (flake-lib) forAllSystems;
 
-      flake-lib = import ./lib/flake (nixpkgs // { inherit self; });
+      flake-lib = import ./lib/flake ({
+        inherit self;
+        inherit (nixpkgs) lib;
+      });
 
-      # This should be the only constructed nixpkgs instances in this flake
       allPkgs = forAllSystems (
         system:
+        # This should be the only constructed nixpkgs instance in this flake
+        # (along with the derived unixpkgs instance in specialModuleArgs)
         import nixpkgs {
           inherit system;
-          config.allowUnfreePredicate = import ./lib/unfree.nix { lib = nixpkgs.lib; };
+          config.allowUnfreePredicate = import ./lib/unfree.nix { inherit (nixpkgs) lib; };
           overlays = [ outputs.overlays.all ];
         }
       );
@@ -84,6 +93,7 @@
 
       inherit flake-lib; # Nonstandard
       lib = forAllPkgs (import ./lib);
+      globals = forAllPkgs (import ./globals.nix);
       templates = import ./templates;
 
       apps = forAllPkgs (import ./apps { pkgs-per-system = allPkgs; });

@@ -1,2 +1,12 @@
 # This flake library is available to modules via the `llib` arg
-pkgs: { }
+{
+  self,
+  ...
+}:
+
+let
+  inherit (self.inputs) net;
+in
+{
+  net = net.lib;
+}

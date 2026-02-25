@@ -1,4 +1,10 @@
 {
+  lib,
+  llib,
+  ...
+}:
+
+{
   domains = rec {
     # wiro.world
     wiro-world = "wiro.world";
@@ -32,13 +38,19 @@
     hbt-banana = "banana.${hypixel-bank-tracker}";
   };
 
-  hosts = {
-    weird-row-server = {
-      ip = "91.99.55.74";
-      ip-prefix-length = 32;
-      ip6 = "2a01:4f8:c2c:76d2::1";
-      ip6-prefix-length = 64;
-      ip6-agnos = "2a01:4f8:c2c:76d2::2";
+  network =
+    let
+      pipeNoMask = [
+        llib.net.decompose
+        (addr: addr.addressNoMask)
+      ];
+    in
+    rec {
+      primary4 = llib.net.decompose "91.99.55.74";
+      primary6-subnet = llib.net.decompose "2a01:4f8:c2c:76d2::/64";
+
+      weird-row-server = lib.pipe primary4.address pipeNoMask;
+      weird-row-server6 = lib.pipe (llib.net.assignAddress primary6-subnet.address 1) pipeNoMask;
+      weird-row-server6-agnos = lib.pipe (llib.net.assignAddress primary6-subnet.address 2) pipeNoMask;
     };
-  };
 }
