@@ -152,7 +152,7 @@ resource "hcloud_zone_rrset" "wiro_world-kalei-cname" {
   name = "kalei"
   type = "CNAME"
   records = [
-    { value = "github.io." },
+    { value = "mrnossiom.github.io." },
   ]
 }
 

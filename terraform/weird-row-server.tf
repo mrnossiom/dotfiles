@@ -6,10 +6,11 @@ resource "hcloud_server" "weird-row-server" {
   location = "nbg1"
   backups  = true
 
-  public_net {
-    ipv4 = hcloud_primary_ip.primary-v4.id
-    ipv6 = hcloud_primary_ip.primary-v6.id
-  }
+  # FIXME: does not properly import
+  # public_net {
+  #   ipv4 = hcloud_primary_ip.primary-v4.id
+  #   ipv6 = hcloud_primary_ip.primary-v6.id
+  # }
 
   rebuild_protection = true
   delete_protection  = true
