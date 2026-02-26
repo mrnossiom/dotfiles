@@ -16,7 +16,9 @@ in
 
   config = lib.mkIf cfg.enable {
     programs.ssh.matchBlocks."robotarium" = {
-      hostname = "robotarium.hw.ac.uk";
+      # hostname = "robotarium.hw.ac.uk";
+      # do not rely on local network DNS resolver
+      hostname = "137.195.243.70";
       user = hw-username;
     };
   };
