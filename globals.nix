@@ -38,19 +38,12 @@
     hbt-banana = "banana.${hypixel-bank-tracker}";
   };
 
-  network =
-    let
-      pipeNoMask = [
-        llib.net.decompose
-        (addr: addr.addressNoMask)
-      ];
-    in
-    rec {
-      primary4 = llib.net.decompose "91.99.55.74";
-      primary6-subnet = llib.net.decompose "2a01:4f8:c2c:76d2::/64";
+  network = rec {
+    primary4 = llib.net.decompose "91.99.55.74";
+    primary6-subnet = llib.net.decompose "2a01:4f8:c2c:76d2::/64";
 
-      weird-row-server = lib.pipe primary4.address pipeNoMask;
-      weird-row-server6 = lib.pipe (llib.net.assignAddress primary6-subnet.address 1) pipeNoMask;
-      weird-row-server6-agnos = lib.pipe (llib.net.assignAddress primary6-subnet.address 2) pipeNoMask;
-    };
+    weird-row-server-v4 = primary4;
+    weird-row-server-v6 = llib.net.decompose (llib.net.assignAddress primary6-subnet.address 1);
+    weird-row-server-v6-agnos = llib.net.decompose (llib.net.assignAddress primary6-subnet.address 2);
+  };
 }

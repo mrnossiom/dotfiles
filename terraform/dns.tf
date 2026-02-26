@@ -12,7 +12,7 @@ resource "hcloud_zone_rrset" "wiro_world-weirdrow_portal-a" {
   name = "weird-row.portal"
   type = "A"
   records = [
-    { value = local.network.weird-row-server },
+    { value = local.network.weird-row-server-v4 },
   ]
   labels = {
     portal = "",
@@ -23,7 +23,7 @@ resource "hcloud_zone_rrset" "wiro_world-weirdrow_portal-aaaa" {
   name = "weird-row.portal"
   type = "AAAA"
   records = [
-    { value = local.network.weird-row-server6 },
+    { value = local.network.weird-row-server-v6 },
   ]
   labels = {
     portal = "",
@@ -37,7 +37,7 @@ resource "hcloud_zone_rrset" "wiro_world-tl-a" {
   name = "@"
   type = "A"
   records = [
-    { value = local.network.weird-row-server },
+    { value = local.network.weird-row-server-v4 },
   ]
 }
 resource "hcloud_zone_rrset" "wiro_world-tl-aaaa" {
@@ -45,7 +45,7 @@ resource "hcloud_zone_rrset" "wiro_world-tl-aaaa" {
   name = "@"
   type = "AAAA"
   records = [
-    { value = local.network.weird-row-server6 },
+    { value = local.network.weird-row-server-v6 },
   ]
 }
 
@@ -163,7 +163,7 @@ resource "hcloud_zone_rrset" "wiro_world-agnos_weirdrow_portal-aaaa" {
   name = "agnos.weird-row.portal"
   type = "AAAA"
   records = [
-    { value = local.network.weird-row-server6-agnos },
+    { value = local.network.weird-row-server-v6-agnos },
   ]
   labels = {
     agnos = "",

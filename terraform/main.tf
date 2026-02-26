@@ -37,9 +37,9 @@ resource "hcloud_primary_ip" "primary-v6" {
 
 locals {
   network = {
-    weird-row-server        = hcloud_primary_ip.primary-v4.ip_address
-    weird-row-server6       = cidrhost(hcloud_primary_ip.primary-v6.ip_network, 1)
-    weird-row-server6-agnos = cidrhost(hcloud_primary_ip.primary-v6.ip_network, 2)
+    weird-row-server-v4       = hcloud_primary_ip.primary-v4.ip_address
+    weird-row-server-v6       = cidrhost(hcloud_primary_ip.primary-v6.ip_network, 1)
+    weird-row-server-v6-agnos = cidrhost(hcloud_primary_ip.primary-v6.ip_network, 2)
   }
 }
 

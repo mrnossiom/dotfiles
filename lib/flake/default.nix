@@ -22,7 +22,7 @@ rec {
     inherit self;
     # local flake library
     llib = import ../. pkgs;
-    globals = import ../../globals.nix;
+    globals = import ../../globals.nix pkgs;
     # local packages set
     lpkgs = import ../../pkgs pkgs;
     # unstable nixpkgs set

@@ -60,9 +60,9 @@ in
     systemd.network.networks."40-eth0" = {
       matchConfig.Name = "eth0";
       address = [
-        "${globals.hosts.weird-row-server.ip}/${toString globals.hosts.weird-row-server.ip-prefix-length}"
-        "${globals.hosts.weird-row-server.ip6}/${toString globals.hosts.weird-row-server.ip6-prefix-length}"
-        "${globals.hosts.weird-row-server.ip6-agnos}/${toString globals.hosts.weird-row-server.ip6-prefix-length}"
+        globals.network.weird-row-server-v4.address
+        globals.network.weird-row-server-v6.address
+        globals.network.weird-row-server-v6-agnos.address
       ];
       routes = [
         {
