@@ -134,6 +134,10 @@ in
 
       minus.greater = "→";
       less.minus = "←";
+
+      bar.minus.greater = "↦";
+      L.greater = "↳";
+
       less.greater.minus = "↔";
 
       equal.greater = "⇒";
