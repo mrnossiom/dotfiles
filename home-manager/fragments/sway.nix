@@ -366,5 +366,10 @@ in
         gamma = 0.8;
       };
     };
+
+    services.autotiling = {
+      enable = true;
+      package = pkgs.autotiling-rs;
+    };
   };
 }
