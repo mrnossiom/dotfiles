@@ -54,6 +54,8 @@ in
       "2001:4860:4860::8844"
     ];
 
+    networking.firewall.enable = true;
+
     # Single network card is `eth0`
     networking.usePredictableInterfaceNames = false;
 

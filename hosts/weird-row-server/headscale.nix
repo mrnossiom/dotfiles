@@ -32,6 +32,12 @@ in
         metrics_listen_addr = "127.0.0.1:${config.local.ports.headscale-metrics.string}";
 
         policy.path = json-format.generate "policy.json" {
+          tagOwners = {
+            "tag:exit-node" = [ ];
+          };
+          autoApprovers = {
+            exitNode = [ "tag:exit-node" ];
+          };
           acls = [
             {
               action = "accept";

@@ -123,7 +123,10 @@
 
     services.upower.enable = true;
 
-    services.tailscale.enable = true;
+    services.tailscale = {
+      enable = true;
+      useRoutingFeatures = "client";
+    };
 
     services.flatpak.enable = true;
 
