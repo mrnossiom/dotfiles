@@ -125,6 +125,11 @@
       logs-dir=${config.xdg.stateHome}/npm/logs
     '';
 
+    home.file.".lldbinit".text = ''
+      # Very annoying behaviour
+      settings set show-statusline true
+    '';
+
     programs.broot.enable = true;
 
     stylix.targets.qt.enable = false;
