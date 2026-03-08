@@ -66,13 +66,7 @@ in
           git_push_bookmark = ''"push-" ++ change_id.short()'';
         };
 
-        revset-aliases = {
-          "current()" = "(::@ ~ ::trunk())";
-          "open()" = "((::tracked_remote_bookmarks() | mine()) ~ ::trunk())::";
-          "visible_open()" = "(open() & ::visible_heads())::";
-          # Useful to rebase all branches with `jj r -s "all:visible_open_roots()" -d main/master/develop/..`
-          "visible_open_roots()" = "roots(visible_open())";
-        };
+        revset-aliases = { };
 
         ui = {
           default-command = "log";
