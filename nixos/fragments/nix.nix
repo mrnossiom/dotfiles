@@ -49,14 +49,14 @@ in
         if isDarwin then
           {
             interval = {
-              Weekday = 7;
-              Hour = 3;
-              Minute = 15;
+              Weekday = 0;
+              Hour = 5;
+              Minute = 0;
             };
           }
         else
           {
-            dates = "Sun *-*-* 03:15:00";
+            dates = "Mon *-*-* 05:00:00";
           }
       );
 
