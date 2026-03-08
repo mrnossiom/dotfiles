@@ -67,54 +67,56 @@
         WAKATIME_HOME = "${config.xdg.configHome}/wakatime";
       };
 
-      packages = with pkgs; [
-        # Unfree
-        aseprite
-        # ida-free
-        jetbrains-toolbox
-        spotify
+      packages =
+        with pkgs;
+        [
+          # Unfree
+          aseprite
+          # ida-free
+          jetbrains-toolbox
+          spotify
 
-        # GUIs
-        audacity
-        baobab
-        blender
-        bottles
-        calibre
-        cura-appimage
-        element-desktop
-        evince
-        figma-linux
-        file-roller
-        gnome-disk-utility
-        insomnia
-        upkgs.jellyfin-desktop
-        kicad
-        legcord
-        libreoffice-qt
-        localsend
-        mpv
-        nautilus
-        nicotine-plus
-        pavucontrol
-        prismlauncher
-        rawtherapee
-        simple-scan
-        transmission_4-gtk
-        wdisplays
-        wireshark
-        zulip
+          # GUIs
+          audacity
+          baobab
+          blender
+          (bottles.override { removeWarningPopup = true; })
+          calibre
+          cura-appimage
+          element-desktop
+          evince
+          figma-linux
+          file-roller
+          gnome-disk-utility
+          insomnia
+          upkgs.jellyfin-desktop
+          kicad
+          legcord
+          libreoffice-qt
+          localsend
+          mpv
+          nautilus
+          nicotine-plus
+          pavucontrol
+          prismlauncher
+          rawtherapee
+          simple-scan
+          transmission_4-gtk
+          wdisplays
+          wireshark
+          zulip
 
-        # Needed for libreoffice spellchecking
-        hunspell
-        hunspellDicts.fr-moderne
-        hunspellDicts.en_US-large
-        hunspellDicts.en_GB-large
+          # Needed for libreoffice spellchecking
+          hunspell
+          hunspellDicts.fr-moderne
+          hunspellDicts.en_US-large
+          hunspellDicts.en_GB-large
 
-        # CLIs
-        wf-recorder
-        wl-clipboard
-        xdg-utils
-      ];
+          # CLIs
+          wf-recorder
+          wl-clipboard
+          xdg-utils
+        ];
     };
 
     # Make NPM respect XDG spec
