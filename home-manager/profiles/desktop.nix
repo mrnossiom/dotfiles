@@ -105,6 +105,7 @@
           wdisplays
           wireshark
           zulip
+          wev
 
           # Needed for libreoffice spellchecking
           hunspell
