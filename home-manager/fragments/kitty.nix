@@ -50,6 +50,14 @@ in
       {
         "kitty/dark-theme.auto.conf".source = kitty-theme "Alabaster_Dark";
         "kitty/light-theme.auto.conf".source = kitty-theme "Alabaster";
+        "kitty/quick-access-terminal.conf".text = ''
+          edge center
+          background_opacity 1
+          margin_top 150
+          margin_bottom 150
+          margin_left 150
+          margin_right 150
+        '';
       };
   };
 }

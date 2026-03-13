@@ -240,6 +240,7 @@ in
           in
           {
             "${mod}+Return" = "exec ${cfg-sway.terminal}";
+            "${mod}+grave" = "exec kitten quick-access-terminal";
             "${mod}+Shift+Return" = "exec ${nautilus}";
             "${mod}+Shift+q" = "kill";
             "${mod}+d" = "exec ${cfg-sway.menu}";
