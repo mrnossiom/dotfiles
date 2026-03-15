@@ -16,4 +16,5 @@ builtins.elem (lib.getName package) [
   "jetbrains-toolbox"
   "spotify"
   "vscode-extension-ms-vsliveshare-vsliveshare"
+  "warp-terminal"
 ]
