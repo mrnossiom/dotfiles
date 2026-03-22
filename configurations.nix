@@ -1,7 +1,7 @@
 flake-lib: pkgs:
 
 let
-  keys = import ./secrets/keys.nix;
+  keys = import secrets/keys.nix;
 in
 {
   nixosConfigurations = with flake-lib.nixos; {
