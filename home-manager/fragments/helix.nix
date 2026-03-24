@@ -71,6 +71,9 @@ in
 
           lsp.display-inlay-hints = false;
 
+          trim-final-newlines = true;
+          trim-trailing-whitespace = true;
+
           rulers = [ 80 ];
           text-width = 80;
           soft-wrap.wrap-at-text-width = true;
