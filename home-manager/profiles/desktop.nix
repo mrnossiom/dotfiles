@@ -101,6 +101,7 @@
           prismlauncher
           rawtherapee
           simple-scan
+          songrec
           transmission_4-gtk
           wdisplays
           wireshark
