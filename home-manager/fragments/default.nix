@@ -15,7 +15,6 @@
     ./foot.nix
     ./git.nix
     ./helix.nix
-    ./heriot-watt.nix
     ./imv.nix
     ./jujutsu.nix
     ./kanshi.nix

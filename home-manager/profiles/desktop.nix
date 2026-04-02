@@ -21,7 +21,6 @@
       compose-key.enable = true;
       epita.enable = true;
       firefox.enable = true;
-      heriot-watt.enable = true;
       imv.enable = true;
       kanshi.enable = true;
       stylix.enable = true;
