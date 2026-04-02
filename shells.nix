@@ -22,22 +22,4 @@ in
       tofu-ls
     ]
   );
-
-  # Add presets that I can quickly use
-
-  rust = mkPackageShell (
-    with pkgs;
-    [
-      rustup
-      cargo-show-asm
-    ]
-  );
-
-  go = mkPackageShell (with pkgs; [ go ]);
-
-  python =
-    let
-      pythonEnv = pkgs.python3.withPackages (ps: with ps; [ ipython ]);
-    in
-    mkPackageShell [ pythonEnv ];
 }
