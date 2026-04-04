@@ -54,6 +54,7 @@
               public = "Public";
               auth = "Authenticated";
               net = "Net";
+              external = "External";
             };
 
             tests = {
@@ -103,6 +104,8 @@
               conditions = [ tests.status200 ];
             })
             (mkHttp "Grafana" groups.net "https://${globals.domains.grafana}/" { })
+
+            (mkHttp "Linkhut" groups.external "https://ln.ht/" { })
           ];
       };
     };
