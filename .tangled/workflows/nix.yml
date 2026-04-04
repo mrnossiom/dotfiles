@@ -8,5 +8,4 @@ dependencies:
   nixpkgs:
 
 steps:
-  - command: |
-      echo Hello, World!
+  - command: nix flake check
