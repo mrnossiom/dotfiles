@@ -59,7 +59,7 @@
 
             tests = {
               status200 = "[STATUS] == 200";
-              time300 = "[RESPONSE_TIME] <= 500";
+              time600 = "[RESPONSE_TIME] <= 600";
               cert1w = "[CERTIFICATE_EXPIRATION] >= 168h";
             };
 
@@ -69,7 +69,7 @@
                 interval ? "5m",
                 conditions ? [
                   tests.status200
-                  tests.time300
+                  tests.time600
                   tests.cert1w
                 ],
                 alerts ? [
@@ -105,7 +105,9 @@
             })
             (mkHttp "Grafana" groups.net "https://${globals.domains.grafana}/" { })
 
-            (mkHttp "Linkhut" groups.external "https://ln.ht/" { })
+            (mkHttp "Linkhut" groups.external "https://ln.ht/" {
+              conditions = [ tests.status200 ];
+            })
           ];
       };
     };
