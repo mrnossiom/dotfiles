@@ -181,6 +181,23 @@ resource "hcloud_zone_rrset" "wiro_world-gitpageschallenge_rustdocs_kalei-txt" {
   ]
 }
 
+resource "hcloud_zone_rrset" "wiro_world-usp-cname" {
+  zone = hcloud_zone.wiro_world.name
+  name = "usp"
+  type = "CNAME"
+  records = [
+    { value = "grebedoc.dev." },
+  ]
+}
+resource "hcloud_zone_rrset" "wiro_world-gitpageschallenge_usp-txt" {
+  zone = hcloud_zone.wiro_world.name
+  name = "_git-pages-challenge.usp"
+  type = "TXT"
+  records = [
+    { value = provider::hcloud::txt_record("6bfe7a2c03ec020f6653d86b408d48455537840c36f2885393bf5aca53a32fdc") },
+  ]
+}
+
 ## Agnos
 
 resource "hcloud_zone_rrset" "wiro_world-agnos_weirdrow_portal-aaaa" {
