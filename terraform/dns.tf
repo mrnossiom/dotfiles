@@ -152,7 +152,32 @@ resource "hcloud_zone_rrset" "wiro_world-kalei-cname" {
   name = "kalei"
   type = "CNAME"
   records = [
-    { value = "mrnossiom.github.io." },
+    { value = "grebedoc.dev." },
+  ]
+}
+resource "hcloud_zone_rrset" "wiro_world-gitpageschallenge_kalei-txt" {
+  zone = hcloud_zone.wiro_world.name
+  name = "_git-pages-challenge.kalei"
+  type = "TXT"
+  records = [
+    { value = provider::hcloud::txt_record("6c44222e68c0ee7c495958d06cfeb73a21158a4a55c3fbef6ff50280c6e5d5d8") },
+  ]
+}
+
+resource "hcloud_zone_rrset" "wiro_world-rustdocs_kalei-cname" {
+  zone = hcloud_zone.wiro_world.name
+  name = "rust-docs.kalei"
+  type = "CNAME"
+  records = [
+    { value = "grebedoc.dev." },
+  ]
+}
+resource "hcloud_zone_rrset" "wiro_world-gitpageschallenge_rustdocs_kalei-txt" {
+  zone = hcloud_zone.wiro_world.name
+  name = "_git-pages-challenge.rust-docs.kalei"
+  type = "TXT"
+  records = [
+    { value = provider::hcloud::txt_record("5a999a1272083d86a2826fb08809df85409705087ec2b8a6c74ac3fca313696c") },
   ]
 }
 

@@ -83,10 +83,6 @@ import {
   id = "wiro.world/*.pds/CNAME"
 }
 import {
-  to = hcloud_zone_rrset.wiro_world-kalei-cname
-  id = "wiro.world/kalei/CNAME"
-}
-import {
   to = hcloud_zone_rrset.wiro_world-agnos_weirdrow_portal-aaaa
   id = "wiro.world/agnos.weird-row.portal/AAAA"
 }
