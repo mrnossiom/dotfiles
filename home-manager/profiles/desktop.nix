@@ -89,6 +89,7 @@
           gnome-disk-utility
           insomnia
           upkgs.jellyfin-desktop
+          upkgs.kdePackages.kdenlive
           kicad
           legcord
           libreoffice-qt
