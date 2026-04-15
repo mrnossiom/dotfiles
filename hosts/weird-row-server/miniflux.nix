@@ -39,6 +39,8 @@
 
         RUN_MIGRATIONS = 1;
 
+        POLLING_PARSING_ERROR_LIMIT = 0; # unlimited
+
         # NetNewsWire is a very good iOS oss client that integrates well
         # https://b.j4.lc/2025/05/05/setting-up-netnewswire-with-miniflux/
       };
