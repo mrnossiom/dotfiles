@@ -115,6 +115,7 @@
           hunspellDicts.en_GB-large
 
           # CLIs
+          pandoc
           wf-recorder
           wl-clipboard
           xdg-utils
