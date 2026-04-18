@@ -106,7 +106,6 @@
           wdisplays
           wireshark
           zulip
-          (warp-terminal.override { waylandSupport = true; })
           wev
 
           # Needed for libreoffice spellchecking
