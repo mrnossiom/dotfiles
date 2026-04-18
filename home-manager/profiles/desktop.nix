@@ -88,8 +88,8 @@
           file-roller
           gnome-disk-utility
           insomnia
-          upkgs.jellyfin-desktop
-          upkgs.kdePackages.kdenlive
+          jellyfin-desktop
+          kdePackages.kdenlive
           kicad
           legcord
           libreoffice-qt
