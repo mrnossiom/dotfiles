@@ -28,7 +28,7 @@
         plugins = [
           "github.com/tailscale/caddy-tailscale@v0.0.0-20251016213337-01d084e119cb"
         ];
-        hash = "sha256-3R2upV1wYmLq4GbedMA7cxRIqLo8WIDnKvDSgUvvjAo=";
+        hash = "sha256-ky3n+IIAs/myLKFucTxEplvoTpmU6P0suvUoUotIwMA=";
       };
 
       environmentFile = config.age.secrets.caddy-env.path;
