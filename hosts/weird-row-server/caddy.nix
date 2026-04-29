@@ -46,7 +46,7 @@
       virtualHosts.${globals.domains.website}.extraConfig =
         # TODO: host website on server with automatic deployment
         ''
-          reverse_proxy https://mrnossiom.github.io {
+          reverse_proxy https://grebedoc.dev {
           	header_up Host {http.request.host}
           }
         '';

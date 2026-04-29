@@ -147,6 +147,24 @@ resource "hcloud_zone_rrset" "wiro_world-wildcard_pds-cname" {
 
 ## External services
 
+# we reverse proxy grebedoc (which is dumb because we lose speed) for tuwunel which I want to get rid of
+# resource "hcloud_zone_rrset" "wiro_world-tl-cname" {
+#   zone = hcloud_zone.wiro_world.name
+#   name = "@"
+#   type = "CNAME"
+#   records = [
+#     { value = "grebedoc.dev." },
+#   ]
+# }
+resource "hcloud_zone_rrset" "wiro_world-gitpageschallenge-txt" {
+  zone = hcloud_zone.wiro_world.name
+  name = "_git-pages-challenge"
+  type = "TXT"
+  records = [
+    { value = provider::hcloud::txt_record("1503c07e1e0a39400d42221fb9df3dcf2fc83b1b71f27bd92ca6819e6296a558") },
+  ]
+}
+
 resource "hcloud_zone_rrset" "wiro_world-kalei-cname" {
   zone = hcloud_zone.wiro_world.name
   name = "kalei"
