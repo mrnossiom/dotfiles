@@ -33,14 +33,8 @@
       };
     };
 
-    services.caddy = {
-      virtualHosts.${globals.domains.matrix}.extraConfig = ''
-        reverse_proxy /_matrix/* http://localhost:${config.local.ports.matrix.string}
-      '';
-
-      virtualHosts.${globals.domains.website}.extraConfig = ''
-        reverse_proxy /.well-known/matrix/* http://localhost:${config.local.ports.matrix.string}
-      '';
-    };
+    services.caddy.virtualHosts.${globals.domains.matrix}.extraConfig = ''
+      reverse_proxy /_matrix/* http://localhost:${config.local.ports.matrix.string}
+    '';
   };
 }
