@@ -66,60 +66,58 @@
         WAKATIME_HOME = "${config.xdg.configHome}/wakatime";
       };
 
-      packages =
-        with pkgs;
-        [
-          # Unfree
-          aseprite
-          # ida-free
-          jetbrains-toolbox
-          spotify
+      packages = with pkgs; [
+        # Unfree
+        aseprite
+        # ida-free
+        jetbrains-toolbox
+        spotify
 
-          # GUIs
-          audacity
-          baobab
-          blender
-          (bottles.override { removeWarningPopup = true; })
-          calibre
-          cura-appimage
-          element-desktop
-          evince
-          figma-linux
-          file-roller
-          gnome-disk-utility
-          insomnia
-          jellyfin-desktop
-          kdePackages.kdenlive
-          kicad
-          legcord
-          libreoffice-qt
-          localsend
-          mpv
-          nautilus
-          nicotine-plus
-          pavucontrol
-          prismlauncher
-          rawtherapee
-          simple-scan
-          songrec
-          transmission_4-gtk
-          wdisplays
-          wireshark
-          zulip
-          wev
+        # GUIs
+        audacity
+        baobab
+        blender
+        (bottles.override { removeWarningPopup = true; })
+        calibre
+        cura-appimage
+        element-desktop
+        evince
+        figma-linux
+        file-roller
+        gnome-disk-utility
+        insomnia
+        jellyfin-desktop
+        kdePackages.kdenlive
+        kicad
+        legcord
+        libreoffice-qt
+        localsend
+        mpv
+        nautilus
+        nicotine-plus
+        pavucontrol
+        prismlauncher
+        rawtherapee
+        simple-scan
+        songrec
+        transmission_4-gtk
+        wdisplays
+        wireshark
+        zulip
+        wev
 
-          # Needed for libreoffice spellchecking
-          hunspell
-          hunspellDicts.fr-moderne
-          hunspellDicts.en_US-large
-          hunspellDicts.en_GB-large
+        # Needed for libreoffice spellchecking
+        hunspell
+        hunspellDicts.fr-moderne
+        hunspellDicts.en_US-large
+        hunspellDicts.en_GB-large
 
-          # CLIs
-          pandoc
-          wf-recorder
-          wl-clipboard
-          xdg-utils
-        ];
+        # CLIs
+        pandoc
+        wf-recorder
+        wl-clipboard
+        xdg-utils
+      ];
     };
 
     # Make NPM respect XDG spec
