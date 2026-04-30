@@ -31,14 +31,6 @@ import {
   id = "wiro.world/weird-row.portal/AAAA"
 }
 import {
-  to = hcloud_zone_rrset.wiro_world-tl-a
-  id = "wiro.world/@/A"
-}
-import {
-  to = hcloud_zone_rrset.wiro_world-tl-aaaa
-  id = "wiro.world/@/AAAA"
-}
-import {
   to = hcloud_zone_rrset.wiro_world-knot-cname
   id = "wiro.world/knot/CNAME"
 }

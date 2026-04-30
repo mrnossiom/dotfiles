@@ -31,7 +31,6 @@ in
     ./tuwunel.nix
     ./vaultwarden.nix
     ./warrior.nix
-    ./webfinger.nix
 
     # doesn't support domain restrictions
     # ./git-pages.nix

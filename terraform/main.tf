@@ -40,6 +40,9 @@ locals {
     weird-row-server-v4       = hcloud_primary_ip.primary-v4.ip_address
     weird-row-server-v6       = cidrhost(hcloud_primary_ip.primary-v6.ip_network, 1)
     weird-row-server-v6-agnos = cidrhost(hcloud_primary_ip.primary-v6.ip_network, 2)
+
+    grebedoc-v4 = "185.187.152.7"
+    grebedoc-v6 = "2a05:b0c4:1::3"
   }
 }
 

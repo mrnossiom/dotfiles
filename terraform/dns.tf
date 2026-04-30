@@ -32,23 +32,6 @@ resource "hcloud_zone_rrset" "wiro_world-weirdrow_portal-aaaa" {
 
 ## Hosted services
 
-resource "hcloud_zone_rrset" "wiro_world-tl-a" {
-  zone = hcloud_zone.wiro_world.name
-  name = "@"
-  type = "A"
-  records = [
-    { value = local.network.weird-row-server-v4 },
-  ]
-}
-resource "hcloud_zone_rrset" "wiro_world-tl-aaaa" {
-  zone = hcloud_zone.wiro_world.name
-  name = "@"
-  type = "AAAA"
-  records = [
-    { value = local.network.weird-row-server-v6 },
-  ]
-}
-
 resource "hcloud_zone_rrset" "wiro_world-knot-cname" {
   zone = hcloud_zone.wiro_world.name
   name = "knot"
@@ -147,15 +130,22 @@ resource "hcloud_zone_rrset" "wiro_world-wildcard_pds-cname" {
 
 ## External services
 
-# we reverse proxy grebedoc (which is dumb because we lose speed) for tuwunel which I want to get rid of
-# resource "hcloud_zone_rrset" "wiro_world-tl-cname" {
-#   zone = hcloud_zone.wiro_world.name
-#   name = "@"
-#   type = "CNAME"
-#   records = [
-#     { value = "grebedoc.dev." },
-#   ]
-# }
+resource "hcloud_zone_rrset" "wiro_world-tl-a" {
+  zone = hcloud_zone.wiro_world.name
+  name = "@"
+  type = "A"
+  records = [
+    { value = local.network.grebedoc-v4 },
+  ]
+}
+resource "hcloud_zone_rrset" "wiro_world-tl-aaaa" {
+  zone = hcloud_zone.wiro_world.name
+  name = "@"
+  type = "AAAA"
+  records = [
+    { value = local.network.grebedoc-v6 },
+  ]
+}
 resource "hcloud_zone_rrset" "wiro_world-gitpageschallenge-txt" {
   zone = hcloud_zone.wiro_world.name
   name = "_git-pages-challenge"

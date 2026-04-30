@@ -88,7 +88,6 @@
               };
           in
           [
-            (mkHttp "Website" groups.public "https://${globals.domains.website}/" { })
             (mkHttp "Hypixel Bank Tracker" groups.public "https://${globals.domains.hbt-main}/" { })
             (mkHttp "Hypixel Bank Tracker Banana" groups.public "https://${globals.domains.hbt-banana}/" { })
             (mkHttp "Status" groups.public "https://${globals.domains.status}/" { })
@@ -105,6 +104,7 @@
             })
             (mkHttp "Grafana" groups.net "https://${globals.domains.grafana}/" { })
 
+            (mkHttp "Website" groups.external "https://${globals.domains.website}/" { })
             (mkHttp "Linkhut" groups.external "https://ln.ht/" {
               conditions = [ tests.status200 ];
             })
