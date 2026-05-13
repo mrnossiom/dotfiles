@@ -41,6 +41,8 @@
 
       kernelPackages = pkgs.linuxKernel.packages.linux_zen;
 
+      extraModulePackages = with config.boot.kernelPackages; [ apfs ];
+
       loader = {
         systemd-boot.enable = true;
         systemd-boot.consoleMode = "auto";
