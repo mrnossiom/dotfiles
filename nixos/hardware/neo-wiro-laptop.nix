@@ -20,8 +20,7 @@ in
   config = {
     system.stateVersion = "23.05";
 
-    # time.timeZone = "Europe/Paris";
-    time.timeZone = "Europe/London";
+    time.timeZone = "Europe/Paris";
 
     systemd.package = patched-systemd;
 
