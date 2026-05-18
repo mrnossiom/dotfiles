@@ -17,6 +17,10 @@ in
     security.sudo.enable = false;
     security.sudo-rs.enable = true;
 
+    security.sudo-rs.extraConfig = ''
+      Defaults !pwfeedback
+    '';
+
     # Security Kits
     security.polkit.enable = true;
     security.rtkit.enable = true;
