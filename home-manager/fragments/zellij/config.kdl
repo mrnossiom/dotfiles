@@ -181,23 +181,6 @@ env {
     TERM "xterm-256color"
 }
 
-// Toggle between having Zellij lay out panes according to a predefined set of layouts whenever possible
-// auto_layout true
-
-theme "onedark"
-
-themes {
-    onedark {
-        fg "#3B4048"
-        bg "#2C323C"
-        red "#E06C75"
-        green "#98C379"
-        yellow "#E5C07B"
-        blue "#61AFEF"
-        magenta "#C678DD"
-        orange "#D19A66"
-        cyan "#56B6C2"
-        black "#282C34"
-        white "#ABB2BF"
-    }
-}
+theme "catppuccin-frappe"
+theme_dark "catppuccin-frappe"
+theme_light "catppuccin-latte"
