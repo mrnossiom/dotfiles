@@ -42,7 +42,7 @@ in
                 concat(
                   separate(" ",
                     format_short_change_id_with_change_offset(self),
-                    format_short_signature_oneline(author),
+                    author.name(),
                     bookmarks,
                     tags,
                     working_copies,
