@@ -98,6 +98,7 @@
         pavucontrol
         prismlauncher
         rawtherapee
+        scribus
         simple-scan
         songrec
         transmission_4-gtk
