@@ -40,7 +40,6 @@ in
         ffmpeg
         file
         fzf
-        upkgs.gemini-cli
         git-pages-cli
         inetutils
         jq
