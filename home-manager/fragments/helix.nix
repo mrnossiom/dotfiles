@@ -154,8 +154,9 @@ in
               // extra;
           in
           [
-            (mk-lang "html" [ "vscode-html-language-server" ] { })
             (mk-lang "hcl" [ "terraform-ls" "tofu-ls" ] { })
+            (mk-lang "html" [ "vscode-html-language-server" ] { })
+            (mk-lang "jjdescription" [ "zls" ] { })
             (mk-lang "markdown" [ ] { }) # removed "marksman"
             (mk-lang "nix" [ "nil" ] { })
             (mk-lang "ocaml" [ "ocamllsp" ] { })
@@ -170,33 +171,7 @@ in
                 args = [ ];
               };
             })
-
-            # TODO: remove when merged upstream
-            (mk-lang "ebnf" [ "ebnfer" ] {
-              scope = "source.ebnf";
-              injection-regex = "ebnf";
-              file-types = [ "ebnf" ];
-              indent = {
-                tab-width = 4;
-                unit = "    ";
-              };
-              block-comment-tokens = {
-                start = "(*";
-                end = "*)";
-              };
-            })
           ];
-
-        grammar = [
-          {
-            name = "ebnf";
-            source = {
-              git = "https://github.com/RubixDev/ebnf/";
-              rev = "8e635b0b723c620774dfb8abf382a7f531894b40";
-              subpath = "crates/tree-sitter-ebnf";
-            };
-          }
-        ];
       };
     };
 
