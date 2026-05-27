@@ -2,7 +2,6 @@
   config,
   lib,
   pkgs,
-  upkgs,
   lpkgs,
 
   isDarwin,
@@ -49,8 +48,8 @@ in
       config.hide_env_diff = true;
     };
     # TODO: depend on osConfig
-    xdg.configFile."direnv/lib/angrr.sh".source = "${upkgs.angrr}/share/direnv/lib/angrr.sh";
-    home.packages = [ upkgs.angrr ];
+    xdg.configFile."direnv/lib/angrr.sh".source = "${pkgs.angrr}/share/direnv/lib/angrr.sh";
+    home.packages = [ pkgs.angrr ];
 
     programs.zoxide = {
       enable = true;

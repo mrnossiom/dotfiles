@@ -2,15 +2,16 @@
   description = "NixOS and Home Manager configuration for Milo's laptops";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-25.11";
+    nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-26.05";
     unixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
 
-    home-manager.url = "github:nix-community/home-manager?ref=release-25.11";
+    home-manager.url = "github:nix-community/home-manager?ref=release-26.05";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
-    nix-darwin.url = "github:nix-darwin/nix-darwin?ref=nix-darwin-25.11";
+    nix-darwin.url = "github:nix-darwin/nix-darwin?ref=nix-darwin-26.05";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
 
+    # stylix.url = "github:nix-community/stylix?ref=release-26.05";
     stylix.url = "github:nix-community/stylix?ref=release-25.11";
     stylix.inputs.nixpkgs.follows = "nixpkgs";
 
@@ -55,6 +56,18 @@
 
     tangled.url = "git+https://tangled.org/tangled.org/core";
     tangled.inputs.nixpkgs.follows = "unixpkgs";
+
+    # remove useless tangled inputs
+    tangled.inputs = {
+      actor-typeahead-src.follows = "";
+      fenix.follows = "";
+      htmx-src.follows = "";
+      htmx-ws-src.follows = "";
+      ibm-plex-mono-src.follows = "";
+      inter-fonts-src.follows = "";
+      lucide-src.follows = "";
+      mermaid-src.follows = "";
+    };
 
     wakatime-ls.url = "github:mrnossiom/wakatime-ls";
     wakatime-ls.inputs.nixpkgs.follows = "nixpkgs";

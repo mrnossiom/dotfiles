@@ -32,7 +32,7 @@ in
         calc
         csvlens
         delta
-        dogdns
+        doggo
         dust
         encfs
         fastfetch

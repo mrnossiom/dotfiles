@@ -39,11 +39,9 @@ in
 
       # Needed for sshfs
       enable = true;
-      matchBlocks."ssh.cri.epita.fr" = {
-        extraOptions = {
-          GSSAPIAuthentication = "yes";
-          GSSAPIDelegateCredentials = "yes";
-        };
+      settings."ssh.cri.epita.fr" = {
+        GSSAPIAuthentication = "yes";
+        GSSAPIDelegateCredentials = "yes";
       };
     };
 

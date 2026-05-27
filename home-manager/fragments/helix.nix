@@ -111,8 +111,8 @@ in
           ltex-ls
           marksman
           nil
-          nodePackages.bash-language-server
-          nodePackages.typescript-language-server
+          bash-language-server
+          typescript-language-server
           tombi
           typos-lsp
           vscode-langservers-extracted

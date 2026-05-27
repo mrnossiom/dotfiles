@@ -10,6 +10,8 @@ let
 in
 
 {
+  disabledModules = [ "programs/screen.nix" ];
+
   options = {
     programs.screen = {
       enable = lib.mkEnableOption "screen, a basic terminal multiplexer";

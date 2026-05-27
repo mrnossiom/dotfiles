@@ -109,24 +109,12 @@ in
             command = "${lib.getExe' pkgs.systemd "systemctl"} suspend";
           }
         ];
-        events = [
-          {
-            event = "before-sleep";
-            command = "${playerctl} pause; ${display "off"}; ${loginctl} lock-session";
-          }
-          {
-            event = "after-resume";
-            command = display "on";
-          }
-          {
-            event = "lock";
-            command = lock;
-          }
-          {
-            event = "unlock";
-            command = display "on";
-          }
-        ];
+        events = {
+          before-sleep = "${playerctl} pause; ${display "off"}; ${loginctl} lock-session";
+          after-resume = display "on";
+          lock = lock;
+          unlock = display "on";
+        };
       };
 
     wayland.windowManager.sway = {
