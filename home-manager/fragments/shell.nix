@@ -80,15 +80,6 @@ in
       };
 
       shellAbbrs = {
-        # One letter abbrs
-        c = "cargo";
-        d = "docker";
-        dc = "docker compose";
-        g = "git";
-        j = "just";
-        n = "nix";
-        m = "make";
-
         # Edit utilities
         cp = "cp -iv";
         ln = "ln -v";
