@@ -101,10 +101,10 @@
       metrics { per_host }
     '';
 
-    services.caddy.virtualHosts.${globals.domains.grafana}.extraConfig = ''
-      bind tailscale/console
-      tls /var/lib/agnos/net.wiro.world_fullchain.pem /var/lib/agnos/net.wiro.world_privkey.pem
-      reverse_proxy http://localhost:${config.local.ports.grafana.string}
-    '';
+    # services.caddy.virtualHosts.${globals.domains.grafana}.extraConfig = ''
+    #   bind tailscale/console
+    #   tls /var/lib/agnos/net.wiro.world_fullchain.pem /var/lib/agnos/net.wiro.world_privkey.pem
+    #   reverse_proxy http://localhost:${config.local.ports.grafana.string}
+    # '';
   };
 }

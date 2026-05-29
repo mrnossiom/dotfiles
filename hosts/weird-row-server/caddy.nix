@@ -1,7 +1,5 @@
 {
   config,
-  pkgs,
-  globals,
   ...
 }:
 
@@ -24,24 +22,24 @@
 
     services.caddy = {
       enable = true;
-      package = pkgs.caddy.withPlugins {
-        plugins = [
-          "github.com/tailscale/caddy-tailscale@v0.0.0-20251016213337-01d084e119cb"
-        ];
-        hash = "sha256-grHleLf9SqeAJSXKHNRZG43FZ3TCcgU4RIkCnWscrn8=";
-      };
+      # package = pkgs.caddy.withPlugins {
+      #   plugins = [
+      #     "github.com/tailscale/caddy-tailscale@v0.0.0-20251016213337-01d084e119cb"
+      #   ];
+      #   hash = "sha256-grHleLf9SqeAJSXKHNRZG43FZ3TCcgU4RIkCnWscrn8=";
+      # };
 
       environmentFile = config.age.secrets.caddy-env.path;
 
-      globalConfig = ''
-        tailscale {
-          # this caddy instance already proxies headscale but needs to access headscale to start
-          # control_url https://headscale.wiro.world
-          control_url http://localhost:${config.local.ports.headscale.string}
-
-          ephemeral
-        }
-      '';
+      # globalConfig = ''
+      #   tailscale {
+      #     # this caddy instance already proxies headscale but needs to access headscale to start
+      #     # control_url https://headscale.wiro.world
+      #     control_url http://localhost:${config.local.ports.headscale.string}
+      #
+      #     ephemeral
+      #   }
+      # '';
     };
 
     services.prometheus.scrapeConfigs = [
