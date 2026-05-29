@@ -84,6 +84,7 @@
         evince
         figma-linux
         file-roller
+        freecad
         gnome-disk-utility
         insomnia
         jellyfin-desktop
