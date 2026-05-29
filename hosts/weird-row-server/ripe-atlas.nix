@@ -53,7 +53,6 @@
           ${mkdir} -p /var/spool/ripe-atlas
         '';
         serviceConfig = {
-          Restart = "always";
           RestartSec = "10s";
         };
       };

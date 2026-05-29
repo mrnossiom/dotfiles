@@ -29,6 +29,9 @@
           root_url = "https://${globals.domains.grafana}";
         };
 
+        # TODO: regen a new one and do not hardcode
+        security.secret_key = "SW2YcwTIb9zpOOhoPsMm";
+
         "auth.generic_oauth" = {
           enable = true;
           name = "Authelia";
