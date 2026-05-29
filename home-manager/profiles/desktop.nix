@@ -96,6 +96,7 @@
         mpv
         nautilus
         nicotine-plus
+        openscad
         pavucontrol
         prismlauncher
         rawtherapee
