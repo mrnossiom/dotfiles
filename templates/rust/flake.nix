@@ -37,7 +37,7 @@
         pkgs:
         let
           file-rust-toolchain = pkgs.rust-bin.fromRustupToolchainFile ./rust-toolchain.toml;
-          rust-toolchain = file-rust-toolchain.override { extensions = [ "rust-analyzer" ]; };
+          rust-toolchain = file-rust-toolchain.override { extensions = [ "rust-analyzer" "rust-src" ]; };
         in
         {
           default = pkgs.mkShell {
@@ -45,8 +45,6 @@
               pkg-config
               rust-toolchain
             ];
-
-            RUST_SRC_PATH = pkgs.rustPlatform.rustLibSrc;
           };
         }
       );
