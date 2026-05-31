@@ -110,6 +110,7 @@
               tailscale = mkStrictPolicy "two_factor" [ "group:headscale" ];
               grafana = mkStrictPolicy "one_factor" [ "group:grafana" ];
               miniflux = mkStrictPolicy "one_factor" [ "group:miniflux" ];
+              rustical = mkStrictPolicy "two_factor" [ "group:rustical" ];
             };
 
           claims_policies = {
@@ -158,6 +159,13 @@
               client_secret = "$pbkdf2-sha256$310000$uPqbWfCOBXDY6nV1vsx3uA$HOWG2hL.c/bs9Dwaee3b9DxjH7KFO.SaZMbasXV9Vdw";
               redirect_uris = [ "https://${globals.domains.miniflux}/oauth2/oidc/callback" ];
               authorization_policy = "miniflux";
+            }
+            {
+              client_name = "Rustical";
+              client_id = "rustical";
+              client_secret = "$pbkdf2-sha256$310000$XKUQi7I8bMJzyFYhLojL7A$2XPHX1bbRoeiuDn1B5BYYUMsVCUO5hC1VtgnLRtZuJk";
+              redirect_uris = [ "https://${globals.domains.cdav}/frontend/login/oidc/callback" ];
+              authorization_policy = "rustical";
             }
           ];
         };

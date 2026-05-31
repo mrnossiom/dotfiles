@@ -127,6 +127,14 @@ resource "hcloud_zone_rrset" "wiro_world-wildcard_pds-cname" {
     atproto = "",
   }
 }
+resource "hcloud_zone_rrset" "wiro_world-cdav-cname" {
+  zone = hcloud_zone.wiro_world.name
+  name = "cdav"
+  type = "CNAME"
+  records = [
+    { value = "weird-row.portal" },
+  ]
+}
 
 ## External services
 

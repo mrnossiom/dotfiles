@@ -25,6 +25,7 @@ in
     ./miniflux.nix
     ./pds.nix
     ./ripe-atlas.nix
+    ./rustical.nix
     ./tailscale.nix
     ./tangled.nix
     ./thelounge.nix

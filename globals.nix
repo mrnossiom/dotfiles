@@ -11,6 +11,7 @@
 
     # wiro.world public
     authelia = "auth.${wiro-world}";
+    cdav = "cdav.${wiro-world}";
     goatcounter = "stats.${wiro-world}";
     headscale = "headscale.${wiro-world}";
     matrix = "matrix.${wiro-world}";

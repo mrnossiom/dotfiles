@@ -26,6 +26,8 @@ in
   "miniflux-oidc-secret.age".publicKeys = deploy;
   # Defines `PDS_JWT_SECRET`, `PDS_ADMIN_PASSWORD`, `PDS_PLC_ROTATION_KEY_K256_PRIVATE_KEY_HEX`, `PDS_EMAIL_SMTP_URL`, `PDS_EMAIL_FROM_ADDRESS`
   "pds-env.age".publicKeys = deploy;
+  # Defines `RUSTICAL_OIDC__CLIENT_SECRET`
+  "rustical-env.age".publicKeys = deploy;
   "tuwunel-registration-tokens.age".publicKeys = deploy;
   # Defines `SMTP_PASSWORD`
   "vaultwarden-env.age".publicKeys = deploy;
