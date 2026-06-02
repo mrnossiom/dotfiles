@@ -206,6 +206,23 @@ resource "hcloud_zone_rrset" "wiro_world-gitpageschallenge_usp-txt" {
   ]
 }
 
+resource "hcloud_zone_rrset" "wiro_world-cypdf-cname" {
+  zone = hcloud_zone.wiro_world.name
+  name = "cypdf"
+  type = "CNAME"
+  records = [
+    { value = "grebedoc.dev." },
+  ]
+}
+resource "hcloud_zone_rrset" "wiro_world-gitpageschallenge_cypdf-txt" {
+  zone = hcloud_zone.wiro_world.name
+  name = "_git-pages-challenge.cypdf"
+  type = "TXT"
+  records = [
+    { value = provider::hcloud::txt_record("d308a5a90d28fcf421a117afcfca92766c004deccf984acdc33069802eaba556") },
+  ]
+}
+
 ## Agnos
 
 resource "hcloud_zone_rrset" "wiro_world-agnos_weirdrow_portal-aaaa" {
