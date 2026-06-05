@@ -11,8 +11,7 @@
     nix-darwin.url = "github:nix-darwin/nix-darwin?ref=nix-darwin-26.05";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
 
-    # stylix.url = "github:nix-community/stylix?ref=release-26.05";
-    stylix.url = "github:nix-community/stylix?ref=release-25.11";
+    stylix.url = "github:nix-community/stylix?ref=release-26.05";
     stylix.inputs.nixpkgs.follows = "nixpkgs";
 
     ## Miscellaneous
