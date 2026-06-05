@@ -143,7 +143,6 @@ in
           let
             global-language-servers = [
               "typos-ls"
-              "wakatime-ls"
             ];
             mk-lang =
               name: language-servers: extra:
