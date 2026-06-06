@@ -2,6 +2,7 @@
   config,
   lib,
   pkgs,
+  upkgs,
 
   isDarwin,
   ...
@@ -32,6 +33,8 @@ in
 
     programs.kitty = {
       enable = true;
+      package = upkgs.kitty;
+
       settings = {
         confirm_os_window_close = 0;
         enable_audio_bell = "no";
