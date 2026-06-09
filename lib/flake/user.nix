@@ -57,6 +57,7 @@ in
           ++ lib.optionals elevated [
             "wheel" # root access
             "tss" # tpm access
+            "dialout" # serial device access
           ];
         }
     )
