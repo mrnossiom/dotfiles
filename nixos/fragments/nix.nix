@@ -86,7 +86,6 @@ in
     };
 
     # other disk space saver
-    # TODO: update to new policies based version
     services.angrr = {
       enable = true;
       enableNixGcIntegration = true;
