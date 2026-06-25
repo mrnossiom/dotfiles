@@ -27,7 +27,7 @@
       formatter = forAllPkgs (pkgs: pkgs.nixfmt-tree);
 
       devShells = forAllPkgs (pkgs: {
-        default = pkgs.mkShell {
+        default = pkgs.mkShellNoCC {
           packages = with pkgs; [
             # hello
           ];
