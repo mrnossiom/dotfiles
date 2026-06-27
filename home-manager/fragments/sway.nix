@@ -165,9 +165,7 @@ in
               # Inhibit IDLE when these are in fullscreen or focused
               (inhibitIdle "firefox" "fullscreen")
               (inhibitIdle "zen-beta" "fullscreen")
-              (inhibitIdle "spotify" "fullscreen")
               (inhibitIdle "mpv" "focus")
-              (inhibitIdle "org.jellyfin.JellyfinDesktop" "focus")
             ];
         };
 

@@ -71,7 +71,6 @@
         aseprite
         # ida-free
         jetbrains-toolbox
-        spotify
 
         # GUIs
         audacity
@@ -87,7 +86,6 @@
         freecad
         gnome-disk-utility
         insomnia
-        jellyfin-desktop
         kdePackages.kdenlive
         kicad
         legcord
@@ -106,7 +104,7 @@
         transmission_4-gtk
         wdisplays
         wireshark
-        zulip
+        # zulip
         wev
 
         # Needed for libreoffice spellchecking

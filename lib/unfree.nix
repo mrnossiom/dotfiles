@@ -14,6 +14,5 @@ builtins.elem (lib.getName package) [
   "aseprite"
   "ida-free"
   "jetbrains-toolbox"
-  "spotify"
   "vscode-extension-ms-vsliveshare-vsliveshare"
 ]
