@@ -28,6 +28,11 @@
 
     hardware.xone.enable = true;
 
+    services.udev.extraRules = ''
+      ACTION=="add", SUBSYSTEM=="leds", DRIVERS=="xone-gip-gamepad", KERNELS=="gip0.0", ATTR{brightness}="1"
+      ACTION=="change", SUBSYSTEM=="leds", DRIVERS=="xone-gip-gamepad", KERNELS=="gip0.0", ATTR{brightness}="1"
+    '';
+
     boot = {
       kernelParams = [ "quiet" ];
 
