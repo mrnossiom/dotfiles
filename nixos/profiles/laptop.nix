@@ -26,6 +26,8 @@
 
     hardware.graphics.enable = true;
 
+    hardware.xone.enable = true;
+
     boot = {
       kernelParams = [ "quiet" ];
 
@@ -33,7 +35,6 @@
       kernel.sysctl."kernel.perf_event_paranoid" = -1;
 
       kernelPackages = pkgs.linuxKernel.packages.linux_zen;
-      extraModulePackages = with config.boot.kernelPackages; [ xone ];
 
       loader = {
         systemd-boot.enable = true;

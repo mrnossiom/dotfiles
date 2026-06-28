@@ -9,6 +9,7 @@ builtins.elem (lib.getName package) [
   "steam-original"
   "steam-run"
   "steam-unwrapped"
+  "xone-dongle-firmware"
 
   # Home Manager
   "aseprite"
