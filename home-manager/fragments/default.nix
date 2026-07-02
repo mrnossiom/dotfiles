@@ -7,7 +7,6 @@
 {
   imports = [
     ./agenix.nix
-    ./aws.nix
     ./chromium.nix
     ./compose-key.nix
     ./epita.nix

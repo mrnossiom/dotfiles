@@ -109,7 +109,6 @@
       globals = forAllPkgs (import ./globals.nix);
       templates = import ./templates;
 
-      apps = forAllPkgs (import ./apps { pkgs-per-system = allPkgs; });
       devShells = forAllPkgs (import ./shells.nix);
       overlays = import ./overlays (nixpkgs // { inherit self; });
       packages = forAllPkgs (import ./pkgs);
