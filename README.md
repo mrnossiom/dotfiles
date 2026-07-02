@@ -2,7 +2,6 @@
 
 # Structure
 
-- `apps`: scripts serving dotfiles purposes
 - `assets`: media or files that don't fit in Nix files
 - `home-manager`: Home Manager specific
 	- `fragments`: Home Manager configuration fragments

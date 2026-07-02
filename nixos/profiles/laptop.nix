@@ -49,7 +49,6 @@
         efi.canTouchEfiVariables = true;
       };
 
-      # This is needed to build cross platform ISOs in `apps/flash-installer.nix`
       binfmt.emulatedSystems = [ "aarch64-linux" ];
     };
 
