@@ -29,7 +29,7 @@
     # wiro.world private net
     grafana = "console.${wiro-world-net}";
     lldap = "ldap.${wiro-world-net}";
-    thelounge = "irc-lounge.${wiro-world-net}";
+    thelounge = "irc.${wiro-world-net}";
     warrior = "warrior.${wiro-world-net}";
 
     # hypixel-bank-tracker.xyz
