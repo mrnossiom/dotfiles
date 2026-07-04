@@ -17,6 +17,7 @@ in
       just
       nix-inspect
       nixos-anywhere
+      nix-output-monitor
       nix-tree
       opentofu
       tofu-ls
