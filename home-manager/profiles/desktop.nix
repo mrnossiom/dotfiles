@@ -87,7 +87,6 @@
         insomnia
         kdePackages.kdenlive
         kicad
-        legcord
         libreoffice-qt
         localsend
         mpv
@@ -103,7 +102,6 @@
         transmission_4-gtk
         wdisplays
         wireshark
-        # zulip
         wev
 
         # Needed for libreoffice spellchecking
