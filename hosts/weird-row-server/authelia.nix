@@ -137,6 +137,7 @@
               redirect_uris = [ "https://${globals.domains.headscale}/oidc/callback" ];
               authorization_policy = "headscale";
               claims_policy = "headscale";
+              consent_mode = "implicit";
             }
             {
               client_name = "Tailscale";
@@ -144,6 +145,7 @@
               client_secret = "$pbkdf2-sha256$310000$PcUaup9aWKI9ZLeCF6.avw$FpsTxkDaxcoQlBi8aIacegXpjEDiCI6nXcaHyZ2Sxyc";
               redirect_uris = [ "https://login.tailscale.com/a/oauth_response" ];
               authorization_policy = "tailscale";
+              consent_mode = "implicit";
             }
             {
               client_name = "Grafana Console";
@@ -152,6 +154,7 @@
               redirect_uris = [ "https://${globals.domains.grafana}/login/generic_oauth" ];
               authorization_policy = "grafana";
               claims_policy = "grafana";
+              consent_mode = "implicit";
             }
             {
               client_name = "Miniflux";
@@ -159,6 +162,7 @@
               client_secret = "$pbkdf2-sha256$310000$uPqbWfCOBXDY6nV1vsx3uA$HOWG2hL.c/bs9Dwaee3b9DxjH7KFO.SaZMbasXV9Vdw";
               redirect_uris = [ "https://${globals.domains.miniflux}/oauth2/oidc/callback" ];
               authorization_policy = "miniflux";
+              consent_mode = "implicit";
             }
             {
               client_name = "Rustical";
@@ -166,6 +170,7 @@
               client_secret = "$pbkdf2-sha256$310000$XKUQi7I8bMJzyFYhLojL7A$2XPHX1bbRoeiuDn1B5BYYUMsVCUO5hC1VtgnLRtZuJk";
               redirect_uris = [ "https://${globals.domains.cdav}/frontend/login/oidc/callback" ];
               authorization_policy = "rustical";
+              consent_mode = "implicit";
             }
           ];
         };
