@@ -16,6 +16,7 @@ in
     ./agnos.nix
     ./authelia.nix
     ./caddy.nix
+    ./caddy-tailscale.nix
     ./gatus.nix
     ./goatcounter.nix
     ./grafana.nix

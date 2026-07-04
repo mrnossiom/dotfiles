@@ -12,6 +12,8 @@
       tcp = false; # let agnos manage the firewall
     };
 
+    users.groups.agnos.gid = 980;
+
     age.secrets.agnos-account-key = {
       file = secrets/agnos-account-key.age;
       owner = config.security.agnos.user;
