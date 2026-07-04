@@ -97,12 +97,15 @@
             (mkHttp "Headscale" groups.auth "https://${globals.domains.headscale}/health" { })
             (mkHttp "Atproto PDS" groups.auth "https://${globals.domains.pds}/xrpc/_health" { })
             (mkHttp "Goat Counter" groups.auth "https://${globals.domains.goatcounter}/" { })
+            (mkHttp "Rustical" groups.auth "https://${globals.domains.cdav}/" { })
 
+            (mkHttp "Grafana" groups.net "https://${globals.domains.grafana}/" { })
+            (mkHttp "LLDAP" groups.net "https://${globals.domains.lldap}/" { })
+            (mkHttp "The Lounge" groups.net "https://${globals.domains.thelounge}/" { })
             (mkHttp "Warrior" groups.net "https://${globals.domains.warrior}/" {
               interval = "10m";
               conditions = [ tests.status200 ];
             })
-            (mkHttp "Grafana" groups.net "https://${globals.domains.grafana}/" { })
 
             (mkHttp "Website" groups.external "https://${globals.domains.website}/" { })
             (mkHttp "Linkhut" groups.external "https://ln.ht/" {
