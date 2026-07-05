@@ -34,7 +34,7 @@
 
         "auth.generic_oauth" = {
           enable = true;
-          name = "Authelia";
+          name = "wiro.world SSO";
           icon = "signin";
 
           client_id = "grafana";
@@ -46,10 +46,10 @@
           name_attribute_path = "name";
 
           role_attribute_path = builtins.concatStringsSep " || " [
-            "contains(groups[*], 'admin') && 'GrafanaAdmin'"
-            "contains(groups[*], 'admin') && 'Admin'"
-            "contains(groups[*], 'editor') && 'Editor'"
-            "'Viewer'"
+            "contains(groups[*], 'admin') && 'GrafanaAdmin'" # instance admin
+            "contains(groups[*], 'service:grafana:admin') && 'Admin'" # org admin
+            "contains(groups[*], 'service:grafana:editor') && 'Editor'"
+            "contains(groups[*], 'service:grafana') && 'Viewer'"
           ];
           allow_assign_grafana_admin = true;
 

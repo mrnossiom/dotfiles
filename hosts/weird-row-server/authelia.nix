@@ -72,25 +72,11 @@
         access_control = {
           default_policy = "deny";
           # Rules are sequential and do not apply to OIDC
+          # these are used for e.g. caddy's `forward_auth`
           rules = [
             {
-              domain = globals.domains.headscale;
-              policy = "two_factor";
-            }
-            {
-              domain = globals.domains.miniflux;
-              policy = "one_factor";
-
-              subject = [
-                [
-                  "group:miniflux"
-                  "oauth2:client:miniflux"
-                ]
-              ];
-            }
-            {
-              domain = "*.${globals.domains.wiro-world}";
-              policy = "two_factor";
+              domain = "wiro.world";
+              policy = "bypass";
             }
           ];
         };
@@ -106,11 +92,11 @@
               };
             in
             {
-              headscale = mkStrictPolicy "two_factor" [ "group:headscale" ];
-              tailscale = mkStrictPolicy "two_factor" [ "group:headscale" ];
-              grafana = mkStrictPolicy "one_factor" [ "group:grafana" ];
-              miniflux = mkStrictPolicy "one_factor" [ "group:miniflux" ];
-              rustical = mkStrictPolicy "two_factor" [ "group:rustical" ];
+              headscale = mkStrictPolicy "two_factor" [ "group:service:headscale" ];
+              tailscale = mkStrictPolicy "two_factor" [ "group:service:headscale" ];
+              grafana = mkStrictPolicy "one_factor" [ "group:service:grafana" ];
+              miniflux = mkStrictPolicy "one_factor" [ "group:service:miniflux" ];
+              rustical = mkStrictPolicy "two_factor" [ "group:service:rustical" ];
             };
 
           claims_policies = {

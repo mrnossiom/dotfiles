@@ -34,7 +34,7 @@
             "profile"
             "groups"
           ];
-          require_group = "rustical";
+          require_group = "service:rustical";
           allow_sign_up = true;
         };
 
