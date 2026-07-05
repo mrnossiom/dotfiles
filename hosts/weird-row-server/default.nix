@@ -29,7 +29,6 @@ in
     ./rustical.nix
     ./tailscale.nix
     ./tangled.nix
-    ./thelounge.nix
     ./tuwunel.nix
     ./vaultwarden.nix
     ./warrior.nix

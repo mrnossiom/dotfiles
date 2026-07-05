@@ -4,37 +4,28 @@
   ...
 }:
 
+# We need a second caddy instance to support the tailscale plugin.
+# Else we have a dep cycle of authelia -> caddy -> tailscale → authelia
+# A light container is the simplest way to configure it.
+
 {
   config = {
     containers.caddy-tailscale = {
       autoStart = true;
       privateNetwork = false;
-      # hostAddress = "192.168.100.10";
-      # localAddress = "192.168.100.11";
 
       bindMounts = {
         "/var/lib/agnos/".isReadOnly = true;
         "/run/agenix/".isReadOnly = true;
       };
 
-      # forwardPorts =
-      #   let
-      #     mkFwd = port: {
-      #       containerPort = port;
-      #       hostPort = port;
-      #       protocol = "tcp";
-      #     };
-      #   in
-      #   [
-      #     (mkFwd config.local.ports.grafana.number)
-      #     (mkFwd config.local.ports.lldap-interface.number)
-      #     (mkFwd config.local.ports.thelounge.number)
-      #     (mkFwd config.local.ports.warrior.number)
-      #   ];
-
       config =
         { pkgs, ... }:
         {
+          system.stateVersion = "26.05";
+
+          # used to link the "host-agnos" group in the container to the host "agnos" group
+          # needed to read the certs
           users.groups.host-agnos.gid = 980;
           users.users.caddy.extraGroups = [ "host-agnos" ];
 
@@ -71,27 +62,12 @@
               reverse_proxy http://localhost:${config.local.ports.lldap-interface.string}
             '';
 
-            virtualHosts.${globals.domains.thelounge}.extraConfig = ''
-              bind tailscale/irc
-              tls /var/lib/agnos/net.wiro.world_fullchain.pem /var/lib/agnos/net.wiro.world_privkey.pem
-              reverse_proxy http://localhost:${config.local.ports.thelounge.string}
-            '';
-
             virtualHosts.${globals.domains.warrior}.extraConfig = ''
               bind tailscale/warrior
               tls /var/lib/agnos/net.wiro.world_fullchain.pem /var/lib/agnos/net.wiro.world_privkey.pem
               reverse_proxy http://localhost:${config.local.ports.warrior.string}
             '';
           };
-
-          # networking.firewall.allowedTCPPorts = [
-          #   config.local.ports.grafana.number
-          #   config.local.ports.lldap-interface.number
-          #   config.local.ports.thelounge.number
-          #   config.local.ports.warrior.number
-          # ];
-
-          system.stateVersion = "26.05";
         };
     };
   };

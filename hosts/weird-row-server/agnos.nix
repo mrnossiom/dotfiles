@@ -12,6 +12,7 @@
       tcp = false; # let agnos manage the firewall
     };
 
+    # needed in caddy-tailscale
     users.groups.agnos.gid = 980;
 
     age.secrets.agnos-account-key = {

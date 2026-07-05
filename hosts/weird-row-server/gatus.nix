@@ -101,7 +101,6 @@
 
             (mkHttp "Grafana" groups.net "https://${globals.domains.grafana}/" { })
             (mkHttp "LLDAP" groups.net "https://${globals.domains.lldap}/" { })
-            (mkHttp "The Lounge" groups.net "https://${globals.domains.thelounge}/" { })
             (mkHttp "Warrior" groups.net "https://${globals.domains.warrior}/" {
               interval = "10m";
               conditions = [ tests.status200 ];
