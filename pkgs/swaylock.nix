@@ -9,7 +9,7 @@ swaylock.overrideAttrs (old: {
   src = fetchFromGitHub {
     owner = "mrnossiom";
     repo = "swaylock";
-    rev = "c1f213e8ba96706e9f42963941850ffb51bd9e53";
-    hash = "sha256-1OeReYEJv66fHUiHL0B1+H0aQNqWlY2ZauFVyAAMNTo=";
+    rev = "164e46e1b632872ef62dd414c634f3983cb6ac56";
+    hash = "sha256-9yEfcU3lc2ZXqf4XTVLmYQqdNpsR3WtuWjqyeBf2yx4=";
   };
 })
