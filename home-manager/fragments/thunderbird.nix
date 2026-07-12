@@ -34,6 +34,9 @@ in
           # Use compact cards
           "mail.threadpane.listview" = 0;
           "mail.threadpane.cardsview.rowcount" = 2; # 2 row instead of 1
+
+          # Start weeks on Monday
+          "calendar.week.start" = 1;
         };
 
         # <https://www.userchrome.org/how-create-userchrome-css.html>
