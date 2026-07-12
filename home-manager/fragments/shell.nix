@@ -166,5 +166,36 @@ in
         '';
       };
     };
+
+    programs.nushell = {
+      enable = true;
+
+      settings = {
+        show_banner = false;
+      };
+
+      configFile.text = ''
+        def gcdu [
+            --processes (-p)    # also show roots from running processes
+        ]: nothing -> table {
+          let roots = ^nix-store --gc --print-roots
+            | parse "{root} -> {closure}"
+            | where root !~ '{censored}|^/proc' or $processes
+            | group-by --to-table closure
+            | rename path roots
+            | update roots { get root | sort | str join "\n" }
+
+          let pathinfo = ^nix path-info --closure-size --json ...($roots | get path)
+            | from json
+            | select closureSize narSize path
+            | into filesize closureSize narSize
+
+          $roots | join $pathinfo path
+            | update path { path basename }
+            | rename -c { path: "store path" }
+            | sort-by -r closureSize
+        }
+      '';
+    };
   };
 }
