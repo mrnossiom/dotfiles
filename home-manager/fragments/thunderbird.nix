@@ -9,7 +9,7 @@ let
 in
 {
   options.local.fragment.thunderbird.enable = lib.mkEnableOption ''
-    `imv` related
+    Thunderbird related
   '';
 
   config = lib.mkIf cfg.enable {
@@ -30,6 +30,10 @@ in
           "mailnews.default_news_sort_type" = 22;
           "mailnews.default_sort_order" = 2;
           "mailnews.default_sort_type" = 22;
+
+          # Use compact cards
+          "mail.threadpane.listview" = 0;
+          "mail.threadpane.cardsview.rowcount" = 2; # 2 row instead of 1
         };
 
         # <https://www.userchrome.org/how-create-userchrome-css.html>
