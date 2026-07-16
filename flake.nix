@@ -16,6 +16,10 @@
 
     ## Miscellaneous
 
+    flake-parts.url = "github:hercules-ci/flake-parts";
+
+    import-tree.url = "github:vic/import-tree";
+
     agenix.url = "github:ryantm/agenix?ref=0.18.0";
     agenix.inputs.nixpkgs.follows = "nixpkgs";
     agenix.inputs.home-manager.follows = "home-manager";
@@ -86,46 +90,24 @@
   };
 
   outputs =
-    { self, nixpkgs, ... }:
-    let
-      inherit (self) outputs;
-      inherit (flake-lib) forAllSystems;
+    inputs:
+    inputs.flake-parts.lib.mkFlake { inherit inputs; } (
+      { ... }:
+      {
+        systems = [
+          "aarch64-darwin"
+          "aarch64-linux"
+          "x86_64-linux"
+        ];
+        imports = [
+          inputs.home-manager.flakeModules.home-manager
 
-      flake-lib = import ./lib/flake ({
-        inherit self;
-        inherit (nixpkgs) lib;
-      });
-
-      allPkgs = forAllSystems (
-        system:
-        # This should be the only constructed nixpkgs instance in this flake
-        # (along with the derived unixpkgs instance in specialModuleArgs)
-        import nixpkgs {
-          inherit system;
-          config.allowUnfreePredicate = import ./lib/unfree.nix { inherit (nixpkgs) lib; };
-          overlays = [ outputs.overlays.all ];
-        }
-      );
-
-      forAllPkgs = func: forAllSystems (system: func allPkgs.${system});
-    in
-    {
-      formatter = forAllPkgs (pkgs: pkgs.nixfmt-tree);
-
-      inherit flake-lib; # Nonstandard
-      lib = forAllPkgs (import ./lib);
-      globals = forAllPkgs (import ./globals.nix);
-      templates = import ./templates;
-
-      devShells = forAllPkgs (import ./shells.nix);
-      overlays = import ./overlays (nixpkgs // { inherit self; });
-      packages = forAllPkgs (import ./pkgs);
-
-      homeManagerModules = import ./modules/home-manager;
-      nixosModules = import ./modules/nixos;
-
-      # `nixos`, `home-manager` and `nix-darwin` configs are generic over `pkgs` and placed in `configurations.nix`
-      # `legacyPackages` tree structure is not checked by `nix flake check` but picked up by all rebuild tools
-      legacyPackages = forAllPkgs (import ./configurations.nix flake-lib);
-    };
+          (inputs.import-tree ./src)
+        ];
+        flake = { };
+        perSystem = { pkgs, ... }: {
+          formatter = pkgs.nixfmt-tree;
+        };
+      }
+    );
 }
