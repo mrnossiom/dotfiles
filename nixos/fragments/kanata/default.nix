@@ -1,7 +1,6 @@
 {
   config,
   lib,
-  pkgs,
 
   ...
 }:
@@ -18,7 +17,6 @@ in
   config = lib.mkIf cfg.enable {
     services.kanata = {
       enable = true;
-      package = pkgs.kanata;
 
       keyboards.neo-integrated = {
         devices = [
@@ -29,7 +27,7 @@ in
         extraDefCfg = "process-unmapped-keys yes";
 
         # Qwerty Arsenik layout
-        # See <https://ergol.org/claviers/arsenik> for mentionned reference files
+        # See <https://ergol.org/claviers/arsenik> for mentioned reference files
         config = builtins.readFile ./arsenik.kbd.lisp;
       };
     };

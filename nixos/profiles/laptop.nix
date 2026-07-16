@@ -90,10 +90,8 @@
       # staticFile = "48.8\n2.3\n0\n0\n";
     };
 
-    programs.wireshark = {
-      enable = true;
-      package = pkgs.wireshark;
-    };
+    programs.wireshark.enable = true;
+
     users.users.${config.local.user.username}.extraGroups = [
       "wireshark"
       "plugdev"
