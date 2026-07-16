@@ -16,35 +16,50 @@ in
   config = lib.mkIf cfg.enable {
     programs.vscodium = {
       enable = true;
+      profiles.default = {
+        userSettings = {
+          window.autoDetectColorScheme = true;
+          workbench.preferredLightColorTheme = "Alabaster";
+          workbench.preferredDarkColorTheme = "Alabaster Dark";
 
-      profiles.default.extensions =
-        with pkgs.vscode-extensions;
-        [
-          bradlc.vscode-tailwindcss
-          dbaeumer.vscode-eslint
-          eamodio.gitlens
-          esbenp.prettier-vscode
-          ms-vsliveshare.vsliveshare
-          usernamehw.errorlens
-          vue.volar
-          wakatime.vscode-wakatime
-        ]
-        ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
-          {
-            # https://marketplace.visualstudio.com/items?itemName=meganrogge.template-string-converter
-            name = "template-string-converter";
-            publisher = "meganrogge";
-            version = "0.6.1";
-            sha256 = "sha256-w0ppzh0m/9Hw3BPJbAKsNcMStdzoH9ODf3zweRcCG5k=";
-          }
-          {
-            # https://marketplace.visualstudio.com/items?itemName=akamud.vscode-theme-onedark
-            name = "vscode-theme-onedark";
-            publisher = "akamud";
-            version = "2.3.0";
-            sha256 = "sha256-8GGv4L4poTYjdkDwZxgNYajuEmIB5XF1mhJMxO2Ho84=";
-          }
-        ];
+          explorer.excludeGitIgnore = true;
+          files.autoSave = "onFocusChange";
+          editor.minimap.enabled = false;
+        };
+
+        extensions =
+          with pkgs.vscode-extensions;
+          [
+            dbaeumer.vscode-eslint
+            eamodio.gitlens
+            esbenp.prettier-vscode
+            ms-vsliveshare.vsliveshare
+            usernamehw.errorlens
+          ]
+          ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
+            {
+              # https://marketplace.visualstudio.com/items?itemName=meganrogge.template-string-converter
+              name = "template-string-converter";
+              publisher = "meganrogge";
+              version = "0.6.1";
+              sha256 = "sha256-w0ppzh0m/9Hw3BPJbAKsNcMStdzoH9ODf3zweRcCG5k=";
+            }
+            {
+              # https://open-vsx.org/extension/tonsky/theme-alabaster
+              name = "theme-alabaster";
+              publisher = "tonsky";
+              version = "0.2.9";
+              sha256 = "sha256-3LvXIJAyKUqgxAsC7fa48YRqX3/5UByMhYCQxnuKJm4=";
+            }
+            {
+              # https://open-vsx.org/extension/lao-liang/vscode-theme-alabaster-dark
+              name = "vscode-theme-alabaster-dark";
+              publisher = "lao-liang";
+              version = "0.0.2";
+              sha256 = "sha256-tbIA+7R2KTA9vubQNpWTmGtZqdJyGA77BT6L9uA85UU=";
+            }
+          ];
+      };
     };
   };
 }
