@@ -31,17 +31,6 @@ in
           modules-settings = {
             "sway/workspaces" = {
               disable-scroll = true;
-              format = "{name} {icon}";
-              format-icons = {
-                default = "●";
-
-                "1" = " ";
-                "2" = " ";
-                "3" = " ";
-                "4" = " ";
-                "9" = " ";
-                "10" = "♫ ";
-              };
             };
 
             "group/misc" = {
@@ -242,15 +231,9 @@ in
         /* Apply transparency to the bar */
         #waybar { background: alpha(white, 0); }
 
-        /* Apply margin to all module groups */
-        .modules-left, .modules-center, .modules-right {
-          /*margin: .5rem .8rem;*/
-        }
-
         /* Apply padding to all modules */
         .modules-right widget .module {
           padding: 0 .7rem;
-
           color: @base07;
         }
 
