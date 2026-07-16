@@ -14,6 +14,19 @@ let
     DontCheckDefaultBrowser = true;
     DisablePocket = true;
     SearchBar = "unified";
+
+    ExtensionSettings = {
+      # AutoTabDiscard
+      "{c2c003ee-bd69-42a2-b0e9-6f34222cb046}" = {
+        number = 20; # wait for 20 tabs before closing old ones
+
+        # inhibit if
+        audio = true; # tab has media playing
+        paused = true; # tab has media paused
+        pinned = true; # tab is pinned
+        online = true; # there is no internet connection
+      };
+    };
   };
 
   settings = {
