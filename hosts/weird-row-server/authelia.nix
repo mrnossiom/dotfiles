@@ -97,6 +97,7 @@
               grafana = mkStrictPolicy "one_factor" [ "group:service:grafana" ];
               miniflux = mkStrictPolicy "one_factor" [ "group:service:miniflux" ];
               rustical = mkStrictPolicy "two_factor" [ "group:service:rustical" ];
+              vaultwarden = mkStrictPolicy "two_factor" [ "group:service:vaultwarden" ];
             };
 
           claims_policies = {
@@ -156,6 +157,14 @@
               client_secret = "$pbkdf2-sha256$310000$XKUQi7I8bMJzyFYhLojL7A$2XPHX1bbRoeiuDn1B5BYYUMsVCUO5hC1VtgnLRtZuJk";
               redirect_uris = [ "https://${globals.domains.cdav}/frontend/login/oidc/callback" ];
               authorization_policy = "rustical";
+              consent_mode = "implicit";
+            }
+            {
+              client_name = "Vaultwarden";
+              client_id = "vaultwarden";
+              client_secret = "$pbkdf2-sha256$310000$IBOav1QzUHR6cB/bZdP89A$gwq2hsvAEAAR2Ry0/iaZyCfUh8Nkox5TXBDTTn539Bc";
+              redirect_uris = [ "https://${globals.domains.vaultwarden}/identity/connect/oidc-signin" ];
+              authorization_policy = "vaultwarden";
               consent_mode = "implicit";
             }
           ];
