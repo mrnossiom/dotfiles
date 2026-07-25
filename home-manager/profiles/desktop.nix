@@ -78,6 +78,7 @@
         (bottles.override { removeWarningPopup = true; })
         calibre
         cura-appimage
+        darktable
         element-desktop
         evince
         figma-linux
@@ -101,8 +102,8 @@
         songrec
         transmission_4-gtk
         wdisplays
-        wireshark
         wev
+        wireshark
 
         # Needed for libreoffice spellchecking
         hunspell
