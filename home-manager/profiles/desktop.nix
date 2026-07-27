@@ -84,6 +84,7 @@
         figma-linux
         file-roller
         freecad
+        gimp
         gnome-disk-utility
         insomnia
         kdePackages.kdenlive
