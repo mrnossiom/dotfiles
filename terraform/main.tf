@@ -20,7 +20,6 @@ resource "hcloud_primary_ip" "primary-v4" {
   location = "nbg1"
   type     = "ipv4"
 
-  assignee_type     = "server"
   auto_delete       = false
   delete_protection = true
 }
@@ -30,7 +29,6 @@ resource "hcloud_primary_ip" "primary-v6" {
   location = "nbg1"
   type     = "ipv6"
 
-  assignee_type     = "server"
   auto_delete       = false
   delete_protection = true
 }

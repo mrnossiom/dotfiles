@@ -75,6 +75,56 @@ import {
   id = "wiro.world/*.pds/CNAME"
 }
 import {
+  to = hcloud_zone_rrset.wiro_world-cdav-cname
+  id = "wiro.world/cdav/CNAME"
+}
+### External services
+import {
+  to = hcloud_zone_rrset.wiro_world-tl-a
+  id = "wiro.world/@/A"
+}
+import {
+  to = hcloud_zone_rrset.wiro_world-tl-aaaa
+  id = "wiro.world/@/AAAA"
+}
+import {
+  to = hcloud_zone_rrset.wiro_world-gitpageschallenge-txt
+  id = "wiro.world/_git-pages-challenge/TXT"
+}
+import {
+  to = hcloud_zone_rrset.wiro_world-kalei-cname
+  id = "wiro.world/kalei/CNAME"
+}
+import {
+  to = hcloud_zone_rrset.wiro_world-gitpageschallenge_kalei-txt
+  id = "wiro.world/_git-pages-challenge.kalei/TXT"
+}
+import {
+  to = hcloud_zone_rrset.wiro_world-rustdocs_kalei-cname
+  id = "wiro.world/rust-docs.kalei/CNAME"
+}
+import {
+  to = hcloud_zone_rrset.wiro_world-gitpageschallenge_rustdocs_kalei-txt
+  id = "wiro.world/_git-pages-challenge.rust-docs.kalei/TXT"
+}
+import {
+  to = hcloud_zone_rrset.wiro_world-usp-cname
+  id = "wiro.world/usp/CNAME"
+}
+import {
+  to = hcloud_zone_rrset.wiro_world-gitpageschallenge_usp-txt
+  id = "wiro.world/_git-pages-challenge.usp/TXT"
+}
+import {
+  to = hcloud_zone_rrset.wiro_world-cypdf-cname
+  id = "wiro.world/cypdf/CNAME"
+}
+import {
+  to = hcloud_zone_rrset.wiro_world-gitpageschallenge_cypdf-txt
+  id = "wiro.world/_git-pages-challenge.cypdf/TXT"
+}
+### Agnos
+import {
   to = hcloud_zone_rrset.wiro_world-agnos_weirdrow_portal-aaaa
   id = "wiro.world/agnos.weird-row.portal/AAAA"
 }
@@ -90,6 +140,7 @@ import {
   to = hcloud_zone_rrset.wiro_world-acme_challenge_pds-ns
   id = "wiro.world/_acme-challenge.pds/NS"
 }
+### Mail
 import {
   to = hcloud_zone_rrset.wiro_world-tl-mx
   id = "wiro.world/@/MX"
@@ -138,6 +189,7 @@ import {
   to = hcloud_zone_rrset.wiro_world-resend_domainkey_services-txt
   id = "wiro.world/resend._domainkey.services/TXT"
 }
+### Identification
 import {
   to = hcloud_zone_rrset.wiro_world-atproto-txt
   id = "wiro.world/_atproto/TXT"
