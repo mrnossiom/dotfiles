@@ -94,10 +94,11 @@
             {
               headscale = mkStrictPolicy "two_factor" [ "group:service:headscale" ];
               tailscale = mkStrictPolicy "two_factor" [ "group:service:headscale" ];
-              grafana = mkStrictPolicy "one_factor" [ "group:service:grafana" ];
-              miniflux = mkStrictPolicy "one_factor" [ "group:service:miniflux" ];
+              grafana = mkStrictPolicy "two_factor" [ "group:service:grafana" ];
+              miniflux = mkStrictPolicy "two_factor" [ "group:service:miniflux" ];
               rustical = mkStrictPolicy "two_factor" [ "group:service:rustical" ];
               vaultwarden = mkStrictPolicy "two_factor" [ "group:service:vaultwarden" ];
+              hedgedoc = mkStrictPolicy "two_factor" [ "group:service:hedgedoc" ];
             };
 
           claims_policies = {
@@ -166,6 +167,16 @@
               redirect_uris = [ "https://${globals.domains.vaultwarden}/identity/connect/oidc-signin" ];
               authorization_policy = "vaultwarden";
               consent_mode = "implicit";
+            }
+            {
+              client_name = "Hedgedoc";
+              client_id = "hedgedoc";
+              client_secret = "$pbkdf2-sha256$310000$rN2opyCE0Lp3L2xO26sLMg$Z3Wf3KKODpb7l6FNhAfInyxn49nSXHfXhfxJH31EStc";
+              redirect_uris = [ "https://${globals.domains.hedgedoc}/auth/oauth2/callback" ];
+              authorization_policy = "hedgedoc";
+              consent_mode = "implicit";
+
+              token_endpoint_auth_method = "client_secret_post";
             }
           ];
         };

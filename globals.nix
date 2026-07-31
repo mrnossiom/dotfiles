@@ -14,6 +14,7 @@
     cdav = "cdav.${wiro-world}";
     goatcounter = "stats.${wiro-world}";
     headscale = "headscale.${wiro-world}";
+    hedgedoc = "hedgedoc.${wiro-world}";
     matrix = "matrix.${wiro-world}";
     miniflux = "news.${wiro-world}";
     pds = "pds.${wiro-world}";

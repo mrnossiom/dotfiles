@@ -21,6 +21,7 @@ in
     ./goatcounter.nix
     ./grafana.nix
     ./headscale.nix
+    ./hedgedoc.nix
     ./hypixel-bank-tracker.nix
     ./lldap.nix
     ./miniflux.nix
