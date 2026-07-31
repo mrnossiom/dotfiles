@@ -127,6 +127,14 @@ resource "hcloud_zone_rrset" "wiro_world-cdav-cname" {
     { value = "weird-row.portal" },
   ]
 }
+resource "hcloud_zone_rrset" "wiro_world-hedgedoc-cname" {
+  zone = hcloud_zone.wiro_world.name
+  name = "hedgedoc"
+  type = "CNAME"
+  records = [
+    { value = "weird-row.portal" },
+  ]
+}
 
 ## External services
 

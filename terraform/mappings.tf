@@ -74,6 +74,10 @@ import {
   to = hcloud_zone_rrset.wiro_world-cdav-cname
   id = "wiro.world/cdav/CNAME"
 }
+import {
+  to = hcloud_zone_rrset.wiro_world-hedgedoc-cname
+  id = "wiro.world/hedgedoc/CNAME"
+}
 ### External services
 import {
   to = hcloud_zone_rrset.wiro_world-tl-a
