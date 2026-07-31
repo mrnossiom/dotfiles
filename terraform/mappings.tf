@@ -51,10 +51,6 @@ import {
   id = "wiro.world/news/CNAME"
 }
 import {
-  to = hcloud_zone_rrset.wiro_world-spindle-cname
-  id = "wiro.world/spindle/CNAME"
-}
-import {
   to = hcloud_zone_rrset.wiro_world-stats-cname
   id = "wiro.world/stats/CNAME"
 }
@@ -114,14 +110,6 @@ import {
 import {
   to = hcloud_zone_rrset.wiro_world-gitpageschallenge_usp-txt
   id = "wiro.world/_git-pages-challenge.usp/TXT"
-}
-import {
-  to = hcloud_zone_rrset.wiro_world-cypdf-cname
-  id = "wiro.world/cypdf/CNAME"
-}
-import {
-  to = hcloud_zone_rrset.wiro_world-gitpageschallenge_cypdf-txt
-  id = "wiro.world/_git-pages-challenge.cypdf/TXT"
 }
 ### Agnos
 import {

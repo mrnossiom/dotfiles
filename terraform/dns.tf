@@ -72,14 +72,6 @@ resource "hcloud_zone_rrset" "wiro_world-news-cname" {
     { value = "weird-row.portal" },
   ]
 }
-resource "hcloud_zone_rrset" "wiro_world-spindle-cname" {
-  zone = hcloud_zone.wiro_world.name
-  name = "spindle"
-  type = "CNAME"
-  records = [
-    { value = "weird-row.portal" },
-  ]
-}
 resource "hcloud_zone_rrset" "wiro_world-stats-cname" {
   zone = hcloud_zone.wiro_world.name
   name = "stats"
@@ -211,23 +203,6 @@ resource "hcloud_zone_rrset" "wiro_world-gitpageschallenge_usp-txt" {
   type = "TXT"
   records = [
     { value = provider::hcloud::txt_record("6bfe7a2c03ec020f6653d86b408d48455537840c36f2885393bf5aca53a32fdc") },
-  ]
-}
-
-resource "hcloud_zone_rrset" "wiro_world-cypdf-cname" {
-  zone = hcloud_zone.wiro_world.name
-  name = "cypdf"
-  type = "CNAME"
-  records = [
-    { value = "grebedoc.dev." },
-  ]
-}
-resource "hcloud_zone_rrset" "wiro_world-gitpageschallenge_cypdf-txt" {
-  zone = hcloud_zone.wiro_world.name
-  name = "_git-pages-challenge.cypdf"
-  type = "TXT"
-  records = [
-    { value = provider::hcloud::txt_record("d308a5a90d28fcf421a117afcfca92766c004deccf984acdc33069802eaba556") },
   ]
 }
 
