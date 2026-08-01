@@ -25,11 +25,12 @@
           "hedgedoc.example.com"
         ];
 
-        email = false;
-        allowAnonymous = false;
-        allowFreeURL = true;
+        allowAnonymous = false; # disable guests note creation
+        allowAnonymousEdits = false; # disallow `freely` permission mode
+        allowFreeURL = true; # allow creation of custom URLs notes
         defaultPermission = "private";
 
+        email = false;
         oauth2 = {
           # sessionSecret = ...; # defined in the env
 
