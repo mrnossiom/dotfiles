@@ -109,6 +109,7 @@
             (mkHttp "Website" groups.external "https://${globals.domains.website}/" { })
             (mkHttp "Linkhut" groups.external "https://ln.ht/" {
               conditions = [ tests.status200 ];
+              alerts = [ ];
             })
           ];
       };
