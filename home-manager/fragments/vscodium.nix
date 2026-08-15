@@ -33,6 +33,7 @@ in
             dbaeumer.vscode-eslint
             eamodio.gitlens
             esbenp.prettier-vscode
+            mkhl.direnv
             ms-vsliveshare.vsliveshare
             usernamehw.errorlens
           ]
@@ -57,6 +58,20 @@ in
               publisher = "lao-liang";
               version = "0.0.2";
               sha256 = "sha256-tbIA+7R2KTA9vubQNpWTmGtZqdJyGA77BT6L9uA85UU=";
+            }
+            {
+              # https://marketplace.visualstudio.com/items?itemName=gregoire.dance
+              name = "dance";
+              publisher = "gregoire";
+              version = "0.5.16000";
+              sha256 = "sha256-LOUsRQ18G4xARYO7RLz/YHvMv+Jg7ICWDG40iDjWWww=";
+            }
+            {
+              # https://marketplace.visualstudio.com/items?itemName=gregoire.dance-helix
+              name = "dance-helix";
+              publisher = "gregoire";
+              version = "0.1.1001";
+              sha256 = "sha256-wWOlBsOJEQ8rjN3yMsegYg/8t3Jy6Gz/RyCn4/Ts7ZE=";
             }
           ];
       };
