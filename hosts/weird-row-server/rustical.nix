@@ -1,6 +1,7 @@
 {
   config,
   globals,
+  upkgs,
   ...
 }:
 
@@ -12,6 +13,7 @@
 
     services.rustical = {
       enable = true;
+      package = upkgs.rustical;
 
       environmentFiles = [
         config.age.secrets.rustical-env.path
