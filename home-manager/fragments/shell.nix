@@ -57,6 +57,8 @@ in
     };
     home.sessionVariables._ZO_EXCLUDE_DIRS = "$HOME:/nix/store/*:/tmp/*";
 
+    programs.command-not-found.enable = false;
+
     programs.fish = {
       enable = true;
 
