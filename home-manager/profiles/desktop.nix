@@ -106,6 +106,7 @@
         wev
         wireshark
         wl-mirror
+        zint-qt
 
         # Needed for libreoffice spellchecking
         hunspell
