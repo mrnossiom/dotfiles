@@ -36,13 +36,18 @@ in
 
     stylix.targets.helix.enable = false;
 
-    xdg.configFile = let
-      wolf-alabaster-themes = "${wolf-alabaster-helix}/helix/dot-config/helix/themes";
-    in {
-      "helix/themes/wolf-alabaster-dark.toml".source = "${wolf-alabaster-themes}/wolf-alabaster-dark.toml";
-      "helix/themes/wolf-alabaster-light.toml".source = "${wolf-alabaster-themes}/wolf-alabaster-light.toml";
-      "helix/themes/wolf-alabaster-light-bg.toml".source = "${wolf-alabaster-themes}/wolf-alabaster-light-bg.toml";
-    };
+    xdg.configFile =
+      let
+        wolf-alabaster-themes = "${wolf-alabaster-helix}/helix/dot-config/helix/themes";
+      in
+      {
+        "helix/themes/wolf-alabaster-dark.toml".source =
+          "${wolf-alabaster-themes}/wolf-alabaster-dark.toml";
+        "helix/themes/wolf-alabaster-light.toml".source =
+          "${wolf-alabaster-themes}/wolf-alabaster-light.toml";
+        "helix/themes/wolf-alabaster-light-bg.toml".source =
+          "${wolf-alabaster-themes}/wolf-alabaster-light-bg.toml";
+      };
 
     programs.helix = {
       enable = true;
