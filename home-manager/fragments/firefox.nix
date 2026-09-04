@@ -80,6 +80,7 @@ let
   '';
 
   cfg = config.local.fragment.firefox;
+
 in
 {
   imports = [
@@ -87,11 +88,24 @@ in
   ];
 
   options.local.fragment.firefox.enable = lib.mkEnableOption ''
-    Firefox related
+    Firefox (or Zen Browser) related
   '';
 
+  options.local.fragment.firefox.useZen = lib.mkOption {
+    description = "Use zen-browser";
+    type = lib.types.bool;
+    default = true;
+  };
+
   config = lib.mkIf cfg.enable {
-    home.sessionVariables.BROWSER = lib.getExe config.programs.zen-browser.package;
+    home.sessionVariables =
+      let
+        package =
+          if cfg.useZen then config.programs.zen-browser.package else config.programs.firefox.package;
+      in
+      lib.mkIf (package != null) {
+        BROWSER = lib.getExe package;
+      };
 
     stylix.targets.firefox = {
       enable = false;
@@ -103,7 +117,7 @@ in
     };
 
     programs.zen-browser = {
-      enable = true;
+      enable = cfg.useZen;
 
       inherit policies;
 
@@ -128,7 +142,7 @@ in
     };
 
     programs.firefox = {
-      enable = false;
+      enable = !cfg.useZen;
 
       inherit policies;
 
