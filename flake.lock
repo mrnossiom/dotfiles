@@ -836,6 +836,7 @@
         "tangled": "tangled",
         "unixpkgs": "unixpkgs",
         "wakatime-ls": "wakatime-ls",
+        "wolf-alabaster-helix": "wolf-alabaster-helix",
         "zen-browser": "zen-browser"
       }
     },
@@ -1218,6 +1219,22 @@
       "original": {
         "owner": "mrnossiom",
         "repo": "wakatime-ls",
+        "type": "github"
+      }
+    },
+    "wolf-alabaster-helix": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1769534853,
+        "narHash": "sha256-vbachtD8r0I9z5SPrsHQWdFCY1/1NJW1Ks7m3vGWnEY=",
+        "owner": "wolf",
+        "repo": "alabaster-for-helix",
+        "rev": "c75451071adb0d278d353f4fb458f7917fd70b94",
+        "type": "github"
+      },
+      "original": {
+        "owner": "wolf",
+        "repo": "alabaster-for-helix",
         "type": "github"
       }
     },

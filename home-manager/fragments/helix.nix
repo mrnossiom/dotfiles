@@ -9,7 +9,8 @@
 }:
 
 let
-  inherit (self) homeManagerModules;
+  inherit (self) homeManagerModules inputs;
+  inherit (inputs) wolf-alabaster-helix;
   inherit (config.age) secrets;
 
   flags = config.local.flags;
@@ -35,16 +36,28 @@ in
 
     stylix.targets.helix.enable = false;
 
+    xdg.configFile = let
+      wolf-alabaster-themes = "${wolf-alabaster-helix}/helix/dot-config/helix/themes";
+    in {
+      "helix/themes/wolf-alabaster-dark.toml".source = "${wolf-alabaster-themes}/wolf-alabaster-dark.toml";
+      "helix/themes/wolf-alabaster-light.toml".source = "${wolf-alabaster-themes}/wolf-alabaster-light.toml";
+      "helix/themes/wolf-alabaster-light-bg.toml".source = "${wolf-alabaster-themes}/wolf-alabaster-light-bg.toml";
+    };
+
     programs.helix = {
       enable = true;
       package = if flags.onlyCached then upkgs.helix else lpkgs.helix;
       defaultEditor = true;
 
       settings = {
-        theme = {
-          dark = lib.mkDefault "wolf-alabaster-dark";
-          light = lib.mkDefault "wolf-alabaster-light-bg";
-        };
+        theme =
+          if flags.onlyCached then
+            "wolf-alabaster-dark"
+          else
+            {
+              dark = lib.mkDefault "wolf-alabaster-dark";
+              light = lib.mkDefault "wolf-alabaster-light-bg";
+            };
 
         editor = {
           auto-format = true;

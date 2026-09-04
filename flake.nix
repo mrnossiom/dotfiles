@@ -75,6 +75,11 @@
     zen-browser.url = "github:0xc000022070/zen-browser-flake";
     zen-browser.inputs.nixpkgs.follows = "unixpkgs";
     zen-browser.inputs.home-manager.follows = "home-manager";
+
+    ## Files
+
+    wolf-alabaster-helix.url = "github:wolf/alabaster-for-helix";
+    wolf-alabaster-helix.flake = false;
   };
 
   outputs =
