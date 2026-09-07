@@ -85,7 +85,6 @@ in
         ln = "ln -v";
         mv = "mv -iv";
         mkdir = "mkdir -v";
-        tp = "trash-put";
 
         # Listing utilities
         l = "ls -A1";
@@ -186,7 +185,7 @@ in
             | rename path roots
             | update roots { get root | sort | str join "\n" }
 
-          let pathinfo = ^nix path-info --closure-size --json ...($roots | get path)
+          let pathinfo = ^nix path-info --closure-size --json-format 1 ...($roots | get path)
             | from json
             | select closureSize narSize path
             | into filesize closureSize narSize

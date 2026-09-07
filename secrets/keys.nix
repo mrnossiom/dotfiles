@@ -21,4 +21,6 @@ rec {
     milo-ed25519
     wirody
   ];
+
+  epita = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPxVZAdPQ5qEsA/D2eTHsbetI+l5TBhIkT5DFHdn+f/6";
 }

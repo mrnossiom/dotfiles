@@ -1,11 +1,14 @@
 {
-  config,
   pkgs,
+  lib,
 
   isDarwin,
   ...
 }:
 
+let
+  keys = import ../../secrets/keys.nix;
+in
 {
   config = {
     assertions = [
@@ -18,7 +21,7 @@
     local.flags.onlyCached = true;
 
     local.fragment = {
-      agenix.enable = true;
+      # agenix.enable = true;
       git.enable = true;
       helix.enable = true;
       jujutsu.enable = true;
@@ -26,6 +29,8 @@
       # tools.enable = true;
       zellij.enable = true;
     };
+
+    programs.jujutsu.settings.signing.key = lib.mkForce keys.epita;
 
     home.packages = with pkgs; [
       # GUIs

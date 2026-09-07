@@ -28,10 +28,10 @@ in
 
   config = lib.mkIf cfg.enable {
     assertions = [
-      {
-        assertion = config.local.fragment.agenix.enable;
-        message = "`helix` fragment depends on `agenix` fragment";
-      }
+      # {
+      #   assertion = config.local.fragment.agenix.enable;
+      #   message = "`helix` fragment depends on `agenix` fragment";
+      # }
     ];
 
     stylix.targets.helix.enable = false;

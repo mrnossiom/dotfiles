@@ -74,10 +74,12 @@ in
 
     programs.fish.shellAbbrs = {
       # Use newer tools
-      clear = "#"; # <ctrl-l>
       cat = "#"; # bat
+      clear = "#"; # <ctrl-l>
       rm = "#"; # trash-put
       tr = "#"; # srgn
+
+      tp = "trash-put";
     };
 
     programs.bat = {
