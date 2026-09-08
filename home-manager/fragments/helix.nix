@@ -183,10 +183,7 @@ in
             (mk-lang "zig" [ "zls" ] { })
 
             (mk-lang "c" [ "clangd" ] {
-              formatter = {
-                command = lib.getExe' pkgs.clang-tools "clang-format";
-                args = [ ];
-              };
+              auto-format = true;
             })
           ];
       };
