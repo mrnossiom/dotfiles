@@ -42,6 +42,14 @@ in
       xdg-utils
     ];
 
+    programs.alacritty = {
+      enable = true;
+      package = null;
+      settings = {
+        terminal.shell = "fish";
+      };
+    };
+
     programs.bat = {
       enable = true;
       config = {
