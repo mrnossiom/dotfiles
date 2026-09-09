@@ -105,6 +105,7 @@
         wdisplays
         wev
         wireshark
+        wl-mirror
 
         # Needed for libreoffice spellchecking
         hunspell
