@@ -34,8 +34,6 @@ in
         ".direnv/"
         # Nix build result link
         "result"
-        # lldb project config file
-        ".lldbinit"
       ];
 
       settings = {
