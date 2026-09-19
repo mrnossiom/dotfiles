@@ -185,6 +185,9 @@ in
             (mk-lang "c" [ "clangd" ] {
               auto-format = true;
             })
+            (mk-lang "cpp" [ "clangd" ] {
+              auto-format = true;
+            })
           ];
       };
     };
