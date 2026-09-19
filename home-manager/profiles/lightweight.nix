@@ -47,6 +47,7 @@ in
       package = null;
       settings = {
         terminal.shell = "fish";
+        bell.duration = 1000;
       };
     };
 
