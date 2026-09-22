@@ -56,14 +56,6 @@ resource "hcloud_zone_rrset" "wiro_world-auth-cname" {
     { value = "weird-row.portal" },
   ]
 }
-resource "hcloud_zone_rrset" "wiro_world-matrix-cname" {
-  zone = hcloud_zone.wiro_world.name
-  name = "matrix"
-  type = "CNAME"
-  records = [
-    { value = "weird-row.portal" },
-  ]
-}
 resource "hcloud_zone_rrset" "wiro_world-news-cname" {
   zone = hcloud_zone.wiro_world.name
   name = "news"

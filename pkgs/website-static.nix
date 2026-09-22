@@ -34,20 +34,11 @@ let
   discord-proof = writeTextDir ".well-known/discord" ''
     dh=919234284ceb2aba439d15b9136073eb2308989b
   '';
-
-  matrix-server-config = writeTextDir ".well-known/matrix/server" ''
-    {"m.server":"matrix.wiro.world:443"}
-  '';
-  matrix-client-config = writeTextDir ".well-known/matrix/client" ''
-    {"m.homeserver":{"base_url":"https://matrix.wiro.world/"}}
-  '';
 in
 symlinkJoin {
   name = "additional-website-files";
   paths = [
     webfinger
     discord-proof
-    matrix-server-config
-    matrix-client-config
   ];
 }

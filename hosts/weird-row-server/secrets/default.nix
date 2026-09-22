@@ -30,7 +30,6 @@ in
   "pds-env.age".publicKeys = deploy;
   # Defines `RUSTICAL_OIDC__CLIENT_SECRET`
   "rustical-env.age".publicKeys = deploy;
-  "tuwunel-registration-tokens.age".publicKeys = deploy;
   # Defines `SMTP_PASSWORD`, `SSO_CLIENT_SECRET`
   "vaultwarden-env.age".publicKeys = deploy;
 }

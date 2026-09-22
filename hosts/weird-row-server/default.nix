@@ -30,7 +30,6 @@ in
     ./rustical.nix
     ./tailscale.nix
     ./tangled.nix
-    ./tuwunel.nix
     ./vaultwarden.nix
     ./warrior.nix
 

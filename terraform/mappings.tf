@@ -43,10 +43,6 @@ import {
   id = "wiro.world/auth/CNAME"
 }
 import {
-  to = hcloud_zone_rrset.wiro_world-matrix-cname
-  id = "wiro.world/matrix/CNAME"
-}
-import {
   to = hcloud_zone_rrset.wiro_world-news-cname
   id = "wiro.world/news/CNAME"
 }
