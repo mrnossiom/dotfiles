@@ -12,7 +12,6 @@
       gaming.enable = true;
       logiops.enable = true;
       nix.enable = true;
-      secure-boot.enable = true;
       security.enable = true;
       virtualisation.enable = true;
       wireless.enable = true;
