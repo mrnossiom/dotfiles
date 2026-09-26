@@ -111,6 +111,14 @@ import {
   to = hcloud_zone_rrset.wiro_world-gitpageschallenge_usp-txt
   id = "wiro.world/_git-pages-challenge.usp/TXT"
 }
+import {
+  to = hcloud_zone_rrset.wiro_world-cypdf-cname
+  id = "wiro.world/cypdf/CNAME"
+}
+import {
+  to = hcloud_zone_rrset.wiro_world-gitpageschallenge_cypdf-txt
+  id = "wiro.world/_git-pages-challenge.cypdf/TXT"
+}
 ### Agnos
 import {
   to = hcloud_zone_rrset.wiro_world-agnos_weirdrow_portal-aaaa
