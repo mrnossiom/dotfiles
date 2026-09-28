@@ -138,7 +138,6 @@ in
         ]
         ++ lib.optionals (!flags.onlyCached) [
           lpkgs.ebnfer
-          lpkgs.wakatime-ls
         ];
 
       languages = {
@@ -148,7 +147,6 @@ in
           };
 
           typos-ls.command = "typos-lsp";
-          wakatime-ls.command = "wakatime-ls";
 
           ebnfer.command = "ebnfer";
           tofu-ls = {

@@ -15,7 +15,6 @@ let
     git-pages
     helix
     nix-alien
-    wakatime-ls
     ;
 in
 {
@@ -32,5 +31,4 @@ in
   inherit (git-pages.packages.${system}) git-pages;
   inherit (helix.packages.${system}) helix;
   inherit (nix-alien.packages.${system}) nix-alien;
-  inherit (wakatime-ls.packages.${system}) wakatime-ls;
 }
