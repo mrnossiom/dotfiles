@@ -16,17 +16,17 @@
 
     ## Miscellaneous
 
-    agenix.url = "github:ryantm/agenix";
+    agenix.url = "github:ryantm/agenix?ref=0.18.0";
     agenix.inputs.nixpkgs.follows = "nixpkgs";
     agenix.inputs.home-manager.follows = "home-manager";
 
-    disko.url = "github:nix-community/disko";
+    disko.url = "github:nix-community/disko?ref=v1.13.0";
     disko.inputs.nixpkgs.follows = "nixpkgs";
 
     nixos-hardware.url = "github:nixos/nixos-hardware";
     nixos-hardware.inputs.nixpkgs.follows = "nixpkgs";
 
-    lanzaboote.url = "github:nix-community/lanzaboote";
+    lanzaboote.url = "github:nix-community/lanzaboote?ref=v1.2.0";
     lanzaboote.inputs.nixpkgs.follows = "unixpkgs";
 
     srvos.url = "github:nix-community/srvos";
@@ -54,9 +54,8 @@
     nix-alien.url = "github:thiagokokada/nix-alien";
     nix-alien.inputs.nixpkgs.follows = "nixpkgs";
 
-    tangled.url = "git+https://tangled.org/tangled.org/core";
+    tangled.url = "git+https://tangled.org/tangled.org/core?ref=v1.16.1-alpha";
     tangled.inputs.nixpkgs.follows = "unixpkgs";
-
     # remove useless tangled inputs
     tangled.inputs = {
       actor-typeahead-src.follows = "";
