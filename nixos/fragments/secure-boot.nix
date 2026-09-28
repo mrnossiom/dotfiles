@@ -28,6 +28,8 @@ in
     boot.lanzaboote = {
       enable = true;
       pkiBundle = "/var/lib/sbctl";
+
+      autoEnrollKeys.enable = true;
     };
 
     boot.initrd.systemd.enable = true;
