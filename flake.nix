@@ -28,6 +28,7 @@
 
     lanzaboote.url = "github:nix-community/lanzaboote?ref=v1.2.0";
     lanzaboote.inputs.nixpkgs.follows = "unixpkgs";
+    lanzaboote.inputs.rust-overlay.follows = "rust-overlay";
 
     srvos.url = "github:nix-community/srvos";
     srvos.inputs.nixpkgs.follows = "nixpkgs";
@@ -37,19 +38,25 @@
     net.url = "github:0xCCF4/nix-net-lib";
     net.inputs.nixpkgs.follows = "unixpkgs";
 
+    rust-overlay.url = "github:oxalica/rust-overlay";
+    rust-overlay.inputs.nixpkgs.follows = "unixpkgs";
+
     ## Packages
 
     git-leave.url = "github:mrnossiom/git-leave";
     git-leave.inputs.nixpkgs.follows = "nixpkgs";
+    git-leave.inputs.rust-overlay.follows = "rust-overlay";
 
     git-pages.url = "git+https://codeberg.org/git-pages/git-pages";
     git-pages.inputs.nixpkgs.follows = "nixpkgs";
 
     helix.url = "github:helix-editor/helix";
     helix.inputs.nixpkgs.follows = "unixpkgs";
+    helix.inputs.rust-overlay.follows = "rust-overlay";
 
     hypixel-bank-tracker.url = "github:pixilie/hypixel-bank-tracker";
     hypixel-bank-tracker.inputs.nixpkgs.follows = "nixpkgs";
+    hypixel-bank-tracker.inputs.rust-overlay.follows = "rust-overlay";
 
     nix-alien.url = "github:thiagokokada/nix-alien";
     nix-alien.inputs.nixpkgs.follows = "nixpkgs";
