@@ -26,7 +26,7 @@
         ];
 
         allowAnonymous = false; # disable guests note creation
-        allowAnonymousEdits = false; # disallow `freely` permission mode
+        allowAnonymousEdits = true; # allow `freely` permission mode
         allowFreeURL = true; # allow creation of custom URLs notes
         defaultPermission = "private";
 
