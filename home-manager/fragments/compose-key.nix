@@ -23,6 +23,7 @@ in
     loadConfigInEnv = false;
 
     sequences.Multi_key = {
+      # Accents
       e.grave = "è";
       E.grave = "È";
       e.apostrophe = "é";
@@ -129,25 +130,21 @@ in
 
       # Symbols
       o.o = "∞";
-      # Irony point
-      question.question = "⸮";
+      question.question = "⸮"; # Irony point
+      asciicircum.period = "·"; # Median point
+      O.plus = "⊕"; # XOR
+      "0"."0" = "°"; # degree
+      minus.minus = "—"; # Em dash
 
-      asciicircum.period = "·";
-
+      # Arrows
       minus.greater = "→";
       less.minus = "←";
-
       bar.minus.greater = "↦";
       L.greater = "↳";
-
       less.greater.minus = "↔";
-
       equal.greater = "⇒";
       less.equal = "⇐";
       less.greater.equal = "⇔";
-
-      "0"."0" = "°";
-      minus.minus = "—";
     };
   };
 }
