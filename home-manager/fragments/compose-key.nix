@@ -132,6 +132,8 @@ in
       # Irony point
       question.question = "⸮";
 
+      asciicircum.period = "·";
+
       minus.greater = "→";
       less.minus = "←";
 
