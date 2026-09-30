@@ -56,6 +56,21 @@ in
         }
 
         {
+          profile.name = "atelier-dock";
+          # position external screen centered above
+          profile.outputs = [
+            {
+              criteria = "Iiyama North America PL2492H 11511918A1785";
+              position = "0,0";
+            }
+            {
+              criteria = "eDP-1";
+              position = "240,1080";
+            }
+          ];
+        }
+
+        {
           profile.name = "hdmi-default";
           # position external screen right
           profile.outputs = [
