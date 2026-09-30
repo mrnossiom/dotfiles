@@ -37,6 +37,8 @@ in
 
           # Start weeks on Monday
           "calendar.week.start" = 1;
+          # Default calendar zoom is too small
+          "calendar.view.visiblehours" = 13;
         };
 
         # <https://www.userchrome.org/how-create-userchrome-css.html>
