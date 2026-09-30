@@ -195,10 +195,7 @@ in
               "DP-2"
               "DP-3"
               "DP-4"
-              "HDMI-1"
-              "HDMI-2"
-              "HDMI-3"
-              "HDMI-4"
+              "HDMI-A-1"
             ];
 
             modules-left = [
