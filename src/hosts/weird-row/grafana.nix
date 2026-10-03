@@ -4,7 +4,8 @@
     config = {
       local.ports.grafana = 3002;
       local.ports.prometheus = 9001;
-      local.ports.prometheus-node-exporter = 9002;
+      local.ports.prometheus-exporter-node = 9002;
+      local.ports.prometheus-exporter-systemd = 9006;
 
       sops.secrets."grafana/secret_key" = {
         owner = "grafana";
@@ -81,7 +82,12 @@
 
         exporters.node = {
           enable = true;
-          port = config.local.ports.prometheus-node-exporter.number;
+          port = config.local.ports.prometheus-exporter-node.number;
+        };
+
+        exporters.systemd = {
+          enable = true;
+          port = config.local.ports.prometheus-exporter-systemd.number;
         };
 
         scrapeConfigs = [
@@ -89,6 +95,12 @@
             job_name = "node-exporter";
             static_configs = [
               { targets = [ "localhost:${toString config.services.prometheus.exporters.node.port}" ]; }
+            ];
+          }
+          {
+            job_name = "systemd";
+            static_configs = [
+              { targets = [ "localhost:${toString config.services.prometheus.exporters.systemd.port}" ]; }
             ];
           }
         ];
