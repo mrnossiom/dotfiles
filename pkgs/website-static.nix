@@ -32,7 +32,7 @@ let
   '';
 
   discord-proof = writeTextDir ".well-known/discord" ''
-    dh=919234284ceb2aba439d15b9136073eb2308989b
+    dh=9c8f5a0b7ee69d88bd0e91a38e01cd9762476a01
   '';
 in
 symlinkJoin {
