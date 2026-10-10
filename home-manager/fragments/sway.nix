@@ -271,6 +271,7 @@ in
             "${mod}+p" = "sticky toggle";
 
             # Screenshotting
+            "Print" = ''exec ${grim} - | ${wl-copy}'';
             "${mod}+s" = ''exec ${grim} -g "$(${slurp})" - | ${wl-copy}'';
             "${mod}+Shift+s" = "exec ${wl-paste} | ${swappy} --file - --output-file - | ${wl-copy}";
 
