@@ -61,5 +61,10 @@ in
     fonts.fontconfig.defaultFonts = {
       monospace = "JetBrainsMono Nerd Font";
     };
+
+    services.autotiling = {
+      enable = true;
+      package = pkgs.autotiling-rs;
+    };
   };
 }
