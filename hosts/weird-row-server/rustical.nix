@@ -13,7 +13,8 @@
     age.secrets.rustical-env.file = secrets/rustical-env.age;
 
     # PATCH: needed to use versions above v0.15
-    systemd.services.rustical.serviceConfig.ExecStart = lib.mkForce "${lib.getExe config.services.rustical.package} serve";
+    systemd.services.rustical.serviceConfig.ExecStart =
+      lib.mkForce "${lib.getExe config.services.rustical.package} serve";
 
     services.rustical = {
       enable = true;
