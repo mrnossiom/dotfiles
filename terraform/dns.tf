@@ -29,6 +29,28 @@ resource "hcloud_zone_rrset" "wiro_world-weirdrow_portal-aaaa" {
     portal = "",
   }
 }
+resource "hcloud_zone_rrset" "wiro_world-rowrack_portal-a" {
+  zone = hcloud_zone.wiro_world.name
+  name = "rowrack.portal"
+  type = "A"
+  records = [
+    { value = local.network.rowrack-server-v4 },
+  ]
+  labels = {
+    portal = "",
+  }
+}
+resource "hcloud_zone_rrset" "wiro_world-rowrack_portal-aaaa" {
+  zone = hcloud_zone.wiro_world.name
+  name = "rowrack.portal"
+  type = "AAAA"
+  records = [
+    { value = local.network.rowrack-server-v6 },
+  ]
+  labels = {
+    portal = "",
+  }
+}
 
 ## Hosted services
 
@@ -427,13 +449,23 @@ resource "hcloud_zone_rrset" "wiro_world-atproto-txt" {
 
 ## Reverse DNS
 
-resource "hcloud_rdns" "primary-v4" {
-  primary_ip_id = hcloud_primary_ip.primary-v4.id
-  ip_address    = hcloud_primary_ip.primary-v4.ip_address
+resource "hcloud_rdns" "v4-nbg1-primary" {
+  primary_ip_id = hcloud_primary_ip.v4-nbg1-primary.id
+  ip_address    = hcloud_primary_ip.v4-nbg1-primary.ip_address
   dns_ptr       = "weird-row.portal.wiro.world"
 }
-resource "hcloud_rdns" "primary-v6" {
-  primary_ip_id = hcloud_primary_ip.primary-v6.id
-  ip_address    = cidrhost(hcloud_primary_ip.primary-v6.ip_network, 1)
+resource "hcloud_rdns" "v6-nbg1-primary" {
+  primary_ip_id = hcloud_primary_ip.v6-nbg1-primary.id
+  ip_address    = cidrhost(hcloud_primary_ip.v6-nbg1-primary.ip_network, 1)
   dns_ptr       = "weird-row.portal.wiro.world"
+}
+resource "hcloud_rdns" "v4-fsn1-primary" {
+  primary_ip_id = hcloud_primary_ip.v4-fsn1-primary.id
+  ip_address    = hcloud_primary_ip.v4-fsn1-primary.ip_address
+  dns_ptr       = "rowrack.portal.wiro.world"
+}
+resource "hcloud_rdns" "v6-fsn1-primary" {
+  primary_ip_id = hcloud_primary_ip.v6-fsn1-primary.id
+  ip_address    = cidrhost(hcloud_primary_ip.v6-fsn1-primary.ip_network, 1)
+  dns_ptr       = "rowrack.portal.wiro.world"
 }

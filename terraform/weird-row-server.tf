@@ -2,15 +2,13 @@ resource "hcloud_server" "weird-row-server" {
   name        = "weird-row-server"
   server_type = "cx23"
 
-  image    = "ubuntu-20.04"
   location = "nbg1"
   backups  = true
 
-  # FIXME: does not properly import
-  # public_net {
-  #   ipv4 = hcloud_primary_ip.primary-v4.id
-  #   ipv6 = hcloud_primary_ip.primary-v6.id
-  # }
+  public_net {
+    ipv4 = hcloud_primary_ip.v4-nbg1-primary.id
+    ipv6 = hcloud_primary_ip.v6-nbg1-primary.id
+  }
 
   rebuild_protection = true
   delete_protection  = true

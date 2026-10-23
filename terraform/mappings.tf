@@ -4,16 +4,32 @@ import {
   to = hcloud_server.weird-row-server
   id = "62287388"
 }
+import {
+  to = hcloud_server.rowrack-server
+  id = "171917889"
+}
+import {
+  to = hcloud_storage_box.rowrack-storage
+  id = "680791"
+}
 
 ## Networks
 
 import {
-  to = hcloud_primary_ip.primary-v4
+  to = hcloud_primary_ip.v4-nbg1-primary
   id = "85834839"
 }
 import {
-  to = hcloud_primary_ip.primary-v6
+  to = hcloud_primary_ip.v6-nbg1-primary
   id = "85776061"
+}
+import {
+  to = hcloud_primary_ip.v4-fsn1-primary
+  id = "157175572"
+}
+import {
+  to = hcloud_primary_ip.v6-fsn1-primary
+  id = "157175573"
 }
 
 ## DNS
@@ -194,10 +210,10 @@ import {
 ## Reverse DNS
 
 import {
-  to = hcloud_rdns.primary-v4
+  to = hcloud_rdns.v4-nbg1-primary
   id = "p-85834839-91.99.55.74"
 }
 import {
-  to = hcloud_rdns.primary-v6
+  to = hcloud_rdns.v6-nbg1-primary
   id = "p-85776061-2a01:4f8:c2c:76d2::1"
 }
