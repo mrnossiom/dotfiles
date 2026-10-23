@@ -4,6 +4,10 @@ terraform {
       source  = "hetznercloud/hcloud"
       version = "1.70"
     }
+    local = {
+      source  = "hashicorp/local"
+      version = "2.9.1"
+    }
   }
 }
 
@@ -53,13 +57,15 @@ resource "hcloud_primary_ip" "v6-fsn1-primary" {
 
 locals {
   network = {
-    weird-row-server-v4       = hcloud_primary_ip.v4-nbg1-primary.ip_address
-    weird-row-server-v6       = cidrhost(hcloud_primary_ip.v6-nbg1-primary.ip_network, 1)
-    weird-row-server-v6-agnos = cidrhost(hcloud_primary_ip.v6-nbg1-primary.ip_network, 2)
+    weird-row-server-v4         = hcloud_primary_ip.v4-nbg1-primary.ip_address
+    weird-row-server-v6-network = hcloud_primary_ip.v6-nbg1-primary.ip_network
+    weird-row-server-v6-server  = cidrhost(hcloud_primary_ip.v6-nbg1-primary.ip_network, 1)
+    weird-row-server-v6-agnos   = cidrhost(hcloud_primary_ip.v6-nbg1-primary.ip_network, 2)
 
-    rowrack-server-v4       = hcloud_primary_ip.v4-fsn1-primary.ip_address
-    rowrack-server-v6       = cidrhost(hcloud_primary_ip.v6-fsn1-primary.ip_network, 1)
-    rowrack-server-v6-agnos = cidrhost(hcloud_primary_ip.v6-fsn1-primary.ip_network, 2)
+    rowrack-server-v4         = hcloud_primary_ip.v4-fsn1-primary.ip_address
+    rowrack-server-v6-network = hcloud_primary_ip.v6-fsn1-primary.ip_network
+    rowrack-server-v6-server  = cidrhost(hcloud_primary_ip.v6-fsn1-primary.ip_network, 1)
+    rowrack-server-v6-agnos   = cidrhost(hcloud_primary_ip.v6-fsn1-primary.ip_network, 2)
 
     grebedoc-v4 = "185.187.152.7"
     grebedoc-v6 = "2a05:b0c4:1::3"
@@ -68,4 +74,10 @@ locals {
 
 output "network" {
   value = local.network
+}
+
+# Save network IPs for Nix config
+resource "local_file" "network" {
+  content  = jsonencode(local.network)
+  filename = "network.json"
 }

@@ -23,7 +23,7 @@ resource "hcloud_zone_rrset" "wiro_world-weirdrow_portal-aaaa" {
   name = "weird-row.portal"
   type = "AAAA"
   records = [
-    { value = local.network.weird-row-server-v6 },
+    { value = local.network.weird-row-server-v6-server },
   ]
   labels = {
     portal = "",
@@ -45,7 +45,7 @@ resource "hcloud_zone_rrset" "wiro_world-rowrack_portal-aaaa" {
   name = "rowrack.portal"
   type = "AAAA"
   records = [
-    { value = local.network.rowrack-server-v6 },
+    { value = local.network.rowrack-server-v6-server },
   ]
   labels = {
     portal = "",
