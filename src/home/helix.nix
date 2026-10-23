@@ -1,0 +1,195 @@
+{
+  self,
+  inputs,
+  moduleWithSystem,
+  ...
+}:
+{
+  flake.modules.homeManager.helix = moduleWithSystem (
+    { self', ... }:
+    {
+      config,
+      lib,
+      pkgs,
+      upkgs,
+      ...
+    }:
+    let
+      inherit (config.age) secrets;
+      flags = config.local.flags;
+    in
+    {
+      imports = [ self.homeModules.wakatime ];
+
+      config = {
+        stylix.targets.helix.enable = false;
+
+        xdg.configFile =
+          let
+            wolf-alabaster-themes = "${inputs.wolf-alabaster-helix}/helix/dot-config/helix/themes";
+          in
+          {
+            "helix/themes/wolf-alabaster-dark.toml".source =
+              "${wolf-alabaster-themes}/wolf-alabaster-dark.toml";
+            "helix/themes/wolf-alabaster-light.toml".source =
+              "${wolf-alabaster-themes}/wolf-alabaster-light.toml";
+            "helix/themes/wolf-alabaster-light-bg.toml".source =
+              "${wolf-alabaster-themes}/wolf-alabaster-light-bg.toml";
+          };
+
+        programs.helix = {
+          enable = true;
+          package = if flags.onlyCached then upkgs.helix else self'.packages.helix;
+          defaultEditor = true;
+
+          settings = {
+            theme =
+              if flags.onlyCached then
+                "wolf-alabaster-dark"
+              else
+                {
+                  dark = lib.mkDefault "wolf-alabaster-dark";
+                  light = lib.mkDefault "wolf-alabaster-light-bg";
+                };
+
+            editor = {
+              auto-format = true;
+              auto-info = false;
+              auto-save = true;
+
+              bufferline = "multiple"; # Show open buffers as tabs
+              line-number = "relative";
+
+              mouse = false;
+
+              end-of-line-diagnostics = "hint";
+              inline-diagnostics = {
+                cursor-line = "error";
+                other-lines = "error";
+              };
+
+              indent-guides = {
+                render = true;
+                characters = "╎";
+              };
+
+              file-picker.hidden = false;
+
+              lsp.display-inlay-hints = false;
+
+              trim-final-newlines = true;
+              trim-trailing-whitespace = true;
+
+              rulers = [ 80 ];
+              text-width = 80;
+              soft-wrap.wrap-at-text-width = true;
+            };
+
+            keys = {
+              normal = {
+                "space" = {
+                  # Swap original keybinds, default (lowercase) searches in `pwd`
+                  f = "file_picker_in_current_directory";
+                  F = "file_picker";
+                };
+
+                # Toggle inlay hints
+                "A-u" = ":toggle lsp.display-inlay-hints";
+                # Toggle wrapping
+                # TODO: change to `soft-wrap.enable` when supported by `:toggle`
+                "A-w" = ":toggle soft-wrap.wrap-at-text-width";
+              };
+              insert = {
+                up = "no_op";
+                down = "no_op";
+                left = "no_op";
+                right = "no_op";
+              };
+            };
+          };
+
+          extraPackages =
+            with pkgs;
+            [
+              clang-tools
+              gopls
+              kotlin-language-server
+              ltex-ls
+              marksman
+              nil
+              bash-language-server
+              typescript-language-server
+              tombi
+              typos-lsp
+              vscode-langservers-extracted
+              yaml-language-server
+            ]
+            ++ lib.optionals (!flags.onlyCached) [
+              self'.packages.ebnfer
+            ];
+
+          languages = {
+            language-server = {
+              rust-analyzer.config = {
+                check.command = "clippy";
+              };
+
+              typos-ls.command = "typos-lsp";
+
+              ebnfer.command = "ebnfer";
+              tofu-ls = {
+                command = "tofu-ls";
+                args = [ "serve" ];
+              };
+            };
+
+            language =
+              let
+                global-language-servers = [
+                  "typos-ls"
+                ];
+                mk-lang =
+                  name: language-servers: extra:
+                  {
+                    inherit name;
+                    language-servers = language-servers ++ global-language-servers;
+                  }
+                  // extra;
+              in
+              [
+                (mk-lang "hcl" [ "terraform-ls" "tofu-ls" ] { })
+                (mk-lang "html" [ "vscode-html-language-server" ] { })
+                (mk-lang "jjdescription" [ "zls" ] { })
+                (mk-lang "markdown" [ ] { }) # removed "marksman"
+                (mk-lang "nix" [ "nil" ] { })
+                (mk-lang "ocaml" [ "ocamllsp" ] { })
+                (mk-lang "python" [ "ruff" "jedi" "pylsp" ] { })
+                (mk-lang "rust" [ "rust-analyzer" ] { })
+                (mk-lang "typescript" [ "typescript-language-server" ] { })
+                (mk-lang "zig" [ "zls" ] { })
+
+                (mk-lang "c" [ "clangd" ] {
+                  auto-format = true;
+                })
+                (mk-lang "cpp" [ "clangd" ] {
+                  auto-format = true;
+                })
+              ];
+          };
+        };
+
+        age.secrets.api-wakatime.file = ../../secrets/api-wakatime.age;
+        age.secrets.api-wakapi.file = ../../secrets/api-wakapi.age;
+        programs.wakatime = {
+          enable = true;
+          apiKeyFile = secrets.api-wakapi.path;
+          settings = {
+            api_url = "https://wakapi.dev/api";
+
+            exclude_unknown_project = true;
+          };
+        };
+      };
+    }
+  );
+}

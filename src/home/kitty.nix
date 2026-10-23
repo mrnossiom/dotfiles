@@ -1,0 +1,61 @@
+let
+  isDarwin = false;
+in
+{
+  flake.modules.homeManager.kitty =
+    {
+      upkgs,
+      pkgs,
+      lib,
+      config,
+      ...
+    }:
+    {
+      config = {
+        assertions = [
+          {
+            assertion = (!isDarwin) || config.programs.fish.enable;
+            message = ''
+              `kitty` fragment depends on `fish` program on darwin platforms
+
+              launches fish on startup (fish has weird behavior if set as login shell)
+            '';
+          }
+        ];
+
+        home.sessionVariables.TERMINAL = lib.getExe config.programs.kitty.package;
+
+        programs.kitty = {
+          enable = true;
+          package = upkgs.kitty;
+
+          settings = {
+            confirm_os_window_close = 0;
+            enable_audio_bell = "no";
+            macos_option_as_alt = "left";
+          }
+          // lib.optionalAttrs isDarwin {
+            # Workaround to avoid launching fish as a login shell
+            shell = "zsh -c fish";
+          };
+        };
+
+        xdg.configFile =
+          let
+            kitty-theme = name: "${pkgs.kitty-themes}/share/kitty-themes/themes/${name}.conf";
+          in
+          {
+            "kitty/dark-theme.auto.conf".source = kitty-theme "Alabaster_Dark";
+            "kitty/light-theme.auto.conf".source = kitty-theme "Alabaster";
+            "kitty/quick-access-terminal.conf".text = ''
+              edge center
+              background_opacity 1
+              margin_top 150
+              margin_bottom 150
+              margin_left 150
+              margin_right 150
+            '';
+          };
+      };
+    };
+}

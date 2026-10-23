@@ -101,11 +101,14 @@
         ];
         imports = [
           inputs.disko.flakeModules.default
+          inputs.flake-parts.flakeModules.modules
           inputs.home-manager.flakeModules.home-manager
 
           (inputs.import-tree ./src)
         ];
-        flake = { };
+        flake = {
+          keys = import ./secrets/keys.nix;
+        };
         perSystem = { pkgs, ... }: {
           formatter = pkgs.nixfmt-tree;
         };

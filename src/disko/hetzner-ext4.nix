@@ -1,6 +1,6 @@
 {
   flake.diskoConfigurations.hetzner-ext4 = {
-    devices.disk.primary = {
+    disko.devices.disk.primary = {
       type = "disk";
       device = "/dev/sda";
 

@@ -1,6 +1,6 @@
 {
   flake.diskoConfigurations.luks-btrfs = {
-    devices.disk.primary = {
+    disko.devices.disk.primary = {
       device = "/dev/nvme0n1";
       content = {
         type = "gpt";
