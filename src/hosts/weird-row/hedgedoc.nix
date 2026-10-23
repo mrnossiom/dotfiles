@@ -4,6 +4,21 @@
     config = {
       local.ports.hedgedoc = 3021;
 
+      age.secrets.storage-box-creds-hedgedoc.file = secrets/storage-box-creds-hedgedoc.age;
+
+      users.users.hedgedoc.isSystemUser = true;
+      users.users.hedgedoc.group = "hedgedoc";
+      users.groups.hedgedoc = { };
+
+      services.hetzner.storageBoxes.hedgedoc = {
+        enable = true;
+        username = "u701292-sub2";
+        share = "u701292-sub2";
+        credentialsFile = config.age.secrets.storage-box-creds-hedgedoc.path;
+        mountPoint = "/mnt/hedgedoc";
+        owner = config.users.users.hedgedoc.name;
+      };
+
       age.secrets.hedgedoc-env.file = secrets/hedgedoc-env.age;
 
       services.hedgedoc = {
@@ -15,11 +30,13 @@
           domain = "hedgedoc.wiro.world";
           port = config.local.ports.hedgedoc.number;
 
+          db = {
+            dialect = "sqlite";
+            storage = "/var/lib/hedgedoc/db.sqlite";
+          };
+          uploadsPath = "/mnt/hedgedoc/uploads";
+
           protocolUseSSL = true;
-          allowOrigin = [
-            "localhost"
-            "hedgedoc.example.com"
-          ];
 
           allowAnonymous = false; # disable guests note creation
           allowAnonymousEdits = true; # allow `freely` permission mode

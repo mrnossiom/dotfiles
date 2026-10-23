@@ -49,6 +49,18 @@ resource "hcloud_storage_box_subaccount" "public" {
   }
 }
 
+resource "random_password" "storage_box_hedgedoc_password" {
+  length           = 64
+  override_special = "ÄÖÜäöüß^°!§$%/()=?+#-.,;:~*@{}_&"
+}
+
+resource "hcloud_storage_box_subaccount" "hedgedoc" {
+  storage_box_id = hcloud_storage_box.rowrack.id
+
+  password = random_password.storage_box_hedgedoc_password.result
+
+  name           = "hedgedoc"
+  home_directory = "weird-row/hedgedoc"
 
   access_settings = {
     samba_enabled = true

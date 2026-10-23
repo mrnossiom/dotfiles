@@ -30,6 +30,7 @@ in
   "pds-env.age".publicKeys = deploy;
   # Defines `RUSTICAL_OIDC__CLIENT_SECRET`
   "rustical-env.age".publicKeys = deploy;
+  "storage-box-creds-hedgedoc.age".publicKeys = deploy;
   "storage-box-creds-public.age".publicKeys = deploy;
   # Defines `SMTP_PASSWORD`, `SSO_CLIENT_SECRET`
   "vaultwarden-env.age".publicKeys = deploy;
