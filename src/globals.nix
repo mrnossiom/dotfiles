@@ -44,5 +44,17 @@
         networks = lib.fromJSON (lib.fileContents ../terraform/network.json);
       in
       lib.mapAttrs (name: ip: libnet.decompose ip) networks;
+
+    # User keys (~/.ssh/id_{ed25519,ecdsa}.pub)
+    pubkeys = rec {
+      milo-ed25519 = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJdt7atyPTOfaBIsgDYYb0DG1yid2u78abaCDji6Uxgi";
+      wirody = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMdW6ijH9oTsrswUJmQBF2LQkhjrMFkJ1LktnirPuL2S";
+      groups.users = [
+        milo-ed25519
+        wirody
+      ];
+
+      epita = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPxVZAdPQ5qEsA/D2eTHsbetI+l5TBhIkT5DFHdn+f/6";
+    };
   };
 }

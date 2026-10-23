@@ -11,10 +11,10 @@
       # needed in caddy-tailscale
       users.groups.agnos.gid = 980;
 
-      age.secrets.agnos-account-key = {
-        file = secrets/agnos-account-key.age;
+      sops.secrets."agnos/account_key" = {
         owner = config.security.agnos.user;
       };
+
       security.agnos = {
         enable = true;
         temporarilyOpenFirewall = true;
@@ -24,7 +24,7 @@
           accounts = [
             {
               email = "admin@wiro.world";
-              private_key_path = config.age.secrets.agnos-account-key.path;
+              private_key_path = config.sops.secrets."agnos/account_key".path;
               certificates = [
                 {
                   domains = [

@@ -74,13 +74,18 @@
       };
 
       config = {
+        sops.secrets."caddy/ts_authkey" = { };
+        sops.templates."caddy-tailscale.env".content = ''
+          TS_AUTHKEY=${config.sops.placeholder."caddy/ts_authkey"}
+        '';
+
         containers.caddy-tailscale = {
           autoStart = true;
           privateNetwork = false;
 
           bindMounts = {
             "/var/lib/agnos/".isReadOnly = true;
-            "/run/agenix/".isReadOnly = true;
+            "/run/secrets/".isReadOnly = true;
           };
 
           config = {
@@ -88,19 +93,19 @@
 
             # used to link the "host-agnos" group in the container to the host
             # "agnos" group needed to read the certs
-            users.groups.host-agnos.gid = 980;
+            users.groups.host-agnos.gid = config.users.groups.agnos.gid;
             users.users.caddy.extraGroups = [ "host-agnos" ];
 
             services.caddy = {
               enable = true;
               package = pkgs.caddy.withPlugins {
                 plugins = [
-                  "github.com/tailscale/caddy-tailscale@v0.0.0-20251016213337-01d084e119cb"
+                  "github.com/tailscale/caddy-tailscale@v0.0.0-20260826180304-de41b249af4f"
                 ];
-                hash = "sha256-tUVp32+dj9h0FBFcQ7m0OVBe0bxaR6uFRACrFPOUs3c=";
+                hash = "sha256-9/1L9s6dO35Bd8h/96DO2gY6akqXZ5aoPMsaXI5mDBw=";
               };
 
-              environmentFile = config.age.secrets.caddy-env.path;
+              environmentFile = config.sops.templates."caddy-tailscale.env".path;
 
               globalConfig = ''
                 auto_https off

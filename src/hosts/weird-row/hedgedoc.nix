@@ -4,25 +4,34 @@
     config = {
       local.ports.hedgedoc = 3021;
 
-      age.secrets.storage-box-creds-hedgedoc.file = secrets/storage-box-creds-hedgedoc.age;
-
       users.users.hedgedoc.isSystemUser = true;
       users.users.hedgedoc.group = "hedgedoc";
       users.groups.hedgedoc = { };
 
+      sops.secrets."storage_boxes/hedgedoc" = { };
+      sops.templates."storage_box_hedgedoc.creds".content = ''
+        username=u701292-sub2
+        password=${config.sops.placeholder."storage_boxes/hedgedoc"}
+      '';
+
       services.hetzner.storageBoxes.hedgedoc = {
         enable = true;
         username = "u701292-sub2";
-        credentialsFile = config.age.secrets.storage-box-creds-hedgedoc.path;
+        credentialsFile = config.sops.templates."storage_box_hedgedoc.creds".path;
         owner = config.users.users.hedgedoc.name;
       };
 
-      age.secrets.hedgedoc-env.file = secrets/hedgedoc-env.age;
+      sops.secrets."hedgedoc/session_secret" = { };
+      sops.secrets."hedgedoc/oidc_secret" = { };
+      sops.templates."hedgedoc.env".content = ''
+        CMD_SESSION_SECRET=${config.sops.placeholder."hedgedoc/session_secret"}
+        CMD_OAUTH2_CLIENT_SECRET=${config.sops.placeholder."hedgedoc/oidc_secret"}
+      '';
 
       services.hedgedoc = {
         enable = true;
 
-        environmentFile = config.age.secrets.hedgedoc-env.path;
+        environmentFile = config.sops.templates."hedgedoc.env".path;
 
         settings = {
           domain = "hedgedoc.wiro.world";

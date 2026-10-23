@@ -5,37 +5,39 @@
       local.ports.authelia = 3008;
       local.ports.authelia-metrics = 9004;
 
-      age.secrets.authelia-jwt-secret = {
-        file = secrets/authelia-jwt-secret.age;
+      sops.secrets."authelia/jwt_secret" = {
+        restartUnits = [ "authelia-main.service" ];
         owner = config.services.authelia.instances.main.user;
       };
-      age.secrets.authelia-issuer-private-key = {
-        file = secrets/authelia-issuer-private-key.age;
+      sops.secrets."authelia/issuer_private_key" = {
+        restartUnits = [ "authelia-main.service" ];
         owner = config.services.authelia.instances.main.user;
       };
-      age.secrets.authelia-storage-key = {
-        file = secrets/authelia-storage-key.age;
+      sops.secrets."authelia/storage_key" = {
+        restartUnits = [ "authelia-main.service" ];
         owner = config.services.authelia.instances.main.user;
       };
-      age.secrets.authelia-ldap-password = {
-        file = secrets/authelia-ldap-password.age;
+      sops.secrets."authelia/ldap_password" = {
+        restartUnits = [ "authelia-main.service" ];
         owner = config.services.authelia.instances.main.user;
       };
-      age.secrets.authelia-smtp-password = {
-        file = secrets/authelia-smtp-password.age;
+      sops.secrets."authelia/smtp_password" = {
+        restartUnits = [ "authelia-main.service" ];
         owner = config.services.authelia.instances.main.user;
       };
+
       services.authelia.instances.main = {
         enable = true;
 
         secrets = {
-          jwtSecretFile = config.age.secrets.authelia-jwt-secret.path;
-          oidcIssuerPrivateKeyFile = config.age.secrets.authelia-issuer-private-key.path;
-          storageEncryptionKeyFile = config.age.secrets.authelia-storage-key.path;
+          jwtSecretFile = config.sops.secrets."authelia/jwt_secret".path;
+          oidcIssuerPrivateKeyFile = config.sops.secrets."authelia/issuer_private_key".path;
+          storageEncryptionKeyFile = config.sops.secrets."authelia/storage_key".path;
         };
         environmentVariables = {
-          AUTHELIA_AUTHENTICATION_BACKEND_LDAP_PASSWORD_FILE = config.age.secrets.authelia-ldap-password.path;
-          AUTHELIA_NOTIFIER_SMTP_PASSWORD_FILE = config.age.secrets.authelia-smtp-password.path;
+          AUTHELIA_AUTHENTICATION_BACKEND_LDAP_PASSWORD_FILE =
+            config.sops.secrets."authelia/ldap_password".path;
+          AUTHELIA_NOTIFIER_SMTP_PASSWORD_FILE = config.sops.secrets."authelia/smtp_password".path;
         };
         settings = {
           server.address = "localhost:${config.local.ports.authelia.string}";

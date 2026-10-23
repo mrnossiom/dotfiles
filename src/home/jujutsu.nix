@@ -22,7 +22,7 @@
             signing = {
               behavior = "own";
               backend = "ssh";
-              key = self.keys.milo-ed25519;
+              key = self.globals.pubkeys.milo-ed25519;
               git.sign-on-push = true;
             };
 

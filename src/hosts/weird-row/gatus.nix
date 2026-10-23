@@ -4,13 +4,15 @@
     config = {
       local.ports.gatus = 3018;
 
-      age.secrets.gatus-env.file = secrets/gatus-env.age;
+      sops.secrets."gatus/smtp_password" = { };
+      sops.templates."gatus.env".content = ''
+        SMTP_PASSWORD=${config.sops.placeholder."gatus/smtp_password"}
+        GATUS_DELAY_START_SECONDS=10
+      '';
 
       services.gatus = {
         enable = true;
-        environmentFile = config.age.secrets.gatus-env.path;
-
-        # GATUS_DELAY_START_SECONDS=10
+        environmentFile = config.sops.templates."gatus.env".path;
 
         settings = {
           web.port = config.local.ports.gatus.number;

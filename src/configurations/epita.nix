@@ -20,7 +20,6 @@
 
             self.modules.homeManager.base
             self.modules.homeManager.options
-            self.modules.homeManager.agenix
             self.modules.homeManager.profile-lightweight
           ];
 

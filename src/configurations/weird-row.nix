@@ -18,8 +18,8 @@
         ({ ... }: {
           imports = with self.modules.nixos; [
             option-ports
-            agenix
             nix
+            sops
 
             weird_row-ogama
 
@@ -52,7 +52,9 @@
 
             networking.hostName = "weird-row";
 
-            users.users.root.openssh.authorizedKeys.keys = self.keys.users;
+            sops.defaultSopsFile = ../../secrets/weird-row.yaml;
+
+            users.users.root.openssh.authorizedKeys.keys = self.globals.pubkeys.groups.users;
 
             boot.loader.grub.enable = true;
 

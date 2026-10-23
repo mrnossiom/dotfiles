@@ -3,7 +3,7 @@
     # Useful tools for managing these dotfiles
     devShells.default = pkgs.mkShellNoCC {
       packages = with pkgs; [
-        inputs'.agenix.packages.agenix
+        sops
         home-manager
         just
         nixos-anywhere

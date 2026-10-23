@@ -6,16 +6,13 @@
       local.ports.prometheus = 9001;
       local.ports.prometheus-node-exporter = 9002;
 
-      age.secrets.grafana-secret-key = {
-        file = secrets/grafana-secret-key.age;
+      sops.secrets."grafana/secret_key" = {
         owner = "grafana";
       };
-      age.secrets.grafana-oidc-secret = {
-        file = secrets/grafana-oidc-secret.age;
+      sops.secrets."grafana/oidc_secret" = {
         owner = "grafana";
       };
-      age.secrets.grafana-smtp-password = {
-        file = secrets/grafana-smtp-password.age;
+      sops.secrets."grafana/smtp_password" = {
         owner = "grafana";
       };
 
@@ -29,7 +26,7 @@
             root_url = "https://${self.globals.domains.grafana}";
           };
 
-          security.secret_key = "$__file{${config.age.secrets.grafana-secret-key.path}}";
+          security.secret_key = "$__file{${config.sops.secrets."grafana/secret_key".path}}";
 
           "auth.generic_oauth" = {
             enabled = true;
@@ -37,7 +34,7 @@
             icon = "signin";
 
             client_id = "grafana";
-            client_secret = "$__file{${config.age.secrets.grafana-oidc-secret.path}}";
+            client_secret = "$__file{${config.sops.secrets."grafana/oidc_secret".path}}";
             auto_login = true;
             auth_style = "InHeader";
 
@@ -69,7 +66,7 @@
             enabled = true;
             host = "smtp.resend.com:2587";
             user = "resend";
-            password = "$__file{${config.age.secrets.grafana-smtp-password.path}}";
+            password = "$__file{${config.sops.secrets."grafana/smtp_password".path}}";
 
             from_address = "grafana@services.wiro.world";
             from_name = "wiro.world Grafana Alerts";

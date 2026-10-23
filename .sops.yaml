@@ -1,0 +1,24 @@
+keys:
+  # Machine keys
+  - &neo-wiro age1cgtrsfa25vjzmky09ad3pz655n65lpgts8uq4pmmhmveq32wv4mqu2fz55
+  - &archaic-wiro age16sjet3257u32jthwta857fyhnwa026gdksyvf7ruclgkrfqnu9es4wn6eh
+
+  # Server keys
+  - &weird-row age1m7p426m0v7d2ug5ka0sryc933nvjvt9h5kv7l748w5tgdxyp5y0qtp3n0f
+
+  # User keys
+  - &milo age1jac9du4lpsuceraf4ll0gvdufjlfjgkk636awgkfpz0whthpfv5qh6a2xy
+
+  # Session keys
+  - &home_manager age1vz2zmduaqhaw5jrqh277pmp36plyth8rz5k9ccxeftfcl2nlhalqwvx5xz
+creation_rules:
+  - path_regex: ^secrets/weird-row\.yaml$
+    key_groups:
+      - age:
+          - *weird-row
+          - *milo
+  - path_regex: ^secrets/desktop\.yaml$
+    key_groups:
+      - age:
+          - *home_manager
+          - *milo

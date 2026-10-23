@@ -19,20 +19,27 @@
       config = {
         local.ports.tangled-knot = 3004;
 
-        age.secrets.tangled-knot2-env.file = secrets/tangled-knot2-env.age;
+        sops.secrets."tangled_knot/master_key" = { };
+        sops.templates."tangled-knot.env".content = ''
+          KNOT_MASTER_KEY=${config.sops.placeholder."tangled_knot/master_key"}
+        '';
 
-        age.secrets.storage-box-creds-tangled.file = secrets/storage-box-creds-tangled.age;
+        sops.secrets."storage_boxes/tangled" = { };
+        sops.templates."storage_box_tangled.creds".content = ''
+          username=u701292-sub6
+          password=${config.sops.placeholder."storage_boxes/tangled"}
+        '';
 
         services.hetzner.storageBoxes.tangled = {
           enable = true;
           username = "u701292-sub6";
-          credentialsFile = config.age.secrets.storage-box-creds-tangled.path;
+          credentialsFile = config.sops.templates."storage_box_tangled.creds".path;
           owner = "knot";
         };
 
         services.tangled.knot-rs = {
           enable = true;
-          environmentFile = config.age.secrets.tangled-knot2-env.path;
+          environmentFile = config.sops.templates."tangled-knot.env".path;
 
           openFirewall = true;
 

@@ -9,10 +9,12 @@
         group = "miniflux";
       };
       users.groups.miniflux = { };
-      age.secrets.miniflux-oidc-secret = {
-        file = secrets/miniflux-oidc-secret.age;
+
+      sops.secrets."miniflux/oidc_secret" = {
+        restartUnits = [ "miniflux.service" ];
         owner = "miniflux";
       };
+
       services.miniflux = {
         enable = true;
 
@@ -27,7 +29,7 @@
           OAUTH2_PROVIDER = "oidc";
           OAUTH2_OIDC_PROVIDER_NAME = "wiro.world SSO";
           OAUTH2_CLIENT_ID = "miniflux";
-          OAUTH2_CLIENT_SECRET_FILE = config.age.secrets.miniflux-oidc-secret.path;
+          OAUTH2_CLIENT_SECRET_FILE = config.sops.secrets."miniflux/oidc_secret".path;
           OAUTH2_REDIRECT_URL = "https://${self.globals.domains.miniflux}/oauth2/oidc/callback";
           OAUTH2_OIDC_DISCOVERY_ENDPOINT = "https://auth.wiro.world";
           OAUTH2_USER_CREATION = 1;

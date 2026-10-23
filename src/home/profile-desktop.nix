@@ -8,6 +8,8 @@
     }:
     {
       imports = with self.modules.homeManager; [
+        sops
+
         # Interface
         chromium
         compose-key
@@ -23,7 +25,6 @@
         xdg-mime
 
         # Tools
-        agenix
         git
         helix
         jujutsu
@@ -35,13 +36,14 @@
         zed
         zellij
       ];
+
       config = {
         home = {
           sessionVariables = {
             # Quick access to `~/Development` folder
             dev = "${config.home.homeDirectory}/Development";
 
-            # Would love to get rid of the Desktop folder ☹
+            # Would love to get rid of the Desktop folder :(
             XDG_DESKTOP_DIR = "$HOME";
 
             # Makes electron apps use ozone and not crash because xwayland is not there
@@ -113,6 +115,8 @@
             xdg-utils
           ];
         };
+
+        sops.defaultSopsFile = ../../secrets/desktop.yaml;
 
         # Make NPM respect XDG spec
         xdg.configFile."npm/npmrc".text = ''

@@ -11,15 +11,10 @@
       };
       local.ports.caddy-metrics = 2019;
 
-      age.secrets.caddy-env.file = secrets/caddy-env.age;
-
       # ensure caddy can access dns challenge wildcard certificates
       users.users.caddy.extraGroups = [ "agnos" ];
 
-      services.caddy = {
-        enable = true;
-        environmentFile = config.age.secrets.caddy-env.path;
-      };
+      services.caddy.enable = true;
 
       services.prometheus.scrapeConfigs = [
         {

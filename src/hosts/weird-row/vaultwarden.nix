@@ -4,11 +4,18 @@
     config = {
       local.ports.vaultwarden = 3011;
 
-      age.secrets.vaultwarden-env.file = secrets/vaultwarden-env.age;
+      sops.secrets."vaultwarden/smtp_password" = { };
+      sops.secrets."vaultwarden/oidc_secret" = { };
+      sops.templates."vaultwarden.env".content = ''
+        SMTP_PASSWORD=${config.sops.placeholder."vaultwarden/smtp_password"}
+        SSO_CLIENT_SECRET=${config.sops.placeholder."vaultwarden/oidc_secret"}
+      '';
+
       services.vaultwarden = {
         enable = true;
 
-        environmentFile = config.age.secrets.vaultwarden-env.path;
+        environmentFile = config.sops.templates."vaultwarden.env".path;
+
         config = {
           ROCKET_PORT = config.local.ports.vaultwarden.number;
           DOMAIN = "https://${self.globals.domains.vaultwarden}";

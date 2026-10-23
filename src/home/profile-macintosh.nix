@@ -1,20 +1,12 @@
-{ self, inputs, ... }:
+{ self, ... }:
 {
   flake.modules.homeManager.profile-macintosh = { config, pkgs, ... }: {
-    imports = [
-      inputs.agenix.homeManagerModules.default
-      {
-        # This allows us to decrypt user space secrets without having to use a
-        # passwordless ssh key as you cannot interact with age in the service.
-        age.identityPaths = [ "${config.home.homeDirectory}/.ssh/id_home_manager" ];
-      }
-    ]
-    ++ (with self.modules.homeManager; [
+    imports = with self.modules.homeManager; [
       git
       jujutsu
       shell
       tools
-    ]);
+    ];
 
     config = {
       assertions = [

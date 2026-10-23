@@ -11,7 +11,10 @@
       config = {
         local.ports.rustical = 3019;
 
-        age.secrets.rustical-env.file = secrets/rustical-env.age;
+        sops.secrets."rustical/oidc_secret" = { };
+        sops.templates."rustical.env".content = ''
+          RUSTICAL_OIDC__CLIENT_SECRET=${config.sops.placeholder."rustical/oidc_secret"}
+        '';
 
         # PATCH: needed to use versions above v0.15
         systemd.services.rustical.serviceConfig.ExecStart =
@@ -22,7 +25,7 @@
           package = upkgs.rustical;
 
           environmentFiles = [
-            config.age.secrets.rustical-env.path
+            config.sops.templates."rustical.env".path
           ];
 
           settings = {

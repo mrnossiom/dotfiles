@@ -20,9 +20,8 @@
 
     import-tree.url = "github:vic/import-tree";
 
-    agenix.url = "github:ryantm/agenix?ref=0.18.0";
-    agenix.inputs.nixpkgs.follows = "nixpkgs";
-    agenix.inputs.home-manager.follows = "home-manager";
+    sops-nix.url = "github:Mic92/sops-nix";
+    sops-nix.inputs.nixpkgs.follows = "unixpkgs";
 
     disko.url = "github:nix-community/disko?ref=v1.13.0";
     disko.inputs.nixpkgs.follows = "nixpkgs";
@@ -107,9 +106,7 @@
 
           (inputs.import-tree ./src)
         ];
-        flake = {
-          keys = import ./secrets/keys.nix;
-        };
+        flake = { };
         perSystem = { pkgs, ... }: {
           formatter = pkgs.nixfmt-tree;
         };

@@ -7,12 +7,12 @@
       imports = with self.modules.nixos; [
         option-user
 
-        agenix
         fonts
         gaming
         logiops
         nix
         security
+        sops
         virtualisation
         wireless
       ];
@@ -169,8 +169,6 @@
         };
 
         services.earlyoom.enable = true;
-
-        programs.command-not-found.enable = false;
       };
     }
   );

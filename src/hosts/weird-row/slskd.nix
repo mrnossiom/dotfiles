@@ -3,9 +3,16 @@
   flake.modules.nixos.weird_row-slskd = { config, ... }: {
     local.ports.slskd = 3022;
 
-    age.secrets.slskd-env.file = ./secrets/slskd-env.age;
-
     users.groups.media = { };
+
+    sops.secrets."slskd/username" = { };
+    sops.secrets."slskd/password" = { };
+    sops.templates."slskd.env".content = ''
+      SLSKD_USERNAME=${config.sops.placeholder."slskd/username"}
+      SLSKD_PASSWORD=${config.sops.placeholder."slskd/password"}
+      SLSKD_SLSK_USERNAME=${config.sops.placeholder."slskd/username"}
+      SLSKD_SLSK_PASSWORD=${config.sops.placeholder."slskd/password"}
+    '';
 
     services.slskd = {
       enable = true;
@@ -13,7 +20,7 @@
 
       group = "media";
 
-      environmentFile = config.age.secrets.slskd-env.path;
+      environmentFile = config.sops.templates."slskd.env".path;
 
       settings = {
         web.port = config.local.ports.slskd.number;

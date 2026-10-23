@@ -7,22 +7,17 @@
       ...
     }:
     let
-      inherit (config.age) secrets;
-
       hostname = config.networking.hostName;
       mainUsername = config.local.user.username;
     in
     {
       config = {
-        age.secrets.backup-restic-key.file = ../../secrets/backup/restic-key.age;
-        age.secrets.backup-rclone-google-drive.file = ../../secrets/backup/rclone-googledrive.age;
-
         services.restic.backups = {
           # Backup documents and repos code
           google-drive = {
             repository = "rclone:googledrive:/Backups/${hostname}";
-            passwordFile = secrets.backup-restic-key.path;
-            rcloneConfigFile = secrets.backup-rclone-googledrive.path;
+            # passwordFile = secrets.backup-restic-key.path;
+            # rcloneConfigFile = secrets.backup-rclone-googledrive.path;
             initialize = true;
 
             paths = [
@@ -73,7 +68,7 @@
           # Backup documents and large files
           archaic-bak = {
             repository = "/run/media/${mainUsername}/ArchaicBak/Backups/${hostname}";
-            passwordFile = secrets.backup-restic-key.path;
+            # passwordFile = secrets.backup-restic-key.path;
             initialize = true;
 
             # this would fix issue that folder is created as root

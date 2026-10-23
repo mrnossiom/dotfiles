@@ -55,8 +55,7 @@
 
       config =
         let
-          # Bash script is needed cause file path can contain env variables
-          # e.g. agenix uses `$XDG_RUNTIME_DIR`
+          # expansion needed because path can contain env variables (e.g. XDG_RUNTIME_DIR)
           wakatime-key = pkgs.writeShellScript "cat-wakatime-api-key" "cat ${cfg.apiKeyFile}";
 
           merged-settings = cfg.settings // {

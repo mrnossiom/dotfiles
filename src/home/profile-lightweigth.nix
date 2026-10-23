@@ -12,7 +12,7 @@
     config = {
       local.flags.onlyCached = true;
 
-      programs.jujutsu.settings.signing.key = lib.mkForce self.keys.epita;
+      programs.jujutsu.settings.signing.key = lib.mkForce self.globals.pubkeys.epita;
 
       home.packages = with pkgs; [
         # GUIs

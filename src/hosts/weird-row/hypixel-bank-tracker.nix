@@ -7,20 +7,28 @@
       local.ports.hbt-main = 3013;
       local.ports.hbt-banana = 3014;
 
-      age.secrets.hypixel-bank-tracker-main.file = secrets/hypixel-bank-tracker-main.age;
+      sops.secrets."hypixel_bank_tracker/hypixel_api_key" = { };
+      sops.secrets."hypixel_bank_tracker/main_profile_uuid" = { };
+      sops.secrets."hypixel_bank_tracker/banana_profile_uuid" = { };
+      sops.templates."hbt-main.env".content = ''
+        HBT_HYPIXEL_API_KEY=${config.sops.placeholder."hypixel_bank_tracker/hypixel_api_key"}
+        HBT_PROFILE_UUID=${config.sops.placeholder."hypixel_bank_tracker/main_profile_uuid"}
+      '';
+      sops.templates."hbt-banana.env".content = ''
+        HBT_HYPIXEL_API_KEY=${config.sops.placeholder."hypixel_bank_tracker/hypixel_api_key"}
+        HBT_PROFILE_UUID=${config.sops.placeholder."hypixel_bank_tracker/banana_profile_uuid"}
+      '';
+
       services.hypixel-bank-tracker.instances.main = {
         enable = true;
-
         port = config.local.ports.hbt-main.number;
-        environmentFile = config.age.secrets.hypixel-bank-tracker-main.path;
+        environmentFile = config.sops.templates."hbt-main.env".path;
       };
 
-      age.secrets.hypixel-bank-tracker-banana.file = secrets/hypixel-bank-tracker-banana.age;
       services.hypixel-bank-tracker.instances.banana = {
         enable = true;
-
         port = config.local.ports.hbt-banana.number;
-        environmentFile = config.age.secrets.hypixel-bank-tracker-banana.path;
+        environmentFile = config.sops.templates."hbt-banana.env".path;
       };
 
       services.caddy = {

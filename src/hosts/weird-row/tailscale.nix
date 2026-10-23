@@ -4,12 +4,11 @@
     config = {
       local.ports.tailscale-exporter = 9005;
 
-      # age.secrets.tailscale-authkey.file = secrets/tailscale-authkey.age;
       services.tailscale = {
         enable = true;
         useRoutingFeatures = "server";
         extraSetFlags = [ "--advertise-exit-node" ];
-        # authKeyFile = config.age.secrets.tailscale-authkey.path;
+        # authKeyFile = config.sops.secrets."tailscale-authkey".path;
         authKeyParameters = {
           baseURL = "https://${self.globals.domains.headscale}";
           ephemeral = true;

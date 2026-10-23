@@ -28,7 +28,7 @@
               shell = pkgs.fish;
               profile = "desktop";
               elevated = true;
-              keys = self.keys.users;
+              keys = self.globals.pubkeys.groups.users;
             };
           };
         })

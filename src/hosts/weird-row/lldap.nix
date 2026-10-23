@@ -5,18 +5,26 @@
       local.ports.lldap-interface = 3007;
       local.ports.lldap-ldap = 3890;
 
-      age.secrets.lldap-env.file = secrets/lldap-env.age;
       users.users.lldap = {
         isSystemUser = true;
         group = "lldap";
       };
       users.groups.lldap = { };
-      age.secrets.lldap-user-pass = {
-        file = secrets/lldap-user-pass.age;
+
+      sops.secrets."lldap/jwt_secret" = { };
+      sops.secrets."lldap/key_seed" = { };
+      sops.templates."lldap.env".content = ''
+        LLDAP_JWT_SECRET=${config.sops.placeholder."lldap/jwt_secret"}
+        LLDAP_KEY_SEED=${config.sops.placeholder."lldap/key_seed"}
+      '';
+
+      sops.secrets."lldap/user_pass" = {
         owner = "lldap";
       };
+
       services.lldap = {
         enable = true;
+        environmentFile = config.sops.templates."lldap.env".path;
 
         silenceForceUserPassResetWarning = true;
 
@@ -24,12 +32,11 @@
           http_url = "https://${self.globals.domains.lldap}";
           http_port = config.local.ports.lldap-interface.number;
 
-          ldap_user_pass_file = config.age.secrets.lldap-user-pass.path;
+          ldap_user_pass_file = config.sops.secrets."lldap/user_pass".path;
           force_ldap_user_pass_reset = false;
 
           ldap_base_dn = "dc=wiro,dc=world";
         };
-        environmentFile = config.age.secrets.lldap-env.path;
       };
 
       local.tailscale.net.binds.ldap = {

@@ -2,7 +2,6 @@
 {
   flake.modules.darwin.profile-macintosh = { ... }: {
     imports = with self.modules.darwin; [
-      agenix
       fonts
       nix
       yabai

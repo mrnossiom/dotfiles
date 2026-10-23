@@ -11,7 +11,7 @@
     in
     {
       config = {
-        # Honor the XDG specification
+        # honor the XDG specification
         home.sessionVariables = {
           CARGO_HOME = "${config.xdg.dataHome}/cargo";
           RUSTUP_HOME = "${config.xdg.dataHome}/rustup";
@@ -21,14 +21,16 @@
         home.sessionPath = [ "${config.home.sessionVariables.CARGO_HOME}/bin" ];
 
         # cargo config
-        age.secrets.api-crates-io.file = ../../secrets/api-crates-io.age;
+        sops.secrets."crates_io_key" = { };
         home.file."${config.home.sessionVariables.CARGO_HOME}/config.toml".source =
           let
             clang = lib.getExe pkgs.llvmPackages.clang;
             _mold = lib.getExe pkgs.mold-wrapped;
             wild = lib.getExe pkgs.wild;
 
-            get-crates-io-token = pkgs.writeShellScript "get-crates-io-token" "cat ${config.age.secrets.api-crates-io.path}";
+            get-crates-io-token = pkgs.writeShellScript "get-crates-io-token" "cat ${
+              config.sops.secrets."crates_io_key".path
+            }";
           in
           toml-format.generate "cargo-config" {
             registry.global-credential-providers = [ "cargo:token-from-stdout ${get-crates-io-token}" ];

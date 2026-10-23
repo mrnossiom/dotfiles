@@ -1,7 +1,7 @@
 { self, ... }:
 {
   flake.modules.nixos.weird_row-headscale =
-    { config, pkgs, ... }:
+    { config, pkgs, upkgs, ... }:
     let
       json-format = pkgs.formats.json { };
     in
@@ -16,10 +16,10 @@
           udp = true;
         };
 
-        age.secrets.headscale-oidc-secret = {
-          file = secrets/headscale-oidc-secret.age;
+        sops.secrets."headscale/oidc_secret" = {
           owner = config.services.headscale.user;
         };
+
         services.headscale = {
           enable = true;
 
@@ -75,7 +75,7 @@
               only_start_if_oidc_is_available = true;
               issuer = "https://auth.wiro.world";
               client_id = "headscale";
-              client_secret_path = config.age.secrets.headscale-oidc-secret.path;
+              client_secret_path = config.sops.secrets."headscale/oidc_secret".path;
               scope = [
                 "openid"
                 "profile"

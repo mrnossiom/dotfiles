@@ -4,12 +4,16 @@
     imports = [ self.nixosModules.hetzner-storage-box ];
 
     config = {
-      age.secrets.storage-box-creds-public.file = secrets/storage-box-creds-public.age;
+      sops.secrets."storage_boxes/public" = { };
+      sops.templates."storage_box_public.creds".content = ''
+        username=u701292-sub1
+        password=${config.sops.placeholder."storage_boxes/public"}
+      '';
 
       services.hetzner.storageBoxes.public = {
         enable = true;
         username = "u701292-sub1";
-        credentialsFile = config.age.secrets.storage-box-creds-public.path;
+        credentialsFile = config.sops.templates."storage_box_public.creds".path;
         owner = config.services.caddy.user;
       };
 

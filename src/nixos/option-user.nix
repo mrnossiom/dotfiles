@@ -1,7 +1,6 @@
 { self, inputs, ... }:
-let
-  mkUserModule =
-    isDarwin:
+{
+  flake.modules.nixos.option-user =
     {
       config,
       lib,
@@ -14,12 +13,7 @@ let
     in
     {
       imports = [
-        (
-          if isDarwin then
-            inputs.home-manager.darwinModules.home-manager
-          else
-            inputs.home-manager.nixosModules.home-manager
-        )
+        inputs.home-manager.nixosModules.home-manager
       ];
 
       options = {
@@ -43,26 +37,19 @@ let
         users.users.${cfg.username} = {
           inherit (cfg) description shell;
           openssh.authorizedKeys.keys = cfg.keys;
-        }
-        // (
-          if isDarwin then
-            {
-              home = "/Users/${cfg.username}";
-            }
-          else
-            {
-              home = "/home/${cfg.username}";
-              isNormalUser = true;
-              extraGroups = [
-                "networkmanager"
-              ]
-              ++ lib.optionals cfg.elevated [
-                "wheel" # root access
-                "tss" # tpm access
-                "dialout" # serial device access
-              ];
-            }
-        );
+
+          # if isDarwin then home = "/Users/${cfg.username}";
+          home = "/home/${cfg.username}";
+          isNormalUser = true;
+          extraGroups = [
+            "networkmanager"
+          ]
+          ++ lib.optionals cfg.elevated [
+            "wheel" # root access
+            "tss" # tpm access
+            "dialout" # serial device access
+          ];
+        };
 
         home-manager = {
           extraSpecialArgs = {
@@ -81,11 +68,6 @@ let
             ];
           };
         };
-
       };
     };
-in
-{
-  flake.modules.nixos.option-user = mkUserModule false;
-  flake.modules.darwin.option-user = mkUserModule true;
 }
