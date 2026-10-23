@@ -100,6 +100,7 @@
           "x86_64-linux"
         ];
         imports = [
+          inputs.disko.flakeModules.default
           inputs.home-manager.flakeModules.home-manager
 
           (inputs.import-tree ./src)

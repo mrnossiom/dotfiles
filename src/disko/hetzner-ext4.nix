@@ -1,34 +1,32 @@
 {
-  config,
-  ...
-}:
+  flake.diskoConfigurations.hetzner-ext4 = {
+    devices.disk.primary = {
+      type = "disk";
+      device = "/dev/sda";
 
-let
-  cfg = config.local.disk;
-in
-{
-  config.disko.devices.disk.primary = {
-    type = "disk";
-    device = cfg.device;
-    content = {
-      type = "gpt";
-      partitions = {
-        boot = {
+      content = {
+        type = "gpt";
+
+        partitions.boot = {
           size = "1M";
           type = "EF02";
           priority = 1;
         };
-        ESP = {
+
+        partitions.ESP = {
           size = "512M";
           type = "EF00";
+
           content = {
             type = "filesystem";
             format = "vfat";
             mountpoint = "/boot";
           };
         };
-        root = {
+
+        partitions.root = {
           size = "100%";
+
           content = {
             type = "filesystem";
             format = "ext4";
