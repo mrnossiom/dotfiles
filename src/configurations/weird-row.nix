@@ -36,6 +36,7 @@
             weird_row_server-pds
             weird_row_server-ripe-atlas
             weird_row_server-rustical
+            weird_row_server-storage-box
             weird_row_server-tailscale
             weird_row_server-tangled
             weird_row_server-vaultwarden

@@ -42,7 +42,13 @@ resource "hcloud_storage_box_subaccount" "public" {
   password = random_password.storage_box_public_password.result
 
   name           = "public"
-  home_directory = "public"
+  home_directory = "weird-row/public"
+
+  access_settings = {
+    samba_enabled = true
+  }
+}
+
 
   access_settings = {
     samba_enabled = true
