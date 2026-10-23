@@ -17,4 +17,4 @@ let
   secretsDir = path: prependAttrsName (path + "/") ((import ./${path}/_default.nix) keys);
 in
 
-secretsDir "secrets" // secretsDir "hosts/weird-row/secrets"
+secretsDir "secrets" // secretsDir "src/hosts/weird-row/secrets"

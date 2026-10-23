@@ -25,10 +25,10 @@ switch-target host *args:
 	nixos-rebuild switch \
 		--flake .#{{host}} \
 		--target-host {{host}} \
-		--sudo {{args}}
+		{{args}}
 
 test-target host *args:
 	nixos-rebuild test \
 		--flake .#{{host}} \
 		--target-host {{host}} \
-		--sudo {{args}}
+		{{args}}

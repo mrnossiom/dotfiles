@@ -1,20 +1,24 @@
-variable "rowrack_storage_primary_password" {
-  sensitive = true
+resource "random_password" "storage_box_primary_password" {
+  length           = 64
+  override_special = "ÄÖÜäöüß^°!§$%/()=?+#-.,;:~*@{}_&"
 }
 
+output "rowrack-username" {
+  value = hcloud_storage_box.rowrack.username
+}
 
 resource "hcloud_storage_box" "rowrack" {
-  name             = "rowrack-storage"
+  name             = "rowrack"
   storage_box_type = "bx11"
   location         = "fsn1"
 
-  password = var.rowrack_storage_primary_password
+  password = random_password.storage_box_primary_password.result
 
   access_settings = {
     samba_enabled        = true
     webdav_enabled       = false
     ssh_enabled          = false
-    reachable_externally = false
+    reachable_externally = true
     zfs_enabled          = false # show snapshots folder
   }
 
@@ -27,20 +31,20 @@ resource "hcloud_storage_box" "rowrack" {
   delete_protection = true
 }
 
-# variable "rowrack_storage_password" {
-#   sensitive = true
-# }
+resource "random_password" "storage_box_public_password" {
+  length           = 64
+  override_special = "ÄÖÜäöüß^°!§$%/()=?+#-.,;:~*@{}_&"
+}
 
-# resource "hcloud_storage_box_subaccount" "backups" {
-#   storage_box_id = hcloud_storage_box.rowrack-storage.id
+resource "hcloud_storage_box_subaccount" "public" {
+  storage_box_id = hcloud_storage_box.rowrack.id
 
-#   name           = "backups"
-#   home_directory = "backups"
+  password = random_password.storage_box_public_password.result
 
-#   access_settings = {
-#     samba_enabled        = true
-#     reachable_externally = true
-#   }
-# }
+  name           = "public"
+  home_directory = "public"
 
-# TODO: add public bucket with Caddy proxy to serve the files
+  access_settings = {
+    samba_enabled = true
+  }
+}
