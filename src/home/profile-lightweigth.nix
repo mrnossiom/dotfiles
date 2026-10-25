@@ -1,7 +1,4 @@
 { self, ... }:
-let
-  isDarwin = false;
-in
 {
   flake.modules.homeManager.profile-lightweight = { pkgs, lib, ... }: {
     imports = [
@@ -15,13 +12,6 @@ in
     ];
 
     config = {
-      assertions = [
-        {
-          assertion = !isDarwin;
-          message = "this is a HM non-darwin config";
-        }
-      ];
-
       local.flags.onlyCached = true;
 
       programs.jujutsu.settings.signing.key = lib.mkForce self.keys.epita;

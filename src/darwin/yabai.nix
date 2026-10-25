@@ -1,5 +1,5 @@
 {
-  flake.modules.nixos.yabai = {
+  flake.modules.darwin.yabai = { ... }: {
     config = {
       services.yabai =
         let

@@ -1,6 +1,5 @@
 { self, ... }:
 let
-  isDarwin = false;
   clear-nix-env = false;
 in
 {
@@ -38,7 +37,7 @@ in
           }
           # Same option to say that GC is ran weekly at 3h15
           // (
-            if isDarwin then
+            if pkgs.stdenv.isDarwin then
               {
                 interval = {
                   Weekday = 0;

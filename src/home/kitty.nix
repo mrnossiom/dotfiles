@@ -1,6 +1,3 @@
-let
-  isDarwin = false;
-in
 {
   flake.modules.homeManager.kitty =
     {
@@ -14,7 +11,7 @@ in
       config = {
         assertions = [
           {
-            assertion = (!isDarwin) || config.programs.fish.enable;
+            assertion = (!pkgs.stdenv.isDarwin) || config.programs.fish.enable;
             message = ''
               `kitty` fragment depends on `fish` program on darwin platforms
 
@@ -34,7 +31,7 @@ in
             enable_audio_bell = "no";
             macos_option_as_alt = "left";
           }
-          // lib.optionalAttrs isDarwin {
+          // lib.optionalAttrs pkgs.stdenv.isDarwin {
             # Workaround to avoid launching fish as a login shell
             shell = "zsh -c fish";
           };

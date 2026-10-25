@@ -1,7 +1,4 @@
 { moduleWithSystem, ... }:
-let
-  isDarwin = false;
-in
 {
   flake.modules.homeManager.shell = moduleWithSystem (
     { self', ... }:
@@ -149,7 +146,7 @@ in
               cd $dir
             '';
           }
-          // lib.optionalAttrs (!isDarwin) {
+          // lib.optionalAttrs (!pkgs.stdenv.isDarwin) {
             change-mac = ''
               set dev (nmcli --get-values GENERAL.DEVICE,GENERAL.TYPE device show | sed '/^wifi/!{h;d;};x;q')
               sudo ip link set $dev down

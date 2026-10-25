@@ -1,6 +1,3 @@
-let
-  isDarwin = false;
-in
 {
   flake.modules.nixos.fonts = { lib, pkgs, ... }: {
     config = {
@@ -15,7 +12,7 @@ in
           noto-fonts-color-emoji
         ];
       }
-      // lib.optionalAttrs (!isDarwin) {
+      // lib.optionalAttrs (!pkgs.stdenv.isDarwin) {
         fontconfig = {
           defaultFonts = {
             sansSerif = [

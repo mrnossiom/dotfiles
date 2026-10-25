@@ -1,12 +1,11 @@
 { self, ... }:
 {
-  flake.modules.nixos.profile-macintosh = { ... }: {
+  flake.modules.darwin.profile-macintosh = { ... }: {
     imports = [
-      self.modules.nixos.agenix
-      self.modules.nixos.fonts
-      self.modules.nixos.helix
-      self.modules.nixos.nix
-      self.modules.nixos.yabai
+      self.modules.darwin.agenix
+      self.modules.darwin.fonts
+      self.modules.darwin.nix
+      self.modules.darwin.yabai
     ];
 
     config = {

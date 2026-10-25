@@ -1,13 +1,15 @@
 {
+  self,
   inputs,
   withSystem,
   ...
 }:
 {
   flake.nixosConfigurations.archaic-wiro-laptop = withSystem "x86_64-linux" (
-    { self, pkgs, ... }:
+    { pkgs, upkgs, ... }:
     inputs.nixpkgs.lib.nixosSystem {
       inherit pkgs;
+      specialArgs = { inherit upkgs; };
       modules = [
         self.modules.nixos.profile-laptop
 
@@ -15,6 +17,15 @@
           config = {
             system.stateVersion = "23.05";
             time.timeZone = "Europe/Paris";
+
+            local.user = {
+              username = "milomoisson";
+              description = "Milo Moisson";
+              shell = pkgs.fish;
+              profile = "desktop";
+              elevated = true;
+              keys = self.keys.users;
+            };
           };
         })
 

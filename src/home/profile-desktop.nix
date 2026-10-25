@@ -1,7 +1,4 @@
 { self, ... }:
-let
-  isDarwin = false;
-in
 {
   flake.modules.homeManager.profile-desktop =
     {
@@ -38,13 +35,6 @@ in
         self.modules.homeManager.zellij
       ];
       config = {
-        assertions = [
-          {
-            assertion = !isDarwin;
-            message = "this is a HM non-darwin config";
-          }
-        ];
-
         home = {
           sessionVariables = {
             # Quick access to `~/Development` folder

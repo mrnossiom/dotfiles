@@ -1,7 +1,4 @@
 { moduleWithSystem, ... }:
-let
-  isDarwin = false;
-in
 {
   flake.modules.homeManager.sway = moduleWithSystem (
     { self', ... }:
@@ -22,13 +19,6 @@ in
     {
 
       config = {
-        assertions = [
-          {
-            assertion = !isDarwin;
-            message = "this is a non-darwin fragment";
-          }
-        ];
-
         programs.swaylock = {
           enable = true;
           package = if !flags.onlyCached then self'.packages.swaylock else pkgs.swaylock;
