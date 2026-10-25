@@ -3,7 +3,7 @@ variable "rowrack_storage_primary_password" {
 }
 
 
-resource "hcloud_storage_box" "rowrack-storage" {
+resource "hcloud_storage_box" "rowrack" {
   name             = "rowrack-storage"
   storage_box_type = "bx11"
   location         = "fsn1"

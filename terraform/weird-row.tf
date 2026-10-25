@@ -1,5 +1,5 @@
-resource "hcloud_server" "weird-row-server" {
-  name        = "weird-row-server"
+resource "hcloud_server" "weird-row" {
+  name        = "weird-row"
   server_type = "cx23"
 
   location = "nbg1"

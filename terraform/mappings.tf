@@ -1,15 +1,11 @@
 ## Servers
 
 import {
-  to = hcloud_server.weird-row-server
+  to = hcloud_server.weird-row
   id = "62287388"
 }
 import {
-  to = hcloud_server.rowrack-server
-  id = "171917889"
-}
-import {
-  to = hcloud_storage_box.rowrack-storage
+  to = hcloud_storage_box.rowrack
   id = "680791"
 }
 
@@ -22,14 +18,6 @@ import {
 import {
   to = hcloud_primary_ip.v6-nbg1-primary
   id = "85776061"
-}
-import {
-  to = hcloud_primary_ip.v4-fsn1-primary
-  id = "157175572"
-}
-import {
-  to = hcloud_primary_ip.v6-fsn1-primary
-  id = "157175573"
 }
 
 ## DNS
