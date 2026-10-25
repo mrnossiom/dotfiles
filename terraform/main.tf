@@ -53,10 +53,6 @@ locals {
   }
 }
 
-output "network" {
-  value = local.network
-}
-
 # Save network IPs for Nix config
 resource "local_file" "network" {
   content  = jsonencode(local.network)

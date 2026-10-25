@@ -22,6 +22,7 @@ in
   # Defines `HYPIXEL_API_KEY`, `PROFILE_UUID`
   "hypixel-bank-tracker-main.age".publicKeys = deploy;
   "hypixel-bank-tracker-banana.age".publicKeys = deploy;
+  "jellyfin-ldap-password.age".publicKeys = deploy;
   # Defines `LLDAP_JWT_SECRET`, `LLDAP_KEY_SEED`.
   "lldap-env.age".publicKeys = deploy;
   "lldap-user-pass.age".publicKeys = deploy;
@@ -31,7 +32,11 @@ in
   # Defines `RUSTICAL_OIDC__CLIENT_SECRET`
   "rustical-env.age".publicKeys = deploy;
   "storage-box-creds-hedgedoc.age".publicKeys = deploy;
+  "storage-box-creds-jellyfin-movies.age".publicKeys = deploy;
+  "storage-box-creds-jellyfin-music.age".publicKeys = deploy;
   "storage-box-creds-public.age".publicKeys = deploy;
+  # Defines `KNOT_MASTER_KEY`
+  "tangled-knot2-env.age".publicKeys = deploy;
   # Defines `SMTP_PASSWORD`, `SSO_CLIENT_SECRET`
   "vaultwarden-env.age".publicKeys = deploy;
 }

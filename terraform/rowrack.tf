@@ -1,10 +1,6 @@
-resource "random_password" "storage_box_primary_password" {
+resource "random_password" "rowrack_primary_password" {
   length           = 64
   override_special = "ÄÖÜäöüß^°!§$%/()=?+#-.,;:~*@{}_&"
-}
-
-output "rowrack-username" {
-  value = hcloud_storage_box.rowrack.username
 }
 
 resource "hcloud_storage_box" "rowrack" {
@@ -12,7 +8,7 @@ resource "hcloud_storage_box" "rowrack" {
   storage_box_type = "bx11"
   location         = "fsn1"
 
-  password = random_password.storage_box_primary_password.result
+  password = random_password.rowrack_primary_password.result
 
   access_settings = {
     samba_enabled        = true
@@ -31,15 +27,15 @@ resource "hcloud_storage_box" "rowrack" {
   delete_protection = true
 }
 
-resource "random_password" "storage_box_public_password" {
+resource "random_password" "rowrack_public_password" {
   length           = 64
   override_special = "ÄÖÜäöüß^°!§$%/()=?+#-.,;:~*@{}_&"
 }
 
-resource "hcloud_storage_box_subaccount" "public" {
+resource "hcloud_storage_box_subaccount" "rowrack_public" {
   storage_box_id = hcloud_storage_box.rowrack.id
 
-  password = random_password.storage_box_public_password.result
+  password = random_password.rowrack_public_password.result
 
   name           = "public"
   home_directory = "weird-row/public"
@@ -49,18 +45,54 @@ resource "hcloud_storage_box_subaccount" "public" {
   }
 }
 
-resource "random_password" "storage_box_hedgedoc_password" {
+resource "random_password" "rowrack_hedgedoc_password" {
   length           = 64
   override_special = "ÄÖÜäöüß^°!§$%/()=?+#-.,;:~*@{}_&"
 }
 
-resource "hcloud_storage_box_subaccount" "hedgedoc" {
+resource "hcloud_storage_box_subaccount" "rowrack_hedgedoc" {
   storage_box_id = hcloud_storage_box.rowrack.id
 
-  password = random_password.storage_box_hedgedoc_password.result
+  password = random_password.rowrack_hedgedoc_password.result
 
   name           = "hedgedoc"
   home_directory = "weird-row/hedgedoc"
+
+  access_settings = {
+    samba_enabled = true
+  }
+}
+
+resource "random_password" "rowrack_music_password" {
+  length           = 64
+  override_special = "ÄÖÜäöüß^°!§$%/()=?+#-.,;:~*@{}_&"
+}
+
+resource "hcloud_storage_box_subaccount" "rowrack_music" {
+  storage_box_id = hcloud_storage_box.rowrack.id
+
+  password = random_password.rowrack_music_password.result
+
+  name           = "music"
+  home_directory = "music"
+
+  access_settings = {
+    samba_enabled = true
+  }
+}
+
+resource "random_password" "rowrack_movies_password" {
+  length           = 64
+  override_special = "ÄÖÜäöüß^°!§$%/()=?+#-.,;:~*@{}_&"
+}
+
+resource "hcloud_storage_box_subaccount" "rowrack_movies" {
+  storage_box_id = hcloud_storage_box.rowrack.id
+
+  password = random_password.rowrack_movies_password.result
+
+  name           = "movies"
+  home_directory = "movies"
 
   access_settings = {
     samba_enabled = true
