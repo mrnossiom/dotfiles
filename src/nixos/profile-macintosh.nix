@@ -1,11 +1,11 @@
 { self, ... }:
 {
   flake.modules.darwin.profile-macintosh = { ... }: {
-    imports = [
-      self.modules.darwin.agenix
-      self.modules.darwin.fonts
-      self.modules.darwin.nix
-      self.modules.darwin.yabai
+    imports = with self.modules.darwin; [
+      agenix
+      fonts
+      nix
+      yabai
     ];
 
     config = {

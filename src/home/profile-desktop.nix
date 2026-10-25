@@ -7,32 +7,33 @@
       ...
     }:
     {
-      imports = [
+      imports = with self.modules.homeManager; [
         # Interface
-        self.modules.homeManager.chromium
-        self.modules.homeManager.compose-key
-        self.modules.homeManager.epita
-        self.modules.homeManager.firefox
-        self.modules.homeManager.imv
-        self.modules.homeManager.kanshi
-        self.modules.homeManager.stylix
-        self.modules.homeManager.sway
-        self.modules.homeManager.thunderbird
-        self.modules.homeManager.waybar
-        self.modules.homeManager.xdg-mime
+        chromium
+        compose-key
+        epita
+        firefox
+        imv
+        kanshi
+        launcher
+        stylix
+        sway
+        thunderbird
+        waybar
+        xdg-mime
 
         # Tools
-        self.modules.homeManager.agenix
-        self.modules.homeManager.git
-        self.modules.homeManager.helix
-        self.modules.homeManager.jujutsu
-        self.modules.homeManager.kitty
-        self.modules.homeManager.rust
-        self.modules.homeManager.shell
-        self.modules.homeManager.tools
-        self.modules.homeManager.vscodium
-        self.modules.homeManager.zed
-        self.modules.homeManager.zellij
+        agenix
+        git
+        helix
+        jujutsu
+        kitty
+        rust
+        shell
+        tools
+        vscodium
+        zed
+        zellij
       ];
       config = {
         home = {

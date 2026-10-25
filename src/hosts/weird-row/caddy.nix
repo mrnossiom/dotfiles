@@ -1,0 +1,49 @@
+{
+  flake.modules.nixos.weird_row_server-caddy = { config, ... }: {
+    config = {
+      local.ports.caddy-http = {
+        number = 80;
+        public = true;
+      };
+      local.ports.caddy-https = {
+        number = 443;
+        public = true;
+      };
+      local.ports.caddy-metrics = 2019;
+
+      age.secrets.caddy-env.file = secrets/caddy-env.age;
+
+      # ensure caddy can access dns challenge wildcard certificates
+      users.users.caddy.extraGroups = [ "agnos" ];
+
+      services.caddy = {
+        enable = true;
+        # package = pkgs.caddy.withPlugins {
+        #   plugins = [
+        #     "github.com/tailscale/caddy-tailscale@v0.0.0-20251016213337-01d084e119cb"
+        #   ];
+        #   hash = "sha256-grHleLf9SqeAJSXKHNRZG43FZ3TCcgU4RIkCnWscrn8=";
+        # };
+
+        environmentFile = config.age.secrets.caddy-env.path;
+
+        # globalConfig = ''
+        #   tailscale {
+        #     # this caddy instance already proxies headscale but needs to access headscale to start
+        #     # control_url https://headscale.wiro.world
+        #     control_url http://localhost:${config.local.ports.headscale.string}
+        #
+        #     ephemeral
+        #   }
+        # '';
+      };
+
+      services.prometheus.scrapeConfigs = [
+        {
+          job_name = "caddy";
+          static_configs = [ { targets = [ "localhost:${config.local.ports.caddy-metrics.string}" ]; } ];
+        }
+      ];
+    };
+  };
+}

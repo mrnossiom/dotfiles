@@ -14,7 +14,7 @@ let
         inherit value;
       }
     );
-  secretsDir = path: prependAttrsName (path + "/") ((import ./${path}/default.nix) keys);
+  secretsDir = path: prependAttrsName (path + "/") ((import ./${path}/_default.nix) keys);
 in
 
-secretsDir "secrets" // secretsDir "hosts/weird-row-server/secrets"
+secretsDir "secrets" // secretsDir "hosts/weird-row/secrets"

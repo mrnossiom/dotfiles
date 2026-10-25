@@ -5,7 +5,7 @@
 #   ...
 # }:
 # {
-#   flake.nixosConfigurations.apple-wiro-laptop = withSystem "aarch64-darwin" (
+#   flake.nixosConfigurations.apple-wiro = withSystem "aarch64-darwin" (
 #     { pkgs, ... }:
 #     inputs.nix-darwin.lib.darwinSystem {
 #       inherit pkgs;
@@ -27,4 +27,4 @@
 #     }
 #   );
 # }
-{}
+{ }

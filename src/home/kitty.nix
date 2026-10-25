@@ -13,7 +13,7 @@
           {
             assertion = (!pkgs.stdenv.isDarwin) || config.programs.fish.enable;
             message = ''
-              `kitty` fragment depends on `fish` program on darwin platforms
+              `kitty` depends on `fish` program on darwin platforms
 
               launches fish on startup (fish has weird behavior if set as login shell)
             '';

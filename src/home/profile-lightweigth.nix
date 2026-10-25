@@ -1,14 +1,12 @@
 { self, ... }:
 {
   flake.modules.homeManager.profile-lightweight = { pkgs, lib, ... }: {
-    imports = [
-      # self.modules.homeManager.agenix
-      self.modules.homeManager.git
-      self.modules.homeManager.helix
-      self.modules.homeManager.jujutsu
-      self.modules.homeManager.shell
-      # self.modules.homeManager.tools
-      self.modules.homeManager.zellij
+    imports = with self.modules.homeManager; [
+      git
+      helix
+      jujutsu
+      shell
+      zellij
     ];
 
     config = {

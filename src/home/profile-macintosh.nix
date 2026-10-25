@@ -8,13 +8,13 @@
         # passwordless ssh key as you cannot interact with age in the service.
         age.identityPaths = [ "${config.home.homeDirectory}/.ssh/id_home_manager" ];
       }
-
-      self.modules.homeManager.git
-      self.modules.homeManager.jujutsu
-      self.modules.homeManager.shell
-      self.modules.homeManager.tools
-      # self.modules.homeManager.vscodium
-    ];
+    ]
+    ++ (with self.modules.homeManager; [
+      git
+      jujutsu
+      shell
+      tools
+    ]);
 
     config = {
       assertions = [

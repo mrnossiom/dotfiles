@@ -4,17 +4,17 @@
     { self', ... }:
     { config, pkgs, ... }:
     {
-      imports = [
-        self.modules.nixos.option-user
+      imports = with self.modules.nixos; [
+        option-user
 
-        self.modules.nixos.agenix
-        self.modules.nixos.fonts
-        self.modules.nixos.gaming
-        self.modules.nixos.logiops
-        self.modules.nixos.nix
-        self.modules.nixos.security
-        self.modules.nixos.virtualisation
-        self.modules.nixos.wireless
+        agenix
+        fonts
+        gaming
+        logiops
+        nix
+        security
+        virtualisation
+        wireless
       ];
 
       config = {

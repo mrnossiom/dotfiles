@@ -7,7 +7,7 @@
 
         keyboards.neo-integrated = {
           devices = [
-            # archaic-wiro-laptop integrated keyboard
+            # archaic-wiro integrated keyboard
             "/dev/input/by-path/platform-i8042-serio-0-event-kbd"
           ];
 

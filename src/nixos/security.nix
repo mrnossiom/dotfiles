@@ -20,7 +20,7 @@
         # IdleAction = "lock";
         # Don’t shutdown when power button is short-pressed
         HandlePowerKey = "suspend";
-        # i have no long press on neo-wiro-laptop
+        # Disable long press
         HandlePowerKeyLongPress = "ignore";
       };
 

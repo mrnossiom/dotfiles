@@ -75,14 +75,14 @@ in
   flake.modules.homeManager.firefox =
     { config, lib, ... }:
     let
-      cfg = config.local.fragment.firefox;
+      flags = config.local.flags;
     in
     {
       imports = [
         inputs.zen-browser.homeModules.beta
       ];
 
-      options.local.fragment.firefox.useZen = lib.mkOption {
+      options.local.flags.useZen = lib.mkOption {
         description = "Use zen-browser";
         type = lib.types.bool;
         default = true;
@@ -92,7 +92,7 @@ in
         home.sessionVariables =
           let
             package =
-              if cfg.useZen then config.programs.zen-browser.package else config.programs.firefox.package;
+              if flags.useZen then config.programs.zen-browser.package else config.programs.firefox.package;
           in
           lib.mkIf (package != null) {
             BROWSER = lib.getExe package;
@@ -108,7 +108,7 @@ in
         };
 
         programs.zen-browser = {
-          enable = cfg.useZen;
+          enable = flags.useZen;
 
           inherit policies;
 
@@ -133,7 +133,7 @@ in
         };
 
         programs.firefox = {
-          enable = !cfg.useZen;
+          enable = !flags.useZen;
 
           inherit policies;
 

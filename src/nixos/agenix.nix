@@ -22,7 +22,7 @@ let
           # be located on luks protected partitions.
           # identityPaths = [ ];
 
-          # Secrets are defined in the fragments that use it
+          # Secrets are defined in the modules they are used
           # secrets = ...;
         };
       };

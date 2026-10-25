@@ -11,16 +11,16 @@
         assertions = [
           {
             assertion = config.programs.firefox.enable || config.programs.zen-browser.enable;
-            message = "`xdg-mime` fragment depends on `firefox` program: default browser";
+            message = "`xdg-mime` depends on `firefox` program: default browser";
           }
           {
             assertion = config.programs.imv.enable;
-            message = "`xdg-mime` fragment depends on `imv` program: default image viewer";
+            message = "`xdg-mime` depends on `imv` program: default image viewer";
           }
           {
             assertion =
               lib.lists.count (drv: (drv.pname or "") == pkgs.nautilus.pname) config.home.packages > 0;
-            message = "`xdg-mime` fragment depends on `nautilus` program: default file explorer";
+            message = "`xdg-mime` depends on `nautilus` program: default file explorer";
           }
         ];
 
