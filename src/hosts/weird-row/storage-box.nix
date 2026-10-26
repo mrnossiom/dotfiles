@@ -1,6 +1,6 @@
 { self, ... }:
 {
-  flake.modules.nixos.weird_row_server-storage-box = { config, ... }: {
+  flake.modules.nixos.weird_row-storage-box = { config, ... }: {
     imports = [ self.nixosModules.hetzner-storage-box ];
 
     config = {
@@ -16,8 +16,8 @@
       };
 
       services.caddy.virtualHosts.${self.globals.domains.public}.extraConfig = ''
-      	root /mnt/public
-       	file_server
+        	root /mnt/public
+         	file_server
       '';
     };
   };

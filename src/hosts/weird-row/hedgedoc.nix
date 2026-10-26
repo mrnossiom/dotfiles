@@ -1,6 +1,6 @@
 { self, ... }:
 {
-  flake.modules.nixos.weird_row_server-hedgedoc = { config, ... }: {
+  flake.modules.nixos.weird_row-hedgedoc = { config, ... }: {
     config = {
       local.ports.hedgedoc = 3021;
 

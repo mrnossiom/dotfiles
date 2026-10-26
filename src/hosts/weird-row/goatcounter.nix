@@ -1,6 +1,6 @@
 { self, ... }:
 {
-  flake.modules.nixos.weird_row_server-goatcounter = { config, ... }: {
+  flake.modules.nixos.weird_row-goatcounter = { config, ... }: {
     config = {
       local.ports.goatcounter = 3010;
 

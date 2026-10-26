@@ -1,6 +1,6 @@
 { self, ... }:
 {
-  flake.modules.nixos.weird_row_server-grafana = { config, ... }: {
+  flake.modules.nixos.weird_row-grafana = { config, ... }: {
     config = {
       local.ports.grafana = 3002;
       local.ports.prometheus = 9001;

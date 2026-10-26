@@ -1,6 +1,6 @@
 { self, ... }:
 {
-  flake.modules.nixos.weird_row_server-pds = { config, ... }: {
+  flake.modules.nixos.weird_row-bluesky-pds = { config, ... }: {
     config = {
       local.ports.pds = 3001;
 
@@ -13,6 +13,8 @@
           PDS_PORT = config.local.ports.pds.number;
           # is in systemd /tmp subfolder
           LOG_DESTINATION = "/tmp/pds.log";
+
+          # PDS_DATA_DIRECTORY = "/mnt/bluesky";
         };
 
         environmentFiles = [

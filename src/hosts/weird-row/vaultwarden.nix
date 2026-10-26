@@ -1,6 +1,6 @@
 { self, ... }:
 {
-  flake.modules.nixos.weird_row_server-vaultwarden = { config, ... }: {
+  flake.modules.nixos.weird_row-vaultwarden = { config, ... }: {
     config = {
       local.ports.vaultwarden = 3011;
 

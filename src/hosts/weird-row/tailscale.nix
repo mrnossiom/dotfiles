@@ -1,6 +1,6 @@
 { self, ... }:
 {
-  flake.modules.nixos.weird_row_server-tailscale = { config, ... }: {
+  flake.modules.nixos.weird_row-tailscale = { config, ... }: {
     config = {
       local.ports.tailscale-exporter = 9005;
 

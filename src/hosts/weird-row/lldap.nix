@@ -1,6 +1,6 @@
 { self, ... }:
 {
-  flake.modules.nixos.weird_row_server-lldap = { config, ... }: {
+  flake.modules.nixos.weird_row-lldap = { config, ... }: {
     config = {
       local.ports.lldap-interface = 3007;
       local.ports.lldap-ldap = 3890;

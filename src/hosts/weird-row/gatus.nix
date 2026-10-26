@@ -1,6 +1,6 @@
 { self, ... }:
 {
-  flake.modules.nixos.weird_row_server-gatus = { config, ... }: {
+  flake.modules.nixos.weird_row-gatus = { config, ... }: {
     config = {
       local.ports.gatus = 3018;
 

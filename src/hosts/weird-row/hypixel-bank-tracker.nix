@@ -1,6 +1,6 @@
 { self, inputs, ... }:
 {
-  flake.modules.nixos.weird_row_server-hypixel-bank-tracker = { config, ... }: {
+  flake.modules.nixos.weird_row-hypixel-bank-tracker = { config, ... }: {
     imports = [ inputs.hypixel-bank-tracker.nixosModules.default ];
 
     config = {

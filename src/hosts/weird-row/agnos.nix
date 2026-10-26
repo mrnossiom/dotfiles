@@ -1,6 +1,6 @@
 { self, ... }:
 {
-  flake.modules.nixos.weird_row_server-agnos = { config, ... }: {
+  flake.modules.nixos.weird_row-agnos = { config, ... }: {
     config = {
       local.ports.agnos = {
         number = 53;

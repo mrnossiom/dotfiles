@@ -1,6 +1,6 @@
 { self, ... }:
 {
-  flake.modules.nixos.weird_row_server-rustical =
+  flake.modules.nixos.weird_row-rustical =
     {
       config,
       lib,

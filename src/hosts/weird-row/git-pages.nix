@@ -1,6 +1,6 @@
 { self, ... }:
 {
-  flake.modules.nixos.weird_row_server-git-pages = { config, ... }: {
+  flake.modules.nixos.weird_row-git-pages = { config, ... }: {
     imports = [ self.nixosModules.git-pages ];
 
     config = {

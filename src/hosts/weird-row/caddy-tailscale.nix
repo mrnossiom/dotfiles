@@ -4,7 +4,7 @@
 # A light container is the simplest way to configure it.
 { self, ... }:
 {
-  flake.modules.nixos.weird_row_server-caddy-tailscale = { config, ... }: {
+  flake.modules.nixos.weird_row-caddy-tailscale = { config, ... }: {
     config = {
       containers.caddy-tailscale = {
         autoStart = true;

@@ -3,7 +3,7 @@ let
   tangled-owner = "did:plc:xhgrjm4mcx3p5h3y6eino6ti";
 in
 {
-  flake.modules.nixos.weird_row_server-tangled = { config, ... }: {
+  flake.modules.nixos.weird_row-tangled = { config, ... }: {
     imports = [
       inputs.tangled.nixosModules.knot
       inputs.tangled.nixosModules.spindle

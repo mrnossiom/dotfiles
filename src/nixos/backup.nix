@@ -14,14 +14,6 @@
     in
     {
       config = {
-        # TODO: fix module
-        assertions = [
-          {
-            assertion = false;
-            message = "module is broken";
-          }
-        ];
-
         age.secrets.backup-restic-key.file = ../../secrets/backup/restic-key.age;
         age.secrets.backup-rclone-google-drive.file = ../../secrets/backup/rclone-googledrive.age;
 

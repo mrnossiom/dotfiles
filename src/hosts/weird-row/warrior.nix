@@ -1,5 +1,5 @@
 {
-  flake.modules.nixos.weird_row_server-warrior = { config, ... }: {
+  flake.modules.nixos.weird_row-warrior = { config, ... }: {
     config = {
       local.ports.warrior = 3015;
 

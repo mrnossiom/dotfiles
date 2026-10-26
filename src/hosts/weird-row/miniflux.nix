@@ -1,6 +1,6 @@
 { self, ... }:
 {
-  flake.modules.nixos.weird_row_server-miniflux = { config, ... }: {
+  flake.modules.nixos.weird_row-miniflux = { config, ... }: {
     config = {
       local.ports.miniflux = 3012;
 

@@ -1,6 +1,6 @@
 { self, ... }:
 {
-  flake.modules.nixos.weird_row_server-authelia = { config, ... }: {
+  flake.modules.nixos.weird_row-authelia = { config, ... }: {
     config = {
       local.ports.authelia = 3008;
       local.ports.authelia-metrics = 9004;

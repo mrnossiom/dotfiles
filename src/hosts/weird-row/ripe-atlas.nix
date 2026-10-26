@@ -1,5 +1,5 @@
 {
-  flake.modules.nixos.weird_row_server-ripe-atlas =
+  flake.modules.nixos.weird_row-ripe-atlas =
     {
       config,
       lib,

@@ -21,26 +21,26 @@
             agenix
             nix
 
-            weird_row_server-agnos
-            weird_row_server-authelia
-            weird_row_server-caddy
-            weird_row_server-caddy-tailscale
-            weird_row_server-gatus
-            weird_row_server-goatcounter
-            weird_row_server-grafana
-            weird_row_server-headscale
-            weird_row_server-hedgedoc
-            weird_row_server-hypixel-bank-tracker
-            weird_row_server-lldap
-            weird_row_server-miniflux
-            weird_row_server-pds
-            weird_row_server-ripe-atlas
-            weird_row_server-rustical
-            weird_row_server-storage-box
-            weird_row_server-tailscale
-            weird_row_server-tangled
-            weird_row_server-vaultwarden
-            weird_row_server-warrior
+            weird_row-agnos
+            weird_row-authelia
+            weird_row-bluesky-pds
+            weird_row-caddy
+            weird_row-caddy-tailscale
+            weird_row-gatus
+            weird_row-goatcounter
+            weird_row-grafana
+            weird_row-headscale
+            weird_row-hedgedoc
+            weird_row-hypixel-bank-tracker
+            weird_row-lldap
+            weird_row-miniflux
+            weird_row-ripe-atlas
+            weird_row-rustical
+            weird_row-storage-box
+            weird_row-tailscale
+            weird_row-tangled
+            weird_row-vaultwarden
+            weird_row-warrior
           ];
 
           config = {
