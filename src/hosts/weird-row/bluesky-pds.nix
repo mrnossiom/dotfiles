@@ -1,12 +1,13 @@
 { self, ... }:
 {
-  flake.modules.nixos.weird_row-bluesky-pds = { config, ... }: {
+  flake.modules.nixos.weird_row-bluesky-pds = { config, upkgs, ... }: {
     config = {
       local.ports.pds = 3001;
 
       age.secrets.pds-env.file = secrets/pds-env.age;
       services.bluesky-pds = {
         enable = true;
+        package = upkgs.bluesky-pds;
 
         settings = {
           PDS_HOSTNAME = "pds.wiro.world";
