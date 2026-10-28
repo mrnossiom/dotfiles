@@ -14,6 +14,10 @@
         file = secrets/grafana-smtp-password.age;
         owner = "grafana";
       };
+      age.secrets.grafana-secret-key = {
+        file = secrets/grafana-secret-key.age;
+        owner = "grafana";
+      };
 
       services.grafana = {
         enable = true;
@@ -25,8 +29,7 @@
             root_url = "https://${self.globals.domains.grafana}";
           };
 
-          # TODO: regen a new one and do not hardcode
-          security.secret_key = "SW2YcwTIb9zpOOhoPsMm";
+          security.secret_key = "$__file{${config.age.secrets.grafana-secret-key.path}}";
 
           "auth.generic_oauth" = {
             enable = true;

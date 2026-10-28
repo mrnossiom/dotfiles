@@ -16,6 +16,7 @@ in
   "gatus-env.age".publicKeys = deploy;
   "grafana-oidc-secret.age".publicKeys = deploy;
   "grafana-smtp-password.age".publicKeys = deploy;
+  "grafana-secret-key.age".publicKeys = deploy;
   "headscale-oidc-secret.age".publicKeys = deploy;
   # Defines `CMD_SESSION_SECRET`, `CMD_OAUTH2_CLIENT_SECRET`
   "hedgedoc-env.age".publicKeys = deploy;
