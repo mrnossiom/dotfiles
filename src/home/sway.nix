@@ -21,7 +21,7 @@
       config = {
         programs.swaylock = {
           enable = true;
-          package = if !flags.onlyCached then self'.packages.swaylock else pkgs.swaylock;
+          package = if flags.onlyCached then pkgs.swaylock else self'.packages.swaylock;
           settings = {
             ignore-empty-password = true;
             show-failed-attempts = true;

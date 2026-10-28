@@ -9,7 +9,10 @@
     { pkgs, upkgs, ... }:
     inputs.home-manager.lib.homeManagerConfiguration {
       inherit pkgs;
-      extraSpecialArgs = { osConfig = null; inherit upkgs; };
+      extraSpecialArgs = {
+        osConfig = null;
+        inherit upkgs;
+      };
       modules = [
         ({ ... }: {
           imports = [

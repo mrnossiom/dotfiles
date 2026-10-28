@@ -6,7 +6,7 @@
 }:
 {
   flake.modules.homeManager.helix = moduleWithSystem (
-    { self', ... }:
+    { self', inputs', ... }:
     {
       config,
       lib,
@@ -39,7 +39,7 @@
 
         programs.helix = {
           enable = true;
-          package = if flags.onlyCached then upkgs.helix else self'.packages.helix;
+          package = if flags.onlyCached then upkgs.helix else inputs'.helix.packages.default;
           defaultEditor = true;
 
           settings = {

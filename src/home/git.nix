@@ -1,7 +1,7 @@
 { moduleWithSystem, ... }:
 {
   flake.modules.homeManager.git = moduleWithSystem (
-    { self', ... }:
+    { inputs', ... }:
     {
       config,
       lib,
@@ -141,7 +141,7 @@
             difftastic
           ])
           ++ lib.optionals (!config.local.flags.onlyCached) [
-            self'.packages.git-leave
+            inputs'.git-leave.packages.default
           ];
 
         programs.gh.enable = true;

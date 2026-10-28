@@ -1,9 +1,9 @@
 {
-  perSystem = { pkgs, self', ... }: {
+  perSystem = { pkgs, inputs', ... }: {
     # Useful tools for managing these dotfiles
     devShells.default = pkgs.mkShellNoCC {
       packages = with pkgs; [
-        self'.packages.agenix
+        inputs'.agenix.packages.agenix
         home-manager
         just
         nixos-anywhere

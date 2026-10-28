@@ -1,7 +1,7 @@
 { moduleWithSystem, ... }:
 {
   flake.modules.homeManager.tools = moduleWithSystem (
-    { self', ... }:
+    { inputs', ... }:
     {
       config,
       pkgs,
@@ -62,7 +62,7 @@
             wormhole-rs
           ])
           ++ lib.optionals (!config.local.flags.onlyCached) [
-            self'.packages.nix-alien
+            inputs'.nix-alien.packages.default
           ];
 
         programs.fish.shellAbbrs = {
