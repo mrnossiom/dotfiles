@@ -17,6 +17,7 @@
       miniflux = "news.${wiro-world}";
       pds = "pds.${wiro-world}";
       public = "public.${wiro-world}";
+      slskd = "slskd.${wiro-world}";
       status = "status.${wiro-world}";
       tangled-knot = "knot.${wiro-world}";
       tangled-spindle = "spindle.${wiro-world}";
