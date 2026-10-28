@@ -98,3 +98,39 @@ resource "hcloud_storage_box_subaccount" "rowrack_movies" {
     samba_enabled = true
   }
 }
+
+resource "random_password" "rowrack_immich_password" {
+  length           = 64
+  override_special = "ÄÖÜäöüß^°!§$%/()=?+#-.,;:~*@{}_&"
+}
+
+resource "hcloud_storage_box_subaccount" "rowrack_immich" {
+  storage_box_id = hcloud_storage_box.rowrack.id
+
+  password = random_password.rowrack_immich_password.result
+
+  name           = "immich"
+  home_directory = "immich"
+
+  access_settings = {
+    samba_enabled = true
+  }
+}
+
+resource "random_password" "rowrack_tangled_password" {
+  length           = 64
+  override_special = "ÄÖÜäöüß^°!§$%/()=?+#-.,;:~*@{}_&"
+}
+
+resource "hcloud_storage_box_subaccount" "rowrack_tangled" {
+  storage_box_id = hcloud_storage_box.rowrack.id
+
+  password = random_password.rowrack_tangled_password.result
+
+  name           = "tangled"
+  home_directory = "tangled"
+
+  access_settings = {
+    samba_enabled = true
+  }
+}

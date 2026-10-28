@@ -33,6 +33,7 @@ in
   "rustical-env.age".publicKeys = deploy;
   "slskd-env.age".publicKeys = deploy;
   "storage-box-creds-hedgedoc.age".publicKeys = deploy;
+  "storage-box-creds-immich.age".publicKeys = deploy;
   "storage-box-creds-jellyfin-movies.age".publicKeys = deploy;
   "storage-box-creds-jellyfin-music.age".publicKeys = deploy;
   "storage-box-creds-public.age".publicKeys = deploy;

@@ -13,6 +13,7 @@
       goatcounter = "stats.${wiro-world}";
       headscale = "headscale.${wiro-world}";
       hedgedoc = "hedgedoc.${wiro-world}";
+      immich = "immich.${wiro-world}";
       jellyfin = "jellyfin.${wiro-world}";
       miniflux = "news.${wiro-world}";
       pds = "pds.${wiro-world}";

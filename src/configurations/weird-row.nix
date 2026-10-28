@@ -32,6 +32,7 @@
             weird_row-headscale
             weird_row-hedgedoc
             weird_row-hypixel-bank-tracker
+            weird_row-immich
             weird_row-jellyfin
             weird_row-lldap
             weird_row-miniflux
