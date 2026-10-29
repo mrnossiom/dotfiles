@@ -21,6 +21,8 @@
             agenix
             nix
 
+            weird_row-ogama
+
             weird_row-agnos
             weird_row-authelia
             weird_row-bluesky-pds
