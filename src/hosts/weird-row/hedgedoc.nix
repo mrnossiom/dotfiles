@@ -13,9 +13,7 @@
       services.hetzner.storageBoxes.hedgedoc = {
         enable = true;
         username = "u701292-sub2";
-        share = "u701292-sub2";
         credentialsFile = config.age.secrets.storage-box-creds-hedgedoc.path;
-        mountPoint = "/mnt/hedgedoc";
         owner = config.users.users.hedgedoc.name;
       };
 
@@ -34,7 +32,7 @@
             dialect = "sqlite";
             storage = "/var/lib/hedgedoc/db.sqlite";
           };
-          uploadsPath = "/mnt/hedgedoc/uploads";
+          uploadsPath = "${config.services.hetzner.storageBoxes.hedgedoc.mountPoint}/uploads";
 
           protocolUseSSL = true;
 
