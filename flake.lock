@@ -558,11 +558,11 @@
     "hydrant": {
       "flake": false,
       "locked": {
-        "lastModified": 1793061079,
-        "narHash": "sha256-eoKt3IMQ+x0hTD5JMWClvDmtgKRnzhgdsK9a52zs6MA=",
+        "lastModified": 1793323227,
+        "narHash": "sha256-t4Peo2XzHtAvizZLNfUHf0qySNmNVpkgNZTyccS+Bwk=",
         "ref": "refs/heads/main",
-        "rev": "8c140637671e8155a7efcddd626cf91dcaa4560d",
-        "revCount": 884,
+        "rev": "942f366fa25d14591cbd7bcfdb56c63066c34953",
+        "revCount": 886,
         "type": "git",
         "url": "https://tangled.org/ptr.pet/hydrant"
       },
@@ -574,11 +574,11 @@
     "hydrant-dev": {
       "flake": false,
       "locked": {
-        "lastModified": 1793061079,
-        "narHash": "sha256-eoKt3IMQ+x0hTD5JMWClvDmtgKRnzhgdsK9a52zs6MA=",
+        "lastModified": 1793323227,
+        "narHash": "sha256-t4Peo2XzHtAvizZLNfUHf0qySNmNVpkgNZTyccS+Bwk=",
         "ref": "refs/heads/main",
-        "rev": "8c140637671e8155a7efcddd626cf91dcaa4560d",
-        "revCount": 884,
+        "rev": "942f366fa25d14591cbd7bcfdb56c63066c34953",
+        "revCount": 886,
         "type": "git",
         "url": "https://tangled.org/ptr.pet/hydrant"
       },
@@ -1144,16 +1144,16 @@
         "timeless-fonts-src": "timeless-fonts-src"
       },
       "locked": {
-        "lastModified": 1793249603,
-        "narHash": "sha256-nAwqNFmIVjikyPDtJrOptVYDcm0BT2LcSsXqaM3sqFg=",
-        "ref": "next-dev",
-        "rev": "7a507b7739c9aca91be292ed2a0c1e885e42da79",
-        "revCount": 5892,
+        "lastModified": 1793354951,
+        "narHash": "sha256-5Q5bJvpE/eB0FJirmsL7YXXN+FXjtrQmXaOXJ3f1rEQ=",
+        "ref": "v1.20.0",
+        "rev": "e403ee95fccaffba06281b5c1a0665c984bbfdec",
+        "revCount": 6025,
         "type": "git",
         "url": "https://tangled.org/tangled.org/core"
       },
       "original": {
-        "ref": "next-dev",
+        "ref": "v1.20.0",
         "type": "git",
         "url": "https://tangled.org/tangled.org/core"
       }

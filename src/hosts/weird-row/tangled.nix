@@ -54,8 +54,7 @@ in
             acl.admission = "closed";
 
             # repo.scan_path = "";
-            # lfs.store_path = "";
-            # secrets.sealed_key_file = "";
+            lfs.store_path = "${config.services.hetzner.storageBoxes.tangled.mountPoint}/lfs";
             git.object_format = "sha256";
 
             atproto.plc_directory = "https://plc.directory";

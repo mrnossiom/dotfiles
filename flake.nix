@@ -65,7 +65,7 @@
     nix-alien.url = "github:thiagokokada/nix-alien";
     nix-alien.inputs.nixpkgs.follows = "nixpkgs";
 
-    tangled.url = "git+https://tangled.org/tangled.org/core?ref=next-dev";
+    tangled.url = "git+https://tangled.org/tangled.org/core?ref=v1.20.0";
     tangled.inputs.nixpkgs.follows = "unixpkgs";
     # remove useless tangled inputs
     tangled.inputs = {
