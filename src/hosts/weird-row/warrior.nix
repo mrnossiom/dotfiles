@@ -1,3 +1,4 @@
+{ self, ... }:
 {
   flake.modules.nixos.weird_row-warrior = { config, ... }: {
     config = {
@@ -15,11 +16,11 @@
         };
       };
 
-      # services.caddy.virtualHosts.${globals.domains.warrior}.extraConfig = ''
-      #   bind tailscale/warrior
-      #   tls /var/lib/agnos/net.wiro.world_fullchain.pem /var/lib/agnos/net.wiro.world_privkey.pem
-      #   reverse_proxy http://localhost:${config.local.ports.warrior.string}
-      # '';
+      local.tailscale.net.binds.warrior = {
+        enable = true;
+        domain = self.globals.domains.warrior;
+        port = config.local.ports.warrior.number;
+      };
     };
   };
 }

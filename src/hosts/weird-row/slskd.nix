@@ -5,7 +5,7 @@
 
     age.secrets.slskd-env.file = ./secrets/slskd-env.age;
 
-    users.groups.media = {  };
+    users.groups.media = { };
 
     services.slskd = {
       enable = true;
@@ -23,8 +23,10 @@
       };
     };
 
-    services.caddy.virtualHosts.${self.globals.domains.slskd}.extraConfig = ''
-      reverse_proxy http://localhost:${config.local.ports.slskd.string}
-    '';
+    local.tailscale.net.binds.slskd = {
+      enable = true;
+      domain = self.globals.domains.slskd;
+      port = config.local.ports.slskd.number;
+    };
   };
 }

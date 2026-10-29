@@ -18,7 +18,6 @@
       miniflux = "news.${wiro-world}";
       pds = "pds.${wiro-world}";
       public = "public.${wiro-world}";
-      slskd = "slskd.${wiro-world}";
       status = "status.${wiro-world}";
       tangled-knot = "knot.${wiro-world}";
       tangled-spindle = "spindle.${wiro-world}";
@@ -31,6 +30,7 @@
       # wiro.world private net
       grafana = "console.${wiro-world-net}";
       lldap = "ldap.${wiro-world-net}";
+      slskd = "slskd.${wiro-world-net}";
       warrior = "warrior.${wiro-world-net}";
 
       # hypixel-bank-tracker.xyz
