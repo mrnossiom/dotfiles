@@ -65,12 +65,11 @@
     nix-alien.url = "github:thiagokokada/nix-alien";
     nix-alien.inputs.nixpkgs.follows = "nixpkgs";
 
-    tangled.url = "git+https://tangled.org/tangled.org/core?ref=v1.16.1-alpha";
+    tangled.url = "git+https://tangled.org/tangled.org/core?ref=next-dev";
     tangled.inputs.nixpkgs.follows = "unixpkgs";
     # remove useless tangled inputs
     tangled.inputs = {
       actor-typeahead-src.follows = "";
-      fenix.follows = "";
       htmx-src.follows = "";
       htmx-ws-src.follows = "";
       ibm-plex-mono-src.follows = "";

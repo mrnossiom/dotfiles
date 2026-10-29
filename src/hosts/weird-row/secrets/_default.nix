@@ -37,6 +37,7 @@ in
   "storage-box-creds-jellyfin-movies.age".publicKeys = deploy;
   "storage-box-creds-jellyfin-music.age".publicKeys = deploy;
   "storage-box-creds-public.age".publicKeys = deploy;
+  "storage-box-creds-tangled.age".publicKeys = deploy;
   # Defines `KNOT_MASTER_KEY`
   "tangled-knot2-env.age".publicKeys = deploy;
   # Defines `SMTP_PASSWORD`, `SSO_CLIENT_SECRET`
