@@ -134,7 +134,7 @@
               {
                 client_name = "Grafana Console";
                 client_id = "grafana";
-                client_secret = "$pbkdf2-sha256$310000$UkwrqxTZodGMs9.Ca2cXAA$HCWFgQbFHGXZpuz.I3HHdkTZLUevRVGlhKEFaOlPmKs";
+                client_secret = "$pbkdf2-sha256$310000$lw2us3UEMS4l7LzQS.mweg$YqOZjm.4/C2WJFT1Kr.x/SXbppp0KPyRd32/SMnWZyY";
                 redirect_uris = [ "https://${self.globals.domains.grafana}/login/generic_oauth" ];
                 authorization_policy = "grafana";
                 claims_policy = "grafana";

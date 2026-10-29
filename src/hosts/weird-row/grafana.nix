@@ -6,16 +6,16 @@
       local.ports.prometheus = 9001;
       local.ports.prometheus-node-exporter = 9002;
 
+      age.secrets.grafana-secret-key = {
+        file = secrets/grafana-secret-key.age;
+        owner = "grafana";
+      };
       age.secrets.grafana-oidc-secret = {
         file = secrets/grafana-oidc-secret.age;
         owner = "grafana";
       };
       age.secrets.grafana-smtp-password = {
         file = secrets/grafana-smtp-password.age;
-        owner = "grafana";
-      };
-      age.secrets.grafana-secret-key = {
-        file = secrets/grafana-secret-key.age;
         owner = "grafana";
       };
 
@@ -32,13 +32,14 @@
           security.secret_key = "$__file{${config.age.secrets.grafana-secret-key.path}}";
 
           "auth.generic_oauth" = {
-            enable = true;
+            enabled = true;
             name = "wiro.world SSO";
             icon = "signin";
 
             client_id = "grafana";
             client_secret = "$__file{${config.age.secrets.grafana-oidc-secret.path}}";
             auto_login = true;
+            auth_style = "InHeader";
 
             login_attribute_path = "preferred_username";
             groups_attribute_path = "groups";

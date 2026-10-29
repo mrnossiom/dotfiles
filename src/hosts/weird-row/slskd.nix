@@ -18,8 +18,8 @@
       settings = {
         web.port = config.local.ports.slskd.number;
 
-        directories.downloads = "/mnt/music/AAA_To_Sort";
-        shares.directories = [ "/mnt/music" ];
+        directories.downloads = "${config.services.hetzner.storageBoxes.music.mountPoint}/AAA_To_Sort";
+        shares.directories = [ config.services.hetzner.storageBoxes.music.mountPoint ];
       };
     };
 
