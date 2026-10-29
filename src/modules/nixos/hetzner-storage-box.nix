@@ -41,14 +41,20 @@
                   type = lib.types.str;
                 };
 
+                group = lib.mkOption {
+                  type = lib.types.str;
+                  default = config.owner;
+                };
+
                 mountPoint = lib.mkOption {
                   type = lib.types.str;
-                  example = "/mnt/storagebox-${name}";
+                  default = "/mnt/storagebox-${name}";
                   description = "Absolute path to the local mount point.";
                 };
 
                 share = lib.mkOption {
                   type = lib.types.str;
+                  default = config.username;
                   description = ''
                     The share name. For main accounts, this is usually "backup".
                     For sub-accounts, it is typically the sub-account username itself.
@@ -85,8 +91,8 @@
               "nofail" # prevent boot stalls if the storage box is unreachable
               "_netdev" # wait for network stack to be online before mounting
               "seal" # encrypt smb connection (recommended by hetzner)
-              "uid=${box.owner}" # map files to your local user id
-              "gid=${box.owner}" # map files to your local group id
+              "uid=${box.owner}"
+              "gid=${box.group}"
               "file_mode=0660"
               "dir_mode=0770"
               "x-systemd.automount"
