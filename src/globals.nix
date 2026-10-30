@@ -29,7 +29,6 @@
 
       # wiro.world private net
       grafana = "console.${wiro-world-net}";
-      immich = "immich.${wiro-world-net}";
       lldap = "ldap.${wiro-world-net}";
       slskd = "slskd.${wiro-world-net}";
       warrior = "warrior.${wiro-world-net}";
