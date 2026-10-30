@@ -53,6 +53,8 @@ in
 
             acl.admission = "closed";
 
+            atproto.repo_signing_keys = "${config.services.tangled.knot-rs.stateDir}/repo-signing-keys.json";
+
             # repo.scan_path = "";
             lfs.store_path = "${config.services.hetzner.storageBoxes.tangled.mountPoint}/lfs";
             git.object_format = "sha256";
