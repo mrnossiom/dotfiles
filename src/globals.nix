@@ -31,7 +31,6 @@
       grafana = "console.${wiro-world-net}";
       lldap = "ldap.${wiro-world-net}";
       slskd = "slskd.${wiro-world-net}";
-      warrior = "warrior.${wiro-world-net}";
 
       # hypixel-bank-tracker.xyz
       hypixel-bank-tracker = "hypixel-bank-tracker.xyz";

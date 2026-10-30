@@ -99,10 +99,6 @@
 
               (mkHttp "Grafana" groups.net "https://${self.globals.domains.grafana}/" { })
               (mkHttp "LLDAP" groups.net "https://${self.globals.domains.lldap}/" { })
-              (mkHttp "Warrior" groups.net "https://${self.globals.domains.warrior}/" {
-                interval = "10m";
-                conditions = [ tests.status200 ];
-              })
 
               (mkHttp "Website" groups.external "https://${self.globals.domains.website}/" { })
               (mkHttp "Linkhut" groups.external "https://ln.ht/" {

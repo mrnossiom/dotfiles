@@ -44,7 +44,6 @@
             weird_row-tailscale
             weird_row-tangled
             weird_row-vaultwarden
-            weird_row-warrior
           ];
 
           config = {
