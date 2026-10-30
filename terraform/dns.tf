@@ -88,7 +88,6 @@ resource "hcloud_zone_rrset" "wiro_world-vault-cname" {
     { value = "weird-row.portal" },
   ]
 }
-
 resource "hcloud_zone_rrset" "wiro_world-pds-cname" {
   zone = hcloud_zone.wiro_world.name
   name = "pds"
@@ -138,22 +137,6 @@ resource "hcloud_zone_rrset" "wiro_world-public-cname" {
 resource "hcloud_zone_rrset" "wiro_world-jellyfin-cname" {
   zone = hcloud_zone.wiro_world.name
   name = "jellyfin"
-  type = "CNAME"
-  records = [
-    { value = "weird-row.portal" },
-  ]
-}
-resource "hcloud_zone_rrset" "wiro_world-slskd-cname" {
-  zone = hcloud_zone.wiro_world.name
-  name = "slskd"
-  type = "CNAME"
-  records = [
-    { value = "weird-row.portal" },
-  ]
-}
-resource "hcloud_zone_rrset" "wiro_world-immich-cname" {
-  zone = hcloud_zone.wiro_world.name
-  name = "immich"
   type = "CNAME"
   records = [
     { value = "weird-row.portal" },
