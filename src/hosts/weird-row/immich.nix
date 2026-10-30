@@ -28,9 +28,11 @@
         };
       };
 
-      services.caddy.virtualHosts.${self.globals.domains.immich}.extraConfig = ''
-        reverse_proxy http://localhost:${config.local.ports.immich.string}
-      '';
+      local.tailscale.net.binds.immich = {
+        enable = true;
+        domain = self.globals.domains.immich;
+        port = config.local.ports.immich.number;
+      };
     };
   };
 }

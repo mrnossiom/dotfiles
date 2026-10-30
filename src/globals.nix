@@ -13,7 +13,6 @@
       goatcounter = "stats.${wiro-world}";
       headscale = "headscale.${wiro-world}";
       hedgedoc = "hedgedoc.${wiro-world}";
-      immich = "immich.${wiro-world}";
       jellyfin = "jellyfin.${wiro-world}";
       miniflux = "news.${wiro-world}";
       pds = "pds.${wiro-world}";
@@ -26,9 +25,11 @@
 
       # wiro.world projects
       kaleic = "kaleic.${wiro-world}";
+      usp = "usp.${wiro-world}";
 
       # wiro.world private net
       grafana = "console.${wiro-world-net}";
+      immich = "immich.${wiro-world-net}";
       lldap = "ldap.${wiro-world-net}";
       slskd = "slskd.${wiro-world-net}";
       warrior = "warrior.${wiro-world-net}";
