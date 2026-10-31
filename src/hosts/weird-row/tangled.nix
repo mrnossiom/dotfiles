@@ -41,7 +41,7 @@ in
           settings = {
             motd = "Welcome to @wiro.world's knot!\n";
 
-            contact.email = "milo@wiro.world";
+            contact.email = "noreply@services.wiro.world";
 
             server = {
               hostname = "knot.wiro.world";
