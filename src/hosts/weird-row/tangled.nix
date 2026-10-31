@@ -4,18 +4,16 @@
   moduleWithSystem,
   ...
 }:
-let
-  did-wiro-world = "did:plc:xhgrjm4mcx3p5h3y6eino6ti";
-in
 {
   flake.modules.nixos.weird_row-tangled = moduleWithSystem (
     { inputs', ... }:
     { config, lib, ... }:
+    let
+      did-wiro-world = "did:plc:xhgrjm4mcx3p5h3y6eino6ti";
+    in
     {
       imports = [
-        inputs.tangled.nixosModules.knot
         inputs.tangled.nixosModules.knot-rs
-        inputs.tangled.nixosModules.spindle
       ];
 
       config = {

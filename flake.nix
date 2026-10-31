@@ -76,6 +76,8 @@
       inter-fonts-src.follows = "";
       lucide-src.follows = "";
       mermaid-src.follows = "";
+      tailwindcss-animated-src.follows = "";
+      timeless-fonts-src.follows = "";
     };
 
     zen-browser.url = "github:0xc000022070/zen-browser-flake";
