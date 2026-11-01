@@ -55,7 +55,6 @@
             NPM_CONFIG_USERCONFIG = "${config.xdg.dataHome}/npm/npmrc";
             RAD_HOME = "${config.xdg.dataHome}/radicle";
             W3M_DIR = "${config.xdg.configHome}/w3m";
-            WAKATIME_HOME = "${config.xdg.configHome}/wakatime";
           };
 
           packages = with pkgs; [

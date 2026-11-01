@@ -1,9 +1,4 @@
-{
-  self,
-  inputs,
-  moduleWithSystem,
-  ...
-}:
+{ inputs, moduleWithSystem, ... }:
 {
   flake.modules.homeManager.helix = moduleWithSystem (
     { self', inputs', ... }:
@@ -15,12 +10,9 @@
       ...
     }:
     let
-      inherit (config.age) secrets;
       flags = config.local.flags;
     in
     {
-      imports = [ self.homeModules.wakatime ];
-
       config = {
         stylix.targets.helix.enable = false;
 
@@ -175,18 +167,6 @@
                   auto-format = true;
                 })
               ];
-          };
-        };
-
-        age.secrets.api-wakatime.file = ../../secrets/api-wakatime.age;
-        age.secrets.api-wakapi.file = ../../secrets/api-wakapi.age;
-        programs.wakatime = {
-          enable = true;
-          apiKeyFile = secrets.api-wakapi.path;
-          settings = {
-            api_url = "https://wakapi.dev/api";
-
-            exclude_unknown_project = true;
           };
         };
       };
