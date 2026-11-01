@@ -15,7 +15,7 @@ resource "hcloud_storage_box" "rowrack" {
     webdav_enabled       = false
     ssh_enabled          = false
     reachable_externally = true
-    zfs_enabled          = false # show snapshots folder
+    zfs_enabled          = true # show snapshots folder
   }
 
   snapshot_plan = {
@@ -38,7 +38,7 @@ resource "hcloud_storage_box_subaccount" "rowrack_public" {
   password = random_password.rowrack_public_password.result
 
   name           = "public"
-  home_directory = "weird-row/public"
+  home_directory = "public"
 
   access_settings = {
     samba_enabled = true
@@ -56,7 +56,7 @@ resource "hcloud_storage_box_subaccount" "rowrack_hedgedoc" {
   password = random_password.rowrack_hedgedoc_password.result
 
   name           = "hedgedoc"
-  home_directory = "weird-row/hedgedoc"
+  home_directory = "hedgedoc"
 
   access_settings = {
     samba_enabled = true
