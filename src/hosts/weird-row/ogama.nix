@@ -3,10 +3,9 @@
     { config, lib, ... }:
     let
       proxiedServices = [
-        "calino"
         "immich"
         "jellyfin"
-        "qbittorrent"
+        "lsi"
         "rustical"
         "wakapi"
       ];
@@ -14,7 +13,7 @@
       proxiedVirtualHosts = lib.genAttrs' proxiedServices (
         service:
         let
-          host = "https://${service}.ogama.me";
+          host = "${service}.ogama.me";
           extraConfig = ''
             reverse_proxy https://${service}.ipv6.ogama.me
           '';
