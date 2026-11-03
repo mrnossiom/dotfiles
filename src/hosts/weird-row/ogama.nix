@@ -3,6 +3,7 @@
     { config, lib, ... }:
     let
       proxiedServices = [
+        "app.lsi"
         "immich"
         "jellyfin"
         "lsi"
