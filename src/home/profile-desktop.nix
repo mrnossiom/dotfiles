@@ -127,8 +127,8 @@
         '';
 
         home.file.".lldbinit".text = ''
-          # Very annoying behaviour
-          settings set show-statusline true
+          # very annoying behavior
+          settings set show-statusline false
         '';
 
         programs.broot.enable = true;

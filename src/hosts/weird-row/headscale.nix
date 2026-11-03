@@ -1,7 +1,12 @@
 { self, ... }:
 {
   flake.modules.nixos.weird_row-headscale =
-    { config, pkgs, upkgs, ... }:
+    {
+      config,
+      pkgs,
+      upkgs,
+      ...
+    }:
     let
       json-format = pkgs.formats.json { };
     in
