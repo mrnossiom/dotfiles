@@ -16,7 +16,7 @@
       jellyfin = "jellyfin.${wiro-world}";
       miniflux = "news.${wiro-world}";
       pds = "pds.${wiro-world}";
-      public = "public.${wiro-world}";
+      static = "static.${wiro-world}";
       status = "status.${wiro-world}";
       tangled-knot = "knot.${wiro-world}";
       tangled-spindle = "spindle.${wiro-world}";

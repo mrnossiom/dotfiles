@@ -21,6 +21,8 @@
             nix
             sops
 
+            self.nixosModules.hetzner-storage-box
+
             weird_row-ogama
 
             weird_row-agnos
@@ -40,7 +42,7 @@
             weird_row-ripe-atlas
             weird_row-rustical
             weird_row-slskd
-            weird_row-storage-box
+            weird_row-static
             weird_row-tailscale
             weird_row-tangled
             weird_row-vaultwarden

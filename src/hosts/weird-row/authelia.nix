@@ -73,8 +73,18 @@
             # these are used for e.g. caddy's `forward_auth`
             rules = [
               {
-                domain = "wiro.world";
-                policy = "bypass";
+                domain = self.globals.domains.website;
+                policy = "one_factor";
+              }
+              {
+                domain = self.globals.domains.static;
+                resources = [
+                  "^/protected/.*$"
+                ];
+                subject = [
+                  "group:static:protected"
+                ];
+                policy = "one_factor";
               }
             ];
           };

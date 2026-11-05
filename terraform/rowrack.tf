@@ -27,18 +27,18 @@ resource "hcloud_storage_box" "rowrack" {
   delete_protection = true
 }
 
-resource "random_password" "rowrack_public_password" {
+resource "random_password" "rowrack_static_password" {
   length           = 64
   override_special = "ÄÖÜäöüß^°!§$%/()=?+#-.,;:~*@{}_&"
 }
 
-resource "hcloud_storage_box_subaccount" "rowrack_public" {
+resource "hcloud_storage_box_subaccount" "rowrack_static" {
   storage_box_id = hcloud_storage_box.rowrack.id
 
-  password = random_password.rowrack_public_password.result
+  password = random_password.rowrack_static_password.result
 
-  name           = "public"
-  home_directory = "public"
+  name           = "static"
+  home_directory = "static"
 
   access_settings = {
     samba_enabled = true
