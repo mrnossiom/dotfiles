@@ -12,12 +12,13 @@ hcloud_token = "token"
 
 ```
 tofu init
-````
-
-```
 tofu plan
+tofu apply
 ```
 
-```
-tofu apply
+## Extract generated
+
+```sh
+tofu show -json | jq -j '.values.root_module.resources[] | select(.address=="hcloud_storage_box.rowrack") | .values.password' | wl-copy
+tofu show -json | jq -j '.values.root_module.resources[] | select(.address=="hcloud_storage_box_subaccount.rowrack_tangled") | .values.password' | wl-copy
 ```
