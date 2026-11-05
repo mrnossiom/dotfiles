@@ -131,6 +131,11 @@
           settings set show-statusline false
         '';
 
+        xdg.configFile."gdb/gdbinit".text = ''
+          set history save on
+          set history remove-duplicates unlimited
+        '';
+
         programs.broot.enable = true;
 
         stylix.targets.qt.enable = false;
