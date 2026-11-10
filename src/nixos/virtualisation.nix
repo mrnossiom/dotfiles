@@ -14,8 +14,6 @@
           dates = "weekly";
         };
       };
-
-      virtualisation.waydroid.enable = true;
     };
   };
 }
