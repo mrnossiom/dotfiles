@@ -2,13 +2,10 @@
   lib,
 
   rustPlatform,
-  gitignore,
 }:
 
 let
-  inherit (gitignore.lib) gitignoreSource;
-
-  src = gitignoreSource ./.;
+  src = ./.;
   cargo-toml = lib.importTOML "${src}/Cargo.toml";
 in
 rustPlatform.buildRustPackage {
