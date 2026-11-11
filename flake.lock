@@ -301,7 +301,6 @@
     },
     "git-leave": {
       "inputs": {
-        "gitignore": "gitignore",
         "nixpkgs": [
           "nixpkgs"
         ],
@@ -310,11 +309,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1787577373,
-        "narHash": "sha256-ubHBPAw7OGPhiUNdQdTLLZ1nVYaRqEU5Ba+CsRSR+7Y=",
+        "lastModified": 1794420351,
+        "narHash": "sha256-qJQ5ZajLG7giLuFbqzQw6AqnS5k8JLptUXkEu011k7A=",
         "owner": "mrnossiom",
         "repo": "git-leave",
-        "rev": "30d39289004f063c61a19383e5fb7531a5415ab2",
+        "rev": "0043b602abb9e3b9b2678c123e792a1f688a4ce6",
         "type": "github"
       },
       "original": {
@@ -347,27 +346,6 @@
       }
     },
     "gitignore": {
-      "inputs": {
-        "nixpkgs": [
-          "git-leave",
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1762808025,
-        "narHash": "sha256-XmjITeZNMTQXGhhww6ed/Wacy2KzD6svioyCX7pkUu4=",
-        "owner": "hercules-ci",
-        "repo": "gitignore.nix",
-        "rev": "cb5e3fdca1de58ccbc3ef53de65bd372b48f567c",
-        "type": "github"
-      },
-      "original": {
-        "owner": "hercules-ci",
-        "repo": "gitignore.nix",
-        "type": "github"
-      }
-    },
-    "gitignore_2": {
       "inputs": {
         "nixpkgs": [
           "hypixel-bank-tracker",
@@ -542,7 +520,7 @@
     },
     "hypixel-bank-tracker": {
       "inputs": {
-        "gitignore": "gitignore_2",
+        "gitignore": "gitignore",
         "nixpkgs": [
           "nixpkgs"
         ],
