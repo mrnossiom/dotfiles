@@ -134,6 +134,8 @@
         xdg.configFile."gdb/gdbinit".text = ''
           set history save on
           set history remove-duplicates unlimited
+
+          set disassembly-flavor intel
         '';
 
         programs.broot.enable = true;
