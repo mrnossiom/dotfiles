@@ -16,7 +16,18 @@
         let
           host = "${service}.ogama.me";
           extraConfig = ''
-            reverse_proxy https://${service}.ipv6.ogama.me
+            reverse_proxy {
+              dynamic a ipv6.ogama.me 443 {
+                versions ipv6
+              }
+
+              transport http {
+                tls
+                tls_server_name ${service}.ogama.me
+              }
+
+              header_up Host {hostport}
+            }
           '';
         in
         lib.nameValuePair host { inherit extraConfig; }
