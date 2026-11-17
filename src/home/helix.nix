@@ -67,7 +67,10 @@
 
               file-picker.hidden = false;
 
-              lsp.display-inlay-hints = false;
+              lsp = {
+                display-inlay-hints = false;
+                display-progress-messages = true;
+              };
 
               trim-final-newlines = true;
               trim-trailing-whitespace = true;
