@@ -16,6 +16,10 @@
 
       services.caddy.enable = true;
 
+      services.caddy.globalConfig = ''
+        metrics { per_host }
+      '';
+
       services.prometheus.scrapeConfigs = [
         {
           job_name = "caddy";

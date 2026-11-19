@@ -38,6 +38,7 @@
             weird_row-hypixel-bank-tracker
             weird_row-jellyfin
             weird_row-lldap
+            weird_row-loki
             weird_row-miniflux
             weird_row-ripe-atlas
             weird_row-rustical
