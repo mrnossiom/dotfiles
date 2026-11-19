@@ -73,6 +73,7 @@
             calibre
             cura-appimage
             darktable
+            deltachat-desktop
             element-desktop
             evince
             figma-linux
