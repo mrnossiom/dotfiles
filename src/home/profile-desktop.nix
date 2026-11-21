@@ -81,6 +81,7 @@
             freecad
             gimp
             gnome-disk-utility
+            gradia
             insomnia
             kdePackages.kdenlive
             kicad

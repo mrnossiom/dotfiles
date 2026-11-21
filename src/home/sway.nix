@@ -209,7 +209,7 @@
 
                 grim = lib.getExe pkgs.grim;
                 slurp = lib.getExe pkgs.slurp;
-                swappy = lib.getExe pkgs.swappy;
+                gradia = lib.getExe pkgs.gradia;
                 wl-copy = lib.getExe' pkgs.wl-clipboard "wl-copy";
                 wl-paste = lib.getExe' pkgs.wl-clipboard "wl-paste";
               in
@@ -262,7 +262,7 @@
                 # Screenshotting
                 "Print" = "exec ${grim} - | ${wl-copy}";
                 "${mod}+s" = ''exec ${grim} -g "$(${slurp})" - | ${wl-copy}'';
-                "${mod}+Shift+s" = "exec ${wl-paste} | ${swappy} --file - --output-file - | ${wl-copy}";
+                "${mod}+Shift+s" = "exec ${wl-paste} | ${gradia}";
 
                 # Soundcontrol Keys
                 "--locked XF86AudioPrev" = "exec ${playerctl} previous";
