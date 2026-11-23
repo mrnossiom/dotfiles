@@ -35,6 +35,9 @@
           PDS_EMAIL_FROM_ADDRESS = "pds@services.wiro.world";
 
           # PDS_DATA_DIRECTORY = "/mnt/bluesky";
+
+          # Force ipv4 first to pass tangled firewall heuristic
+          NODE_OPTIONS = "--dns-result-order=ipv4first";
         };
       };
 
