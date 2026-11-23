@@ -507,11 +507,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1795203255,
-        "narHash": "sha256-nwf7rf4thZGRnSdPe8dzMKD2XHi14xKJVnFAWYV5QJo=",
+        "lastModified": 1795451238,
+        "narHash": "sha256-soR0U5Mdsdxpg95CUtceBeZMoXo7izCtyHoq8zjcDiI=",
         "owner": "pixilie",
         "repo": "hypixel-bank-tracker",
-        "rev": "3644d6a67b4bf01f401515f89ca6fe94adf8caee",
+        "rev": "09a2ef33d4aa6ac76c7a1f62752e11fb267523f4",
         "type": "github"
       },
       "original": {
