@@ -8,6 +8,7 @@
         just
         nixos-anywhere
 
+        dix
         nix-inspect
         nix-output-monitor
         nix-tree
