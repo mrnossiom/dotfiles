@@ -2,12 +2,23 @@
   flake.modules.nixos.wireless = { pkgs, ... }: {
     config = {
       # Wifi
-      networking.nameservers = [
-        "1.1.1.1"
-        "8.8.8.8"
-        "9.9.9.9"
-      ];
       networking.networkmanager.enable = true;
+
+      # DNS
+      services.resolved = {
+        enable = true;
+        settings.Resolve = {
+          DNS = [
+            "noads.joindns4.eu"
+            # still need IP fallbacks
+            "86.54.11.13"
+            "86.54.11.213"
+            "2a13:1001::86:54:11:13"
+            "2a13:1001::86:54:11:213"
+          ];
+          DNSOverTls = true;
+        };
+      };
 
       # Firewall
       networking.firewall = {
