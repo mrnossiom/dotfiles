@@ -66,14 +66,10 @@
               magic_dns = true;
               base_domain = "net.wiro.world";
 
-              override_local_dns = true;
-              # Quad9 nameservers
-              nameservers.global = [
-                "9.9.9.9"
-                "149.112.112.112"
-                "2620:fe::fe"
-                "2620:fe::9"
-              ];
+              override_local_dns = false;
+              # nameservers, extra_records should not be used then overriding is not set
+              # I prefer to not mess with the clients own DNS config
+              # <https://tailscale.com/docs/reference/dns-in-tailscale#override-dns-servers>
             };
 
             oidc = {
