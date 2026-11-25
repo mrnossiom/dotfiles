@@ -9,12 +9,12 @@
         enable = true;
         settings.Resolve = {
           DNS = [
-            "noads.joindns4.eu"
+            "hard.dnsforge.de"
             # still need IP fallbacks
-            "86.54.11.13"
-            "86.54.11.213"
-            "2a13:1001::86:54:11:13"
-            "2a13:1001::86:54:11:213"
+            "49.12.222.213"
+            "88.198.122.154"
+            "2a01:4f8:c17:2c61::213"
+            "2a01:4f8:c013:5ec0::154"
           ];
           DNSOverTls = true;
         };
