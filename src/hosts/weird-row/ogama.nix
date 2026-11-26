@@ -3,18 +3,19 @@
     { config, lib, ... }:
     let
       proxiedServices = [
-        "app.lsi"
-        "immich"
-        "jellyfin"
-        "lsi"
-        "rustical"
-        "wakapi"
+        "app.lsi.ogama.me"
+        "immich.ogama.me"
+        "jellyfin.ogama.me"
+        "lsi.ogama.me"
+        "rustical.ogama.me"
+        "wakapi.ogama.me"
+
+        "lasceneinterieure.com"
       ];
 
       proxiedVirtualHosts = lib.genAttrs' proxiedServices (
-        service:
-        let
-          host = "${service}.ogama.me";
+        host:
+        lib.nameValuePair host {
           extraConfig = ''
             reverse_proxy {
               dynamic a ipv6.ogama.me 443 {
@@ -23,14 +24,13 @@
 
               transport http {
                 tls
-                tls_server_name ${service}.ogama.me
+                tls_server_name ${host}
               }
 
               header_up Host {hostport}
             }
           '';
-        in
-        lib.nameValuePair host { inherit extraConfig; }
+        }
       );
     in
     {
