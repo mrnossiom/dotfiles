@@ -53,7 +53,7 @@
               admins = [ did-wiro-world ];
 
               listen_addr = "127.0.0.1:${config.local.ports.tangled-knot.string}";
-              ssh_listen_addr = "[::]:2222";
+              ssh_listen_addr = "[::]:22";
             };
 
             acl.admission = "closed";
