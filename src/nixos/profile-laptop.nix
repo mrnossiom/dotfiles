@@ -33,6 +33,26 @@
           ACTION=="change", SUBSYSTEM=="leds", DRIVERS=="xone-gip-gamepad", KERNELS=="gip0.0", ATTR{brightness}="1"
         '';
 
+        system.nixos-init.enable = true;
+        services.userborn.enable = true;
+        system.etc.overlay = {
+          enable = true;
+          mutable = false;
+        };
+        users.mutableUsers = false;
+
+        services.openssh.hostKeys = [
+          {
+            path = "/var/lib/ssh/ssh_host_ed25519_key";
+            type = "ed25519";
+          }
+          {
+            path = "/var/lib/ssh/ssh_host_rsa_key";
+            type = "rsa";
+            bits = 4096;
+          }
+        ];
+
         boot = {
           kernelParams = [ "quiet" ];
 

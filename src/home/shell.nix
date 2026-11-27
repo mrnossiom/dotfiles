@@ -93,6 +93,8 @@
             history = " history";
             reboot = " reboot";
             shutdown = " shutdown";
+            fg = " fg";
+            bg = " bg";
           };
 
           functions = {
