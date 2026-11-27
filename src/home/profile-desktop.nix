@@ -165,6 +165,12 @@
         programs.ssh = {
           enable = true;
           enableDefaultConfig = false;
+
+          settings."weird-row" = {
+            HostName = "weird-row.portal.wiro.world";
+            User = "root";
+            Port = 2222;
+          };
         };
 
         services.tailscale-systray.enable = true;
