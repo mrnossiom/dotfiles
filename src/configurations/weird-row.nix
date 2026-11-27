@@ -15,7 +15,7 @@
         inputs.srvos.nixosModules.hardware-hetzner-cloud
         inputs.srvos.nixosModules.mixins-terminfo
 
-        ({ ... }: {
+        ({ config, ... }: {
           imports = with self.modules.nixos; [
             option-ports
             nix
@@ -92,10 +92,13 @@
             networking.firewall.enable = true;
 
             local.ports.openssh = {
-              number = 22;
+              number = 2222;
               public = true;
             };
-            services.openssh.enable = true;
+            services.openssh = {
+              enable = true;
+              ports = [ config.local.ports.openssh.number ];
+            };
 
             services.fail2ban = {
               enable = true;
