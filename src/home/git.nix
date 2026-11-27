@@ -100,6 +100,7 @@
             fetch.prune = true;
             color.ui = true;
             init.defaultBranch = "main";
+            init.defaultObjectFormat = "sha256";
 
             rebase.autosquash = true;
             push.autoSetupRemote = true;
