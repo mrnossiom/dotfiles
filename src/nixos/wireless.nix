@@ -9,14 +9,13 @@
         enable = true;
         settings.Resolve = {
           DNS = [
-            "hard.dnsforge.de"
-            # still need IP fallbacks
-            "49.12.222.213"
-            "88.198.122.154"
-            "2a01:4f8:c17:2c61::213"
-            "2a01:4f8:c013:5ec0::154"
+            "49.12.222.213#hard.dnsforge.de"
+            "88.198.122.154#hard.dnsforge.de"
+            "2a01:4f8:c17:2c61::213#hard.dnsforge.de"
+            "2a01:4f8:c013:5ec0::154#hard.dnsforge.de"
           ];
-          DNSOverTls = true;
+          DNSOverTLS = true;
+          DNSSEC = true;
         };
       };
 
